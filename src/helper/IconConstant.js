@@ -1,0 +1,17 @@
+export const Images = {
+  onBoardingImageOne: require('../assets/images/onBoarding3.png'),
+  onBoardingImageSecond: require('../assets/images/onBoarding2.png'),
+  onBoardingImageThird: require('../assets/images/onBoarding1.png'),
+  welcomeScreenIcon: require('../assets/icons/welcomeScreenIcon.png'),
+  google: require('../assets/icons/search.png'),
+  apple: require('../assets/icons/apple.png'),
+  facebook: require('../assets/icons/facebook.png'),
+  twitter: require('../assets/icons/twitter.png'),
+  backIcon: require('../assets/icons/back.png'),
+  Email: require('../assets/icons/mail.png'),
+  password: require('../assets/icons/padlock.png'),
+  ViewPassword: require('../assets/icons/view.png'),
+  HidePassword: require('../assets/icons/hidden.png'),
+  WelcomeScreenModalImage: require('../assets/images/welcomeModalImage.png'),
+  passResetSuccess: require('../assets/images/passResetSuccess.png'),
+};
