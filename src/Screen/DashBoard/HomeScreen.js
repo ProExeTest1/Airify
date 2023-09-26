@@ -172,6 +172,7 @@ const HomeScreen = () => {
             <Image
               source={Images.forward}
               style={styles.forwardStyle}
+              
               resizeMode="contain"
             />
           </TouchableOpacity>
