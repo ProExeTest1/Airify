@@ -1,24 +1,23 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
-import { icons } from '../../Helpers/ImageHelper';
 
 
-const CustomPaperTextInput = ({width,placeholder,label,icon,onChangeText,text}) => {
+const CustomPaperTextInput = ({width,placeholder,label,icon,onChangeText,value,marginVertical}) => {
   return (
-    <View style={{width:width}}>
+    <TouchableOpacity style={{width:width,marginVertical:marginVertical}}>
       <TextInput
         label={label}
         placeholder={placeholder}
-        value={text}
-        outlineStyle={{borderRadius:20}}
+        value={value}
+        outlineStyle={{borderRadius:16,borderWidth:0.5}}
         mode='outlined'
         left={<TextInput.Icon icon={icon} style={{marginTop:20}} />}
-        style={{backgroundColor:'white',height:70,justifyContent:'center',fontSize:20}}
+        style={{backgroundColor:'white',height:60,justifyContent:'center',fontSize:20}}
         outlineColor='grey'
         onChangeText={onChangeText}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
