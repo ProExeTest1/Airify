@@ -1,12 +1,12 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../Screen/DashBoard/HomeScreen';
-import SavedScreen from '../Screen/DashBoard/SavedScreen';
-import BookingsScreen from '../Screen/DashBoard/BookingsScreen';
-import WalletScreen from '../Screen/DashBoard/WalletScreen';
-import AccountScreen from '../Screen/DashBoard/AccountScreen';
-import {Images} from '../Helpers/IconConstant';
-import { TabBarComponents } from '../Components';
+import HomeScreen from '../screen/dashBoard/HomeScreen';
+import SavedScreen from '../screen/dashBoard/SavedScreen';
+import BookingsScreen from '../screen/dashBoard/BookingsScreen';
+import WalletScreen from '../screen/dashBoard/WalletScreen';
+import AccountScreen from '../screen/dashBoard/AccountScreen';
+import {Images} from '../helpers/IconConstant';
+import { TabBarComponents } from '../components';
 
 const Tab = createBottomTabNavigator();
 const TabNavigation = () => {

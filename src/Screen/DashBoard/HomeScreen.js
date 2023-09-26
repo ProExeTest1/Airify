@@ -9,12 +9,12 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {CustomPaperTextInput} from '../../Components';
-import {Images} from '../../Helpers/IconConstant';
-import {fontSize, hp, wp} from '../../Helpers/helper';
-import {color} from '../../Helpers/ColorConstant';
+import {CustomPaperTextInput} from '../../components';
+import {Images} from '../../helpers/IconConstant';
+import {fontSize, hp, wp} from '../../helpers/helper';
+import {color} from '../../helpers/ColorConstant';
 import SwiperFlatList from 'react-native-swiper-flatlist';
-import {dummyData} from '../../Assets/DummyData/Data';
+import {dummyData} from '../../assets/DummyData/Data';
 
 const HomeScreen = () => {
   const [origin, setOrigin] = useState('');

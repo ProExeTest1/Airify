@@ -1,6 +1,6 @@
 import {Image, StyleSheet} from 'react-native';
 import React from 'react';
-import {wp} from '../../Helpers/helper';
+import {wp} from '../../helpers/helper';
 
 const TabBarComponents = props => {
   return (
