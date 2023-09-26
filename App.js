@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
 import StackNavigation from './src/navigators/StackNavigation';
