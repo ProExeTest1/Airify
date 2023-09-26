@@ -1,2 +1,6 @@
-export const TabHomeIcon=require('../Assets/icons/Home.png')
-export const TabActiveHomeIcon=require('../Assets/icons/ActiveHome.png')
+export const TabHomeIcon=require('../assets/icons/Home.png')
+export const TabActiveHomeIcon=require('../assets/icons/ActiveHome.png')
+export const BackIcon=require('../assets/icons/back.png')
+export const MenuIcon=require('../assets/icons/menu.png')
+export const AirplaneBlueIcon=require('../assets/icons/airplaneBlue.png')
+export const AirplaneWhiteIcon=require('../assets/icons/airplaneWhite.png')

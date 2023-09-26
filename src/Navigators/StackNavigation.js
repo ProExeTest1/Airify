@@ -1,7 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import TabNavigation from './TabNavigation';
+import SearchFlights from '../screen/SearchFlights';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   return (
@@ -9,7 +9,7 @@ const StackNavigation = () => {
         <Stack.Navigator screenOptions={{
             headerShown:false
         }}>
-          <Stack.Screen name="TabNavigation" component={TabNavigation} />
+          <Stack.Screen name="SearchFlights" component={SearchFlights} />
         </Stack.Navigator>
       </NavigationContainer>
   );
