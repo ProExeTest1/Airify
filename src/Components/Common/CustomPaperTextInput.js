@@ -10,7 +10,7 @@ const CustomPaperTextInput = ({
   onChangeText,
   value,
   marginVertical,
-  onPress
+  onPress,
 }) => {
   return (
     <TouchableOpacity 

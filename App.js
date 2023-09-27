@@ -1,24 +1,17 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
 import StackNavigation from './src/navigators/StackNavigation';
-import {color} from './src/helpers/ColorConstant';
+import {store} from './src/redux/store';
+import {Provider} from 'react-redux';
 
 function App() {
   return (
-    <View style={styles.Header}>
-      <StatusBar
-        backgroundColor={color.commonBlue}
-        barStyle={'light-content'}
-      />
+    <Provider store={store}>
       <StackNavigation />
-    </View>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  Header: {
-    flex: 1,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;

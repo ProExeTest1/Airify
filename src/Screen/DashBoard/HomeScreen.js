@@ -15,8 +15,10 @@ import {fontSize, hp, wp} from '../../helpers/helper';
 import {color} from '../../helpers/ColorConstant';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import {dummyData} from '../../assets/DummyData/Data';
+import {useSelector} from 'react-redux';
 
 const HomeScreen = ({navigation}) => {
+  const reduxDepatureDate = useSelector(state => state.date.depatureDate);
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [depatureDate, setDepatureDate] = useState();
@@ -100,7 +102,7 @@ const HomeScreen = ({navigation}) => {
           label={'From'}
           icon={images.takeOff}
           value={change ? destination : origin}
-          onChangeText={txt => setOrigin(txt)}
+          onChangeText={txt => change ? setDestination(txt) : setOrigin(txt)}
         />
         <CustomPaperTextInput
           width={'90%'}
@@ -109,7 +111,7 @@ const HomeScreen = ({navigation}) => {
           marginVertical={10}
           icon={images.landing}
           value={change ? origin : destination}
-          onChangeText={txt => setDestination(txt)}
+          onChangeText={txt => (change ? setOrigin(txt) : setDestination(txt))}
         />
         <TouchableOpacity
           onPress={() => toggleChange()}
@@ -125,9 +127,10 @@ const HomeScreen = ({navigation}) => {
           placeholder={'Depature Date'}
           marginVertical={10}
           label={'Depature Date'}
+          disabled={true}
           icon={images.calendar}
-          value={depatureDate}
-          onPress={()=>navigation.navigate('DatePicker')}
+          value={reduxDepatureDate ? reduxDepatureDate : depatureDate}
+          onPress={() => navigation.navigate('DatePicker')}
           onChangeText={txt => setDepatureDate(txt)}
         />
         {press ? (
@@ -173,7 +176,6 @@ const HomeScreen = ({navigation}) => {
             <Image
               source={images.forward}
               style={styles.forwardStyle}
-              
               resizeMode="contain"
             />
           </TouchableOpacity>
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
   },
   profilePicStyle: {
     height: hp(7.38),
-    width:hp(7.38),
+    width: hp(7.38),
     borderRadius: 100,
   },
   headertextStyle: {marginHorizontal: 10},
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
   userNameStyle: {
     fontWeight: 'bold',
     color: 'white',
-    fontSize: fontSize(20,812),
+    fontSize: fontSize(20, 812),
     marginVertical: 5,
   },
   bellTouchStyle: {
@@ -272,7 +274,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical:hp(1.6),
+    paddingVertical: hp(1.6),
     width: wp(40),
   },
   optionTextStyle: {
@@ -292,11 +294,13 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: 'blue',
     marginVertical: hp(1.2),
+    
   },
   searchFontStyle: {
     fontSize: fontSize(20, 812),
     color: 'white',
     fontWeight: 'bold',
+    
   },
   offerStyle: {
     marginTop: hp(50),
@@ -331,5 +335,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: hp(15),
     right: wp(10),
+    
   },
 });
