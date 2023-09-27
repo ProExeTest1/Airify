@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "543089939033",
+    "project_id": "airify-b79ac",
+    "storage_bucket": "airify-b79ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543089939033:android:86b0184b3cd47e74c79748",
+        "android_client_info": {
+          "package_name": "com.airify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCep6LUvM7TOhynlGr2gAjXv83365VrkSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

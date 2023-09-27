@@ -65,7 +65,10 @@ const WelcomeScreen = ({navigation}) => {
           OnBoardingSubText={strings.signUpLine}
           OnBoardingSubTextStyle={{fontSize: fontSize(14), fontWeight: '400'}}
         />
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('SignUpScreen');
+          }}>
           <OnBoardingText
             OnBoardingSubText={strings.signUp}
             OnBoardingSubTextStyle={{

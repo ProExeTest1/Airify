@@ -15,10 +15,11 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingText from '../../components/OnBoardingText';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import Modal from 'react-native-modal';
+import {Checkbox} from 'react-native-paper';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [modal, setModal] = useState(false);
-  const [isSelected, setSelection] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   const openModal = () => {
     setModal(true);
@@ -50,21 +51,32 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           textInputPlaceholder={strings.Password}
         />
         <View style={styles.rememberLineStyle}>
-          {/* <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox}
-          /> */}
-
-          <Text>{strings.RememberMe}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('ResetPassword');
+          <View
+            style={{
+              marginHorizontal: wp(6),
+              flexDirection: 'row',
+              alignItems: 'center',
             }}>
-            <Text style={styles.forgotPasswordStyle}>
-              {strings.ForgotPassword}
-            </Text>
-          </TouchableOpacity>
+            <Checkbox
+              status={checked ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setChecked(!checked);
+              }}
+              color={'green'}
+              uncheckColor={'red'}
+            />
+            <Text style={{marginLeft: wp(2)}}>{strings.RememberMe}</Text>
+          </View>
+          <View style={{marginLeft: wp(12)}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ResetPassword');
+              }}>
+              <Text style={styles.forgotPasswordStyle}>
+                {strings.ForgotPassword}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.lineStyle} />
         <View style={styles.signUpStyle}>
@@ -72,7 +84,10 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
             OnBoardingSubText={strings.signUpLine}
             OnBoardingSubTextStyle={{fontSize: fontSize(14), fontWeight: '400'}}
           />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('SignUpScreen');
+            }}>
             <OnBoardingText
               OnBoardingSubText={strings.signUp}
               OnBoardingSubTextStyle={{
@@ -139,8 +154,8 @@ const styles = StyleSheet.create({
   },
   rememberLineStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     marginTop: hp(2),
+    alignItems: 'center',
   },
   forgotPasswordStyle: {
     color: 'blue',
