@@ -5,7 +5,7 @@ import SavedScreen from '../screen/dashBoard/SavedScreen';
 import BookingsScreen from '../screen/dashBoard/BookingsScreen';
 import WalletScreen from '../screen/dashBoard/WalletScreen';
 import AccountScreen from '../screen/dashBoard/AccountScreen';
-import {Images} from '../helpers/IconConstant';
+import {images} from '../helpers/IconConstant';
 import { TabBarComponents } from '../components';
 
 const Tab = createBottomTabNavigator();
@@ -21,7 +21,7 @@ const TabNavigation = () => {
           tabBarIcon: props => (
             <TabBarComponents
               props={props}
-              Icon={Images.TabHomeIcon}
+              Icon={images.TabHomeIcon}
             />
           ),
         }}
@@ -34,7 +34,7 @@ const TabNavigation = () => {
           tabBarIcon: props => (
             <TabBarComponents
               props={props}
-              Icon={Images.saved}
+              Icon={images.saved}
             />
           ),
         }}
@@ -47,7 +47,7 @@ const TabNavigation = () => {
           tabBarIcon: props => (
             <TabBarComponents
               props={props}
-              Icon={Images.booking}
+              Icon={images.booking}
             />
           ),
         }}
@@ -60,7 +60,7 @@ const TabNavigation = () => {
           tabBarIcon: props => (
             <TabBarComponents
               props={props}
-              Icon={Images.wallet}
+              Icon={images.wallet}
             />
           ),
         }}
@@ -73,8 +73,8 @@ const TabNavigation = () => {
           tabBarIcon: props => (
             <TabBarComponents
               props={props}
-              ActiveIcon={Images.TabActiveHomeIcon}
-              Icon={Images.account}
+              ActiveIcon={images.TabActiveHomeIcon}
+              Icon={images.account}
             />
           ),
         }}

@@ -1,4 +1,4 @@
-export const Images = {
+export const images = {
   takeOff: require('../assets/icons/departure.png'),
   landing: require('../assets/icons/landing.png'),
   TabHomeIcon: require('../assets/icons/hut.png'),
@@ -12,5 +12,6 @@ export const Images = {
   seat : require('../assets/icons/car-seat.png'),
   passenger : require('../assets/icons/people.png'),
   forward : require('../assets/icons/skip-track.png'),
-  up_down : require('../assets/icons/up-and-down.png')
+  up_down : require('../assets/icons/up-and-down.png'),
+  cancel : require('../assets/icons/close.png'),
 };

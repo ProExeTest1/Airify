@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {CustomPaperTextInput} from '../../components';
-import {Images} from '../../helpers/IconConstant';
+import {images} from '../../helpers/IconConstant';
 import {fontSize, hp, wp} from '../../helpers/helper';
 import {color} from '../../helpers/ColorConstant';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import {dummyData} from '../../assets/DummyData/Data';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [depatureDate, setDepatureDate] = useState();
@@ -42,7 +42,7 @@ const HomeScreen = () => {
           <View style={styles.headerStyle}>
             <View style={styles.profilepicViewStyle}>
               <Image
-                source={Images.demoPic}
+                source={images.demoPic}
                 style={styles.profilePicStyle}
                 resizeMode="stretch"
               />
@@ -53,7 +53,7 @@ const HomeScreen = () => {
             </View>
             <TouchableOpacity style={styles.bellTouchStyle}>
               <Image
-                source={Images.bell}
+                source={images.bell}
                 style={styles.bellStyle}
                 resizeMode="stretch"
               />
@@ -98,7 +98,7 @@ const HomeScreen = () => {
           marginVertical={10}
           placeholder={'From'}
           label={'From'}
-          icon={Images.takeOff}
+          icon={images.takeOff}
           value={change ? destination : origin}
           onChangeText={txt => setOrigin(txt)}
         />
@@ -107,7 +107,7 @@ const HomeScreen = () => {
           placeholder={'Destination'}
           label={'To'}
           marginVertical={10}
-          icon={Images.landing}
+          icon={images.landing}
           value={change ? origin : destination}
           onChangeText={txt => setDestination(txt)}
         />
@@ -115,7 +115,7 @@ const HomeScreen = () => {
           onPress={() => toggleChange()}
           style={styles.updownTouchStyle}>
           <Image
-            source={Images.up_down}
+            source={images.up_down}
             style={styles.updownStyle}
             resizeMode="contain"
           />
@@ -125,8 +125,9 @@ const HomeScreen = () => {
           placeholder={'Depature Date'}
           marginVertical={10}
           label={'Depature Date'}
-          icon={Images.calendar}
+          icon={images.calendar}
           value={depatureDate}
+          onPress={()=>navigation.navigate('DatePicker')}
           onChangeText={txt => setDepatureDate(txt)}
         />
         {press ? (
@@ -135,7 +136,7 @@ const HomeScreen = () => {
             placeholder={'Return Date'}
             marginVertical={10}
             label={'Return Date'}
-            icon={Images.calendar}
+            icon={images.calendar}
             value={returnDate}
             onChangeText={txt => setReturnDate(txt)}
           />
@@ -145,7 +146,7 @@ const HomeScreen = () => {
             width="50%"
             placeholder={'Seat'}
             label={'Passenger'}
-            icon={Images.passenger}
+            icon={images.passenger}
             value={passenger}
             onChangeText={txt => setPassenger(txt)}
           />
@@ -153,7 +154,7 @@ const HomeScreen = () => {
             width={'44%'}
             placeholder={'Class'}
             label={'Class'}
-            icon={Images.seat}
+            icon={images.seat}
             value={seat}
             onChangeText={txt => setSeat(txt)}
           />
@@ -170,7 +171,7 @@ const HomeScreen = () => {
               View All
             </Text>
             <Image
-              source={Images.forward}
+              source={images.forward}
               style={styles.forwardStyle}
               
               resizeMode="contain"
@@ -188,7 +189,7 @@ const HomeScreen = () => {
                 <View style={styles.child}>
                   <Image
                     source={item.image}
-                    style={styles.offerImageStyle}
+                    style={styles.offerimageStyle}
                     resizeMode="stretch"
                   />
                 </View>
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerViewStyle: {
-    backgroundColor: '#295dff',
+    backgroundColor: color.commonBlue,
     height: hp(35),
   },
   headerStyle: {
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   forwardStyle: {height: hp(1.8), width: hp(1.8), tintColor: color.commonBlue},
-  offerImageStyle: {height: hp(25), width: wp(90), borderRadius: 16},
+  offerimageStyle: {height: hp(25), width: wp(90), borderRadius: 16},
   updownStyle: {
     height: hp(3.6),
     width: hp(3.6),
