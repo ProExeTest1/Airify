@@ -15,6 +15,7 @@ import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
+import {PickerHeaderBar} from '../../components';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -63,6 +64,9 @@ LocaleConfig.defaultLocale = 'fr';
 const DatePickerScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState('');
+  console.log(selected, 'selected =>>>>.');
+  let selectedDate = moment(selected).format('DD/MM/YYYY');
+  console.log(selectedDate, '=>>><<<<>><><><><><><');
   const [day, setDay] = useState();
   const [returnday, seReturnDay] = useState();
 
@@ -89,19 +93,24 @@ const DatePickerScreen = ({navigation}) => {
   console.log(dayname, 'hello');
   const currentDate = new Date()
     .toLocaleDateString('en-us', {weekday: 'short'})
-    .split(',');
-  const newDate = currentDate[1].split('/');
+    .split(',')
+    .toString();
+  console.log(currentDate, 'current');
+  let newDate1 = new Date();
+  const newDate = moment(newDate1).format('YYYY-MM-DD').split('-');
+  console.log(newDate, 'new');
+
   const currentMonth = new Date().toLocaleDateString('en-us', {month: 'short'});
 
   const onOkPress = () => {
     let tomorrow = new Date();
     tomorrow = moment(tomorrow).add(1, 'day').format('YYYY-MM-DD');
-    let selectedDate = moment(selected).format('YYYY-MM-DD');
+    let selectedDate = moment(selected).format('MM/DD/YYYY');
     let flag = 0;
     if (press) {
-      for (let i = 1; i <= 10; i++) {
-        let roungDate = moment(tomorrow).add(i, 'day').format('YYYY-MM-DD');
-        if (selectedDate == roungDate) {
+      for (let i = 0; i <= 10; i++) {
+        let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
+        if (selectedDate == roundDate) {
           flag = 1;
         }
       }
@@ -109,10 +118,15 @@ const DatePickerScreen = ({navigation}) => {
         const date = new Date(selected).toLocaleDateString('en-us', {
           weekday: 'long',
         });
-        const dayname = date.split(',');
-        const finalDate = dayname[0] + ',' + month + ' ' + day + ' ' + year;
+        const dayname = date.split(',').toString();
+        const finalDate = dayname + ',' + month + ' ' + day + ' ' + year;
         dispatch(depatureDateAction(finalDate));
-        dispatch(dateAction(selected));
+        let selectedDate = moment(selected).format('M/DD/YYYY');
+        let choosenDate = {
+          date: selectedDate,
+          day: dayname,
+        };
+        dispatch(dateAction(choosenDate));
         navigation.navigate('TabNavigation');
       } else {
         Alert.alert('Choose minimum 10 days');
@@ -123,22 +137,10 @@ const DatePickerScreen = ({navigation}) => {
   };
   return (
     <View>
-      <View style={styles.headerViewStyle}>
-        <SafeAreaView style={styles.safeHeaderViewStyle}>
-          <TouchableOpacity
-            style={styles.cancelButtonTouchStyle}
-            onPress={() => navigation.goBack('')}>
-            <Image
-              source={images.cancel}
-              style={styles.cancelButtonStyle}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.headerTextStyle}>Select Date</Text>
-          </View>
-        </SafeAreaView>
-      </View>
+      <PickerHeaderBar
+        headerName={'Select Date'}
+        navigation={() => navigation.goBack('')}
+      />
       <View style={styles.currentDateStyle}>
         <View style={styles.dateMainViewStyle}>
           <TouchableOpacity
@@ -147,7 +149,7 @@ const DatePickerScreen = ({navigation}) => {
             <Text style={styles.dateTextStyle}>
               {press
                 ? `${dayname[0]}, ${month} ${day} ${year}`
-                : `${currentDate[0]},${currentMonth} ${newDate[1]} ${newDate[2]}`}
+                : `${currentDate},${currentMonth} ${newDate[2]} ${newDate[0]}`}
             </Text>
           </TouchableOpacity>
           <Text>------</Text>
@@ -203,23 +205,6 @@ const DatePickerScreen = ({navigation}) => {
 export default DatePickerScreen;
 
 const styles = StyleSheet.create({
-  headerViewStyle: {
-    backgroundColor: color.commonBlue,
-    height: hp(13),
-  },
-  cancelButtonStyle: {
-    height: hp(2),
-    width: hp(2),
-    tintColor: 'white',
-  },
-  headerTextStyle: {
-    alignSelf: 'center',
-    position: 'absolute',
-    left: wp(22),
-    fontSize: fontSize(25, 812),
-    fontWeight: 'bold',
-    color: 'white',
-  },
   dateViewStyle: {
     borderRadius: 30,
     backgroundColor: color.commonBlue,
@@ -242,16 +227,6 @@ const styles = StyleSheet.create({
     fontSize: fontSize(16, 812),
     fontWeight: '500',
     color: 'white',
-  },
-  safeHeaderViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    alignSelf: 'center',
-  },
-  cancelButtonTouchStyle: {
-    marginLeft: wp(7),
-    marginTop: hp(3),
   },
   currentDateStyle: {
     width: wp(95),

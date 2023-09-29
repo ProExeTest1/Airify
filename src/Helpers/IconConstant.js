@@ -14,4 +14,5 @@ export const images = {
   forward : require('../assets/icons/skip-track.png'),
   up_down : require('../assets/icons/up-and-down.png'),
   cancel : require('../assets/icons/close.png'),
+  search : require('../assets/icons/Search.png'),
 };

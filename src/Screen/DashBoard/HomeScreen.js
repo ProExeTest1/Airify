@@ -19,6 +19,11 @@ import {useSelector} from 'react-redux';
 
 const HomeScreen = ({navigation}) => {
   const reduxDepatureDate = useSelector(state => state.date.depatureDate);
+  const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
+  console.log(reduxDepaturePlace,"hello")
+  const reduxDestinationPlace = useSelector(
+    state => state.place.destinationPlace,
+  );
   const [origin, setOrigin] = useState('');
   const [destination, setDestination] = useState('');
   const [depatureDate, setDepatureDate] = useState();
@@ -100,17 +105,39 @@ const HomeScreen = ({navigation}) => {
           marginVertical={10}
           placeholder={'From'}
           label={'From'}
+          onPress={() =>
+            navigation.navigate('PlacePicker', {data: 'Select Origin'})
+          }
           icon={images.takeOff}
-          value={change ? destination : origin}
-          onChangeText={txt => change ? setDestination(txt) : setOrigin(txt)}
+          value={
+            change
+              ? reduxDestinationPlace
+                ? reduxDestinationPlace.city
+                : destination
+              : reduxDepaturePlace
+              ? reduxDepaturePlace.city
+              : origin
+          }
+          onChangeText={txt => (change ? setDestination(txt) : setOrigin(txt))}
         />
         <CustomPaperTextInput
           width={'90%'}
           placeholder={'Destination'}
           label={'To'}
           marginVertical={10}
+          onPress={() =>
+            navigation.navigate('PlacePicker', {data: 'Select Destination'})
+          }
           icon={images.landing}
-          value={change ? origin : destination}
+          value={
+            change
+              ? reduxDepaturePlace
+                ? reduxDepaturePlace.city
+                : origin
+              : reduxDestinationPlace
+              ? reduxDestinationPlace.city
+              : destination
+          }
           onChangeText={txt => (change ? setOrigin(txt) : setDestination(txt))}
         />
         <TouchableOpacity
@@ -294,13 +321,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: 'blue',
     marginVertical: hp(1.2),
-    
   },
   searchFontStyle: {
     fontSize: fontSize(20, 812),
     color: 'white',
     fontWeight: 'bold',
-    
   },
   offerStyle: {
     marginTop: hp(50),
@@ -335,6 +360,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: hp(15),
     right: wp(10),
-    
   },
 });
