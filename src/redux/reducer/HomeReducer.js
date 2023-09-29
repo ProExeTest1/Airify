@@ -1,27 +1,18 @@
+import {DINE_WAY} from '../type';
+
 const initialState = {
-  profileData: {},
-  followers: {},
-  all: {},
-  statusData: false,
+  DineWayData: [],
+  status: '',
 };
-const signupReducer = (state = initialState, action) => {
+const onBoardingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'UPDATE_SIGNUP_DATA':
-      return {...state, profileData: action.payload};
-    case 'FOLLOWERS_DATA':
-      return {...state, followers: action.payload};
-    case 'ALL_DATA':
-      return {...state, all: action.payload};
+    case DINE_WAY:
+      return {...state, DineWayData: action.payload};
     case 'STATUS':
-      return {...state, statusData: action.payload};
-    case 'LOGOUT':
-      return {
-        ...state,
-        signupData: {username: '', password: '', email: ''},
-      };
+      return {...state, status: action.payload};
     default:
       return state;
   }
 };
 
-export default signupReducer;
+export default onBoardingReducer;

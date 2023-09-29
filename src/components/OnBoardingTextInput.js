@@ -17,11 +17,13 @@ const OnBoardingTextInput = ({
   value,
   onChangeText,
   textInputStyle,
+  container,
+  onPressCalender,
 }) => {
   const [focus, setFocus] = useState(true);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, container]}>
       <Image
         source={textInputIcon}
         style={[styles.textInputIconStyle, textInputIconStyle]}
@@ -49,6 +51,24 @@ const OnBoardingTextInput = ({
               tintColor: '#A0A0A0',
             }}
             source={focus ? Images.HidePassword : Images.ViewPassword}
+          />
+        </TouchableOpacity>
+      ) : null}
+      {textInputPlaceholder == 'Date of Birth' ? (
+        <TouchableOpacity
+          style={{alignItems: 'flex-end', marginRight: wp(2)}}
+          onPress={() => {
+            onPressCalender();
+            setFocus(false);
+          }}>
+          <Image
+            style={{
+              paddingRight: 15,
+              height: hp(2),
+              width: hp(2),
+              tintColor: '#A0A0A0',
+            }}
+            source={Images.calender}
           />
         </TouchableOpacity>
       ) : null}

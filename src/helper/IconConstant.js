@@ -14,4 +14,12 @@ export const Images = {
   HidePassword: require('../assets/icons/hidden.png'),
   WelcomeScreenModalImage: require('../assets/images/welcomeModalImage.png'),
   passResetSuccess: require('../assets/images/passResetSuccess.png'),
+  checkMark: require('../assets/images/checkMark.png'),
+  phoneCall: require('../assets/icons/phone-call.png'),
+  SignUpLastScreen: require('../assets/images/SignUpLastScreen.png'),
+  imagePickIcon: require('../assets/icons/profile.png'),
+  editIcon: require('../assets/icons/edit.png'),
+  downArrow: require('../assets/icons/down-arrow.png'),
+  calender: require('../assets/icons/calendar.png'),
+  checkIcon: require('../assets/icons/check.png'),
 };

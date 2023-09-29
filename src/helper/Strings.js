@@ -30,7 +30,7 @@ export const strings = {
 
   welcome: 'Welcome back 👋',
   subText: 'Please enter your email & password to sign in',
-  Email: 'Email',
+  Email: 'Email Or Phone Number',
   Password: 'Password',
   ForgotPassword: 'Forgot password ?',
   RememberMe: 'Remember Me',
@@ -59,4 +59,63 @@ export const strings = {
   cPass: 'Confirm New Password',
   SavePass: 'Save New Password',
   PasswordChangeSuccessText: 'Reset PAssword Successful!',
+
+  // SignUp index 0
+  createNewAccount: 'Create an account 👩‍💻',
+  subTextSignUpScreenHeader:
+    'Sign up to unlock the best flights from around the world.',
+  EmailText: 'Email',
+  Phone: 'Phone Number',
+  ReferralCode: 'Referral Code (optional)',
+  TermsCondition1: 'I agree to Airify ',
+  TextTerm: 'Terms & Conditions.',
+  signInLine: 'Already have an account?',
+
+  // index 1 sign up
+  TouchProfile: 'Touch your profile 👤',
+  subTextProfile:
+    "Add a touch to your profile. Don't worry. your data will be stored safely.",
+  Name: 'Full Name',
+  DateBirth: 'Date of Birth',
+
+  // index 2 sign up
+  Journey: 'Tailor Your Journey 🏖',
+  JourneyText:
+    'Let us know your travel favorites or skip this step to explore a world of possibilities.',
+  DineWay: 'Dine Your Way 🌮',
+  DineWayText:
+    'Personalize your in-flight meals or skip this section for standard options.',
+  Way: 'Fly Your Way ✈️',
+  WayText:
+    "Choose preferred airlines or skip if you're open to different options.",
+  TermsCondition: 'Terms and Conditions 📄',
+  TermsConditionText:
+    'Please agree to our terms and conditions for a smooth journey.',
+  PIN: 'Set Your Pin 🔒',
+  PinText:
+    'The last step, add your security PIN. you will probably use this PIN to book tickets on Airify.',
+  FinalText: 'Welcome Aboard!',
+  FinalSubText:
+    'yours Airify journey begins. Discover flights, plan adventure, and experience seamless travel planning.',
+  AgreeContinue: 'Agree & Continue',
+  Confirm: 'Confirm',
+  Explore: "Let's Explore",
+  TermsHeader: 'Terms and Condition',
+  TermsData:
+    'This website is operated by FirstLocum Inc. d/b/a DirectShifts. Throughout the site, the terms “we”, “us” and “our” refer to DirectShifts. DirectShifts offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.',
+  SectionOne: 'SECTION 1 - ONLINE TERMS',
+  SectionOneText:
+    'By agreeing to these Terms of Service, you represent that you are at least the age of majority in your state or province of residence, or that you are the age of majority in your state or province of residence and you have given us your consent to allow any of your minor dependents to use this site. You may not use our products for any illegal or unauthorized purpose nor may you, in the use of the Service, violate any laws in your jurisdiction (including but not limited to copyright laws). You must not transmit any worms or viruses or any code of a destructive nature. A breach or violation of any of the Terms will result in an immediate termination of your Services.',
+  SectionTwo: 'SECTION 2 - GENERAL CONDITIONS',
+  SectionTwoText:
+    'We reserve the right to refuse service to anyone for any reason at any time. You understand that your content (not including credit card information), may be transferred unencrypted and involve (a) transmissions over various networks; and (b) changes to conform and adapt to technical requirements of connecting networks or devices. Credit card information is always encrypted during transfer over networks. You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Service, use of the Service, or access to the Service or any contact on the website through which the service is provided, without express written permission by us. The headings used in this agreement are included for convenience only and will not limit or otherwise affect these Terms.',
+  SectionThree:
+    'SECTION 3 - ACCURACY, COMPLETENESS AND TIMELINESS OF INFORMATION',
+  SectionThreeText:
+    'We are not responsible if information made available on this site is not accurate, complete or current. The material on this site is provided for general information only and should not be relied upon or used as the sole basis for making decisions without consulting primary, more accurate, more complete or more timely sources of information. Any reliance on the material on this site is at your own risk.',
+  SectionThreeText2:
+    'This site may contain certain historical information. Historical information, necessarily, is not current and is provided for your reference only. We reserve the right to modify the contents of this site at any time, but we have no obligation to update any information on our site. You agree that it is your responsibility to monitor changes to our site.',
+  SectionFour: 'SECTION 4 - MODIFICATIONS TO THE SERVICE AND JOB RATES',
+  SectionFourText:
+    'Job Rates posted are subject to change without notice. We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time. We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.',
 };

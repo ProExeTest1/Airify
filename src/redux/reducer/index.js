@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import signupReducer from '../reducer/HomeReducer';
+import onBoardingReducer from './HomeReducer';
 
 const rootReducer = combineReducers({
-  signup: signupReducer,
+  OnBoarding: onBoardingReducer,
 });
 
 export default rootReducer;

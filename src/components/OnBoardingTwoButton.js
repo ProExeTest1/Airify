@@ -7,29 +7,31 @@ const OnBoardingTwoButton = ({
   buttonTextTwo,
   onPress1,
   onPress2,
+  twoButtonStyle,
+  TwoButtonStyle,
 }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.buttonStyle} onPress={onPress1}>
+      <TouchableOpacity
+        style={[styles.buttonStyle, twoButtonStyle]}
+        onPress={onPress1}>
         <Text
           style={{
             textAlign: 'center',
             color: 'blue',
             fontWeight: '500',
-            fontFamily: 'Poppins-Regular',
           }}>
           {buttonTextOne}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.buttonStyle, {backgroundColor: 'blue'}]}
+        style={[styles.buttonStyle, TwoButtonStyle, {backgroundColor: 'blue'}]}
         onPress={onPress2}>
         <Text
           style={{
             textAlign: 'center',
             color: 'white',
             fontWeight: '500',
-            fontFamily: 'Poppins-Regular',
           }}>
           {buttonTextTwo}
         </Text>

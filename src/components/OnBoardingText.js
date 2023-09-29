@@ -30,14 +30,12 @@ const styles = StyleSheet.create({
     marginTop: hp(2),
     fontWeight: '600',
     width: wp(75),
-    fontFamily: 'Poppins-Bold',
   },
   OnBoardingSubTextStyle: {
     fontSize: fontSize(12),
     textAlign: 'center',
     fontWeight: '200',
     width: wp(63),
-    fontFamily: 'Poppins-Regular',
   },
 });
 

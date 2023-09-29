@@ -1,4 +1,4 @@
-import React, {Component, useRef, useState} from 'react';
+import React, {Component, useEffect, useRef, useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {hp, wp} from '../../helper/Constant';
 import Swiper from 'react-native-swiper';
@@ -8,10 +8,14 @@ import {strings} from '../../helper/Strings';
 import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import {Images} from '../../helper/IconConstant';
+import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
+import {active} from '../../redux/action/HomeAction';
 
 const OnBoardingFirst = ({navigation, props}) => {
   const swiperRef = useRef();
   const [index, setIndex] = useState(0);
+
   return (
     <View style={styles.container}>
       <Swiper

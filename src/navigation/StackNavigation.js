@@ -8,6 +8,7 @@ import ResetPassword from '../screens/onBoarding/ResetPassword';
 import OtpVerificationScreen from '../screens/onBoarding/OtpVerificationScreen';
 import CreateNewPassword from '../screens/onBoarding/CreateNewPassword';
 import SignUpScreen from '../screens/onBoarding/SignUpScreen';
+import SignUpSuccess from '../screens/onBoarding/SignUpSuccess';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ function StackNavigation() {
         />
         <Stack.Screen name="CreateNewPassword" component={CreateNewPassword} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen name="SignUpSuccess" component={SignUpSuccess} />
       </Stack.Navigator>
     </NavigationContainer>
   );

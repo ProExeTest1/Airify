@@ -15,7 +15,7 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingText from '../../components/OnBoardingText';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import Modal from 'react-native-modal';
-import {Checkbox} from 'react-native-paper';
+import CheckButton from '../../components/CheckButton';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [modal, setModal] = useState(false);
@@ -57,15 +57,13 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Checkbox
-              status={checked ? 'checked' : 'unchecked'}
+            <CheckButton
+              check={checked}
               onPress={() => {
                 setChecked(!checked);
               }}
-              color={'green'}
-              uncheckColor={'red'}
             />
-            <Text style={{marginLeft: wp(2)}}>{strings.RememberMe}</Text>
+            <Text style={{marginLeft: wp(6)}}>{strings.RememberMe}</Text>
           </View>
           <View style={{marginLeft: wp(12)}}>
             <TouchableOpacity
@@ -150,7 +148,6 @@ const styles = StyleSheet.create({
   },
   textInputTitleStyle: {
     marginLeft: wp(6),
-    fontFamily: 'Poppins-Regular',
   },
   rememberLineStyle: {
     flexDirection: 'row',

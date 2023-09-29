@@ -1,15 +1,15 @@
-export const cartAPI = data => dispatch => {
-  dispatch({type: 'UPDATE_SIGNUP_DATA', payload: data});
-};
-
-export const followersData = Followers => dispatch => {
-  dispatch({type: 'FOLLOWERS_DATA', payload: Followers});
-};
-
-export const allData = all => dispatch => {
-  dispatch({type: 'ALL_DATA', payload: all});
-};
+// import {makeAPIRequest} from '../../helper/global';
+import axios from 'axios';
+import {DINE_WAY} from '../type';
+import {makeAPIRequest} from '../../helper/global';
 
 export const active = status => dispatch => {
   dispatch({type: 'STATUS', payload: status});
+};
+export const DineWay = () => async dispatch => {
+  await makeAPIRequest({
+    method: 'GET',
+  }).then(response => {
+    dispatch({type: DINE_WAY, payload: response?.data});
+  });
 };
