@@ -1,0 +1,2 @@
+export const DEPATURE_DATE='DEPATURE_DATE'
+export const NORMAL_DATE='NORMAL_DATE'

@@ -11,13 +11,19 @@ import React, {useState} from 'react';
 import {fontSize, hp, wp} from '../../helpers/helper';
 import {Images} from '../../helpers/IconConstant';
 import {getDate} from '../../assets/DummyData/GetDate';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import { dateAction } from '../../redux/action/DateAction';
+
 // import SelectDropdown, {
 //   SelectDropdownProps,
 // } from 'react-native-select-dropdown';
 
-const SearchFlightsHeader = () => {
-  const [SelectDate, setSelectDate] = useState({});
-  const [dropdown,setDropdown]=useState(false)
+const SearchFlightsHeader = ({SelectDate, setSelectDate,onShare,dispatch,setModalVisible1}) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
@@ -27,9 +33,29 @@ const SearchFlightsHeader = () => {
         <TouchableOpacity>
           <Image style={styles.BackImg} source={Images.backIcon} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>setDropdown(!dropdown)}>
-          <Image style={styles.BackImg} source={Images.menuIcon} />
-        </TouchableOpacity>
+        <Menu>
+          <MenuTrigger>
+            <Image style={styles.BackImg} source={Images.menuIcon} />
+          </MenuTrigger>
+          <MenuOptions style={styles.dropdownBody}>
+            <MenuOption onSelect={() => onShare()}>
+              <View
+                style={[
+                  styles.dropdownList,
+                  {borderBottomWidth: 2, borderColor: '#e2e2e2'},
+                ]}>
+                <Image style={styles.dropdownIcon} source={Images.shareIcon} />
+                <Text style={styles.dropdownText}>Share Results</Text>
+              </View>
+            </MenuOption>
+            <MenuOption onSelect={() => setModalVisible1(true)}>
+              <View style={styles.dropdownList}>
+                <Image style={styles.dropdownIcon} source={Images.bell} />
+                <Text style={styles.dropdownText}>Price Alerts</Text>
+              </View>
+            </MenuOption>
+          </MenuOptions>
+        </Menu>
       </View>
       <View style={styles.headerNevBody}>
         <View style={styles.FlightsPlaseBody}>
@@ -60,7 +86,7 @@ const SearchFlightsHeader = () => {
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}) => (
             <TouchableOpacity
-              onPress={() => setSelectDate(item)}
+              onPress={() => {setSelectDate(item);dispatch(dateAction(item))}}
               style={[
                 styles.dateIconBody,
                 {
@@ -85,19 +111,6 @@ const SearchFlightsHeader = () => {
           )}
         />
       </View>
-      {dropdown &&
-        <View style={styles.dropdownBody}>
-        <View style={[styles.dropdownList,{borderBottomWidth: 2,borderColor: '#e2e2e2'}]}>
-          <Image style={styles.dropdownIcon} source={Images.shareIcon} />
-          <Text style={styles.dropdownText}>Share Results</Text>
-        </View>
-        <View style={styles.dropdownList}>
-          <Image style={styles.dropdownIcon} source={Images.bell} />
-          <Text style={styles.dropdownText}>
-            Price Alerts
-          </Text>
-        </View>
-      </View>}
     </View>
   );
 };
@@ -185,10 +198,9 @@ const styles = StyleSheet.create({
   dropdownBody: {
     position: 'absolute',
     backgroundColor: '#fff',
-    right: wp(8),
-    top:Platform.OS==='ios'?hp(10):hp(7),
+    top: wp(10),
     borderRadius: 10,
-    width: wp(48),
+    width: wp(50),
     paddingHorizontal: wp(4),
   },
   dropdownList: {
