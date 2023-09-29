@@ -19,4 +19,8 @@ export const Images = {
   menuIcon: require('../assets/icons/menu.png'),
   airplaneBlueIcon: require('../assets/icons/airplaneBlue.png'),
   airplaneWhiteIcon: require('../assets/icons/airplaneWhite.png'),
+  filterIcon: require('../assets/icons/filter.png'),
+  sortIcon: require('../assets/icons/sort.png'),
+  shareIcon: require('../assets/icons/share.png'),
+
 };
