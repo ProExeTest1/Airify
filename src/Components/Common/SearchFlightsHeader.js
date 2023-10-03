@@ -17,13 +17,14 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import { dateAction } from '../../redux/action/DateAction';
-
-// import SelectDropdown, {
-//   SelectDropdownProps,
-// } from 'react-native-select-dropdown';
-
-const SearchFlightsHeader = ({SelectDate, setSelectDate,onShare,dispatch,setModalVisible1}) => {
+import {dateAction} from '../../redux/action/DateAction';
+const SearchFlightsHeader = ({
+  SelectDate,
+  setSelectDate,
+  onShare,
+  dispatch,
+  setModalVisible1,
+}) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
@@ -86,7 +87,10 @@ const SearchFlightsHeader = ({SelectDate, setSelectDate,onShare,dispatch,setModa
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}) => (
             <TouchableOpacity
-              onPress={() => {setSelectDate(item);dispatch(dateAction(item))}}
+              onPress={() => {
+                setSelectDate(item);
+                dispatch(dateAction(item));
+              }}
               style={[
                 styles.dateIconBody,
                 {
@@ -152,6 +156,7 @@ const styles = StyleSheet.create({
   },
   FlightsPlaseBody: {
     width: wp(24),
+    paddingHorizontal: wp(4),
   },
   FlightsPlaseImgBody: {
     alignItems: 'center',
@@ -201,12 +206,12 @@ const styles = StyleSheet.create({
     top: wp(10),
     borderRadius: 10,
     width: wp(50),
-    paddingHorizontal: wp(4),
   },
   dropdownList: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: hp(1.5),
+    paddingStart: wp(3),
   },
   dropdownIcon: {
     height: wp(6.5),

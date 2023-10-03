@@ -1,14 +1,13 @@
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import React from 'react';
 import CardList from './CardList';
-import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import {wp} from '../../helpers/helper';
 
-const TicktList = ({SelectDate}) => {
+const TicktList = ({SelectDate, SearchFlightCardData}) => {
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
-        data={SearchFlightData.filter(i => {
+        data={SearchFlightCardData.filter(i => {
           if (
             `${new Date().toLocaleString().split(',')[0]}` == SelectDate?.date
           ) {

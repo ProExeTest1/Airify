@@ -13,8 +13,6 @@ export const Images = {
   passenger: require('../assets/icons/people.png'),
   forward: require('../assets/icons/skip-track.png'),
   up_down: require('../assets/icons/up-and-down.png'),
-  // tabHomeIcon: require('../assets/icons/Home.png'),
-  // tabActiveHomeIcon: require('../assets/icons/ActiveHome.png'),
   backIcon: require('../assets/icons/back.png'),
   menuIcon: require('../assets/icons/menu.png'),
   airplaneBlueIcon: require('../assets/icons/airplaneBlue.png'),
@@ -23,4 +21,8 @@ export const Images = {
   filterIcon: require('../assets/icons/filter.png'),
   sortIcon: require('../assets/icons/sort.png'),
   shareIcon: require('../assets/icons/share.png'),
+  dollarIcon: require('../assets/icons/dollar.png'),
+  timeIcon: require('../assets/icons/time.png'),
+  flightIcon: require('../assets/icons/flight.png'),
+  cancel: require('../assets/icons/close.png'),
 };
