@@ -5,8 +5,6 @@ import OnBoardingFirst from '../screens/onBoarding/OnBoardingFirst';
 import WelcomeScreen from '../screens/onBoarding/WelcomeScreen';
 import SignInScreen from '../screens/onBoarding/SignInScreen';
 import ResetPassword from '../screens/onBoarding/ResetPassword';
-import OtpVerificationScreen from '../screens/onBoarding/OtpVerificationScreen';
-import CreateNewPassword from '../screens/onBoarding/CreateNewPassword';
 import SignUpScreen from '../screens/onBoarding/SignUpScreen';
 import SignUpSuccess from '../screens/onBoarding/SignUpSuccess';
 
@@ -22,11 +20,6 @@ function StackNavigation() {
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
-        <Stack.Screen
-          name="OtpVerificationScreen"
-          component={OtpVerificationScreen}
-        />
-        <Stack.Screen name="CreateNewPassword" component={CreateNewPassword} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="SignUpSuccess" component={SignUpSuccess} />
       </Stack.Navigator>

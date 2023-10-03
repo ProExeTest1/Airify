@@ -12,7 +12,7 @@ import {hp, wp} from '../helper/Constant';
 import {strings} from '../helper/Strings';
 import {Images} from '../helper/IconConstant';
 
-const CountryPickTextInput = () => {
+const CountryPickTextInput = ({value, onChangeText}) => {
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('');
   return (
@@ -51,7 +51,12 @@ const CountryPickTextInput = () => {
             />
           </TouchableOpacity>
         )}
-        <TextInput placeholder={strings.Phone} style={{marginLeft: wp(4)}} />
+        <TextInput
+          placeholder={strings.Phone}
+          style={{marginLeft: wp(4)}}
+          value={value}
+          onChangeText={onChangeText}
+        />
       </View>
       <CountryPicker
         show={show}

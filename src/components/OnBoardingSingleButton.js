@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonStyle: {
-    height: hp(4),
+    height: hp(5),
     width: wp(80),
     marginRight: wp(2),
     alignItems: 'center',

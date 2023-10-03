@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: hp(8),
   },
   buttonStyle: {
-    height: hp(4),
+    height: hp(5),
     width: wp(40),
     marginRight: wp(2),
     alignItems: 'center',

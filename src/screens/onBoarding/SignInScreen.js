@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
 import {Images} from '../../helper/IconConstant';
@@ -16,10 +17,14 @@ import OnBoardingText from '../../components/OnBoardingText';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import Modal from 'react-native-modal';
 import CheckButton from '../../components/CheckButton';
+import auth from '@react-native-firebase/auth';
+import firestore, {firebase} from '@react-native-firebase/firestore';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [modal, setModal] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
 
   const openModal = () => {
     setModal(true);
@@ -27,6 +32,39 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const closeModal = async () => {
     setModal(false);
   };
+
+  const validation = () => {
+    if (!Email.trim()) {
+      alert('Please Enter Email');
+      return;
+    } else if (!Password.trim()) {
+      alert('Please Enter Password');
+      return;
+    } else {
+      openModal();
+      setTimeout(() => {
+        handleLogin();
+        closeModal();
+      }, 5000);
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      const isUserLogin = await auth().signInWithEmailAndPassword(
+        Email,
+        Password,
+      );
+      await firestore().collection('Users').doc(auth().currentUser.uid).update({
+        Password: Password,
+      });
+      navigation.navigate('SignUpSuccess');
+    } catch (error) {
+      console.log(error.message);
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={{flex: 0.27, backgroundColor: 'blue'}}>
@@ -40,15 +78,19 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
         />
       </View>
       <View style={{flex: 0.73, marginTop: hp(4)}}>
-        <Text style={styles.textInputTitleStyle}>{strings.Email}</Text>
+        <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
         <OnBoardingTextInput
           textInputIcon={Images.Email}
-          textInputPlaceholder={strings.Email}
+          textInputPlaceholder={strings.EmailText}
+          value={Email}
+          onChangeText={email => setEmail(email)}
         />
         <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
         <OnBoardingTextInput
           textInputIcon={Images.password}
           textInputPlaceholder={strings.Password}
+          value={Password}
+          onChangeText={password => setPassword(password)}
         />
         <View style={styles.rememberLineStyle}>
           <View
@@ -100,7 +142,9 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
         <OnBoardingSingleButton
           buttonText={strings.signInText}
           buttonStyle={styles.buttonStyle}
-          onPress={openModal}
+          onPress={() => {
+            validation();
+          }}
         />
       </View>
       <Modal

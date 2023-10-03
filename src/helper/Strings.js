@@ -25,7 +25,7 @@ export const strings = {
   signUpFacebook: 'Continue with Facebook',
   signUpTwitter: 'Continue with Twitter',
   signIn: 'Sign in with password',
-
+  EmailSend: 'Send Update Password Link...',
   // Sign in screen
 
   welcome: 'Welcome back 👋',

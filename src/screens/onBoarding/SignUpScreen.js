@@ -14,6 +14,7 @@ import {
   FlatList,
   Image,
   ScrollView,
+  Alert,
 } from 'react-native';
 import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
 import {Images} from '../../helper/IconConstant';
@@ -29,11 +30,13 @@ import ImagePickerData from '../../components/ImagePickerData';
 import CountryPickTextInput from '../../components/CountryPickTextInput';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import firestore from '@react-native-firebase/firestore';
 import {useDispatch, useSelector} from 'react-redux';
 import {DineWay} from '../../redux/action/HomeAction';
 import OtpInputs from 'react-native-otp-inputs';
 import {dummyAirlineData} from '../../helper/dummyData';
+import firestore, {firebase} from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import storage from '@react-native-firebase/storage';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [checked, setChecked] = useState(false);
@@ -43,10 +46,16 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [datePicker, setDatePicker] = useState(false);
   const [date, setDate] = useState('');
   const [journeyData, setJourneyData] = useState([]);
-  const [selectedJourneyData, setSelectedJourneyData] = useState({});
-  const [selectedDineWay, setSelectedDineWay] = useState({});
-  const [selectedFlyWay, setSelectedFlyWay] = useState({});
+  const [selectedJourneyData, setSelectedJourneyData] = useState([]);
+  const [selectedDineWay, setSelectedDineWay] = useState([]);
+  const [selectedFlyWay, setSelectedFlyWay] = useState([]);
   const dispatch = useDispatch();
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [referralCode, setReferralCode] = useState('');
+  const [name, setName] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [pin, setPin] = useState('');
 
   useEffect(() => {
     JourneyData();
@@ -70,6 +79,82 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       });
   };
 
+  const validation = index => {
+    if (!Email.trim()) {
+      alert('Please Enter Email');
+      return;
+    } else if (!Password.trim()) {
+      alert('Please Enter Password');
+      return;
+    } else {
+      swiperRef.current.scrollBy(1);
+    }
+  };
+
+  const validation2 = index => {
+    if (!name.trim()) {
+      alert('Please Enter name');
+      return;
+    } else if (!phoneNo.trim()) {
+      alert('Please Enter Phone Number');
+      return;
+    } else if (!pickerResponse.trim()) {
+      alert('Please Select Profile Image');
+      return;
+    } else if (!date.trim()) {
+      alert('Please Enter Date of Birth');
+      return;
+    } else {
+      swiperRef.current.scrollBy(1);
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const isUserCreate = await auth().createUserWithEmailAndPassword(
+        Email,
+        Password,
+      );
+      const uploadStorage = pickerResponse;
+      const filename = Date.now();
+      const task = storage()
+        .ref(`/Profile/${isUserCreate.user.uid}/${filename}`)
+        .putFile(uploadStorage);
+      try {
+        await task;
+        Alert.alert('Image uploaded', 'Image uploaded successfully');
+      } catch (error) {
+        console.log(error);
+      }
+      const url = await storage()
+        .ref(`/Profile/${isUserCreate.user.uid}/${filename}`)
+        .getDownloadURL()
+        .catch(err => {
+          console.log('error in download', err);
+        });
+
+      await firestore().collection('Users').doc(isUserCreate.user.uid).set({
+        Name: name,
+        Email: Email,
+        Password: Password,
+        profileImageURL: url,
+        id: filename,
+        uid: isUserCreate.user.uid,
+        referralCode: referralCode,
+        PIN: pin,
+        PhoneNumber: phoneNo,
+        BirthDate: date,
+        JourneyData: selectedJourneyData,
+        DineWay: selectedDineWay,
+        FlyData: selectedFlyWay,
+      });
+      await auth().signOut();
+      navigation.navigate('SignUpSuccess');
+    } catch (error) {
+      console.log(error);
+    }
+    setPickerResponse(null);
+  };
   return (
     <View style={styles.container}>
       <View style={{flex: 0.45, backgroundColor: 'blue'}}>
@@ -119,6 +204,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       </View>
       <Swiper
         ref={swiperRef}
+        scrollEnabled={false}
         onIndexChanged={index => {
           setIndex(index);
         }}
@@ -139,12 +225,16 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               textInputIcon={Images.Email}
               textInputPlaceholder={strings.EmailText}
               container={styles.textInputContainer}
+              value={Email}
+              onChangeText={email => setEmail(email)}
             />
             <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
             <OnBoardingTextInput
               textInputIcon={Images.password}
               textInputPlaceholder={strings.Password}
               container={styles.textInputContainer}
+              value={Password}
+              onChangeText={password => setPassword(password)}
             />
             <Text style={styles.textInputTitleStyle}>
               {strings.ReferralCode}
@@ -152,6 +242,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             <OnBoardingTextInput
               textInputPlaceholder={strings.ReferralCode}
               container={styles.textInputContainer}
+              value={referralCode}
+              onChangeText={referralCode => setReferralCode(referralCode)}
             />
             <View style={styles.rememberLineStyle}>
               <View
@@ -214,14 +306,22 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             <OnBoardingTextInput
               textInputPlaceholder={strings.Name}
               container={styles.textInputContainer}
+              value={name}
+              onChangeText={name => setName(name)}
             />
             <Text style={styles.textInputTitleStyle}>{strings.Phone}</Text>
-            <CountryPickTextInput />
+            <CountryPickTextInput
+              value={phoneNo}
+              onChangeText={phoneNo => setPhoneNo(phoneNo)}
+            />
             <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
             <OnBoardingTextInput
               textInputPlaceholder={strings.DateBirth}
               container={styles.textInputContainer}
               value={date}
+              onPress={() => {
+                setDatePicker(true);
+              }}
               onPressCalender={() => {
                 setDatePicker(true);
               }}
@@ -245,12 +345,22 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     style={[
                       styles.flatListViewStyle,
                       {
-                        borderColor:
-                          item !== selectedJourneyData ? '#EEEEEE' : 'blue',
+                        borderColor: selectedJourneyData.some(
+                          i => i == item.name,
+                        )
+                          ? 'blue'
+                          : '#EEEEEE',
                       },
                     ]}
                     onPress={() => {
-                      setSelectedJourneyData(item);
+                      selectedJourneyData.some(i => i == item.name)
+                        ? setSelectedJourneyData(
+                            selectedJourneyData.filter(e => e !== item.name),
+                          )
+                        : setSelectedJourneyData([
+                            ...selectedJourneyData,
+                            item?.name,
+                          ]);
                     }}>
                     <Image
                       source={{uri: item.image}}
@@ -283,12 +393,22 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     style={[
                       styles.flatListViewStyle,
                       {
-                        borderColor:
-                          item !== selectedDineWay ? '#EEEEEE' : 'blue',
+                        borderColor: selectedDineWay.some(
+                          i => i == item.strCategory,
+                        )
+                          ? 'blue'
+                          : '#EEEEEE',
                       },
                     ]}
                     onPress={() => {
-                      setSelectedDineWay(item);
+                      selectedDineWay.some(i => i == item.strCategory)
+                        ? setSelectedDineWay(
+                            selectedDineWay.filter(e => e !== item.strCategory),
+                          )
+                        : setSelectedDineWay([
+                            ...selectedDineWay,
+                            item?.strCategory,
+                          ]);
                     }}>
                     <Image
                       source={{uri: item.strCategoryThumb}}
@@ -310,21 +430,22 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               bounces={false}
               data={dummyAirlineData}
               renderItem={({item}) => {
-                console.log(
-                  'item !== selectedFlyWay :>> ',
-                  item !== selectedFlyWay,
-                );
                 return item?.logo ? (
                   <TouchableOpacity
                     style={[
                       styles.flyWayStyle,
                       {
-                        borderColor:
-                          item !== selectedFlyWay ? '#EEEEEE' : 'blue',
+                        borderColor: selectedFlyWay.some(i => i == item.name)
+                          ? 'blue'
+                          : '#EEEEEE',
                       },
                     ]}
                     onPress={() => {
-                      setSelectedFlyWay(item);
+                      selectedFlyWay.some(i => i == item.name)
+                        ? setSelectedFlyWay(
+                            selectedFlyWay.filter(e => e !== item.name),
+                          )
+                        : setSelectedFlyWay([...selectedFlyWay, item?.name]);
                     }}>
                     <Image
                       source={{uri: item.logo}}
@@ -337,7 +458,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     <Text style={{marginLeft: wp(4), flex: 1}}>
                       {item.name}
                     </Text>
-                    {item === selectedFlyWay && (
+                    {selectedFlyWay.some(i => i == item.name) && (
                       <View style={{paddingStart: 'auto'}}>
                         <Image
                           source={Images.checkIcon}
@@ -382,7 +503,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                 keyboardType="phone-pad"
                 inputStyles={styles.otpInputStyle}
                 numberOfInputs={4}
-                value="4"
+                handleChange={pin => setPin(pin)}
               />
             </View>
           </View>
@@ -405,8 +526,10 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             onPress={() => {
               {
                 index == 6
-                  ? navigation.navigate('SignUpSuccess')
-                  : swiperRef.current.scrollBy(1);
+                  ? handleSignUp()
+                  : index == 0
+                  ? validation(index)
+                  : validation2(index);
               }
             }}
           />

@@ -19,11 +19,15 @@ const OnBoardingTextInput = ({
   textInputStyle,
   container,
   onPressCalender,
+  onPress,
 }) => {
-  const [focus, setFocus] = useState(true);
+  const [focus, setFocus] = useState(false);
 
   return (
-    <View style={[styles.container, container]}>
+    <TouchableOpacity
+      disabled={onPress ? false : true}
+      onPress={onPress}
+      style={[styles.container, container]}>
       <Image
         source={textInputIcon}
         style={[styles.textInputIconStyle, textInputIconStyle]}
@@ -32,6 +36,8 @@ const OnBoardingTextInput = ({
         placeholder={textInputPlaceholder}
         value={value}
         autoCorrect={false}
+        editable={onPress ? false : true}
+        onPressIn={onPress}
         onChangeText={onChangeText}
         style={[styles.textInputStyle, textInputStyle]}
         secureTextEntry={focus}
@@ -41,7 +47,10 @@ const OnBoardingTextInput = ({
         <TouchableOpacity
           style={{alignItems: 'flex-end', marginRight: wp(2)}}
           onPress={() => {
-            setFocus(!focus);
+            textInputPlaceholder == 'Password' ||
+            textInputPlaceholder == 'Confirm New Password'
+              ? setFocus(!focus)
+              : setFocus(false);
           }}>
           <Image
             style={{
@@ -72,7 +81,7 @@ const OnBoardingTextInput = ({
           />
         </TouchableOpacity>
       ) : null}
-    </View>
+    </TouchableOpacity>
   );
 };
 

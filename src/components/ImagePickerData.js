@@ -1,5 +1,12 @@
 import React, {Component, useCallback, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  PermissionsAndroid,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import {hp, wp} from '../helper/Constant';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';

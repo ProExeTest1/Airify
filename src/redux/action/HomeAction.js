@@ -1,10 +1,9 @@
-// import {makeAPIRequest} from '../../helper/global';
 import axios from 'axios';
-import {DINE_WAY} from '../type';
+import {DINE_WAY, OTP} from '../type';
 import {makeAPIRequest} from '../../helper/global';
 
-export const active = status => dispatch => {
-  dispatch({type: 'STATUS', payload: status});
+export const otp = otp => dispatch => {
+  dispatch({type: OTP, payload: otp});
 };
 export const DineWay = () => async dispatch => {
   await makeAPIRequest({

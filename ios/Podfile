@@ -28,7 +28,7 @@ end
 
 target 'Airify' do
   config = use_native_modules!
-
+  use_frameworks! :linkage => :static
   # Flags change depending on the env values.
   flags = get_default_flags()
 
@@ -51,8 +51,8 @@ target 'Airify' do
   pod 'FirebaseCoreInternal', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
   pod 'FirebaseCore', :modular_headers => true
-  pod 'Firebase/Core'
-
+  pod 'RNFBStorage', :path => '../node_modules/@react-native-firebase/storage'
+  
   target 'AirifyTests' do
     use_frameworks! :linkage => :static
     $RNFirebaseAsStaticFramework = true
@@ -67,6 +67,6 @@ target 'Airify' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    # __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end

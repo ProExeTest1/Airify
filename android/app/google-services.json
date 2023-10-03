@@ -12,7 +12,20 @@
           "package_name": "com.airify"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "543089939033-shvgh9g8324gv0ipu527mm8lmpedglj4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airify",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "543089939033-272au2v0kjvqo8vkqqoplt3lh2o8gt2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCep6LUvM7TOhynlGr2gAjXv83365VrkSs"
@@ -20,7 +33,55 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543089939033-272au2v0kjvqo8vkqqoplt3lh2o8gt2o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "543089939033-cads9br4tdr7apj0qdvur4me9i29nji5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Airify"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543089939033:android:2df9f61251c1a255c79748",
+        "android_client_info": {
+          "package_name": "com.alanaiproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543089939033-272au2v0kjvqo8vkqqoplt3lh2o8gt2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCep6LUvM7TOhynlGr2gAjXv83365VrkSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543089939033-272au2v0kjvqo8vkqqoplt3lh2o8gt2o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "543089939033-cads9br4tdr7apj0qdvur4me9i29nji5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Airify"
+              }
+            }
+          ]
         }
       }
     }
