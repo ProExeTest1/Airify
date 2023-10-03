@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
 import { fontSize, hp } from '../../helpers/helper';
@@ -14,11 +14,13 @@ const CustomPaperTextInput = ({
   onPress,
 }) => {
   return (
-    <TouchableOpacity 
-    onPress={()=>console.log("hello")}
+    <Pressable 
+    onPress={onPress}
     style={{width: width, marginVertical: marginVertical}}>
       <TextInput
+      editable={false}
         label={label}
+        pointerEvents='none'
         placeholder={placeholder}
         value={value}
         outlineStyle={styles.outlineStyle}
@@ -28,7 +30,7 @@ const CustomPaperTextInput = ({
         outlineColor="grey"
         onChangeText={onChangeText}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

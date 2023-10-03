@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {color} from '../../helpers/ColorConstant';
 import {fontSize, hp, statusBarHeight, wp} from '../../helpers/helper';
 import {images} from '../../helpers/IconConstant';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
-import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
+import {dateAction, depatureDateAction, returnDateAction, returnNormalDateAction} from '../../redux/action/DateAction';
 import {PickerHeaderBar} from '../../components';
 
 LocaleConfig.locales['fr'] = {
@@ -61,20 +61,23 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
-const DatePickerScreen = ({navigation}) => {
+const DatePickerScreen = ({navigation,route}) => {
+  const returndata = route?.params?.return;
   const dispatch = useDispatch();
   const [selected, setSelected] = useState('');
-  console.log(selected, 'selected =>>>>.');
-  let selectedDate = moment(selected).format('DD/MM/YYYY');
-  console.log(selectedDate, '=>>><<<<>><><><><><><');
   const [day, setDay] = useState();
   const [returnday, seReturnDay] = useState();
-
   const [year, setYear] = useState();
   const [returnyear, setReturnYear] = useState();
   const [press, setPress] = useState(false);
   const [returnPress, setReturnPress] = useState(false);
   const [returnDate, setReturnDate] = useState(false);
+  useEffect(()=>{
+    if(returndata == 'returnDate'){
+      setReturnPress(true)
+    }
+  },[])
+  console.log(returnPress)
   const date = new Date(selected).toLocaleDateString('en-us', {
     weekday: 'short',
   });
@@ -90,15 +93,13 @@ const DatePickerScreen = ({navigation}) => {
   const returnmonth = new Date(returnDate).toLocaleDateString('en-us', {
     month: 'short',
   });
-  console.log(dayname, 'hello');
+
   const currentDate = new Date()
     .toLocaleDateString('en-us', {weekday: 'short'})
-    .split(',')
-    .toString();
-  console.log(currentDate, 'current');
+    .split(',');
+
   let newDate1 = new Date();
   const newDate = moment(newDate1).format('YYYY-MM-DD').split('-');
-  console.log(newDate, 'new');
 
   const currentMonth = new Date().toLocaleDateString('en-us', {month: 'short'});
 
@@ -106,25 +107,40 @@ const DatePickerScreen = ({navigation}) => {
     let tomorrow = new Date();
     tomorrow = moment(tomorrow).add(1, 'day').format('YYYY-MM-DD');
     let selectedDate = moment(selected).format('MM/DD/YYYY');
+    let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
     let flag = 0;
     if (press) {
       for (let i = 0; i <= 10; i++) {
         let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
-        if (selectedDate == roundDate) {
+        if (selectedDate == roundDate || selectedreturnDate == roundDate ) {
           flag = 1;
         }
       }
-      if (flag === 1) {
+      if (flag === 1 && returndata == 'returnDate') {
+        const date = new Date(returnDate).toLocaleDateString('en-us', {
+          weekday: 'long',
+        });
+        const dayname = date.split(',');
+        const finalDate = dayname[0] + ',' + returnmonth + ' ' + returnday + ' ' + returnyear;
+        dispatch(returnDateAction(finalDate))
+        let selectedDate = moment(returnDate).format('M/DD/YYYY');
+        let choosenDate = {
+          date: selectedDate,
+          day: dayname[0],
+        };
+        dispatch(returnNormalDateAction(choosenDate));
+        navigation.navigate('TabNavigation');
+      }else if (flag === 1 ){
         const date = new Date(selected).toLocaleDateString('en-us', {
           weekday: 'long',
         });
-        const dayname = date.split(',').toString();
-        const finalDate = dayname + ',' + month + ' ' + day + ' ' + year;
+        const dayname = date.split(',');
+        const finalDate = dayname[0] + ',' + month + ' ' + day + ' ' + year;
         dispatch(depatureDateAction(finalDate));
         let selectedDate = moment(selected).format('M/DD/YYYY');
         let choosenDate = {
           date: selectedDate,
-          day: dayname,
+          day: dayname[0],
         };
         dispatch(dateAction(choosenDate));
         navigation.navigate('TabNavigation');
@@ -143,25 +159,23 @@ const DatePickerScreen = ({navigation}) => {
       />
       <View style={styles.currentDateStyle}>
         <View style={styles.dateMainViewStyle}>
-          <TouchableOpacity
-            onPress={() => setReturnPress(false)}
+          <View
             style={styles.dateViewStyle}>
             <Text style={styles.dateTextStyle}>
-              {press
+              {press && !returnPress
                 ? `${dayname[0]}, ${month} ${day} ${year}`
-                : `${currentDate},${currentMonth} ${newDate[2]} ${newDate[0]}`}
+                : `${currentDate[0]},${currentMonth} ${newDate[2]} ${newDate[0]}`}
             </Text>
-          </TouchableOpacity>
+          </View>
           <Text>------</Text>
-          <TouchableOpacity
-            onPress={() => setReturnPress(true)}
+          <View
             style={styles.ReturndateViewStyle}>
             <Text>
               {press && returnPress && returnday !== undefined
                 ? `${returndayname[0]}, ${returnmonth} ${returnday} ${returnyear}`
                 : '+ Return Date'}
             </Text>
-          </TouchableOpacity>
+          </View>
         </View>
         <View style={{height: hp(65)}}>
           <CalendarList
@@ -186,6 +200,12 @@ const DatePickerScreen = ({navigation}) => {
                 disableTouchEvent: true,
                 selectedDotColor: 'orange',
               },
+              [returnDate] :{
+                selected: true,
+                selectedColor: color.commonBlue,
+                disableTouchEvent: true,
+                selectedDotColor: 'orange',
+              }
             }}
           />
         </View>

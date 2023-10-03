@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
   cancelButtonStyle: {
     height: hp(2),
     width: hp(2),
-    tintColor: 'white',
+    tintColor: color.white,
   },
   headerTextStyle: {
-    fontSize: fontSize(25, 812),
+    fontSize: fontSize(22),
     fontWeight: 'bold',
-    color: 'white',
+    color: color.white,
   },
   safeHeaderViewStyle: {
     paddingHorizontal: wp(7),

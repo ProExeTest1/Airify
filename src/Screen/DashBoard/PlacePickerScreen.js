@@ -37,7 +37,7 @@ const PlacePickerScreen = ({navigation, route}) => {
       setSearch(newData);
     }
   };
-const onPlacePress = (capital,country)=>{
+const onPlacePress = (capital,country,airport)=>{
     const data = JSON.stringify(capital)
     const data1= JSON.stringify(country)
 let newString ={}
@@ -47,14 +47,16 @@ if(data.length > 9){
     const countryname = data1.substring(1,8)+'...';
     newString = {
         city : placename,
-        country : countryname
+        country : countryname,
+        airport : airport,
     }
 }else{
     const length1 = data1.length
     const countryname = data1.substring(1,length1-1);
     newString = {
         city : placename,
-        country : countryname
+        country : countryname,
+        airport: airport,
     }
 }
 }else{
@@ -64,18 +66,19 @@ if(data.length > 9){
         const countryname = data1.substring(1,8)+'...';
         newString = {
             city : placename,
-            country : countryname
+            country : countryname,
+            airport: airport,
         }
     }else{
         const length1 = data1.length
         const countryname = data1.substring(1,length1-1);
         newString = {
             city : placename,
-            country : countryname
+            country : countryname,
+            airport: airport,
         }
     }
 }
-// console.log(newString,":::::::::::>>>")
 if( headerData === 'Select Origin'){
     dispatch(depaturePlaceAction(newString))
     navigation.navigate('TabNavigation');
@@ -101,7 +104,7 @@ if( headerData === 'Select Origin'){
             let secondlatter = JSON.stringify(item.name.common).charAt(1);
             return (
               <View>
-                <TouchableOpacity style={styles.cityTouchStyle} onPress={()=>onPlacePress(item.capital[0],item.name.common)}>
+                <TouchableOpacity style={styles.cityTouchStyle} onPress={()=>onPlacePress(item.capital[0],item.name.common,firstLatter+secondlatter)}>
                   <View style={{flex: 1}}>
                     <View style={styles.textViewStyle}>
                       <Text style={styles.textStyle}>{item.capital}</Text>
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
   },
   textViewStyle: {
     fontSize: fontSize(18),
+    width:'70%',
     fontWeight: '500',
     color: 'black',
     flexDirection: 'row',
