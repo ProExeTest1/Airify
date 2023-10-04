@@ -5,7 +5,7 @@ export const getDate=()=>{
         let todayDate=Date.now()
         let milliseconds=86400000*i
         let getCurntDate=new Date(todayDate+milliseconds)
-        Array=[...Array,{day:days[getCurntDate.getDay()],date:getCurntDate.toLocaleDateString()}]
+        Array=[...Array,{day:days[getCurntDate.getDay()],date:getCurntDate.toLocaleDateString('en-IN')}]
     }
     return Array
 }

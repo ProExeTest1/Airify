@@ -14,8 +14,8 @@ import {
   useAnimatedValue,
 } from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {Images} from '../../helpers/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constants';
+import {Images} from '../../helper/IconConstant';
 import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
 import {TicketList} from '../../components/index';
 import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
@@ -23,7 +23,7 @@ import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreatePriceAlert} from '../../components/index';
 import {RadioButton} from 'react-native-radio-buttons-group';
-import {color} from '../../helpers/ColorConstant';
+import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 
@@ -40,7 +40,7 @@ const SearchFlights = ({navigation}) => {
         `${data2.toLocaleDateString('en-us', {
           weekday: 'long',
         })},${data2.toLocaleDateString('en-us', {month: 'short'})} ${
-          dayData[1]
+          dayData[0]
         } ${dayData[2]}`,
       ),
     );

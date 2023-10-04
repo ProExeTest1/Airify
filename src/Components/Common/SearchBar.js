@@ -1,7 +1,7 @@
-import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Image, Platform, StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {Images} from '../../helpers/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constants';
+import {Images} from '../../helper/IconConstant';
 
 const SearchBar = ({value, onChangeText}) => {
   return (
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 10,
-    paddingVertical: hp(2.5),
+    paddingVertical:Platform.OS === 'ios' ? hp(2) : hp(0.4),
     paddingHorizontal: wp(1),
     backgroundColor: '#f3f3f3',
   },

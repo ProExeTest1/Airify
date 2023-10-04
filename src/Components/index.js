@@ -10,6 +10,7 @@ import PickerHeaderBar from './Common/PickerHeaderBar';
 import SearchBar from './Common/SearchBar';
 import PassengerPickerModal from './ModalComponents/PassengerPickerModal';
 import ClassPickerModal from './ModalComponents/ClassPickerModal';
+import SwiperFlatlistComponent from './Common/SwiperFlatlistComponent';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -23,6 +24,7 @@ export {
   SearchBar,
   PassengerPickerModal,
   ClassPickerModal,
+  SwiperFlatlistComponent,
 };
 
 // import CustomPaperTextInput from "./Common/CustomPaperTextInput";

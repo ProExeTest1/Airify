@@ -7,12 +7,12 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {Images} from '../../helpers/IconConstant';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {color} from '../../helpers/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constants';
+import {color} from '../../helper/ColorConstant';
 import Modal from 'react-native-modal';
 import {ClassData} from '../../assets/DummyData/Data';
-import {string} from '../../helpers/String';
+import {strings} from '../../helper/String';
 
 const ClassPickerModal = ({
   isModalVisible,
@@ -29,7 +29,7 @@ const ClassPickerModal = ({
             style={styles.toggleLineStyle}
             onPress={toggleModal}></TouchableOpacity>
           <View style={styles.headerStyle}>
-            <Text style={styles.headerTextStyle}>{string.classheader}</Text>
+            <Text style={styles.headerTextStyle}>{strings.classheader}</Text>
           </View>
           <View>
             <FlatList

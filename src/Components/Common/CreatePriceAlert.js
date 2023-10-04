@@ -10,9 +10,9 @@ import React from 'react';
 import {OnBoardingTwoButton} from '../index';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {wp, fontSize, hp} from '../../helpers/helper';
-import {Images} from '../../helpers/IconConstant';
-import {color} from '../../helpers/ColorConstant';
+import {wp, fontSize, hp} from '../../helper/Constants';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
 import {TimeData} from '../../assets/DummyData/timeData';
 const CreatePriceAlert = ({
   setPriceTargets,

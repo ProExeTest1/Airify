@@ -1,6 +1,7 @@
 import {
   Dimensions,
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -10,26 +11,24 @@ import {
   useColorScheme,
 } from 'react-native';
 import React, {useState} from 'react';
-import {Images} from '../../helpers/IconConstant';
+import {Images} from '../../helper/IconConstant';
 
 import {
   ClassPickerModal,
   CustomPaperTextInput,
   PassengerPickerModal,
+  SwiperFlatlistComponent,
 } from '../../components/index';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {color} from '../../helpers/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constants';
+import {color} from '../../helper/ColorConstant';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import {dummyData} from '../../assets/DummyData/Data';
 import {useSelector} from 'react-redux';
-import {string} from '../../helpers/String';
+import {strings} from '../../helper/String';
 import {useDispatch} from 'react-redux';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
 
 const HomeScreen = ({navigation}) => {
-  const theme = useColorScheme();
-
-  console.log(theme);
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state.date.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
@@ -108,17 +107,17 @@ const HomeScreen = ({navigation}) => {
                 <View style={styles.headertextStyle}>
                   <Text style={styles.GMStyle}>
                     {hours < 12
-                      ? string.Morning
+                      ? strings.Morning
                       : hours < 17
-                      ? string.Afternoon
+                      ? strings.Afternoon
                       : hours < 20
-                      ? string.evening
-                      : string.Night}
+                      ? strings.evening
+                      : strings.Night}
                   </Text>
                   <Text style={styles.userNameStyle}>Andrew Ainsley</Text>
                 </View>
               </View>
-              <TouchableOpacity style={styles.bellTouchStyle}>
+              <TouchableOpacity style={styles.bellTouchStyle} onPress={()=>navigation.navigate('Notification')}>
                 <Image
                   source={Images.bell}
                   style={styles.bellStyle}
@@ -141,7 +140,7 @@ const HomeScreen = ({navigation}) => {
                   styles.optionTextStyle,
                   {color: !press ? color.white : 'black'},
                 ]}>
-                {string.one_way}
+                {strings.one_way}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -155,7 +154,7 @@ const HomeScreen = ({navigation}) => {
                   styles.optionTextStyle,
                   {color: press ? color.white : 'black'},
                 ]}>
-                {string.roundTrip}
+                {strings.roundTrip}
               </Text>
             </TouchableOpacity>
           </View>
@@ -264,11 +263,11 @@ const HomeScreen = ({navigation}) => {
         <View style={StyleSheet.flatten([styles.offerStyle, dynamicStyle])}>
           <View style={styles.specialOfferViewStyle}>
             <Text style={styles.specialOfferTextStyle}>
-              {string.specialoffer}
+              {strings.specialoffer}
             </Text>
-            <TouchableOpacity style={styles.profilepicViewStyle}>
+            <TouchableOpacity style={styles.profilepicViewStyle} onPress={()=>navigation.navigate('SpecialOffer',{header : 'Special Offer'})}>
               <Text style={{color: color.commonBlue, marginHorizontal: 10}}>
-                {string.ViewAll}
+                {strings.ViewAll}
               </Text>
               <Image
                 source={Images.forward}
@@ -277,25 +276,7 @@ const HomeScreen = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <View>
-            <SwiperFlatList
-              autoplay
-              autoplayDelay={3}
-              autoplayLoop
-              data={dummyData}
-              renderItem={({item}) => {
-                return (
-                  <View style={styles.child}>
-                    <Image
-                      source={item.image}
-                      style={styles.offerimageStyle}
-                      resizeMode="stretch"
-                    />
-                  </View>
-                );
-              }}
-            />
-          </View>
+         <SwiperFlatlistComponent/>
         </View>
       </ScrollView>
       <PassengerPickerModal
@@ -329,10 +310,6 @@ export default HomeScreen;
 
 const {width} = Dimensions.get('window');
 const styles = StyleSheet.create({
-  child: {
-    width,
-    justifyContent: 'center',
-  },
   text: {
     fontSize: width * 0.5,
     textAlign: 'center',
@@ -349,6 +326,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: wp(6.66),
     justifyContent: 'space-between',
+    marginTop: Platform.OS === 'android'? hp(4) : null
   },
   profilepicViewStyle: {
     flexDirection: 'row',
@@ -439,7 +417,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   forwardStyle: {height: hp(1.8), width: hp(1.8), tintColor: color.commonBlue},
-  offerimageStyle: {height: hp(25), width: wp(90), borderRadius: 16},
   updownStyle: {
     height: hp(3.6),
     width: hp(3.6),

@@ -1,7 +1,7 @@
 import {Image, StyleSheet} from 'react-native';
 import React from 'react';
-import {wp} from '../../helpers/helper';
-import {color} from '../../helpers/ColorConstant';
+import {wp} from '../../helper/Constants';
+import {color} from '../../helper/ColorConstant';
 
 const TabBarComponents = props => {
   return (

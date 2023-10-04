@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import React from 'react';
 import CardList from './CardList';
-import {wp} from '../../helpers/helper';
+import {wp} from '../../helper/Constants';
 
 const TicktList = ({SelectDate, SearchFlightCardData}) => {
   return (

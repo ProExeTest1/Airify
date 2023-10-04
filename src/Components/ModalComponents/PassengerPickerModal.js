@@ -1,11 +1,11 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import ScrollPicker from 'react-native-wheel-scrollview-picker';
-import {Images} from '../../helpers/IconConstant';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {color} from '../../helpers/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constants';
+import {color} from '../../helper/ColorConstant';
 import Modal from 'react-native-modal';
-import {string} from '../../helpers/String';
+import {strings} from '../../helper/String';
 
 const PassengerPickerModal = ({
   toggleModal,
@@ -28,7 +28,7 @@ const PassengerPickerModal = ({
             onPress={toggleModal}></TouchableOpacity>
           <View style={styles.headerStyle}>
             <Text style={styles.headerTextStyle}>
-              {string.passengerModalHeader}
+              {strings.passengerModalHeader}
             </Text>
           </View>
           <View style={styles.pickerMainViewStyle}>
@@ -38,8 +38,8 @@ const PassengerPickerModal = ({
                 style={styles.pickerImageStyle}
                 resizeMode="contain"
               />
-              <Text style={styles.categoryTextStyle}>{string.Adult}</Text>
-              <Text style={styles.ageTextStyle}>{string.adultAge}</Text>
+              <Text style={styles.categoryTextStyle}>{strings.Adult}</Text>
+              <Text style={styles.ageTextStyle}>{strings.adultAge}</Text>
               <ScrollPicker
                 dataSource={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
                 renderItem={(data, index) => {
@@ -75,8 +75,8 @@ const PassengerPickerModal = ({
                 style={styles.pickerImageStyle}
                 resizeMode="contain"
               />
-              <Text style={styles.categoryTextStyle}>{string.Child}</Text>
-              <Text style={styles.ageTextStyle}>{string.ChildAge}</Text>
+              <Text style={styles.categoryTextStyle}>{strings.Child}</Text>
+              <Text style={styles.ageTextStyle}>{strings.ChildAge}</Text>
               <View style={{height: 100}}>
                 <ScrollPicker
                   dataSource={[0, 1, 3, 4, 5]}
@@ -114,8 +114,8 @@ const PassengerPickerModal = ({
                 style={styles.pickerImageStyle}
                 resizeMode="contain"
               />
-              <Text style={styles.categoryTextStyle}>{string.Infrant}</Text>
-              <Text style={styles.ageTextStyle}>{string.InfrantAge}</Text>
+              <Text style={styles.categoryTextStyle}>{strings.Infrant}</Text>
+              <Text style={styles.ageTextStyle}>{strings.InfrantAge}</Text>
               <ScrollPicker
                 dataSource={[0, 1, 2, 3]}
                 renderItem={(data, index) => {

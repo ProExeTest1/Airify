@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
-import {fontSize, hp} from '../../helpers/helper';
+import {fontSize, hp} from '../../helper/Constants';
 
 const CustomPaperTextInput = ({
   width,

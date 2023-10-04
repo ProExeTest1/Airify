@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {fontSize, hp, wp} from '../../helpers/helper';
+import {fontSize, hp, wp} from '../../helper/Constants';
 import React from 'react';
-import {Images} from '../../helpers/IconConstant';
+import {Images} from '../../helper/IconConstant';
 import {useDispatch, useSelector} from 'react-redux';
 
 const CardList = ({item, index}) => {
