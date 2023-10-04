@@ -1,2 +1,9 @@
 export const DINE_WAY = 'DINE_WAY';
 export const OTP = 'OTP';
+export const DEPATURE_DATE = 'DEPATURE_DATE';
+export const NORMAL_DATE = 'NORMAL_DATE';
+export const DEPATURE_PLACE = 'DEPATURE_PLACE';
+export const DESTINATION_PALCE = 'DESTINATION_PALCE';
+export const RETURN_DATE = 'RETURN_DATE';
+export const RETURN_NORMAL_DATE = 'RETURN_NORMAL_DATE';
+export const SEARCH_FLIGHT_DATA = 'SEARCH_FLIGHT_DATA';

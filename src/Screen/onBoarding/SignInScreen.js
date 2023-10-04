@@ -62,7 +62,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
       await firestore().collection('Users').doc(auth().currentUser.uid).update({
         Password: Password,
       });
-      navigation.navigate('SignUpSuccess');
+      navigation.navigate('TabNavigation');
     } catch (error) {
       console.log(error.message);
       Alert.alert(error.message);

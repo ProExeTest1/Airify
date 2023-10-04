@@ -12,6 +12,7 @@ import SplashScreen from 'react-native-splash-screen';
 import StackNavigation from './src/navigation/StackNavigation';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
+import {MenuProvider} from 'react-native-popup-menu';
 
 function App() {
   Text.defaultProps = Text.defaultProps || {};
@@ -28,10 +29,12 @@ function App() {
   });
   return (
     <Provider store={store}>
-      <View style={styles.Header}>
-        <StatusBar barStyle={'light-content'} />
-        <StackNavigation />
-      </View>
+      <MenuProvider>
+        <View style={styles.Header}>
+          <StatusBar barStyle={'light-content'} />
+          <StackNavigation />
+        </View>
+      </MenuProvider>
     </Provider>
   );
 }

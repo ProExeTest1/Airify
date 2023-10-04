@@ -1,12 +1,17 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import OnBoardingFirst from '../screens/onBoarding/OnBoardingFirst';
-import WelcomeScreen from '../screens/onBoarding/WelcomeScreen';
-import SignInScreen from '../screens/onBoarding/SignInScreen';
-import ResetPassword from '../screens/onBoarding/ResetPassword';
-import SignUpScreen from '../screens/onBoarding/SignUpScreen';
-import SignUpSuccess from '../screens/onBoarding/SignUpSuccess';
+import OnBoardingFirst from '../screen/onBoarding/OnBoardingFirst';
+import WelcomeScreen from '../screen/onBoarding/WelcomeScreen';
+import SignInScreen from '../screen/onBoarding/SignInScreen';
+import ResetPassword from '../screen/onBoarding/ResetPassword';
+import SignUpScreen from '../screen/onBoarding/SignUpScreen';
+import SignUpSuccess from '../screen/onBoarding/SignUpSuccess';
+import TabNavigation from './TabNavigation';
+import SearchFlightsFilter from '../screen/searchFlights/SearchFlightsFilter';
+import DatePickerScreen from '../screen/dashBoard/DatePickerScreen';
+import PlacePickerScreen from '../screen/dashBoard/PlacePickerScreen';
+import SearchFlights from '../screen/searchFlights/SearchFlights';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +27,14 @@ function StackNavigation() {
         <Stack.Screen name="ResetPassword" component={ResetPassword} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="SignUpSuccess" component={SignUpSuccess} />
+        <Stack.Screen name="TabNavigation" component={TabNavigation} />
+        <Stack.Screen
+          name="SearchFlightsFilter"
+          component={SearchFlightsFilter}
+        />
+        <Stack.Screen name="DatePicker" component={DatePickerScreen} />
+        <Stack.Screen name="PlacePicker" component={PlacePickerScreen} />
+        <Stack.Screen name="SearchFlights" component={SearchFlights} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -118,4 +118,26 @@ export const strings = {
   SectionFour: 'SECTION 4 - MODIFICATIONS TO THE SERVICE AND JOB RATES',
   SectionFourText:
     'Job Rates posted are subject to change without notice. We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time. We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.',
+
+  //
+  passengerModalHeader: 'Number of Passengers',
+  Adult: 'Adult',
+  Child: 'Child',
+  Infrant: 'Infrant',
+
+  adultAge: 'Age 12+',
+  ChildAge: 'Age 2-11',
+  InfrantAge: 'Below age 2',
+
+  Morning: 'Good Morning 🌅',
+  Afternoon: 'Good Afternoon🌤️🍂',
+  evening: 'Good Evening🌆',
+  Night: 'Good night🌃',
+
+  specialoffer: 'Special Offer',
+  ViewAll: 'View All',
+
+  one_way: 'One-Way',
+  roundTrip: 'Round trip',
+  classheader: 'Seat Class',
 };

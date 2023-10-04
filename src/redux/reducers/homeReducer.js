@@ -4,7 +4,7 @@ const initialState = {
   DineWayData: [],
   OTP: '',
 };
-const onBoardingReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case DINE_WAY:
       return {...state, DineWayData: action.payload};
@@ -14,5 +14,3 @@ const onBoardingReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default onBoardingReducer;

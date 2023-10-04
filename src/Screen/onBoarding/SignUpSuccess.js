@@ -22,7 +22,7 @@ const SignUpSuccess = ({navigation}) => {
         <OnBoardingSingleButton
           buttonText={strings.Explore}
           onPress={() => {
-            // navigation.navigate('DatePickerData');
+            navigation.navigate('TabNavigation');
           }}
         />
       </View>
