@@ -20,6 +20,7 @@ const OnBoardingTextInput = ({
   container,
   onPressCalender,
   onPress,
+  keyboardType,
 }) => {
   const [focus, setFocus] = useState(false);
 
@@ -41,6 +42,7 @@ const OnBoardingTextInput = ({
         onChangeText={onChangeText}
         style={[styles.textInputStyle, textInputStyle]}
         secureTextEntry={focus}
+        keyboardType={keyboardType}
       />
       {textInputPlaceholder == 'Password' ||
       textInputPlaceholder == 'Confirm New Password' ? (

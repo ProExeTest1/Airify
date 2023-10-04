@@ -34,11 +34,15 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
   };
 
   const validation = () => {
-    if (!Email.trim()) {
-      alert('Please Enter Email');
+    if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
+      alert('Please Enter valid Email');
       return;
-    } else if (!Password.trim()) {
-      alert('Please Enter Password');
+    } else if (
+      !Password.trim().match(
+        /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
+      )
+    ) {
+      alert('Please Enter Valid Password');
       return;
     } else {
       openModal();
@@ -84,6 +88,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           textInputPlaceholder={strings.EmailText}
           value={Email}
           onChangeText={email => setEmail(email)}
+          keyboardType={'email-address'}
         />
         <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
         <OnBoardingTextInput
@@ -91,6 +96,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           textInputPlaceholder={strings.Password}
           value={Password}
           onChangeText={password => setPassword(password)}
+          keyboardType={'default'}
         />
         <View style={styles.rememberLineStyle}>
           <View

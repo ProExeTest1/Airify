@@ -56,6 +56,7 @@ const CountryPickTextInput = ({value, onChangeText}) => {
           style={{marginLeft: wp(4)}}
           value={value}
           onChangeText={onChangeText}
+          keyboardType="number-pad"
         />
       </View>
       <CountryPicker

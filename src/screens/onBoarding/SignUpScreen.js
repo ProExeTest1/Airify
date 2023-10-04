@@ -80,11 +80,15 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   };
 
   const validation = index => {
-    if (!Email.trim()) {
-      alert('Please Enter Email');
+    if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
+      alert('Please Enter Valid Email');
       return;
-    } else if (!Password.trim()) {
-      alert('Please Enter Password');
+    } else if (
+      !Password.trim().match(
+        /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
+      )
+    ) {
+      alert('Please Enter Valid Password');
       return;
     } else {
       swiperRef.current.scrollBy(1);
@@ -92,14 +96,14 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   };
 
   const validation2 = index => {
-    if (!name.trim()) {
-      alert('Please Enter name');
+    if (!pickerResponse.trim()) {
+      alert('Please Select Profile Image');
       return;
     } else if (!phoneNo.trim()) {
       alert('Please Enter Phone Number');
       return;
-    } else if (!pickerResponse.trim()) {
-      alert('Please Select Profile Image');
+    } else if (!name.trim().match('[a-zA-Z ]{3,30}')) {
+      alert('Please Enter Valid name');
       return;
     } else if (!date.trim()) {
       alert('Please Enter Date of Birth');
@@ -227,6 +231,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               container={styles.textInputContainer}
               value={Email}
               onChangeText={email => setEmail(email)}
+              keyboardType={'email-address'}
             />
             <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
             <OnBoardingTextInput
@@ -235,6 +240,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               container={styles.textInputContainer}
               value={Password}
               onChangeText={password => setPassword(password)}
+              keyboardType={'default'}
             />
             <Text style={styles.textInputTitleStyle}>
               {strings.ReferralCode}
@@ -244,6 +250,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               container={styles.textInputContainer}
               value={referralCode}
               onChangeText={referralCode => setReferralCode(referralCode)}
+              keyboardType={'numeric'}
             />
             <View style={styles.rememberLineStyle}>
               <View
@@ -308,6 +315,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               container={styles.textInputContainer}
               value={name}
               onChangeText={name => setName(name)}
+              keyboardType={'default'}
             />
             <Text style={styles.textInputTitleStyle}>{strings.Phone}</Text>
             <CountryPickTextInput

@@ -14,7 +14,7 @@ import {otp} from '../../redux/action/HomeAction';
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');
   const validation = () => {
-    if (!email.trim()) {
+    if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
       alert('Please Enter Email which are use in login');
       return;
     } else {
@@ -58,6 +58,7 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
           textInputPlaceholder={strings.EmailText}
           value={email}
           onChangeText={email => setEmail(email)}
+          keyboardType={'email-address'}
         />
         <View style={styles.buttonViewStyle}>
           <View style={[styles.lineStyle]} />
