@@ -1,12 +1,16 @@
 import {Image, StyleSheet} from 'react-native';
 import React from 'react';
 import {wp} from '../../helpers/helper';
+import {color} from '../../helpers/ColorConstant';
 
 const TabBarComponents = props => {
   return (
     <Image
       source={props.Icon}
-      style={[styles.icons, {tintColor: props.props.focused ? 'rgb(0, 122, 255)' : null}]}
+      style={[
+        styles.icons,
+        {tintColor: props.props.focused ? color.commonBlue : null},
+      ]}
     />
   );
 };

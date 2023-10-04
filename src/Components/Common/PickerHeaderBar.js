@@ -7,9 +7,9 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {color} from '../../helpers/ColorConstant';
 import {fontSize, hp, wp} from '../../helpers/helper';
 import {Images} from '../../helpers/IconConstant';
+import {color} from '../../helpers/ColorConstant';
 
 const PickerHeaderBar = ({headerName, navigation}) => {
   return (
@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
   cancelButtonStyle: {
     height: hp(2),
     width: hp(2),
-    tintColor: 'white',
+    tintColor: color.white,
   },
   headerTextStyle: {
     fontSize: fontSize(22),
     fontWeight: 'bold',
-    color: 'white',
+    color: color.white,
   },
   safeHeaderViewStyle: {
     paddingHorizontal: wp(7),

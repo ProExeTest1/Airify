@@ -25,4 +25,9 @@ export const Images = {
   timeIcon: require('../assets/icons/time.png'),
   flightIcon: require('../assets/icons/flight.png'),
   cancel: require('../assets/icons/close.png'),
+  search: require('../assets/icons/Search.png'),
+  adult: require('../assets/icons/man.png'),
+  children: require('../assets/icons/children.png'),
+  twoYearBelowChild: require('../assets/icons/baby-boy.png'),
+  tickMark: require('../assets/icons/check.png'),
 };

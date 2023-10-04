@@ -18,20 +18,24 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import {dateAction} from '../../redux/action/DateAction';
+import {useDispatch, useSelector} from 'react-redux';
+
 const SearchFlightsHeader = ({
   SelectDate,
   setSelectDate,
   onShare,
   dispatch,
   setModalVisible1,
+  navigation,
 }) => {
+  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
         <View style={styles.headerTitleBody}>
           <Text style={styles.headerTitle}>Search Flights</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image style={styles.BackImg} source={Images.backIcon} />
         </TouchableOpacity>
         <Menu>
@@ -60,19 +64,26 @@ const SearchFlightsHeader = ({
       </View>
       <View style={styles.headerNevBody}>
         <View style={styles.FlightsPlaseBody}>
-          <Text style={styles.FlightsPlaseNicName}>JFK</Text>
-          <Text style={styles.FlightsPlaseName}>New York</Text>
+          <Text style={styles.FlightsPlaseNicName}>
+            {searchFlightData?.fromShortform}
+          </Text>
+          <Text style={styles.FlightsPlaseName}>{searchFlightData?.from}</Text>
         </View>
         <View style={styles.FlightsPlaseImgBody}>
           <Image
             style={styles.FlightsPlaseImg}
             source={Images.airplaneBlueIcon}
           />
-          <Text style={styles.FlightsPlaseImgText}>1 Seat . Economy</Text>
+          <Text style={styles.FlightsPlaseImgText}>
+            {searchFlightData?.passenger} .{' '}
+            {searchFlightData?.class.replace(' Class', '')}
+          </Text>
         </View>
         <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
-          <Text style={styles.FlightsPlaseNicName}>CDG</Text>
-          <Text style={styles.FlightsPlaseName}>Paris</Text>
+          <Text style={styles.FlightsPlaseNicName}>
+            {searchFlightData?.toShortform}
+          </Text>
+          <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
         </View>
       </View>
       <View style={styles.dateListBody}>
@@ -127,7 +138,7 @@ const styles = StyleSheet.create({
   headerNevBody: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: wp(6),
+    paddingHorizontal: wp(4),
     alignItems: 'center',
     marginBottom: hp(3),
   },

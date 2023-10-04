@@ -1,16 +1,19 @@
 import {
-    View,
-    Text,
-    SafeAreaView,
-    StyleSheet,
-    TouchableOpacity,
-    Image,
-  } from 'react-native';
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {fontSize, hp, wp} from '../../helpers/helper';
 import React from 'react';
-import { Images } from '../../helpers/IconConstant';
+import {Images} from '../../helpers/IconConstant';
+import {useDispatch, useSelector} from 'react-redux';
 
 const CardList = ({item, index}) => {
+  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+
   return (
     <View style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
       <View style={styles.cardHeader}>
@@ -21,7 +24,7 @@ const CardList = ({item, index}) => {
       </View>
       <View style={styles.cardDataBody}>
         <View style={styles.FlightsPlaseBody}>
-          <Text style={styles.FlightsPlaseName}>New York</Text>
+          <Text style={styles.FlightsPlaseName}>{searchFlightData?.from}</Text>
           <Text style={styles.FlightsPlaseNicName}>{item.pickTime}</Text>
         </View>
         <View style={styles.FlightsPlaseImgBody}>
@@ -32,14 +35,18 @@ const CardList = ({item, index}) => {
           <Text style={styles.FlightsPlaseImgText}>{item.totalHours}</Text>
         </View>
         <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
-          <Text style={styles.FlightsPlaseName}>Paris</Text>
+          <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
           <Text style={styles.FlightsPlaseNicName}>{item.lendTime}</Text>
         </View>
       </View>
       <View style={styles.cardBottemBody}>
-        <Text style={styles.FlightsPlaseName}>JFK</Text>
+        <Text style={styles.FlightsPlaseName}>
+          {searchFlightData?.fromShortform}
+        </Text>
         <Text style={styles.FlightsPlaseImgText}>{item.stop}</Text>
-        <Text style={styles.FlightsPlaseName}>CDG</Text>
+        <Text style={styles.FlightsPlaseName}>
+          {searchFlightData?.toShortform}
+        </Text>
       </View>
     </View>
   );

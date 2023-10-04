@@ -22,18 +22,30 @@ import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreatePriceAlert} from '../../components/index';
-import RadioGroup, {
-  RadioButton,
-  RadioButtonProps,
-} from 'react-native-radio-buttons-group';
+import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helpers/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
+import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 
-const SearchFlights = props => {
+const SearchFlights = ({navigation}) => {
   const dispatch = useDispatch();
-  const [SelectDate, setSelectDate] = useState(
-    useSelector(e => e.date.normalDate),
-  );
+  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const SelectDate = useSelector(e => e.date.normalDate);
+  const setSelectDate = data => {
+    const data2 = new Date(data.date);
+    const dayData = data.date.split('/');
+
+    dispatch(
+      depatureDateAction(
+        `${data2.toLocaleDateString('en-us', {
+          weekday: 'long',
+        })},${data2.toLocaleDateString('en-us', {month: 'short'})} ${
+          dayData[1]
+        } ${dayData[2]}`,
+      ),
+    );
+  };
+  console.log(searchFlightData);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -141,6 +153,7 @@ const SearchFlights = props => {
         onShare={onShare}
         dispatch={dispatch}
         setModalVisible1={setModalVisible1}
+        navigation={navigation}
       />
       <TicketList
         SelectDate={SelectDate}
@@ -155,7 +168,7 @@ const SearchFlights = props => {
         </TouchableOpacity>
         <View style={styles.sortLine}></View>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('SearchFlightsFilter')}
+          onPress={() => navigation.navigate('SearchFlightsFilter')}
           style={styles.sortImgBody}>
           <Image style={styles.sortImg} source={Images.filterIcon} />
           <Text style={styles.sortText}>Filter</Text>
