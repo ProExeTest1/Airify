@@ -8,7 +8,7 @@ const SearchFlightsFilter = ({navigation}) => {
       <PickerHeaderBar
         headerName={'Filter'}
         navigation={() => navigation.goBack('')}></PickerHeaderBar>
-      <ScrollView style={{}}></ScrollView>
+      <ScrollView style={{flex: 1, paddingHorizontal: wp(4)}}></ScrollView>
     </View>
   );
 };

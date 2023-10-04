@@ -8,8 +8,8 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useState} from 'react';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {Images} from '../../helpers/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
 import {getDate} from '../../assets/DummyData/GetDate';
 import {
   Menu,
@@ -114,7 +114,7 @@ const SearchFlightsHeader = ({
                   styles.date,
                   {color: item?.date === SelectDate?.date ? '#295dff' : '#fff'},
                 ]}>
-                {item.date.split('/')[1]}
+                {item.date.split('/')[0]}
               </Text>
               <Text
                 style={{

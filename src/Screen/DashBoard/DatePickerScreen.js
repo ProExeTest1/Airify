@@ -8,9 +8,9 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {color} from '../../helpers/ColorConstant';
-import {fontSize, hp, statusBarHeight, wp} from '../../helpers/helper';
-import {images} from '../../helpers/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {images} from '../../helper/IconConstant';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';

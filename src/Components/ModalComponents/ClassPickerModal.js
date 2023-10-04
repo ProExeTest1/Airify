@@ -7,12 +7,12 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {Images} from '../../helpers/IconConstant';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {color} from '../../helpers/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
 import Modal from 'react-native-modal';
 import {ClassData} from '../../assets/DummyData/Data';
-import {string} from '../../helpers/String';
+import {string} from '../../helper/Strings';
 
 const ClassPickerModal = ({
   isModalVisible,

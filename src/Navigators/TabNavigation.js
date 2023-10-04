@@ -4,7 +4,7 @@ import HomeScreen from '../screen/dashBoard/HomeScreen';
 import BookingsScreen from '../screen/dashBoard/BookingsScreen';
 import WalletScreen from '../screen/dashBoard/WalletScreen';
 import AccountScreen from '../screen/dashBoard/AccountScreen';
-import {Images} from '../helpers/IconConstant';
+import {Images} from '../helper/IconConstant';
 import {TabBarComponents} from '../components';
 import SavedScreen from '../screen/dashBoard/SavedScreen';
 

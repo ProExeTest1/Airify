@@ -10,19 +10,19 @@ import {
   useColorScheme,
 } from 'react-native';
 import React, {useState} from 'react';
-import {Images} from '../../helpers/IconConstant';
+import {Images} from '../../helper/IconConstant';
 
 import {
   ClassPickerModal,
   CustomPaperTextInput,
   PassengerPickerModal,
 } from '../../components/index';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {color} from '../../helpers/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import {dummyData} from '../../assets/DummyData/Data';
 import {useSelector} from 'react-redux';
-import {string} from '../../helpers/String';
+import {string} from '../../helper/Strings';
 import {useDispatch} from 'react-redux';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
 

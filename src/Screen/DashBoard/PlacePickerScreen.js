@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {PickerHeaderBar, SearchBar} from '../../components';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {Images} from '../../helpers/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
 import {useDispatch} from 'react-redux';
 import {depatureDateAction} from '../../redux/action/DateAction';
 import {

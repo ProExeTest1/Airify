@@ -1,7 +1,7 @@
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {Images} from '../../helpers/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
 
 const SearchBar = ({value, onChangeText}) => {
   return (

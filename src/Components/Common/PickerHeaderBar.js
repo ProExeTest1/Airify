@@ -7,9 +7,9 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {fontSize, hp, wp} from '../../helpers/helper';
-import {Images} from '../../helpers/IconConstant';
-import {color} from '../../helpers/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
 
 const PickerHeaderBar = ({headerName, navigation}) => {
   return (
