@@ -10,6 +10,9 @@ import PickerHeaderBar from './Common/PickerHeaderBar';
 import SearchBar from './Common/SearchBar';
 import PassengerPickerModal from './ModalComponents/PassengerPickerModal';
 import ClassPickerModal from './ModalComponents/ClassPickerModal';
+import CheckBox from './Common/CheckBox';
+import MultiSliderComponets from './Common/MultiSliderComponets';
+import GetTime from './Common/GetTime';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -23,6 +26,9 @@ export {
   SearchBar,
   PassengerPickerModal,
   ClassPickerModal,
+  CheckBox,
+  MultiSliderComponets,
+  GetTime,
 };
 
 // import CustomPaperTextInput from "./Common/CustomPaperTextInput";

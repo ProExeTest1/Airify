@@ -11,11 +11,13 @@ import React from 'react';
 import {Images} from '../../helper/IconConstant';
 import {useDispatch, useSelector} from 'react-redux';
 
-const CardList = ({item, index}) => {
+const CardList = ({setCartFlightData, item, index}) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
 
   return (
-    <View style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
+    <TouchableOpacity
+      onPress={() => setCartFlightData(item)}
+      style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
@@ -48,7 +50,7 @@ const CardList = ({item, index}) => {
           {searchFlightData?.toShortform}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

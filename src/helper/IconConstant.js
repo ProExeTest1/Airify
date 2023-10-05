@@ -30,4 +30,5 @@ export const Images = {
   children: require('../assets/icons/children.png'),
   twoYearBelowChild: require('../assets/icons/baby-boy.png'),
   tickMark: require('../assets/icons/check.png'),
+  doneIcon: require('../assets/icons/done.png'),
 };

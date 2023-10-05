@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {OnBoardingTwoButton} from '../index';
+import {MultiSliderComponets, OnBoardingTwoButton} from '../index';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {wp, fontSize, hp} from '../../helper/Constant';
@@ -78,28 +78,11 @@ const CreatePriceAlert = ({
             styles.PriceTargetsText
           }>{`$${priceTargets[0]} - $${priceTargets[1]}`}</Text>
       </View>
-      <MultiSlider
+      <MultiSliderComponets
         min={700}
         max={2000}
-        selectedStyle={{
-          height: 4,
-          backgroundColor: color.commonBlue,
-        }}
-        unselectedStyle={{height: 4, backgroundColor: '#eeeeee'}}
         values={priceTargets}
         sliderLength={wp(88)}
-        customMarker={() => (
-          <View
-            style={{
-              height: 25,
-              width: 25,
-              backgroundColor: '#fff',
-              borderWidth: 4,
-              borderRadius: 50,
-              borderColor: color.commonBlue,
-            }}></View>
-        )}
-        enabledTwo={true}
         onValuesChangeFinish={a => setPriceTargets(a)}
       />
       <View style={styles.PriceTargetsBody}>

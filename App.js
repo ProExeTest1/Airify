@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import StackNavigation from './src/navigators/StackNavigation';
 import {MenuProvider} from 'react-native-popup-menu';
 import {store} from './src/redux/store';

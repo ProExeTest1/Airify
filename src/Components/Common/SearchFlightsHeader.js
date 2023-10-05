@@ -76,7 +76,7 @@ const SearchFlightsHeader = ({
           />
           <Text style={styles.FlightsPlaseImgText}>
             {searchFlightData?.passenger} .{' '}
-            {searchFlightData?.class.replace(' Class', '')}
+            {searchFlightData?.class?.replace(' Class', '')}
           </Text>
         </View>
         <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>

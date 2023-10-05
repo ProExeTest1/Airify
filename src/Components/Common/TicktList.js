@@ -2,12 +2,19 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 import React from 'react';
 import CardList from './CardList';
 import {wp} from '../../helper/Constant';
+import {useDispatch, useSelector} from 'react-redux';
+import {SearchFlightCardData} from '../../redux/action/SearchFlightAction';
 
-const TicktList = ({SelectDate, SearchFlightCardData}) => {
+const TicktList = ({SelectDate, SearchFlightCard}) => {
+  const dispatch = useDispatch();
+  const setCartFlightData = item => {
+    dispatch(SearchFlightCardData(item));
+  };
+  console.log(useSelector(a => a?.searchFlight?.searchFlightCardData));
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
-        data={SearchFlightCardData.filter(i => {
+        data={SearchFlightCard.filter(i => {
           if (
             `${new Date().toLocaleString().split(',')[0]}` == SelectDate?.date
           ) {
@@ -22,7 +29,13 @@ const TicktList = ({SelectDate, SearchFlightCardData}) => {
         })}
         bounces={false}
         showsVerticalScrollIndicator={false}
-        renderItem={({item, index}) => <CardList item={item} index={index} />}
+        renderItem={({item, index}) => (
+          <CardList
+            setCartFlightData={setCartFlightData}
+            item={item}
+            index={index}
+          />
+        )}
         key={({item, index}) => index}
       />
     </View>

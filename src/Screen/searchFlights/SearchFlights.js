@@ -26,26 +26,21 @@ import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
+import moment from 'moment';
 
 const SearchFlights = ({navigation}) => {
   const dispatch = useDispatch();
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const searchFlightFilterData = useSelector(
+    e => e?.searchFlight?.searchFlightFilterData,
+  );
   const SelectDate = useSelector(e => e.date.normalDate);
   const setSelectDate = data => {
-    const data2 = new Date(data.date);
-    const dayData = data.date.split('/');
-
-    dispatch(
-      depatureDateAction(
-        `${data2.toLocaleDateString('en-us', {
-          weekday: 'long',
-        })},${data2.toLocaleDateString('en-us', {month: 'short'})} ${
-          dayData[1]
-        } ${dayData[2]}`,
-      ),
-    );
+    console.log('data.date', data.date);
+    let tem = moment(data.date).format('D/M/YYYY');
+    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
   };
-  console.log(searchFlightData);
+
+  console.log('searchFlightFilterData >>>>>>>', searchFlightFilterData);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -157,7 +152,7 @@ const SearchFlights = ({navigation}) => {
       />
       <TicketList
         SelectDate={SelectDate}
-        SearchFlightCardData={SearchFlightCardData}
+        SearchFlightCard={SearchFlightCardData}
       />
       <View style={styles.sortBody}>
         <TouchableOpacity
@@ -219,7 +214,7 @@ const SearchFlights = ({navigation}) => {
           </View>
           <View
             style={{
-              paddingVertical: hp(4.5),
+              paddingVertical: hp(2),
               borderTopWidth: 1,
               borderColor: '#e2e2e2',
             }}>
