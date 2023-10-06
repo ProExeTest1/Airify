@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   welcomeScreenFiledImageStyle: {
-    height: hp(3),
-    width: hp(3),
+    height: wp(6),
+    width: wp(6),
   },
   buttonTextStyle: {
     textAlign: 'center',

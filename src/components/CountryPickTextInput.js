@@ -12,22 +12,46 @@ import {hp, wp} from '../helper/Constant';
 import {strings} from '../helper/Strings';
 import {Images} from '../helper/IconConstant';
 
-const CountryPickTextInput = ({value, onChangeText}) => {
-  const [show, setShow] = useState(false);
-  const [countryCode, setCountryCode] = useState('');
+const CountryPickTextInput = ({
+  value,
+  onChangeText,
+  placeholder,
+  countryCode,
+  disabled,
+  onPress1,
+  onPress2,
+  editable,
+}) => {
   return (
-    <View style={{alignItems: 'center', marginVertical: hp(1)}}>
-      <View
-        style={{
-          width: '90%',
-          height: hp(6.5),
-          backgroundColor: '#FAFAFA',
-          padding: 10,
-          borderRadius: wp(2),
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        {countryCode ? (
+    <View
+      style={{
+        alignItems: 'center',
+        marginVertical: hp(1),
+      }}>
+      <TouchableOpacity
+        style={styles.viewStyle}
+        disabled={strings.Phone ? disabled : true}
+        onPress={onPress1}>
+        {placeholder === strings.Phone && (
+          <TouchableOpacity style={styles.InputViewStyle} onPress={onPress2}>
+            <Text>{countryCode}</Text>
+            <Image
+              source={Images.downArrow}
+              style={[styles.textInputIconStyle]}
+            />
+          </TouchableOpacity>
+        )}
+        <View style={styles.InputViewStyle}>
+          <TextInput
+            placeholder={placeholder}
+            style={{marginLeft: wp(4)}}
+            value={value}
+            onChangeText={onChangeText}
+            keyboardType="number-pad"
+            editable={editable}
+          />
+        </View>
+        {/* {countryCode ? (
           <TouchableOpacity
             style={{flexDirection: 'row'}}
             onPress={() => setShow(true)}>
@@ -51,21 +75,18 @@ const CountryPickTextInput = ({value, onChangeText}) => {
             />
           </TouchableOpacity>
         )}
-        <TextInput
-          placeholder={strings.Phone}
-          style={{marginLeft: wp(4)}}
-          value={value}
-          onChangeText={onChangeText}
-          keyboardType="number-pad"
-        />
-      </View>
-      <CountryPicker
-        show={show}
-        pickerButtonOnPress={item => {
-          setCountryCode(item.flag);
-          setShow(false);
-        }}
-      />
+        {placeholder == strings.country && (
+          <TouchableOpacity>
+            <TextInput
+              placeholder={placeholder}
+              style={{marginLeft: wp(4)}}
+              value={value}
+              onChangeText={onChangeText}
+              keyboardType="number-pad"
+            />
+          </TouchableOpacity>
+        )} */}
+      </TouchableOpacity>
     </View>
   );
 };
@@ -76,6 +97,19 @@ const styles = StyleSheet.create({
     width: hp(2),
     tintColor: '#A0A0A0',
     marginLeft: wp(1),
+  },
+  viewStyle: {
+    width: '90%',
+    height: hp(6.5),
+    backgroundColor: '#FAFAFA',
+    padding: 10,
+    borderRadius: wp(2),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  InputViewStyle: {
+    flexDirection: 'row',
+    paddingVertical: hp(1),
   },
 });
 

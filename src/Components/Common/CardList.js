@@ -1,15 +1,9 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import React from 'react';
 import {Images} from '../../helper/IconConstant';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {color} from '../../helper/ColorConstant';
 
 const CardList = ({item, index}) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
@@ -53,16 +47,16 @@ const CardList = ({item, index}) => {
 };
 const styles = StyleSheet.create({
   cardBody: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     paddingHorizontal: wp(4),
     marginBottom: hp(2),
     borderRadius: 10,
-    borderColor: '#e2e2e2',
+    borderColor: color.grayLight,
     borderWidth: 1,
     flex: 1,
   },
   cardHeader: {
-    borderColor: '#e2e2e2',
+    borderColor: color.grayLight,
     borderBottomWidth: 1,
     paddingVertical: hp(2.5),
     flexDirection: 'row',
@@ -80,12 +74,12 @@ const styles = StyleSheet.create({
     marginEnd: wp(3),
   },
   cardPrice: {
-    color: '#295dff',
+    color: color.commonBlue,
     fontSize: fontSize(20),
     fontWeight: '600',
   },
   cardPriceTitle: {
-    color: '#7e7e7f',
+    color: color.darkLight,
     fontSize: fontSize(18),
   },
   cardDataBody: {
@@ -105,7 +99,7 @@ const styles = StyleSheet.create({
     width: hp(17),
   },
   FlightsPlaseImgText: {
-    color: '#7e7e7f',
+    color: color.darkLight,
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
@@ -115,7 +109,7 @@ const styles = StyleSheet.create({
     marginTop: hp(1.5),
   },
   FlightsPlaseName: {
-    color: '#7e7e7f',
+    color: color.darkLight,
     fontWeight: '500',
   },
   cardBottemBody: {

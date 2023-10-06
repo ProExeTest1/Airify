@@ -9,7 +9,7 @@ import {
   View,
   useColorScheme,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
 
 import {
@@ -25,11 +25,14 @@ import {dummyData} from '../../assets/DummyData/Data';
 import {strings} from '../../helper/Strings';
 import {useDispatch, useSelector} from 'react-redux';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
+import auth from '@react-native-firebase/auth';
+import firestore, {firebase} from '@react-native-firebase/firestore';
 
 const HomeScreen = ({navigation}) => {
   const theme = useColorScheme();
-
-  console.log(theme);
+  useEffect(() => {
+    UserData();
+  }, []);
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
@@ -57,6 +60,7 @@ const HomeScreen = ({navigation}) => {
   const [adult, setAdult] = useState(1);
   const [child, setChild] = useState(0);
   const [twoYearBelowChild, setTwoYearBelowChild] = useState(0);
+  const [userData, setUserData] = useState({});
   const seatcount = () => {
     setSeat(adult + child + twoYearBelowChild + ' ' + 'seat');
     setAdult(1);
@@ -90,6 +94,14 @@ const HomeScreen = ({navigation}) => {
       navigation.navigate('SearchFlights');
     }
   };
+
+  const UserData = async () => {
+    const journeyData = await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get();
+    setUserData(journeyData.data());
+  };
   return (
     <>
       <ScrollView
@@ -101,7 +113,7 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.headerStyle}>
               <View style={styles.profilepicViewStyle}>
                 <Image
-                  source={Images.demoPic}
+                  source={{uri: userData?.profileImageURL}}
                   style={styles.profilePicStyle}
                   resizeMode="stretch"
                 />
@@ -115,7 +127,7 @@ const HomeScreen = ({navigation}) => {
                       ? strings.evening
                       : strings.Night}
                   </Text>
-                  <Text style={styles.userNameStyle}>Andrew Ainsley</Text>
+                  <Text style={styles.userNameStyle}>{userData?.Name}</Text>
                 </View>
               </View>
               <TouchableOpacity style={styles.bellTouchStyle}>

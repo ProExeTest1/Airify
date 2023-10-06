@@ -42,11 +42,10 @@ const OnBoardingTwoButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: hp(8),
+    marginTop: hp(4),
   },
   buttonStyle: {
     height: hp(5),

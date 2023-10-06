@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {fontSize, hp, wp} from '../helper/Constant';
+import {color} from '../helper/ColorConstant';
 
 const OnBoardingText = ({
   OnBoardingMainText,
@@ -30,12 +31,14 @@ const styles = StyleSheet.create({
     marginTop: hp(2),
     fontWeight: '600',
     width: wp(75),
+    color: color.black,
   },
   OnBoardingSubTextStyle: {
     fontSize: fontSize(12),
     textAlign: 'center',
-    fontWeight: '200',
     width: wp(63),
+    color: color.black,
+    bottom: hp(4),
   },
 });
 

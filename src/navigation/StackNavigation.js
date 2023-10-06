@@ -1,5 +1,9 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  StackActions,
+  useNavigation,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import OnBoardingFirst from '../screen/onBoarding/OnBoardingFirst';
 import WelcomeScreen from '../screen/onBoarding/WelcomeScreen';
@@ -12,15 +16,19 @@ import SearchFlightsFilter from '../screen/searchFlights/SearchFlightsFilter';
 import DatePickerScreen from '../screen/dashBoard/DatePickerScreen';
 import PlacePickerScreen from '../screen/dashBoard/PlacePickerScreen';
 import SearchFlights from '../screen/searchFlights/SearchFlights';
+import auth from '@react-native-firebase/auth';
+import PersonalInfo from '../screen/account/PersonalInfo';
+import Notification from '../screen/account/Notification';
 
 const Stack = createNativeStackNavigator();
 
 function StackNavigation() {
+  const user = auth()?.currentUser?.uid;
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="OnBoardingFirst"
-        screenOptions={{headerShown: false}}>
+        screenOptions={{headerShown: false}}
+        initialRouteName={user ? 'TabNavigation' : 'OnBoardingFirst'}>
         <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
@@ -35,6 +43,8 @@ function StackNavigation() {
         <Stack.Screen name="DatePicker" component={DatePickerScreen} />
         <Stack.Screen name="PlacePicker" component={PlacePickerScreen} />
         <Stack.Screen name="SearchFlights" component={SearchFlights} />
+        <Stack.Screen name="PersonalInfo" component={PersonalInfo} />
+        <Stack.Screen name="Notification" component={Notification} />
       </Stack.Navigator>
     </NavigationContainer>
   );

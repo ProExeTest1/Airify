@@ -14,7 +14,7 @@ import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import {MenuProvider} from 'react-native-popup-menu';
 
-function App() {
+function App({navigation}) {
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
 
@@ -27,6 +27,7 @@ function App() {
   React.useEffect(() => {
     SplashScreen.hide();
   });
+
   return (
     <Provider store={store}>
       <MenuProvider>

@@ -82,7 +82,6 @@ const DatePickerScreen = ({navigation, route}) => {
       setReturnPress(true);
     }
   }, []);
-  console.log(returnPress);
   const date = new Date(selected).toLocaleDateString('en-us', {
     weekday: 'short',
   });
@@ -129,7 +128,7 @@ const DatePickerScreen = ({navigation, route}) => {
         const finalDate =
           dayname[0] + ',' + returnmonth + ' ' + returnday + ' ' + returnyear;
         dispatch(returnDateAction(finalDate));
-        let selectedDate = moment(returnDate).format('M/D/YYYY');
+        let selectedDate = moment(returnDate).format('D/M/YYYY');
         let choosenDate = {
           date: selectedDate,
           day: dayname[0],
@@ -143,7 +142,7 @@ const DatePickerScreen = ({navigation, route}) => {
         const dayname = date.split(',');
         const finalDate = dayname[0] + ',' + month + ' ' + day + ' ' + year;
         dispatch(depatureDateAction(finalDate));
-        let selectedDate = moment(selected).format('M/D/YYYY');
+        let selectedDate = moment(selected).format('D/M/YYYY');
         let choosenDate = {
           date: selectedDate,
           day: dayname[0],

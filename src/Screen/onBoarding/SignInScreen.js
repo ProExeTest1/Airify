@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ import Modal from 'react-native-modal';
 import CheckButton from '../../components/CheckButton';
 import auth from '@react-native-firebase/auth';
 import firestore, {firebase} from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [modal, setModal] = useState(false);
@@ -52,7 +53,19 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
       }, 5000);
     }
   };
-
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('remember-key');
+      const RememberMeValue = JSON.parse(jsonValue);
+      setEmail(RememberMeValue?.Email);
+      setPassword(RememberMeValue?.Password);
+    } catch (e) {
+      console.log('e :>> ', e);
+    }
+  };
   const handleLogin = async () => {
     try {
       const isUserLogin = await auth().signInWithEmailAndPassword(
@@ -62,6 +75,11 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
       await firestore().collection('Users').doc(auth().currentUser.uid).update({
         Password: Password,
       });
+      if (checked == true) {
+        let value = {Email, Password};
+        const jsonValue = JSON.stringify(value);
+        await AsyncStorage.setItem('remember-key', jsonValue);
+      }
       navigation.navigate('TabNavigation');
     } catch (error) {
       console.log(error.message);
@@ -71,16 +89,14 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 0.27, backgroundColor: 'blue'}}>
-        <OnBoardingModuleHeader
-          backImage={Images.backIcon}
-          onPress={() => {
-            goBack();
-          }}
-          MainText={strings.welcome}
-          SubText={strings.subText}
-        />
-      </View>
+      <OnBoardingModuleHeader
+        backImage={Images.backIcon}
+        onPress={() => {
+          goBack();
+        }}
+        MainText={strings.welcome}
+        SubText={strings.subText}
+      />
       <View style={{flex: 0.73, marginTop: hp(4)}}>
         <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
         <OnBoardingTextInput
@@ -128,7 +144,10 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
         <View style={styles.signUpStyle}>
           <OnBoardingText
             OnBoardingSubText={strings.signUpLine}
-            OnBoardingSubTextStyle={{fontSize: fontSize(14), fontWeight: '400'}}
+            OnBoardingSubTextStyle={{
+              fontSize: fontSize(14),
+              fontWeight: '400',
+            }}
           />
           <TouchableOpacity
             onPress={() => {
@@ -178,11 +197,11 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
             OnBoardingMainText={strings.WelcomeModalMainText}
             OnBoardingMainTextStyle={{color: 'blue'}}
             OnBoardingSubText={strings.WelcomeModalSubText}
-            OnBoardingSubTextStyle={{width: wp(50), marginTop: hp(2)}}
+            OnBoardingSubTextStyle={{width: wp(50), marginTop: hp(6)}}
           />
           <OnBoardingText
             OnBoardingSubText={strings.WelcomeModalSubText2}
-            OnBoardingSubTextStyle={{bottom: hp(3)}}
+            OnBoardingSubTextStyle={{bottom: hp(7)}}
           />
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
@@ -213,6 +232,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: wp(22),
     alignSelf: 'center',
+    top: hp(4),
   },
   buttonStyle: {
     marginTop: hp(4),

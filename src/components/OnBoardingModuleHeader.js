@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import {fontSize, hp, wp} from '../helper/Constant';
 
 const OnBoardingModuleHeader = ({
@@ -64,9 +71,11 @@ const OnBoardingModuleHeader = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginLeft: wp(4),
-    paddingTop: hp(8),
+    // flex: 1,
+    paddingLeft: wp(4),
+    backgroundColor: 'blue',
+    paddingBottom: hp(3),
+    paddingTop: Platform.OS === 'ios' ? hp(8) : hp(2),
   },
   backImageStyle: {
     height: hp(3),

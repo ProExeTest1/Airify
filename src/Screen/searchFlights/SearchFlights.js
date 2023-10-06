@@ -27,25 +27,17 @@ import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {depatureDateAction} from '../../redux/action/DateAction';
 
+import moment from 'moment';
+
 const SearchFlights = ({navigation}) => {
   const dispatch = useDispatch();
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   const SelectDate = useSelector(e => e.date.normalDate);
   const setSelectDate = data => {
-    const data2 = new Date(data.date);
-    const dayData = data.date.split('/');
-
-    dispatch(
-      depatureDateAction(
-        `${data2.toLocaleDateString('en-us', {
-          weekday: 'long',
-        })},${data2.toLocaleDateString('en-us', {month: 'short'})} ${
-          dayData[1]
-        } ${dayData[2]}`,
-      ),
-    );
+    console.log('data.date', data.date);
+    let tem = moment(data.date).format('D/M/YYYY');
+    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
   };
-  console.log(searchFlightData);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);

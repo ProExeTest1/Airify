@@ -96,34 +96,44 @@ const SearchFlightsHeader = ({
           bounces={false}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) => (
-            <TouchableOpacity
-              onPress={() => {
-                setSelectDate(item);
-                dispatch(dateAction(item));
-              }}
-              style={[
-                styles.dateIconBody,
-                {
-                  backgroundColor:
-                    item?.date === SelectDate?.date ? '#fff' : '#295dff',
-                },
-              ]}>
-              <Text
+          renderItem={({item, index}) => {
+            console.log(
+              'item?.date === SelectDate?.date :>> ',
+              item?.date,
+              SelectDate?.date,
+            );
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectDate(item);
+                  dispatch(dateAction(item));
+                }}
                 style={[
-                  styles.date,
-                  {color: item?.date === SelectDate?.date ? '#295dff' : '#fff'},
+                  styles.dateIconBody,
+                  {
+                    backgroundColor:
+                      item?.date === SelectDate?.date ? '#fff' : '#295dff',
+                  },
                 ]}>
-                {item.date.split('/')[0]}
-              </Text>
-              <Text
-                style={{
-                  color: item?.date === SelectDate?.date ? '#295dff' : '#fff',
-                }}>
-                {item.day.slice(0, 3)}
-              </Text>
-            </TouchableOpacity>
-          )}
+                <Text
+                  style={[
+                    styles.date,
+                    {
+                      color:
+                        item?.date === SelectDate?.date ? '#295dff' : '#fff',
+                    },
+                  ]}>
+                  {item.date.split('/')[0]}
+                </Text>
+                <Text
+                  style={{
+                    color: item?.date === SelectDate?.date ? '#295dff' : '#fff',
+                  }}>
+                  {item.day.slice(0, 3)}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
         />
       </View>
     </View>

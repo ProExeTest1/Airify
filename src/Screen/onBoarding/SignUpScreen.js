@@ -69,8 +69,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     dispatch(DineWay());
   };
 
-  const JourneyData = () => {
-    const journeyData = firestore()
+  const JourneyData = async () => {
+    const journeyData = await firestore()
       .collection('countryData')
       .doc('FinalData')
       .get()
@@ -161,51 +161,48 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <View style={{flex: 0.45, backgroundColor: 'blue'}}>
-        <OnBoardingModuleHeader
-          backImage={Images.backIcon}
-          onPress={() => {
-            {
-              index == 0 ? goBack() : swiperRef.current.scrollBy(-1);
-            }
-          }}
-          MainText={
-            index == 0
-              ? strings.createNewAccount
-              : index == 1
-              ? strings.TouchProfile
-              : index == 2
-              ? strings.Journey
-              : index == 3
-              ? strings.DineWay
-              : index == 4
-              ? strings.Way
-              : index == 5
-              ? strings.TermsCondition
-              : index == 6
-              ? strings.PIN
-              : null
+      <OnBoardingModuleHeader
+        backImage={Images.backIcon}
+        onPress={() => {
+          {
+            index == 0 ? goBack() : swiperRef.current.scrollBy(-1);
           }
-          SubText={
-            index == 0
-              ? strings.subTextSignUpScreenHeader
-              : index == 1
-              ? strings.subTextProfile
-              : index == 2
-              ? strings.JourneyText
-              : index == 3
-              ? strings.DineWayText
-              : index == 4
-              ? strings.WayText
-              : index == 5
-              ? strings.TermsConditionText
-              : index == 6
-              ? strings.PinText
-              : null
-          }
-          width={index == 0 ? '' : 16.67 * index}
-        />
-      </View>
+        }}
+        MainText={
+          index == 0
+            ? strings.createNewAccount
+            : index == 1
+            ? strings.TouchProfile
+            : index == 2
+            ? strings.Journey
+            : index == 3
+            ? strings.DineWay
+            : index == 4
+            ? strings.Way
+            : index == 5
+            ? strings.TermsCondition
+            : index == 6
+            ? strings.PIN
+            : null
+        }
+        SubText={
+          index == 0
+            ? strings.subTextSignUpScreenHeader
+            : index == 1
+            ? strings.subTextProfile
+            : index == 2
+            ? strings.JourneyText
+            : index == 3
+            ? strings.DineWayText
+            : index == 4
+            ? strings.WayText
+            : index == 5
+            ? strings.TermsConditionText
+            : index == 6
+            ? strings.PinText
+            : null
+        }
+      />
       <Swiper
         ref={swiperRef}
         scrollEnabled={false}
@@ -321,6 +318,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             <CountryPickTextInput
               value={phoneNo}
               onChangeText={phoneNo => setPhoneNo(phoneNo)}
+              placeholder={strings.Phone}
+              disabled={true}
+              onPress2={() => {
+                setShow(true);
+              }}
+              // countryCode={countryCode}
             />
             <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
             <OnBoardingTextInput
@@ -595,6 +598,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: wp(22),
     alignSelf: 'center',
+    top: hp(4),
   },
   buttonStyle: {
     marginTop: hp(4),

@@ -10,6 +10,7 @@ import SearchBar from './Common/SearchBar';
 import PassengerPickerModal from './ModalComponents/PassengerPickerModal';
 import ClassPickerModal from './ModalComponents/ClassPickerModal';
 import CustomTextInput from './Common/CustomPaperTextInput';
+import CommonHeader from './Common/CommonHeader';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -23,6 +24,7 @@ export {
   SearchBar,
   PassengerPickerModal,
   ClassPickerModal,
+  CommonHeader,
 };
 
 // import CustomPaperTextInput from "./Common/CustomPaperTextInput";

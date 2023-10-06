@@ -5,23 +5,32 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingText from '../../components/OnBoardingText';
 import {strings} from '../../helper/Strings';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {color} from '../../helper/ColorConstant';
 
 const WelcomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={Images.welcomeScreenIcon}
-        style={styles.welcomeScreenIconStyle}
-      />
-      <OnBoardingText
-        OnBoardingMainText={strings.AppName}
-        OnBoardingMainTextStyle={styles.appStyle}
-      />
-      <OnBoardingText
-        OnBoardingSubText={strings.subContent}
-        OnBoardingSubTextStyle={styles.subContentStyle}
-      />
-      <View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          paddingTop: hp(4),
+        }}>
+        <Image
+          source={Images.welcomeScreenIcon}
+          style={styles.welcomeScreenIconStyle}
+        />
+        <OnBoardingText
+          OnBoardingMainText={strings.AppName}
+          OnBoardingMainTextStyle={styles.appStyle}
+        />
+        <OnBoardingText
+          OnBoardingSubText={strings.subContent}
+          OnBoardingSubTextStyle={styles.subContentStyle}
+        />
+      </View>
+      <View style={{flex: 1}}>
         <OnBoardingSingleButton
           buttonTextStyle={styles.buttonTextStyle}
           buttonStyle={[styles.buttonStyle, {marginTop: hp(6)}]}
@@ -92,16 +101,14 @@ const styles = StyleSheet.create({
   welcomeScreenIconStyle: {
     height: hp(10),
     width: hp(10),
-    marginTop: hp(12),
   },
   subContentStyle: {
     fontSize: fontSize(14),
   },
   buttonStyle: {
     marginVertical: hp(1),
-    height: hp(5),
     backgroundColor: 'white',
-    borderWidth: 0.4,
+    borderWidth: 1,
   },
   signUpStyle: {
     flexDirection: 'row',
@@ -110,15 +117,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(22),
     marginTop: hp(4),
   },
-  appStyle: {
-    marginTop: hp(6),
-  },
   filedImageStyle: {
-    position: 'absolute',
-    left: wp(3),
+    marginStart: wp(3),
   },
   buttonTextStyle: {
-    color: 'black',
+    color: color.black,
+    flex: 1,
   },
 });
 
