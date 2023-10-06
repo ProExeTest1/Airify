@@ -14,12 +14,12 @@ const StackNavigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="SearchFlights" component={SearchFlights} />
         <Stack.Screen name="TabNavigation" component={TabNavigation} />
         <Stack.Screen
           name="SearchFlightsFilter"
           component={SearchFlightsFilter}
         />
+        <Stack.Screen name="SearchFlights" component={SearchFlights} />
         <Stack.Screen name="DatePicker" component={DatePickerScreen} />
         <Stack.Screen name="PlacePicker" component={PlacePickerScreen} />
       </Stack.Navigator>

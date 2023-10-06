@@ -26,30 +26,10 @@ import {
 import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import CheckBox from '../../components/Common/CheckBox';
 import {TimeData} from '../../assets/DummyData/timeData';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 
 const SearchFlightsFilter = ({navigation}) => {
-  let dispatch = useDispatch();
-  const [priceTargets1, setPriceTargets1] = useState([1000, 1500]);
-  const [numberOfStopsData, setNumberOfStopsData] = useState('Direct');
-  const [priceTargets2, setPriceTargets2] = useState([1, 3]);
-  const [AirlinesCondition, setAirlinesCondition] = useState(false);
-  const [AirlinesList, setAirlinesList] = useState([]);
-  const [priceTargets3, setPriceTargets3] = useState([5, 7]);
-  const [amenitiesList, setAmenitiesList] = useState([]);
-  const [amenitiesCondition, setAmenitiesCondition] = useState(false);
-  const [departureTime1, setDepartureTime1] = useState({});
-  const [departureTime2, setDepartureTime2] = useState({});
-  const [RefundAndRescheduleList, setRefundAndRescheduleList] = useState([]);
-  const [RefundAndRescheduleCondition, setRefundAndRescheduleCondition] =
-    useState(false);
-  const [FlightPreferencesList, setFlightPreferencesList] = useState([]);
-  const [FlightPreferencesCondition, setFlightPreferencesCondition] =
-    useState(false);
-  const [CabinClassList, setCabinClassList] = useState([]);
-  const [CabinClassCondition, setCabinClassCondition] = useState(false);
-
   const func = () => {
     temp = [];
     SearchFlightData?.map((item, index) => {
@@ -61,6 +41,96 @@ const SearchFlightsFilter = ({navigation}) => {
     });
     return temp;
   };
+  const searchFlightFilterData = useSelector(
+    e => e?.searchFlight?.searchFlightFilterData,
+  );
+  let dispatch = useDispatch();
+  const [priceTargets1, setPriceTargets1] = useState(
+    searchFlightFilterData?.priceRange
+      ? searchFlightFilterData?.priceRange
+      : [1000, 1500],
+  );
+  const [numberOfStopsData, setNumberOfStopsData] = useState(
+    searchFlightFilterData?.numberOfStopsData
+      ? searchFlightFilterData?.numberOfStopsData
+      : 'Direct',
+  );
+  const [priceTargets2, setPriceTargets2] = useState(
+    searchFlightFilterData?.stopsDuration
+      ? searchFlightFilterData?.stopsDuration
+      : [1, 3],
+  );
+  const [AirlinesCondition, setAirlinesCondition] = useState(
+    searchFlightFilterData?.airlinesList?.length === func()?.length
+      ? true
+      : false,
+  );
+  const [AirlinesList, setAirlinesList] = useState(
+    searchFlightFilterData?.airlinesList
+      ? searchFlightFilterData?.airlinesList
+      : [],
+  );
+  const [priceTargets3, setPriceTargets3] = useState(
+    searchFlightFilterData?.flightDuration
+      ? searchFlightFilterData?.flightDuration
+      : [5, 7],
+  );
+  const [amenitiesList, setAmenitiesList] = useState(
+    searchFlightFilterData?.amenitiesList
+      ? searchFlightFilterData?.amenitiesList
+      : [],
+  );
+
+  const [amenitiesCondition, setAmenitiesCondition] = useState(
+    searchFlightFilterData?.amenitiesList?.length === AmenitiesData?.length
+      ? true
+      : false,
+  );
+
+  const [departureTime1, setDepartureTime1] = useState(
+    searchFlightFilterData?.arrivalTime
+      ? searchFlightFilterData?.arrivalTime
+      : {},
+  );
+  const [departureTime2, setDepartureTime2] = useState(
+    searchFlightFilterData?.departureTime
+      ? searchFlightFilterData?.departureTime
+      : {},
+  );
+  const [RefundAndRescheduleList, setRefundAndRescheduleList] = useState(
+    searchFlightFilterData?.refundAndRescheduleList
+      ? searchFlightFilterData?.refundAndRescheduleList
+      : [],
+  );
+  const [RefundAndRescheduleCondition, setRefundAndRescheduleCondition] =
+    useState(
+      searchFlightFilterData?.refundAndRescheduleList?.length ===
+        RefundAndRescheduleData?.length
+        ? true
+        : false,
+    );
+  const [FlightPreferencesList, setFlightPreferencesList] = useState(
+    searchFlightFilterData?.flightPreferencesList
+      ? searchFlightFilterData?.flightPreferencesList
+      : [],
+  );
+  const [FlightPreferencesCondition, setFlightPreferencesCondition] = useState(
+    searchFlightFilterData?.flightPreferencesList?.length ===
+      FlightPreferencesData?.length
+      ? true
+      : false,
+  );
+  const [CabinClassList, setCabinClassList] = useState(
+    searchFlightFilterData?.cabinClassList
+      ? searchFlightFilterData?.cabinClassList
+      : [],
+  );
+  const [CabinClassCondition, setCabinClassCondition] = useState(
+    searchFlightFilterData?.cabinClassList?.length === CabinClassData?.length
+      ? true
+      : false,
+  );
+
   const CancelAll = () => {
     setAirlinesList([]);
   };
@@ -74,16 +144,20 @@ const SearchFlightsFilter = ({navigation}) => {
   const applySortdata = () => {
     dispatch(
       SearchFlightFilterData({
-        priceRange: priceTargets1,
-        numberOfStopsData: numberOfStopsData,
-        airlinesList: AirlinesList,
-        flightDuration: priceTargets2,
-        amenitiesList: amenitiesList,
-        arrivalTime: departureTime1,
-        departureTime: departureTime2,
-        refundAndRescheduleList: RefundAndRescheduleList,
-        flightPreferencesList: FlightPreferencesList,
-        cabinClassList: CabinClassList,
+        airlinesList: AirlinesList?.length > 0 ? AirlinesList : null,
+        amenitiesList: amenitiesList?.length > 0 ? amenitiesList : null,
+        arrivalTime: departureTime1?.title ? departureTime1 : null,
+        cabinClassList: CabinClassList?.length > 0 ? CabinClassList : null,
+        departureTime: departureTime2?.title ? departureTime2 : null,
+        flightDuration: priceTargets3?.length > 0 ? priceTargets3 : null,
+        flightPreferencesList:
+          FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
+        numberOfStopsData:
+          numberOfStopsData.length > 0 ? numberOfStopsData : null,
+        priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+        stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
+        refundAndRescheduleList:
+          RefundAndRescheduleList.length > 0 ? RefundAndRescheduleList : null,
       }),
     );
     navigation.navigate('SearchFlights');
@@ -393,7 +467,6 @@ const SearchFlightsFilter = ({navigation}) => {
               />
             </View>
           </View>
-          {/* bhdwuf */}
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
               <Text style={styles.boxTitle}>Cabin Class</Text>

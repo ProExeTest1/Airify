@@ -94,7 +94,7 @@ export const SearchFlightData = [
     pickTime: '13:00',
     lendTime: '21:30',
     totalHours: '8h 30m',
-    stop: '2 Stop',
+    stop: '3 Stop',
     stopDuration: 3,
     day: 1,
   },

@@ -27,6 +27,7 @@ import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import moment from 'moment';
+import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 
 const SearchFlights = ({navigation}) => {
   const dispatch = useDispatch();
@@ -35,12 +36,9 @@ const SearchFlights = ({navigation}) => {
   );
   const SelectDate = useSelector(e => e.date.normalDate);
   const setSelectDate = data => {
-    console.log('data.date', data.date);
     let tem = moment(data.date).format('D/M/YYYY');
     dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
   };
-
-  console.log('searchFlightFilterData >>>>>>>', searchFlightFilterData);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -139,6 +137,74 @@ const SearchFlights = ({navigation}) => {
     });
     setSearchFlightCardData(sortData);
     setModalVisible2(false);
+  };
+  useEffect(() => {
+    if (searchFlightFilterData?.priceRange) {
+      const filterData = SearchFlightData.filter(item => {
+        let priceRange =
+          searchFlightFilterData?.priceRange[0] <
+            Number(item.price.slice(1).replaceAll(',', '')) &&
+          searchFlightFilterData?.priceRange[1] >
+            Number(item.price.slice(1).replaceAll(',', ''));
+
+        let numberOfStops =
+          searchFlightFilterData?.numberOfStopsData === '2+ Stop'
+            ? Number(item.stop.slice(0, 1)) >= 2
+            : searchFlightFilterData?.numberOfStopsData === item.stop;
+
+        let airlinesList =
+          searchFlightFilterData.airlinesList !== null
+            ? searchFlightFilterData.airlinesList.some(
+                i => i === item.airlineName,
+              )
+            : true;
+
+        let flightDurationTime = item.totalHours.slice(0, -1).split('h ');
+        let flightDuration =
+          searchFlightFilterData?.flightDuration[0] <=
+            Number(flightDurationTime[0]) &&
+          searchFlightFilterData?.flightDuration[1] >
+            Number(flightDurationTime[0]);
+
+        let arrivalTimeList = item.lendTime.slice(0, 2);
+        let searchFlightFilterArrival =
+          searchFlightFilterData?.arrivalTime?.time.split(' - ');
+        let arrivalTime =
+          searchFlightFilterData.arrivalTime !== null
+            ? Number(searchFlightFilterArrival[0].slice(0, 2)) <=
+                Number(arrivalTimeList) &&
+              Number(searchFlightFilterArrival[1].slice(0, 2)) >
+                Number(arrivalTimeList)
+            : true;
+
+        let departureTimeList = item.pickTime.slice(0, 2);
+        let searchFlightFilterdeparture =
+          searchFlightFilterData?.departureTime?.time.split(' - ');
+        let departureTime =
+          searchFlightFilterData.departureTime !== null
+            ? Number(searchFlightFilterdeparture[0].slice(0, 2)) <=
+                Number(departureTimeList) &&
+              Number(searchFlightFilterdeparture[1].slice(0, 2)) >
+                Number(departureTimeList)
+            : true;
+
+        return (
+          priceRange &&
+          numberOfStops &&
+          airlinesList &&
+          flightDuration &&
+          arrivalTime &&
+          departureTime
+        );
+      });
+      console.log(filterData);
+      filterData.length < 0 ? setSearchFlightCardData(filterData) : applydata();
+    }
+  }, [searchFlightFilterData]);
+  const applydata = () => {
+    setSearchFlightCardData(SearchFlightData);
+    dispatch(SearchFlightFilterData({}));
+    Alert.alert('Filter data not match');
   };
   return (
     <View style={styles.body}>
