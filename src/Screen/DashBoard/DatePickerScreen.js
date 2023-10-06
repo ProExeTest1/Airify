@@ -1,16 +1,7 @@
-import {
-  Alert,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, statusBarHeight, wp} from '../../helper/Constants';
-import {images} from '../../helper/IconConstant';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
@@ -82,7 +73,9 @@ const DatePickerScreen = ({navigation, route}) => {
       setReturnPress(true);
     }
   }, []);
-  console.log(returnPress);
+
+  // departure date
+
   const date = new Date(selected).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
@@ -90,7 +83,9 @@ const DatePickerScreen = ({navigation, route}) => {
   const month = new Date(selected).toLocaleDateString('en-IN', {
     month: 'short',
   });
+
   // Return date
+
   const returndate = new Date(returnDate).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
@@ -98,6 +93,8 @@ const DatePickerScreen = ({navigation, route}) => {
   const returnmonth = new Date(returnDate).toLocaleDateString('en-IN', {
     month: 'short',
   });
+
+  //Current Date
 
   const currentDate = new Date()
     .toLocaleDateString('en-IN', {weekday: 'short'})
@@ -108,12 +105,17 @@ const DatePickerScreen = ({navigation, route}) => {
 
   const currentMonth = new Date().toLocaleDateString('en-IN', {month: 'short'});
 
+  // When user press on Ok button it will navigate to home screen and store date data in redux
+
   const onOkPress = () => {
     let tomorrow = new Date();
     tomorrow = moment(tomorrow).add(1, 'day').format('YYYY-MM-DD');
     let selectedDate = moment(selected).format('MM/DD/YYYY');
     let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
     let flag = 0;
+
+    //Condition for date vallidation
+
     if (press) {
       for (let i = 0; i <= 10; i++) {
         let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
@@ -250,7 +252,7 @@ const styles = StyleSheet.create({
   dateTextStyle: {
     fontSize: fontSize(16, 812),
     fontWeight: '500',
-    color: 'white',
+    color: color.white,
   },
   currentDateStyle: {
     width: wp(95),
@@ -268,7 +270,7 @@ const styles = StyleSheet.create({
   },
   searchFontStyle: {
     fontSize: fontSize(20, 812),
-    color: 'white',
+    color: color.white,
     fontWeight: 'bold',
   },
   dateMainViewStyle: {

@@ -3,4 +3,5 @@ export const color = {
   white: '#fff',
   black: '#000',
   grey: 'grey',
+  popUpdark: '#1C1F25',
 };

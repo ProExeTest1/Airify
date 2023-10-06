@@ -13,6 +13,7 @@ import {color} from '../../helper/ColorConstant';
 import Modal from 'react-native-modal';
 import {ClassData} from '../../assets/DummyData/Data';
 import {strings} from '../../helper/String';
+import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';
 
 const ClassPickerModal = ({
   isModalVisible,
@@ -69,16 +70,12 @@ const ClassPickerModal = ({
             />
           </View>
           <View style={styles.buttonViewStyle}>
-            <TouchableOpacity
-              style={styles.cancelButtonStyle}
-              onPress={onCancel}>
-              <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.okButtonStyle}
-              onPress={toggleModal}>
-              <Text style={styles.okButtonTextStyle}>OK</Text>
-            </TouchableOpacity>
+          <OnBoardingTwoButton
+          buttonTextOne={'Cancel'}
+          buttonTextTwo={'OK'}
+          onPress1={onCancel}
+          onPress2={toggleModal}
+        />
           </View>
         </View>
       </Modal>
@@ -176,14 +173,12 @@ const styles = StyleSheet.create({
     marginVertical: hp(1.2),
   },
   buttonViewStyle: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    borderTopWidth: 0.3,
-    borderColor: color.grey,
-    marginVertical: hp(1.2),
-    width: '90%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingVertical: hp(4),
+    borderTopWidth: 1,
+    width:'90%',
+    alignSelf:'center',
+    borderColor: '#e2e2e2',
+    marginBottom:hp(2)
   },
   imageStyle: {
     height: hp(2.4),

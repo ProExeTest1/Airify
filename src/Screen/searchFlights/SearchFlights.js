@@ -1,19 +1,14 @@
 import {
   View,
   Text,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   Image,
-  ScrollView,
   FlatList,
-  TouchableWithoutFeedback,
   Share,
   Alert,
-  Animated,
-  useAnimatedValue,
 } from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {fontSize, hp, wp} from '../../helper/Constants';
 import {Images} from '../../helper/IconConstant';
 import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
@@ -25,25 +20,18 @@ import {CreatePriceAlert} from '../../components/index';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
-import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
+import {depatureDateAction} from '../../redux/action/DateAction';
+import moment from 'moment';
+import { strings } from '../../helper/String';
 
 const SearchFlights = ({navigation}) => {
   const dispatch = useDispatch();
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   const SelectDate = useSelector(e => e.date.normalDate);
   const setSelectDate = data => {
-    const data2 = new Date(data.date);
-    const dayData = data.date.split('/');
-
-    dispatch(
-      depatureDateAction(
-        `${data2.toLocaleDateString('en-us', {
-          weekday: 'long',
-        })},${data2.toLocaleDateString('en-us', {month: 'short'})} ${
-          dayData[0]
-        } ${dayData[2]}`,
-      ),
-    );
+    console.log('data.date', data.date);
+    let tem = moment(data.date).format('D/M/YYYY');
+    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
   };
   console.log(searchFlightData);
   const [modalVisible1, setModalVisible1] = useState(false);
@@ -171,7 +159,7 @@ const SearchFlights = ({navigation}) => {
           onPress={() => navigation.navigate('SearchFlightsFilter')}
           style={styles.sortImgBody}>
           <Image style={styles.sortImg} source={Images.filterIcon} />
-          <Text style={styles.sortText}>Filter</Text>
+          <Text style={styles.sortText}>{strings.filter}</Text>
         </TouchableOpacity>
       </View>
       <Modal
@@ -198,7 +186,7 @@ const SearchFlights = ({navigation}) => {
         onBackdropPress={() => setModalVisible2(false)}>
         <View style={styles.createAlertBody}>
           <View style={styles.createAlertTitleBody}>
-            <Text style={styles.createAlertTitle}>Sort</Text>
+            <Text style={styles.createAlertTitle}>{strings.sort}</Text>
           </View>
           <View style={styles.sortModalBody}>
             <FlatList

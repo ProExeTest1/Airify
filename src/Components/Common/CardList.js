@@ -1,21 +1,40 @@
 import {
   View,
   Text,
-  SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import {fontSize, hp, wp} from '../../helper/Constants';
 import React from 'react';
 import {Images} from '../../helper/IconConstant';
 import {useDispatch, useSelector} from 'react-redux';
+import { color } from '../../helper/ColorConstant';
+import { flightDetailsAction } from '../../redux/action/FlightDetailAction';
 
-const CardList = ({item, index}) => {
+const CardList = ({item, index,navigation}) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-
+  const dispatch = useDispatch();
+  const onSendDataToRedux = (item,from,to,fromShortform,toShortform)=>{
+    dispatch(flightDetailsAction({
+      airlineName : item.airlineName,
+      day : item.day,
+      landTime : item.lendTime,
+      logoColor : item.logo,
+      departureTime : item.pickTime,
+      ticketPrice : item.price,
+      stop : item.stop,
+      totalHours : item.totalHours,
+      from : from,
+      To : to,
+      fromShortform : fromShortform,
+      toShortform : toShortform,
+    }))
+  }
   return (
-    <View style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
+    <TouchableOpacity style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}
+    onPress={()=>onSendDataToRedux(item,searchFlightData?.from,searchFlightData?.to,searchFlightData?.fromShortform,searchFlightData?.toShortform)}
+    >
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
@@ -48,7 +67,7 @@ const CardList = ({item, index}) => {
           {searchFlightData?.toShortform}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
@@ -80,7 +99,7 @@ const styles = StyleSheet.create({
     marginEnd: wp(3),
   },
   cardPrice: {
-    color: '#295dff',
+    color: color.commonBlue,
     fontSize: fontSize(20),
     fontWeight: '600',
   },

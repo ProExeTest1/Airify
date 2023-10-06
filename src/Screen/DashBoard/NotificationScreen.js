@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   SectionList,
   StyleSheet,
@@ -15,7 +16,7 @@ import {NotificationData} from '../../assets/DummyData/NotificationData';
 
 const NotificationScreen = ({navigation}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.headerViewStyle}>
         <SafeAreaView style={styles.safeHeaderViewStyle}></SafeAreaView>
 
@@ -105,6 +106,10 @@ const NotificationScreen = ({navigation}) => {
 export default NotificationScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: color.white,
+    flex: 1,
+  },
   header: {
     fontWeight: '500',
     color: color.grey,
@@ -125,7 +130,7 @@ const styles = StyleSheet.create({
   },
   safeHeaderViewStyle: {
     paddingHorizontal: wp(7),
-    paddingVertical: hp(3),
+    paddingVertical: Platform.OS == 'android' ? hp(1) : hp(3),
   },
   headerinnerViewStyle: {
     backgroundColor: color.commonBlue,
@@ -142,6 +147,7 @@ const styles = StyleSheet.create({
   },
   sectionListStyle: {
     marginVertical: hp(2.4),
+    backgroundColor: color.white,
   },
   listTouchStyle: {
     flexDirection: 'row',
@@ -173,7 +179,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     fontWeight: '600',
     marginVertical: hp(1),
-    color:color.black
+    color: color.black,
   },
   listDiscriptionTextStyle: {
     color: color.black,
