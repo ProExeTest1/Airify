@@ -1,6 +1,6 @@
 import React from 'react';
 import {StatusBar, StyleSheet, View} from 'react-native';
-import StackNavigation from './src/navigators/StackNavigation';
+import StackNavigation from './src/navigation/StackNavigation';
 import {MenuProvider} from 'react-native-popup-menu';
 import {store} from './src/redux/store';
 import {Provider} from 'react-redux';
