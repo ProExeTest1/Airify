@@ -14,7 +14,7 @@ import {wp, fontSize, hp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {TimeData} from '../../assets/DummyData/timeData';
-import {strings} from '../../helper/String';
+import {strings} from '../../helper/Strings';
 const CreatePriceAlert = ({
   setPriceTargets,
   setDepartureTime,

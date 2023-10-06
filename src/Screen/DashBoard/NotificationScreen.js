@@ -11,7 +11,7 @@ import {
 import React from 'react';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import {fontSize, hp, wp} from '../../helper/Constants';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {NotificationData} from '../../assets/DummyData/NotificationData';
 
 const NotificationScreen = ({navigation}) => {

@@ -19,7 +19,7 @@ import {
 } from 'react-native-popup-menu';
 import {dateAction} from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
-import {strings} from '../../helper/String';
+import {strings} from '../../helper/Strings';
 
 const SearchFlightsHeader = ({
   SelectDate,

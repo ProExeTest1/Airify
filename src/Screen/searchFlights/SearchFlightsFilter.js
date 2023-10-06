@@ -73,7 +73,7 @@ const SearchFlightsFilter = ({navigation}) => {
   const [priceTargets3, setPriceTargets3] = useState(
     searchFlightFilterData?.flightDuration
       ? searchFlightFilterData?.flightDuration
-      : [5, 7],
+      : [6, 8],
   );
   const [amenitiesList, setAmenitiesList] = useState(
     searchFlightFilterData?.amenitiesList

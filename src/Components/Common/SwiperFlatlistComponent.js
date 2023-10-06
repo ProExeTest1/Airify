@@ -2,7 +2,7 @@ import {Dimensions, Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import {dummyData} from '../../assets/DummyData/Data';
-import {hp, wp} from '../../helper/Constants';
+import {hp, wp} from '../../helper/Constant';
 
 const SwiperFlatlistComponent = ({showPagination}) => {
   return (

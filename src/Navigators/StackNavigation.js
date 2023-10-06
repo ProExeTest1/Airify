@@ -21,7 +21,6 @@ const StackNavigation = () => {
           name="SearchFlightsFilter"
           component={SearchFlightsFilter}
         />
-        <Stack.Screen name="SearchFlights" component={SearchFlights} />
         <Stack.Screen name="DatePicker" component={DatePickerScreen} />
         <Stack.Screen name="PlacePicker" component={PlacePickerScreen} />
         <Stack.Screen name="SearchFlights" component={SearchFlights} />

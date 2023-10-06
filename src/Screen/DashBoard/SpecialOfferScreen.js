@@ -10,10 +10,10 @@ import {
 } from 'react-native';
 import React from 'react';
 import {PickerHeaderBar, SwiperFlatlistComponent} from '../../components';
-import {strings} from '../../helper/String';
+import {strings} from '../../helper/Strings';
 import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
 import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constants';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import Clipboard from '@react-native-clipboard/clipboard';
 
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: hp(0.8),
-    width:'95%'
+    width: '95%',
   },
   claimDiscountButtonStyle: {
     alignItems: 'center',

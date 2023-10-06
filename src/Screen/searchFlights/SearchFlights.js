@@ -8,13 +8,8 @@ import {
   Share,
   Alert,
 } from 'react-native';
-<<<<<<< HEAD
 import React, {useEffect, useMemo, useState} from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
-=======
-import React, {useState} from 'react';
-import {fontSize, hp, wp} from '../../helper/Constants';
->>>>>>> origin/DharmikBranch-
 import {Images} from '../../helper/IconConstant';
 import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
 import {TicketList} from '../../components/index';
@@ -25,15 +20,10 @@ import {CreatePriceAlert} from '../../components/index';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
-<<<<<<< HEAD
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import moment from 'moment';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
-=======
-import {depatureDateAction} from '../../redux/action/DateAction';
-import moment from 'moment';
-import { strings } from '../../helper/String';
->>>>>>> origin/DharmikBranch-
+import {strings} from '../../helper/Strings';
 
 const SearchFlights = ({navigation}) => {
   const dispatch = useDispatch();
@@ -204,7 +194,9 @@ const SearchFlights = ({navigation}) => {
         );
       });
       console.log(filterData);
-      filterData.length < 0 ? setSearchFlightCardData(filterData) : applydata();
+      filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
+    } else {
+      setSearchFlightCardData(SearchFlightData);
     }
   }, [searchFlightFilterData]);
   const applydata = () => {
