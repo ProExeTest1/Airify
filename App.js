@@ -10,7 +10,7 @@ function App() {
     <Provider store={store}>
       <MenuProvider>
         <View style={styles.Header}>
-          <StatusBar barStyle={'light-content'} />
+          <StatusBar barStyle={'light-content'}/>
           <StackNavigation />
         </View>
       </MenuProvider>

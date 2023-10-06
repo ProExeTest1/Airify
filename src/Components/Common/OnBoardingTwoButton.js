@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {hp, wp} from '../../helper/Constant';
+
 const OnBoardingTwoButton = ({
   buttonTextOne,
   buttonTextTwo,

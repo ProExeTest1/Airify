@@ -5,7 +5,8 @@ import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import Modal from 'react-native-modal';
-import {string} from '../../helper/Strings';
+import {strings} from '../../helper/Strings';
+import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';
 
 const PassengerPickerModal = ({
   toggleModal,
@@ -28,7 +29,7 @@ const PassengerPickerModal = ({
             onPress={toggleModal}></TouchableOpacity>
           <View style={styles.headerStyle}>
             <Text style={styles.headerTextStyle}>
-              {string.passengerModalHeader}
+              {strings.passengerModalHeader}
             </Text>
           </View>
           <View style={styles.pickerMainViewStyle}>
@@ -38,8 +39,8 @@ const PassengerPickerModal = ({
                 style={styles.pickerImageStyle}
                 resizeMode="contain"
               />
-              <Text style={styles.categoryTextStyle}>{string.Adult}</Text>
-              <Text style={styles.ageTextStyle}>{string.adultAge}</Text>
+              <Text style={styles.categoryTextStyle}>{strings.Adult}</Text>
+              <Text style={styles.ageTextStyle}>{strings.adultAge}</Text>
               <ScrollPicker
                 dataSource={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
                 renderItem={(data, index) => {
@@ -75,11 +76,11 @@ const PassengerPickerModal = ({
                 style={styles.pickerImageStyle}
                 resizeMode="contain"
               />
-              <Text style={styles.categoryTextStyle}>{string.Child}</Text>
-              <Text style={styles.ageTextStyle}>{string.ChildAge}</Text>
-              <View style={{height: 100}}>
+              <Text style={styles.categoryTextStyle}>{strings.Child}</Text>
+              <Text style={styles.ageTextStyle}>{strings.ChildAge}</Text>
+              <View style={styles.scrollPickerHeightStyle}>
                 <ScrollPicker
-                  dataSource={[0, 1, 3, 4, 5]}
+                  dataSource={[0, 1, 2, 3, 4, 5]}
                   renderItem={(data, index) => {
                     return (
                       <>
@@ -114,8 +115,8 @@ const PassengerPickerModal = ({
                 style={styles.pickerImageStyle}
                 resizeMode="contain"
               />
-              <Text style={styles.categoryTextStyle}>{string.Infrant}</Text>
-              <Text style={styles.ageTextStyle}>{string.InfrantAge}</Text>
+              <Text style={styles.categoryTextStyle}>{strings.Infrant}</Text>
+              <Text style={styles.ageTextStyle}>{strings.InfrantAge}</Text>
               <ScrollPicker
                 dataSource={[0, 1, 2, 3]}
                 renderItem={(data, index) => {
@@ -147,16 +148,12 @@ const PassengerPickerModal = ({
             </View>
           </View>
           <View style={styles.buttonViewStyle}>
-            <TouchableOpacity
-              style={styles.cancelButtonStyle}
-              onPress={onCancel}>
-              <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.okButtonStyle}
-              onPress={toggleModal}>
-              <Text style={styles.okButtonTextStyle}>OK</Text>
-            </TouchableOpacity>
+            <OnBoardingTwoButton
+              buttonTextOne={'Cancel'}
+              buttonTextTwo={'OK'}
+              onPress1={onCancel}
+              onPress2={toggleModal}
+            />
           </View>
         </View>
       </Modal>
@@ -168,13 +165,13 @@ export default PassengerPickerModal;
 
 const styles = StyleSheet.create({
   pickerViewStyle: {
-    height: 200,
-    width: 100,
+    height: hp(24.6),
+    width: wp(26.6),
     borderRightWidth: 0.5,
   },
   pickerImageStyle: {
-    height: 40,
-    width: 40,
+    height: hp(4.9),
+    width: hp(4.9),
     alignSelf: 'center',
   },
   categoryTextStyle: {
@@ -206,21 +203,21 @@ const styles = StyleSheet.create({
     backgroundColor: color.commonBlue,
     height: hp(6),
     width: wp(37),
-    marginHorizontal: 10,
+    marginHorizontal: wp(2.6),
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: hp(1.2),
   },
   cancelButtonStyle: {
     backgroundColor: '#EBF0FE',
     height: hp(6),
     width: wp(37),
-    marginHorizontal: 10,
+    marginHorizontal: wp(2.6),
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: hp(1.2),
   },
   modalStyle: {
     justifyContent: 'flex-end',
@@ -237,12 +234,12 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     width: wp(15),
     alignSelf: 'center',
-    marginVertical: 10,
+    marginVertical: hp(1.2),
     borderColor: 'grey',
   },
   headerStyle: {
     borderBottomWidth: 0.5,
-    marginVertical: 10,
+    marginVertical: hp(1.2),
     width: '80%',
     alignSelf: 'center',
   },
@@ -251,20 +248,20 @@ const styles = StyleSheet.create({
     fontSize: fontSize(22),
     fontWeight: 'bold',
     color: 'black',
-    marginVertical: 20,
+    marginVertical: hp(2.4),
   },
   buttonViewStyle: {
-    flexDirection: 'row',
+    paddingVertical: hp(4),
+    borderTopWidth: 1,
+    width: '90%',
     alignSelf: 'center',
-    borderTopWidth: 0.5,
-    marginVertical: 10,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: '#e2e2e2',
+    marginBottom: hp(2),
   },
   pickerMainViewStyle: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     alignSelf: 'center',
   },
+  scrollPickerHeightStyle: {height: hp(12.31)},
 });

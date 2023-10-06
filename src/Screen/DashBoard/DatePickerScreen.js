@@ -1,12 +1,4 @@
-import {
-  Alert,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -82,31 +74,39 @@ const DatePickerScreen = ({navigation, route}) => {
       setReturnPress(true);
     }
   }, []);
-  console.log(returnPress);
-  const date = new Date(selected).toLocaleDateString('en-us', {
+
+  // departure date
+
+  const date = new Date(selected).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
   const dayname = date.split(',');
-  const month = new Date(selected).toLocaleDateString('en-us', {
-    month: 'short',
-  });
-  // Return date
-  const returndate = new Date(returnDate).toLocaleDateString('en-us', {
-    weekday: 'short',
-  });
-  const returndayname = returndate.split(',');
-  const returnmonth = new Date(returnDate).toLocaleDateString('en-us', {
+  const month = new Date(selected).toLocaleDateString('en-IN', {
     month: 'short',
   });
 
+  // Return date
+
+  const returndate = new Date(returnDate).toLocaleDateString('en-IN', {
+    weekday: 'short',
+  });
+  const returndayname = returndate.split(',');
+  const returnmonth = new Date(returnDate).toLocaleDateString('en-IN', {
+    month: 'short',
+  });
+
+  //Current Date
+
   const currentDate = new Date()
-    .toLocaleDateString('en-us', {weekday: 'short'})
+    .toLocaleDateString('en-IN', {weekday: 'short'})
     .split(',');
 
   let newDate1 = new Date();
   const newDate = moment(newDate1).format('YYYY-MM-DD').split('-');
 
-  const currentMonth = new Date().toLocaleDateString('en-us', {month: 'short'});
+  const currentMonth = new Date().toLocaleDateString('en-IN', {month: 'short'});
+
+  // When user press on Ok button it will navigate to home screen and store date data in redux
 
   const onOkPress = () => {
     let tomorrow = new Date();
@@ -114,6 +114,9 @@ const DatePickerScreen = ({navigation, route}) => {
     let selectedDate = moment(selected).format('MM/DD/YYYY');
     let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
     let flag = 0;
+
+    //Condition for date vallidation
+
     if (press) {
       for (let i = 0; i <= 10; i++) {
         let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
@@ -122,7 +125,7 @@ const DatePickerScreen = ({navigation, route}) => {
         }
       }
       if (flag === 1 && returndata == 'returnDate') {
-        const date = new Date(returnDate).toLocaleDateString('en-us', {
+        const date = new Date(returnDate).toLocaleDateString('en-IN', {
           weekday: 'long',
         });
         const dayname = date.split(',');
@@ -137,7 +140,7 @@ const DatePickerScreen = ({navigation, route}) => {
         dispatch(returnNormalDateAction(choosenDate));
         navigation.navigate('TabNavigation');
       } else if (flag === 1) {
-        const date = new Date(selected).toLocaleDateString('en-us', {
+        const date = new Date(selected).toLocaleDateString('en-IN', {
           weekday: 'long',
         });
         const dayname = date.split(',');
@@ -250,7 +253,7 @@ const styles = StyleSheet.create({
   dateTextStyle: {
     fontSize: fontSize(16, 812),
     fontWeight: '500',
-    color: 'white',
+    color: color.white,
   },
   currentDateStyle: {
     width: wp(95),
@@ -268,7 +271,7 @@ const styles = StyleSheet.create({
   },
   searchFontStyle: {
     fontSize: fontSize(20, 812),
-    color: 'white',
+    color: color.white,
     fontWeight: 'bold',
   },
   dateMainViewStyle: {

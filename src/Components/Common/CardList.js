@@ -1,19 +1,31 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import React from 'react';
 import {Images} from '../../helper/IconConstant';
 import {useDispatch, useSelector} from 'react-redux';
+import {color} from '../../helper/ColorConstant';
+import {flightDetailsAction} from '../../redux/action/FlightDetailAction';
 
 const CardList = ({setCartFlightData, item, index}) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-
+  const dispatch = useDispatch();
+  // const onSendDataToRedux = (item,from,to,fromShortform,toShortform)=>{
+  //   dispatch(flightDetailsAction({
+  //     airlineName : item.airlineName,
+  //     day : item.day,
+  //     landTime : item.lendTime,
+  //     logoColor : item.logo,
+  //     departureTime : item.pickTime,
+  //     ticketPrice : item.price,
+  //     stop : item.stop,
+  //     totalHours : item.totalHours,
+  //     from : from,
+  //     To : to,
+  //     fromShortform : fromShortform,
+  //     toShortform : toShortform,
+  //   }))
+  // }
   return (
     <TouchableOpacity
       onPress={() => setCartFlightData(item)}
@@ -82,7 +94,7 @@ const styles = StyleSheet.create({
     marginEnd: wp(3),
   },
   cardPrice: {
-    color: '#295dff',
+    color: color.commonBlue,
     fontSize: fontSize(20),
     fontWeight: '600',
   },

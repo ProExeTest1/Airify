@@ -31,4 +31,12 @@ export const Images = {
   twoYearBelowChild: require('../assets/icons/baby-boy.png'),
   tickMark: require('../assets/icons/check.png'),
   doneIcon: require('../assets/icons/done.png'),
+  checkBox_tickMark: require('../assets/icons/approve.png'),
+  security: require('../assets/icons/security.png'),
+  payments: require('../assets/icons/security-payment.png'),
+  discount: require('../assets/icons/sales.png'),
+  aeroplane: require('../assets/icons/aeroplane.jpeg'),
+  setting: require('../assets/icons/setting.png'),
+  copy: require('../assets/icons/paper-stack.png'),
+  clock: require('../assets/icons/clock.png'),
 };

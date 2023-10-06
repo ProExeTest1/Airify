@@ -12,7 +12,8 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import Modal from 'react-native-modal';
 import {ClassData} from '../../assets/DummyData/Data';
-import {string} from '../../helper/Strings';
+import {strings} from '../../helper/Strings';
+import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';
 
 const ClassPickerModal = ({
   isModalVisible,
@@ -29,7 +30,7 @@ const ClassPickerModal = ({
             style={styles.toggleLineStyle}
             onPress={toggleModal}></TouchableOpacity>
           <View style={styles.headerStyle}>
-            <Text style={styles.headerTextStyle}>{string.classheader}</Text>
+            <Text style={styles.headerTextStyle}>{strings.classheader}</Text>
           </View>
           <View>
             <FlatList
@@ -69,16 +70,12 @@ const ClassPickerModal = ({
             />
           </View>
           <View style={styles.buttonViewStyle}>
-            <TouchableOpacity
-              style={styles.cancelButtonStyle}
-              onPress={onCancel}>
-              <Text style={styles.cancelButtonTextStyle}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.okButtonStyle}
-              onPress={toggleModal}>
-              <Text style={styles.okButtonTextStyle}>OK</Text>
-            </TouchableOpacity>
+            <OnBoardingTwoButton
+              buttonTextOne={'Cancel'}
+              buttonTextTwo={'OK'}
+              onPress1={onCancel}
+              onPress2={toggleModal}
+            />
           </View>
         </View>
       </Modal>
@@ -176,14 +173,12 @@ const styles = StyleSheet.create({
     marginVertical: hp(1.2),
   },
   buttonViewStyle: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    borderTopWidth: 0.3,
-    borderColor: color.grey,
-    marginVertical: hp(1.2),
+    paddingVertical: hp(4),
+    borderTopWidth: 1,
     width: '90%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignSelf: 'center',
+    borderColor: '#e2e2e2',
+    marginBottom: hp(2),
   },
   imageStyle: {
     height: hp(2.4),

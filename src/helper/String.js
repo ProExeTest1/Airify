@@ -22,18 +22,17 @@ export const strings = {
   exclusive_offer: 'Exclusive 25% Off on Your Next Flight!',
   offeerDiscription:
     'Unlock a world of saving and adventure with Airify! For a limited time. we are thrilled to offer you an exclusive 25% discount on your next flight.',
-  T_and_D: 'Terms and Conditions :',
-  T_and_D_line1: 'Promo code FLYHIGH25 is valis for one time use per user',
-  T_and_D_line2:
-    'The discount is applicable to the base fare of the your ticket and price of ticket',
-  PriceAlertHeader: 'Create Price Alert',
+  T_and_D : 'Terms and Conditions :',
+  T_and_D_line1 : 'Promo code FLYHIGH25 is valis for one time use per user',
+  T_and_D_line2 : 'The discount is applicable to the base fare of the your ticket and price of ticket',
+  PriceAlertHeader : 'Create Price Alert',
   PriceAlertDis: 'Never miss a deal! Get notified when flight prices drop.',
-  PriceTarget: 'Price Targets',
-  DepartureTime: 'Departure Time',
+  PriceTarget : 'Price Targets',
+  DepartureTime : 'Departure Time',
   DirectFlight: 'Only Direct Flights',
-  searchFlight: 'Search Flights',
-  shareResult: 'Share Results',
-  priceAlerts: 'Price Alerts',
-  filter: 'Filter',
-  sort: 'Sort',
-};
+  searchFlight : 'Search Flights',
+  shareResult : 'Share Results',
+  priceAlerts :'Price Alerts',
+  filter : 'Filter',
+  sort : 'Sort'
+}

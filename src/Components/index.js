@@ -13,6 +13,7 @@ import ClassPickerModal from './ModalComponents/ClassPickerModal';
 import CheckBox from './Common/CheckBox';
 import MultiSliderComponets from './Common/MultiSliderComponets';
 import GetTime from './Common/GetTime';
+import SwiperFlatlistComponent from './Common/SwiperFlatlistComponent';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -29,19 +30,5 @@ export {
   CheckBox,
   MultiSliderComponets,
   GetTime,
+  SwiperFlatlistComponent,
 };
-
-// import CustomPaperTextInput from "./Common/CustomPaperTextInput";
-// import CustomTextInput from "./Common/CustomTextInput";
-// import TabBarComponents from "./Common/TabBarComponents";
-
-// export {
-//     CustomPaperTextInput,
-//     CustomTextInput,
-//     TabBarComponents,
-//     PickerHeaderBar,
-//     SearchBar,
-//     PassengerPickerModal,
-//     ClassPickerModal,
-
-// }

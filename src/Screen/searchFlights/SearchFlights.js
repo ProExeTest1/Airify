@@ -1,20 +1,20 @@
 import {
   View,
   Text,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   Image,
-  ScrollView,
   FlatList,
-  TouchableWithoutFeedback,
   Share,
   Alert,
-  Animated,
-  useAnimatedValue,
 } from 'react-native';
+<<<<<<< HEAD
 import React, {useEffect, useMemo, useState} from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
+=======
+import React, {useState} from 'react';
+import {fontSize, hp, wp} from '../../helper/Constants';
+>>>>>>> origin/DharmikBranch-
 import {Images} from '../../helper/IconConstant';
 import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
 import {TicketList} from '../../components/index';
@@ -25,9 +25,15 @@ import {CreatePriceAlert} from '../../components/index';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
+<<<<<<< HEAD
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import moment from 'moment';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
+=======
+import {depatureDateAction} from '../../redux/action/DateAction';
+import moment from 'moment';
+import { strings } from '../../helper/String';
+>>>>>>> origin/DharmikBranch-
 
 const SearchFlights = ({navigation}) => {
   const dispatch = useDispatch();
@@ -232,7 +238,7 @@ const SearchFlights = ({navigation}) => {
           onPress={() => navigation.navigate('SearchFlightsFilter')}
           style={styles.sortImgBody}>
           <Image style={styles.sortImg} source={Images.filterIcon} />
-          <Text style={styles.sortText}>Filter</Text>
+          <Text style={styles.sortText}>{strings.filter}</Text>
         </TouchableOpacity>
       </View>
       <Modal
@@ -259,7 +265,7 @@ const SearchFlights = ({navigation}) => {
         onBackdropPress={() => setModalVisible2(false)}>
         <View style={styles.createAlertBody}>
           <View style={styles.createAlertTitleBody}>
-            <Text style={styles.createAlertTitle}>Sort</Text>
+            <Text style={styles.createAlertTitle}>{strings.sort}</Text>
           </View>
           <View style={styles.sortModalBody}>
             <FlatList
