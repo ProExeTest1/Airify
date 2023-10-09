@@ -78,7 +78,7 @@ const PassengerPickerModal = ({
               />
               <Text style={styles.categoryTextStyle}>{strings.Child}</Text>
               <Text style={styles.ageTextStyle}>{strings.ChildAge}</Text>
-              <View style={styles.scrollPickerHeightStyle}>
+              <View style={{height: 100}}>
                 <ScrollPicker
                   dataSource={[0, 1, 2, 3, 4, 5]}
                   renderItem={(data, index) => {

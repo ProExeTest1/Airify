@@ -28,3 +28,18 @@ export const radioButtons = [
     label: 'Shortest Duration',
   },
 ];
+
+export const genderRatioButton = [
+  {
+    id: '1',
+    label: 'Male',
+  },
+  {
+    id: '2',
+    label: 'Female',
+  },
+  {
+    id: '3',
+    label: 'Other',
+  },
+];

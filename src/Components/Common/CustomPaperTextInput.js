@@ -3,7 +3,6 @@ import React from 'react';
 import {TextInput} from 'react-native-paper';
 import {fontSize, hp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
-
 const CustomPaperTextInput = ({
   width,
   placeholder,

@@ -1,5 +1,4 @@
 import CustomPaperTextInput from './Common/CustomPaperTextInput';
-import CustomTextInput from './Common/CustomTextInput';
 import TabBarComponents from './Common/TabBarComponents';
 import SearchFlightsHeader from './Common/SearchFlightsHeader';
 import CardList from './Common/CardList';
@@ -14,6 +13,8 @@ import CheckBox from './Common/CheckBox';
 import MultiSliderComponets from './Common/MultiSliderComponets';
 import GetTime from './Common/GetTime';
 import SwiperFlatlistComponent from './Common/SwiperFlatlistComponent';
+import CustomTextInput from './Common/CustomPaperTextInput';
+import CommonHeader from './Common/CommonHeader';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -31,4 +32,5 @@ export {
   MultiSliderComponets,
   GetTime,
   SwiperFlatlistComponent,
+  CommonHeader,
 };

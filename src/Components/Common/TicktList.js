@@ -16,7 +16,8 @@ const TicktList = ({SelectDate, SearchFlightCard}) => {
       <FlatList
         data={SearchFlightCard.filter(i => {
           if (
-            `${new Date().toLocaleString().split(',')[0]}` == SelectDate?.date
+            `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
+            SelectDate?.date
           ) {
             return (
               i.pickTime >
@@ -29,13 +30,19 @@ const TicktList = ({SelectDate, SearchFlightCard}) => {
         })}
         bounces={false}
         showsVerticalScrollIndicator={false}
-        renderItem={({item, index}) => (
-          <CardList
-            setCartFlightData={setCartFlightData}
-            item={item}
-            index={index}
-          />
-        )}
+        renderItem={({item, index}) => {
+          console.log(
+            new Date().toLocaleString('en-IN').split(',')[0],
+            SelectDate?.date,
+          );
+          return (
+            <CardList
+              setCartFlightData={setCartFlightData}
+              item={item}
+              index={index}
+            />
+          );
+        }}
         key={({item, index}) => index}
       />
     </View>

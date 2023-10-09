@@ -2,7 +2,7 @@ import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {images} from '../../helper/IconConstant';
+import {Images} from '../../helper/IconConstant';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
@@ -74,8 +74,6 @@ const DatePickerScreen = ({navigation, route}) => {
       setReturnPress(true);
     }
   }, []);
-
-  // departure date
 
   const date = new Date(selected).toLocaleDateString('en-IN', {
     weekday: 'short',

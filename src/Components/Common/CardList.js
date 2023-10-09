@@ -67,16 +67,16 @@ const CardList = ({setCartFlightData, item, index}) => {
 };
 const styles = StyleSheet.create({
   cardBody: {
-    backgroundColor: '#fff',
+    backgroundColor: color.white,
     paddingHorizontal: wp(4),
     marginBottom: hp(2),
     borderRadius: 10,
-    borderColor: '#e2e2e2',
+    borderColor: color.grayLight,
     borderWidth: 1,
     flex: 1,
   },
   cardHeader: {
-    borderColor: '#e2e2e2',
+    borderColor: color.grayLight,
     borderBottomWidth: 1,
     paddingVertical: hp(2.5),
     flexDirection: 'row',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   cardPriceTitle: {
-    color: '#7e7e7f',
+    color: color.darkLight,
     fontSize: fontSize(18),
   },
   cardDataBody: {
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     width: hp(17),
   },
   FlightsPlaseImgText: {
-    color: '#7e7e7f',
+    color: color.darkLight,
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: hp(1.5),
   },
   FlightsPlaseName: {
-    color: '#7e7e7f',
+    color: color.darkLight,
     fontWeight: '500',
   },
   cardBottemBody: {

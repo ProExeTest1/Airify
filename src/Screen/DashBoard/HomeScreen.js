@@ -10,8 +10,9 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
 
 import {
@@ -20,6 +21,7 @@ import {
   PassengerPickerModal,
   SwiperFlatlistComponent,
 } from '../../components/index';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import SwiperFlatList from 'react-native-swiper-flatlist';
@@ -27,10 +29,16 @@ import {dummyData} from '../../assets/DummyData/Data';
 import {useSelector, useDispatch} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
+import auth from '@react-native-firebase/auth';
+import firestore, {firebase} from '@react-native-firebase/firestore';
 
 const HomeScreen = ({navigation}) => {
+  const theme = useColorScheme();
+  useEffect(() => {
+    UserData();
+  }, []);
   const dispatch = useDispatch();
-  const reduxDepatureDate = useSelector(state => state.date.depatureDate);
+  const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
   //Maintaining textInput value with redux data
@@ -57,6 +65,7 @@ const HomeScreen = ({navigation}) => {
   const [adult, setAdult] = useState(1);
   const [child, setChild] = useState(0);
   const [twoYearBelowChild, setTwoYearBelowChild] = useState(0);
+  const [userData, setUserData] = useState({});
   const seatcount = () => {
     setSeat(adult + child + twoYearBelowChild + ' ' + 'seat');
     setAdult(1);
@@ -108,6 +117,14 @@ const HomeScreen = ({navigation}) => {
       }
     }
   };
+
+  const UserData = async () => {
+    const journeyData = await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get();
+    setUserData(journeyData.data());
+  };
   return (
     <>
       <ScrollView
@@ -119,7 +136,7 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.headerStyle}>
               <View style={styles.profilepicViewStyle}>
                 <Image
-                  source={Images.demoPic}
+                  source={{uri: userData?.profileImageURL}}
                   style={styles.profilePicStyle}
                   resizeMode="stretch"
                 />
@@ -133,12 +150,12 @@ const HomeScreen = ({navigation}) => {
                       ? strings.evening
                       : strings.Night}
                   </Text>
-                  <Text style={styles.userNameStyle}>Andrew Ainsley</Text>
+                  <Text style={styles.userNameStyle}>{userData?.Name}</Text>
                 </View>
               </View>
               <TouchableOpacity
                 style={styles.bellTouchStyle}
-                onPress={() => navigation.navigate('Notification')}>
+                onPress={() => navigation.navigate('NotificationScreen')}>
                 <Image
                   source={Images.bell}
                   style={styles.bellStyle}
