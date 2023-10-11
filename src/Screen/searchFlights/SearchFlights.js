@@ -217,6 +217,7 @@ const SearchFlights = ({navigation}) => {
       <TicketList
         SelectDate={SelectDate}
         SearchFlightCard={SearchFlightCardData}
+       
       />
       <View style={styles.sortBody}>
         <TouchableOpacity

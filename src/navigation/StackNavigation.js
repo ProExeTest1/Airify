@@ -8,6 +8,9 @@ import DatePickerScreen from '../screen/dashBoard/DatePickerScreen';
 import PlacePickerScreen from '../screen/dashBoard/PlacePickerScreen';
 import NotificationScreen from '../screen/dashBoard/NotificationScreen';
 import SpecialOfferScreen from '../screen/dashBoard/SpecialOfferScreen';
+import FlightDetailsScreen from '../screen/searchFlights/FlightDetailsScreen';
+import FlightPackageDetailsScreen from '../screen/searchFlights/FlightPackageDetailsScreen';
+
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   return (
@@ -26,6 +29,11 @@ const StackNavigation = () => {
         <Stack.Screen name="SearchFlights" component={SearchFlights} />
         <Stack.Screen name="Notification" component={NotificationScreen} />
         <Stack.Screen name="SpecialOffer" component={SpecialOfferScreen} />
+        <Stack.Screen name="FlightDetails" component={FlightDetailsScreen} />
+        <Stack.Screen
+          name="FlightPackageDetails"
+          component={FlightPackageDetailsScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -48,7 +48,7 @@ const HomeScreen = ({navigation}) => {
   const [destination, setDestination] = useState('');
   const [depatureDate, setDepatureDate] = useState();
   const [seat, setSeat] = useState();
-  const [passengerClass, setPassengerClass] = useState();
+  const [passengerClass, setPassengerClass] = useState('');
   const [returnDate, setReturnDate] = useState();
   const [press, setPress] = useState(false);
   const [change, setChnage] = useState(false);
@@ -64,7 +64,7 @@ const HomeScreen = ({navigation}) => {
     setTwoYearBelowChild(null);
   };
   const dynamicStyle = {
-    marginTop: press ? hp(53) : hp(43),
+    marginTop: hp(3),
   };
   const toggleChange = () => {
     setChnage(!change);
@@ -109,51 +109,51 @@ const HomeScreen = ({navigation}) => {
     }
   };
   return (
-    <>
+    <View style={{flex: 1}}>
+      <View style={styles.headerViewStyle}></View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         bounces={false}
         style={styles.ScrollViewStyle}>
-        <View style={styles.headerViewStyle}>
-          <SafeAreaView>
-            <View style={styles.headerStyle}>
-              <View style={styles.profilepicViewStyle}>
-                <Image
-                  source={Images.demoPic}
-                  style={styles.profilePicStyle}
-                  resizeMode="stretch"
-                />
-                <View style={styles.headertextStyle}>
-                  <Text style={styles.GMStyle}>
-                    {hours < 12
-                      ? strings.Morning
-                      : hours < 17
-                      ? strings.Afternoon
-                      : hours < 20
-                      ? strings.evening
-                      : strings.Night}
-                  </Text>
-                  <Text style={styles.userNameStyle}>Andrew Ainsley</Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={styles.bellTouchStyle}
-                onPress={() => navigation.navigate('Notification')}>
-                <Image
-                  source={Images.bell}
-                  style={styles.bellStyle}
-                  resizeMode="stretch"
-                />
-              </TouchableOpacity>
+        <SafeAreaView style={styles.headerStyle}>
+          <View style={styles.profilepicViewStyle}>
+            <Image
+              source={Images.demoPic}
+              style={styles.profilePicStyle}
+              resizeMode="stretch"
+            />
+            <View style={styles.headertextStyle}>
+              <Text style={styles.GMStyle}>
+                {hours < 12
+                  ? strings.Morning
+                  : hours < 17
+                  ? strings.Afternoon
+                  : hours < 20
+                  ? strings.evening
+                  : strings.Night}
+              </Text>
+              <Text style={styles.userNameStyle}>Andrew Ainsley</Text>
             </View>
-          </SafeAreaView>
-        </View>
+          </View>
+          <TouchableOpacity
+            style={styles.bellTouchStyle}
+            onPress={() => navigation.navigate('Notification')}>
+            <Image
+              source={Images.bell}
+              style={styles.bellStyle}
+              resizeMode="stretch"
+            />
+          </TouchableOpacity>
+        </SafeAreaView>
         <View style={styles.seatBookingMainViewStyle}>
           <View style={styles.optionStyle}>
             <TouchableOpacity
               style={[
                 styles.optionTouchStyle,
-                {backgroundColor: !press ? color.commonBlue : color.white},
+                {
+                  backgroundColor: !press ? color.commonBlue : color.white,
+                  marginEnd: wp(4),
+                },
               ]}
               onPress={() => setPress(false)}>
               <Text
@@ -179,63 +179,62 @@ const HomeScreen = ({navigation}) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <CustomPaperTextInput
-            width={'90%'}
-            marginVertical={10}
-            placeholder={'From'}
-            label={'From'}
-            onPress={() =>
-              navigation.navigate('PlacePicker', {data: 'Select Origin'})
-            }
-            icon={Images.takeOff}
-            value={
-              change
-                ? reduxDestinationPlace
-                  ? destinationData
-                  : destination
-                : depatureData !== 'undefined(undefined)'
-                ? depatureData
-                : origin
-            }
-            onChangeText={txt =>
-              change ? setDestination(txt) : setOrigin(txt)
-            }
-          />
-          <CustomPaperTextInput
-            width={'90%'}
-            placeholder={'Destination'}
-            label={'To'}
-            marginVertical={10}
-            onPress={() =>
-              navigation.navigate('PlacePicker', {data: 'Select Destination'})
-            }
-            icon={Images.landing}
-            value={
-              change
-                ? reduxDepaturePlace
+          <View>
+            <CustomPaperTextInput
+              marginVertical={hp(1)}
+              placeholder={'From'}
+              label={'From'}
+              onPress={() =>
+                navigation.navigate('PlacePicker', {data: 'Select Origin'})
+              }
+              icon={Images.takeOff}
+              value={
+                change
+                  ? reduxDestinationPlace
+                    ? destinationData
+                    : destination
+                  : depatureData !== 'undefined(undefined)'
                   ? depatureData
                   : origin
-                : destinationData !== 'undefined(undefined)'
-                ? destinationData
-                : destination
-            }
-            onChangeText={txt =>
-              change ? setOrigin(txt) : setDestination(txt)
-            }
-          />
-          <TouchableOpacity
-            onPress={() => toggleChange()}
-            style={styles.updownTouchStyle}>
-            <Image
-              source={Images.up_down}
-              style={styles.updownStyle}
-              resizeMode="contain"
+              }
+              onChangeText={txt =>
+                change ? setDestination(txt) : setOrigin(txt)
+              }
             />
-          </TouchableOpacity>
+            <CustomPaperTextInput
+              placeholder={'Destination'}
+              label={'To'}
+              marginVertical={hp(1)}
+              onPress={() =>
+                navigation.navigate('PlacePicker', {data: 'Select Destination'})
+              }
+              icon={Images.landing}
+              value={
+                change
+                  ? reduxDepaturePlace
+                    ? depatureData
+                    : origin
+                  : destinationData !== 'undefined(undefined)'
+                  ? destinationData
+                  : destination
+              }
+              onChangeText={txt =>
+                change ? setOrigin(txt) : setDestination(txt)
+              }
+            />
+            <TouchableOpacity
+              onPress={() => toggleChange()}
+              style={styles.updownTouchStyle}>
+              <Image
+                source={Images.up_down}
+                style={styles.updownStyle}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
           <CustomPaperTextInput
-            width={'90%'}
             placeholder={'Depature Date'}
-            marginVertical={10}
+            marginVertical={hp(1)}
             label={'Depature Date'}
             disabled={true}
             icon={Images.calendar}
@@ -245,9 +244,8 @@ const HomeScreen = ({navigation}) => {
           />
           {press ? (
             <CustomPaperTextInput
-              width={'90%'}
               placeholder={'Return Date'}
-              marginVertical={10}
+              marginVertical={hp(1)}
               label={'Return Date'}
               icon={Images.calendar}
               onPress={() =>
@@ -259,20 +257,20 @@ const HomeScreen = ({navigation}) => {
           ) : null}
           <View style={styles.customInputStyle}>
             <CustomPaperTextInput
-              width="50%"
               placeholder={'Seat'}
+              width={'42%'}
               label={'Passenger'}
               icon={Images.passenger}
               onPress={toggleModal}
               value={seat}
             />
             <CustomPaperTextInput
-              width={'44%'}
               placeholder={'Class'}
+              width={'44%'}
               label={'Class'}
               icon={Images.seat}
               onPress={toggleClassModal}
-              value={passengerClass}
+              value={passengerClass.split(' ')[0]}
             />
           </View>
           <TouchableOpacity
@@ -327,7 +325,7 @@ const HomeScreen = ({navigation}) => {
           setPassengerClass(null);
         }}
       />
-    </>
+    </View>
   );
 };
 
@@ -346,17 +344,20 @@ const styles = StyleSheet.create({
   headerViewStyle: {
     backgroundColor: color.commonBlue,
     height: hp(35),
+    width: wp(100),
+    position: 'absolute',
   },
   headerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: wp(6.66),
     justifyContent: 'space-between',
-    marginTop: Platform.OS === 'android' ? hp(4) : null,
+    marginTop: Platform.OS === 'android' ? hp(3) : null,
   },
   profilepicViewStyle: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: hp(2),
   },
   profilePicStyle: {
     height: hp(7.38),
@@ -376,23 +377,19 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: color.white,
     padding: hp(1.2),
+    marginBottom: hp(2),
   },
   bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.white},
   seatBookingMainViewStyle: {
-    width: wp(93),
     paddingVertical: hp(2.4),
     backgroundColor: color.white,
-    alignSelf: 'center',
-    alignItems: 'center',
     borderRadius: 16,
-    position: 'absolute',
-    top: hp(15),
-    zIndex: 1,
+    marginHorizontal: wp(6),
   },
   optionStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: wp(83),
+    paddingHorizontal: wp(4),
   },
   optionTouchStyle: {
     borderRadius: 30,
@@ -401,7 +398,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: hp(1.6),
-    width: wp(40),
+    //
+    flex: 1,
   },
   optionTextStyle: {
     fontWeight: '700',
@@ -409,17 +407,15 @@ const styles = StyleSheet.create({
   customInputStyle: {
     flexDirection: 'row',
     marginVertical: hp(1.2),
-    justifyContent: 'space-between',
-    width: '90%',
   },
   searchButtonStyle: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: wp(84),
     height: hp(7),
     borderRadius: 16,
     backgroundColor: 'blue',
     marginVertical: hp(1.2),
+    marginHorizontal: wp(4),
   },
   searchFontStyle: {
     fontSize: fontSize(20, 812),
@@ -427,13 +423,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   offerStyle: {
-    marginTop: hp(50),
-    width: wp(90),
+    width: wp(88),
     alignSelf: 'center',
     position: 'relative',
   },
   specialOfferViewStyle: {
-    width: wp(90),
+    width: wp(88),
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -457,7 +452,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: hp(15),
+    top: '35%',
     right: wp(10),
   },
 });

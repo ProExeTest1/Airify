@@ -60,6 +60,8 @@ const PlacePickerScreen = ({navigation, route}) => {
           city: placename,
           country: countryname,
           airport: airport,
+          capitalName: capital,
+          countryfullName: country,
         };
       } else {
         const length1 = data1.length;
@@ -68,6 +70,8 @@ const PlacePickerScreen = ({navigation, route}) => {
           city: placename,
           country: countryname,
           airport: airport,
+          capitalName: capital,
+          countryfullName: country,
         };
       }
     } else {
@@ -79,6 +83,8 @@ const PlacePickerScreen = ({navigation, route}) => {
           city: placename,
           country: countryname,
           airport: airport,
+          capitalName: capital,
+          countryfullName: country,
         };
       } else {
         const length1 = data1.length;
@@ -87,6 +93,8 @@ const PlacePickerScreen = ({navigation, route}) => {
           city: placename,
           country: countryname,
           airport: airport,
+          capitalName: capital,
+          countryfullName: country,
         };
       }
     }

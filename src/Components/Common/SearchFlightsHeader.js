@@ -20,6 +20,7 @@ import {
 import {dateAction} from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
 import {strings} from '../../helper/Strings';
+import { color } from '../../helper/ColorConstant';
 
 const SearchFlightsHeader = ({
   SelectDate,
@@ -146,6 +147,7 @@ const styles = StyleSheet.create({
   BackImg: {
     height: wp(8),
     width: wp(8),
+    tintColor:color.white,
   },
   headerTitleBody: {
     position: 'absolute',

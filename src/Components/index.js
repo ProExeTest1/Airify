@@ -14,6 +14,9 @@ import CheckBox from './Common/CheckBox';
 import MultiSliderComponets from './Common/MultiSliderComponets';
 import GetTime from './Common/GetTime';
 import SwiperFlatlistComponent from './Common/SwiperFlatlistComponent';
+import FlightDetails from './FlightDetailComponents/FlightDetails';
+import RefundandRescheduleInfo from './FlightDetailComponents/RefundandRescheduleInfo';
+
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -31,4 +34,6 @@ export {
   MultiSliderComponets,
   GetTime,
   SwiperFlatlistComponent,
+  FlightDetails,
+  RefundandRescheduleInfo,
 };
