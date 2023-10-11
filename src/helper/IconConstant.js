@@ -49,7 +49,7 @@ export const Images = {
   timeIcon: require('../assets/icons/time.png'),
   flightIcon: require('../assets/icons/flight.png'),
   cancel: require('../assets/icons/close.png'),
-  search: require('../assets/icons/Search.png'),
+  search: require('../assets/icons/search.png'),
   adult: require('../assets/icons/man.png'),
   children: require('../assets/icons/children.png'),
   twoYearBelowChild: require('../assets/icons/baby-boy.png'),
@@ -76,4 +76,5 @@ export const Images = {
   info: require('../assets/icons/info.png'),
   logout: require('../assets/icons/logout.png'),
   planIcon: require('../assets/icons/planIcon.png'),
+  topUpIcon: require('../assets/icons/topUp.png'),
 };

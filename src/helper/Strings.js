@@ -169,4 +169,16 @@ export const strings = {
   country: 'Country',
   address: 'Address',
   notification: 'Notification',
+
+  // wallet
+
+  wallet: 'Wallet',
+  yourBalance: 'Your balance',
+  topUp: 'Top Up',
+  walletTopUp: 'Wallet Top Up',
+  continue: 'Continue',
+  selectPaymentMethod: 'Select Payment Method',
+  continueTopUp: 'Continue Top Up',
+  avalableBalance: 'Avalable Balance: ',
+  transactionHistory: 'Transaction History',
 };

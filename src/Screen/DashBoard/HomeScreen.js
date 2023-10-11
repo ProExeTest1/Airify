@@ -30,7 +30,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
 import auth from '@react-native-firebase/auth';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 const HomeScreen = ({navigation}) => {
   const theme = useColorScheme();

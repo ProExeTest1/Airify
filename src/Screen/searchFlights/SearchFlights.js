@@ -26,15 +26,6 @@ import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 import {strings} from '../../helper/Strings';
 
 const SearchFlights = ({navigation}) => {
-  const dispatch = useDispatch();
-  const searchFlightFilterData = useSelector(
-    e => e?.searchFlight?.searchFlightFilterData,
-  );
-  const SelectDate = useSelector(e => e.date.normalDate);
-  const setSelectDate = data => {
-    let tem = moment(data.date).format('D/M/YYYY');
-    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
-  };
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -46,6 +37,21 @@ const SearchFlights = ({navigation}) => {
     useState(SearchFlightData);
 
   const [selectedData, setSelectedData] = useState({});
+
+  const dispatch = useDispatch();
+
+  const searchFlightFilterData = useSelector(
+    e => e?.searchFlight?.searchFlightFilterData,
+  );
+
+  const SelectDate = useSelector(e => e.date.normalDate);
+
+  /* ----------------------------------------------------> date function */
+
+  const setSelectDate = data => {
+    let tem = moment(data.date).format('D/M/YYYY');
+    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
+  };
   const onShare = async () => {
     try {
       await Share.share({
@@ -68,6 +74,7 @@ const SearchFlights = ({navigation}) => {
       Alert.alert(error.message);
     }
   };
+
   const addAlert = () => {
     setCreatePriceData({
       priceTargets: priceTargets,
@@ -81,14 +88,20 @@ const SearchFlights = ({navigation}) => {
     });
     setModalVisible1(false);
   };
+
   const closeModal1 = () => {
     setModalVisible1(false);
   };
+
   const closeModal2 = () => {
     setSearchFlightCardData(SearchFlightData);
     setSelectedData({});
     setModalVisible2(false);
   };
+
+  {
+    /* ----------------------------------------------------> sort function */
+  }
 
   const applySortdaata = () => {
     const sortData = SearchFlightData.sort((a, b) => {
@@ -134,6 +147,11 @@ const SearchFlights = ({navigation}) => {
     setSearchFlightCardData(sortData);
     setModalVisible2(false);
   };
+
+  {
+    /* ----------------------------------------------------> card list filter */
+  }
+
   useEffect(() => {
     if (searchFlightFilterData?.priceRange) {
       const filterData = SearchFlightData.filter(item => {
@@ -199,6 +217,7 @@ const SearchFlights = ({navigation}) => {
       setSearchFlightCardData(SearchFlightData);
     }
   }, [searchFlightFilterData]);
+
   const applydata = () => {
     setSearchFlightCardData(SearchFlightData);
     dispatch(SearchFlightFilterData({}));
@@ -206,6 +225,8 @@ const SearchFlights = ({navigation}) => {
   };
   return (
     <View style={styles.body}>
+      {/* ----------------------------------------------------> Header components */}
+
       <SearchFlightsHeader
         SelectDate={SelectDate}
         setSelectDate={setSelectDate}
@@ -214,10 +235,14 @@ const SearchFlights = ({navigation}) => {
         setModalVisible1={setModalVisible1}
         navigation={navigation}
       />
+
+      {/* ----------------------------------------------------> Ticket List */}
+
       <TicketList
         SelectDate={SelectDate}
         SearchFlightCard={SearchFlightCardData}
       />
+
       <View style={styles.sortBody}>
         <TouchableOpacity
           onPress={() => setModalVisible2(true)}
@@ -233,6 +258,9 @@ const SearchFlights = ({navigation}) => {
           <Text style={styles.sortText}>{strings.filter}</Text>
         </TouchableOpacity>
       </View>
+
+      {/* ----------------------------------------------------> Alert Modal */}
+
       <Modal
         style={{margin: 0, justifyContent: 'flex-end'}}
         isVisible={modalVisible1}
@@ -250,6 +278,9 @@ const SearchFlights = ({navigation}) => {
           addAlert={addAlert}
           closeModal={closeModal1}></CreatePriceAlert>
       </Modal>
+
+      {/* ----------------------------------------------------> sort Modal */}
+
       <Modal
         style={{margin: 0, justifyContent: 'flex-end'}}
         isVisible={modalVisible2}

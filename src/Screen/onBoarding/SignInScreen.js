@@ -35,8 +35,8 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
   };
 
   const validation = () => {
-    if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      alert('Please Enter valid Email');
+    if (!Email?.trim()?.match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
+      Alert.alert('Please Enter valid Email');
       return;
     } else if (
       !Password.trim().match(
@@ -97,7 +97,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
         MainText={strings.welcome}
         SubText={strings.subText}
       />
-      <View style={{flex: 0.73, marginTop: hp(4)}}>
+      <View style={{paddingTop: hp(4), flex: 1}}>
         <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
         <OnBoardingTextInput
           textInputIcon={Images.Email}
@@ -140,30 +140,23 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.lineStyle} />
         <View style={styles.signUpStyle}>
-          <OnBoardingText
-            OnBoardingSubText={strings.signUpLine}
-            OnBoardingSubTextStyle={{
-              fontSize: fontSize(14),
-              fontWeight: '400',
-            }}
-          />
+          <Text style={{color: 'black'}}>{strings.signUpLine}</Text>
           <TouchableOpacity
+            style={{marginLeft: wp(1)}}
             onPress={() => {
               navigation.navigate('SignUpScreen');
             }}>
-            <OnBoardingText
-              OnBoardingSubText={strings.signUp}
-              OnBoardingSubTextStyle={{
+            <Text
+              style={{
                 color: 'blue',
                 fontSize: fontSize(14),
                 fontWeight: '400',
-              }}
-            />
+              }}>
+              {strings.signUp}
+            </Text>
           </TouchableOpacity>
         </View>
-        <View style={[styles.lineStyle, {marginTop: hp(18)}]} />
         <OnBoardingSingleButton
           buttonText={strings.signInText}
           buttonStyle={styles.buttonStyle}
@@ -172,6 +165,8 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           }}
         />
       </View>
+
+      {/* ------------------------------------------------->>> Modal  */}
       <Modal
         onBackdropPress={closeModal}
         onDismiss={closeModal}
@@ -221,22 +216,24 @@ const styles = StyleSheet.create({
   rememberLineStyle: {
     flexDirection: 'row',
     marginTop: hp(2),
-    alignItems: 'center',
   },
   forgotPasswordStyle: {
     color: 'blue',
   },
   signUpStyle: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: wp(22),
-    alignSelf: 'center',
-    top: hp(4),
+    justifyContent: 'center',
+    paddingTop: hp(4),
+    marginVertical: hp(5),
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#ECEFEF',
+    marginHorizontal: wp(6),
   },
   buttonStyle: {
-    marginTop: hp(4),
     height: hp(6),
+    bottom: hp(2.5),
   },
   lineStyle: {
     height: 1,

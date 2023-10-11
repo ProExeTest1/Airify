@@ -152,7 +152,16 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         DineWay: selectedDineWay,
         FlyData: selectedFlyWay,
       });
-      await auth().signOut();
+
+      //------------------------------------------------>  UserWallet data
+
+      await firestore()
+        .collection('UserWallet')
+        .doc(isUserCreate.user.uid)
+        .set({
+          wallet: '00.00',
+          transactionHistory: [],
+        });
       navigation.navigate('SignUpSuccess');
     } catch (error) {
       console.log(error);
@@ -220,7 +229,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           bottom: 0,
         }}>
         <View style={styles.slide}>
-          <View style={{marginTop: hp(2)}}>
+          <View style={{marginTop: hp(2), flex: 1}}>
             <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
             <OnBoardingTextInput
               textInputIcon={Images.Email}
@@ -270,27 +279,21 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                 </View>
               </View>
             </View>
-            <View style={styles.lineStyle} />
             <View style={styles.signUpStyle}>
-              <OnBoardingText
-                OnBoardingSubText={strings.signInLine}
-                OnBoardingSubTextStyle={{
-                  fontSize: fontSize(14),
-                  fontWeight: '400',
-                }}
-              />
+              <Text style={{color: 'black'}}>{strings.signUpLine}</Text>
               <TouchableOpacity
+                style={{marginLeft: wp(1)}}
                 onPress={() => {
                   navigation.navigate('SignInScreen');
                 }}>
-                <OnBoardingText
-                  OnBoardingSubText={strings.signInText}
-                  OnBoardingSubTextStyle={{
+                <Text
+                  style={{
                     color: 'blue',
                     fontSize: fontSize(14),
                     fontWeight: '400',
-                  }}
-                />
+                  }}>
+                  {strings.signUp}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -520,8 +523,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           </View>
         </View>
       </Swiper>
-      <View style={{marginBottom: hp(4)}}>
-        <View style={styles.lineStyle} />
+      <View>
         {index == 0 || index == 1 || index == 5 || index == 6 ? (
           <OnBoardingSingleButton
             buttonText={
@@ -593,15 +595,20 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   signUpStyle: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: wp(22),
-    alignSelf: 'center',
-    top: hp(4),
+    justifyContent: 'center',
+    paddingTop: hp(4),
+    marginTop: hp(2),
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#ECEFEF',
+    marginHorizontal: wp(6),
   },
   buttonStyle: {
-    marginTop: hp(4),
+    // flex: 1,
+    // bottom: hp(4),
+    marginVertical: hp(3),
     height: hp(6),
   },
   lineStyle: {

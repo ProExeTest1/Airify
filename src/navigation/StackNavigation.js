@@ -24,10 +24,11 @@ import SearchFlights from '../screen/searchFlights/SearchFlights';
 import auth from '@react-native-firebase/auth';
 import PersonalInfo from '../screen/account/PersonalInfo';
 import Notification from '../screen/account/Notification';
+import TopUp from '../screen/wallet/TopUp';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
-  return(
+  return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
@@ -46,15 +47,20 @@ const StackNavigation = () => {
         <Stack.Screen name="DatePicker" component={DatePickerScreen} />
         <Stack.Screen name="PlacePicker" component={PlacePickerScreen} />
         <Stack.Screen name="SearchFlights" component={SearchFlights} />
-        <Stack.Screen name="NotificationScreen" component={NotificationScreen} />
+        <Stack.Screen
+          name="NotificationScreen"
+          component={NotificationScreen}
+        />
         <Stack.Screen name="SpecialOffer" component={SpecialOfferScreen} />
 
         <Stack.Screen name="PersonalInfo" component={PersonalInfo} />
         <Stack.Screen name="Notification" component={Notification} />
+
+        <Stack.Screen name="TopUp" component={TopUp} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default StackNavigation;
 

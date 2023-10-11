@@ -1,6 +1,5 @@
 import {
   Image,
-  SafeAreaView,
   ScrollView,
   SectionList,
   StyleSheet,
@@ -14,7 +13,7 @@ import {CommonHeader, OnBoardingTwoButton} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 import {SettingData} from '../../assets/DummyData/SettingData';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Modal from 'react-native-modal';
@@ -23,13 +22,13 @@ import {strings} from '../../helper/Strings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AccountScreen = ({navigation}) => {
+  const [modal, setModal] = useState(false);
   const [userData, setUserData] = useState({});
   const [toggleSwitchBut, setToggleSwitchBut] = useState(false);
-  const [modal, setModal] = useState(false);
 
   useEffect(() => {
-    UserData();
     getData();
+    UserData();
   }, [toggleSwitchBut]);
 
   const getData = async () => {
@@ -37,7 +36,7 @@ const AccountScreen = ({navigation}) => {
       const jsonValue = await AsyncStorage.getItem('DarkMode');
       setToggleSwitchBut(JSON.parse(jsonValue));
     } catch (e) {
-      console.log('e :>> ', e);
+      console.log('getData error :>> ', e);
     }
   };
 
