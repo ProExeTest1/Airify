@@ -1,5 +1,4 @@
 import CustomPaperTextInput from './Common/CustomPaperTextInput';
-import CustomTextInput from './Common/CustomTextInput';
 import TabBarComponents from './Common/TabBarComponents';
 import SearchFlightsHeader from './Common/SearchFlightsHeader';
 import CardList from './Common/CardList';
@@ -16,7 +15,8 @@ import GetTime from './Common/GetTime';
 import SwiperFlatlistComponent from './Common/SwiperFlatlistComponent';
 import FlightDetails from './FlightDetailComponents/FlightDetails';
 import RefundandRescheduleInfo from './FlightDetailComponents/RefundandRescheduleInfo';
-
+import CustomTextInput from './Common/CustomPaperTextInput';
+import CommonHeader from './Common/CommonHeader';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -36,4 +36,5 @@ export {
   SwiperFlatlistComponent,
   FlightDetails,
   RefundandRescheduleInfo,
+  CommonHeader,
 };

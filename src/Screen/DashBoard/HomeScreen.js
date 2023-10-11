@@ -10,8 +10,9 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
 
 import {
@@ -20,6 +21,7 @@ import {
   PassengerPickerModal,
   SwiperFlatlistComponent,
 } from '../../components/index';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import SwiperFlatList from 'react-native-swiper-flatlist';
@@ -27,10 +29,16 @@ import {dummyData} from '../../assets/DummyData/Data';
 import {useSelector, useDispatch} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const HomeScreen = ({navigation}) => {
+  const theme = useColorScheme();
+  useEffect(() => {
+    UserData();
+  }, []);
   const dispatch = useDispatch();
-  const reduxDepatureDate = useSelector(state => state.date.depatureDate);
+  const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
   //Maintaining textInput value with redux data
@@ -57,6 +65,7 @@ const HomeScreen = ({navigation}) => {
   const [adult, setAdult] = useState(1);
   const [child, setChild] = useState(0);
   const [twoYearBelowChild, setTwoYearBelowChild] = useState(0);
+  const [userData, setUserData] = useState({});
   const seatcount = () => {
     setSeat(adult + child + twoYearBelowChild + ' ' + 'seat');
     setAdult(1);
@@ -107,6 +116,14 @@ const HomeScreen = ({navigation}) => {
         Alert.alert('Please Fill All Details');
       }
     }
+  };
+
+  const UserData = async () => {
+    const journeyData = await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get();
+    setUserData(journeyData.data());
   };
   return (
     <View style={{flex: 1}}>
