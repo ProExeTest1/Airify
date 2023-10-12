@@ -1,25 +1,25 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-
-import {fontSize, hp, wp} from '../../helper/Constant';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Images} from '../../helper/IconConstant';
-import {useDispatch, useSelector} from 'react-redux';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
-import {flightDetailsAction} from '../../redux/action/FlightDetailAction';
+import {useSelector} from 'react-redux';
 
-const CardList = ({setCartFlightData, item, index,}) => {
+const FlightDetailsCard = ({item}) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
+    ',',
+  );
   return (
-    <TouchableOpacity
-      onPress={() => {
-        setCartFlightData(item);
-      }}
-      style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
+    <View style={[styles.cardBody, {marginVertical: hp(2)}]}>
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
-        <Text style={styles.cardPrice}>{item?.price}</Text>
-        <Text style={styles.cardPriceTitle}>/pax</Text>
+
+        <Text style={styles.cardPriceTitle}>{`${searchFlightDateData[0].slice(
+          0,
+          3,
+        )},${searchFlightDateData[1]}`}</Text>
       </View>
       <View style={styles.cardDataBody}>
         <View style={styles.FlightsPlaseBody}>
@@ -47,21 +47,24 @@ const CardList = ({setCartFlightData, item, index,}) => {
           {searchFlightData?.toShortform}
         </Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
+
+export default FlightDetailsCard;
+
 const styles = StyleSheet.create({
   cardBody: {
     backgroundColor: color.white,
     paddingHorizontal: wp(4),
     marginBottom: hp(2),
     borderRadius: 10,
-    borderColor: color.grayLight,
-    borderWidth: 1,
-    flex: 1,
+    borderColor: '#000',
+    width: '92%',
+    alignSelf: 'center',
   },
   cardHeader: {
-    borderColor: color.grayLight,
+    borderColor: '#e2e2e2',
     borderBottomWidth: 1,
     paddingVertical: hp(2.5),
     flexDirection: 'row',
@@ -71,6 +74,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     fontWeight: 'bold',
     flex: 1,
+    color: color.black,
   },
   cardHeaderLogo: {
     height: wp(5.8),
@@ -82,10 +86,11 @@ const styles = StyleSheet.create({
     color: color.commonBlue,
     fontSize: fontSize(20),
     fontWeight: '600',
+    marginVertical: hp(1.2),
   },
   cardPriceTitle: {
-    color: color.darkLight,
-    fontSize: fontSize(18),
+    color: '#7e7e7f',
+    fontSize: fontSize(16),
   },
   cardDataBody: {
     paddingTop: hp(2.5),
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
     width: hp(17),
   },
   FlightsPlaseImgText: {
-    color: color.darkLight,
+    color: '#7e7e7f',
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
@@ -114,7 +119,7 @@ const styles = StyleSheet.create({
     marginTop: hp(1.5),
   },
   FlightsPlaseName: {
-    color: color.darkLight,
+    color: '#7e7e7f',
     fontWeight: '500',
   },
   cardBottemBody: {
@@ -125,4 +130,3 @@ const styles = StyleSheet.create({
     paddingTop: hp(1),
   },
 });
-export default CardList;

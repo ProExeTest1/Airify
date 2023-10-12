@@ -41,34 +41,36 @@ const PassengerPickerModal = ({
               />
               <Text style={styles.categoryTextStyle}>{strings.Adult}</Text>
               <Text style={styles.ageTextStyle}>{strings.adultAge}</Text>
-              <ScrollPicker
-                dataSource={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-                renderItem={(data, index) => {
-                  return (
-                    <View>
-                      <Text
-                        style={[
-                          styles.numberTextStyle,
-                          {
-                            color:
-                              item1 == index ? color.commonBlue : '#83A6FB',
-                          },
-                        ]}>
-                        {data}
-                      </Text>
-                    </View>
-                  );
-                }}
-                onValueChange={(data, selectedIndex) => {
-                  setItem1(selectedIndex);
-                  setAdult(data);
-                }}
-                wrapperBackground={color.white}
-                itemHeight={60}
-                wrapperHeight={180}
-                highlightColor={color.white}
-                highlightBorderWidth={2}
-              />
+              <View style={styles.scrollPickerHeightStyle}>
+                <ScrollPicker
+                  dataSource={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                  renderItem={(data, index) => {
+                    return (
+                      <View>
+                        <Text
+                          style={[
+                            styles.numberTextStyle,
+                            {
+                              color:
+                                item1 == index ? color.commonBlue : '#83A6FB',
+                            },
+                          ]}>
+                          {data}
+                        </Text>
+                      </View>
+                    );
+                  }}
+                  onValueChange={(data, selectedIndex) => {
+                    setItem1(selectedIndex);
+                    setAdult(data);
+                  }}
+                  wrapperBackground={color.white}
+                  itemHeight={60}
+                  wrapperHeight={180}
+                  highlightColor={color.white}
+                  highlightBorderWidth={2}
+                />
+              </View>
             </View>
             <View style={styles.pickerViewStyle}>
               <Image
@@ -78,12 +80,12 @@ const PassengerPickerModal = ({
               />
               <Text style={styles.categoryTextStyle}>{strings.Child}</Text>
               <Text style={styles.ageTextStyle}>{strings.ChildAge}</Text>
-              <View style={{height: 100}}>
+              <View style={styles.scrollPickerHeightStyle}>
                 <ScrollPicker
                   dataSource={[0, 1, 2, 3, 4, 5]}
                   renderItem={(data, index) => {
                     return (
-                      <>
+                      <View>
                         <Text
                           style={[
                             styles.numberTextStyle,
@@ -94,7 +96,7 @@ const PassengerPickerModal = ({
                           ]}>
                           {data}
                         </Text>
-                      </>
+                      </View>
                     );
                   }}
                   onValueChange={(data, selectedIndex) => {
@@ -117,34 +119,36 @@ const PassengerPickerModal = ({
               />
               <Text style={styles.categoryTextStyle}>{strings.Infrant}</Text>
               <Text style={styles.ageTextStyle}>{strings.InfrantAge}</Text>
-              <ScrollPicker
-                dataSource={[0, 1, 2, 3]}
-                renderItem={(data, index) => {
-                  return (
-                    <View>
-                      <Text
-                        style={[
-                          styles.numberTextStyle,
-                          {
-                            color:
-                              item3 == index ? color.commonBlue : '#83A6FB',
-                          },
-                        ]}>
-                        {data}
-                      </Text>
-                    </View>
-                  );
-                }}
-                onValueChange={(data, selectedIndex) => {
-                  setItem3(selectedIndex);
-                  setTwoYearBelowChild(data);
-                }}
-                wrapperBackground={color.white}
-                itemHeight={60}
-                wrapperHeight={180}
-                highlightColor={color.white}
-                highlightBorderWidth={2}
-              />
+              <View style={styles.scrollPickerHeightStyle}>
+                <ScrollPicker
+                  dataSource={[0, 1, 2, 3]}
+                  renderItem={(data, index) => {
+                    return (
+                      <View>
+                        <Text
+                          style={[
+                            styles.numberTextStyle,
+                            {
+                              color:
+                                item3 == index ? color.commonBlue : '#83A6FB',
+                            },
+                          ]}>
+                          {data}
+                        </Text>
+                      </View>
+                    );
+                  }}
+                  onValueChange={(data, selectedIndex) => {
+                    setItem3(selectedIndex);
+                    setTwoYearBelowChild(data);
+                  }}
+                  wrapperBackground={color.white}
+                  itemHeight={60}
+                  wrapperHeight={180}
+                  highlightColor={color.white}
+                  highlightBorderWidth={2}
+                />
+              </View>
             </View>
           </View>
           <View style={styles.buttonViewStyle}>
@@ -165,7 +169,7 @@ export default PassengerPickerModal;
 
 const styles = StyleSheet.create({
   pickerViewStyle: {
-    height: hp(24.6),
+    height: hp(33.5),
     width: wp(26.6),
     borderRightWidth: 0.5,
   },
@@ -186,38 +190,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   numberTextStyle: {
-    fontSize: fontSize(22),
+    fontSize: fontSize(25),
     fontWeight: 'bold',
-  },
-  cancelButtonTextStyle: {
-    fontSize: fontSize(20),
-    fontWeight: 'bold',
-    color: color.commonBlue,
-  },
-  okButtonTextStyle: {
-    fontSize: fontSize(20),
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  okButtonStyle: {
-    backgroundColor: color.commonBlue,
-    height: hp(6),
-    width: wp(37),
-    marginHorizontal: wp(2.6),
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: hp(1.2),
-  },
-  cancelButtonStyle: {
-    backgroundColor: '#EBF0FE',
-    height: hp(6),
-    width: wp(37),
-    marginHorizontal: wp(2.6),
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: hp(1.2),
+    marginVertical: hp(0),
   },
   modalStyle: {
     justifyContent: 'flex-end',
@@ -229,6 +204,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
+    height: hp(60),
   },
   toggleLineStyle: {
     borderWidth: 1.5,
@@ -251,17 +227,17 @@ const styles = StyleSheet.create({
     marginVertical: hp(2.4),
   },
   buttonViewStyle: {
-    paddingVertical: hp(4),
+    paddingVertical: hp(2),
     borderTopWidth: 1,
     width: '90%',
     alignSelf: 'center',
     borderColor: '#e2e2e2',
-    marginBottom: hp(2),
   },
   pickerMainViewStyle: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     alignSelf: 'center',
+    height: hp(35),
   },
-  scrollPickerHeightStyle: {height: hp(12.31)},
+  scrollPickerHeightStyle: {height: hp(20.31)},
 });

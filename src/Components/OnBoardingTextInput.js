@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {hp, wp} from '../helper/Constant';
 import {Images} from '../helper/IconConstant';
+import {color} from '../helper/ColorConstant';
 
 const OnBoardingTextInput = ({
   textInputPlaceholder,
@@ -37,8 +38,10 @@ const OnBoardingTextInput = ({
         placeholder={textInputPlaceholder}
         value={value}
         autoCorrect={false}
+        autoCapitalize="none"
         editable={onPress ? false : true}
         onPressIn={onPress}
+        placeholderTextColor={color.grey}
         onChangeText={onChangeText}
         style={[styles.textInputStyle, textInputStyle]}
         secureTextEntry={focus}
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
     height: hp(6),
     paddingStart: wp(2),
     borderRadius: wp(2),
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#E6E6E6',
   },
   textInputIconStyle: {
     height: hp(2),

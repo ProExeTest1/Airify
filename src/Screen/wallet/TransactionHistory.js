@@ -48,6 +48,8 @@ const TransactionHistory = ({navigation}) => {
             navigation.navigate('WalletScreen');
           }}
           navigation2={() => {}}
+          Images1Color={'#fff'}
+          Images2Color={null}
           onPress1={true}
           onPress2={false}
           Images1={Images.backIcon}

@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   offerimageStyle: {
     height: hp(25),
-    width: wp(90),
+    width: wp(88),
     borderRadius: 14,
   },
 });

@@ -19,6 +19,8 @@ const CommonHeader = ({
   Images2,
   onPress1,
   onPress2,
+  Images1Color,
+  Images2Color,
 }) => {
   return (
     <SafeAreaView style={styles.headerViewStyle}>
@@ -32,7 +34,10 @@ const CommonHeader = ({
               source={Images1}
               style={[
                 styles.cancelButtonStyle,
-                {borderRadius: Images.planIcon === Images1 ? hp(4 / 2) : 0},
+                {
+                  borderRadius: Images.planIcon === Images1 ? hp(4 / 2) : 0,
+                  tintColor: Images1Color,
+                },
               ]}
               resizeMode="contain"
             />

@@ -42,6 +42,8 @@ const NotificationScreen = ({navigation}) => {
       </View>
       <View style={styles.sectionListStyle}>
         <SectionList
+          bounces={false}
+          showsVerticalScrollIndicator={false}
           sections={NotificationData}
           keyExtractor={item => item.id}
           renderItem={({item}) => {

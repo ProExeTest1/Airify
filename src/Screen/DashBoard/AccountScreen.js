@@ -268,7 +268,10 @@ const styles = StyleSheet.create({
     padding: hp(1.2),
   },
   bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.black},
-  NameStyle: {fontWeight: '500'},
+  NameStyle: {
+    fontWeight: '500',
+    color: color.black,
+  },
   listTouchStyle: {
     flexDirection: 'row',
     alignItems: 'center',

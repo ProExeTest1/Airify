@@ -15,6 +15,8 @@ const SelectSeat = ({navigation}) => {
           navigation.goBack();
         }}
         navigation2={() => {}}
+        Images1Color={'#fff'}
+        Images2Color={null}
         onPress1={true}
         onPress2={false}
         Images1={Images.backIcon}

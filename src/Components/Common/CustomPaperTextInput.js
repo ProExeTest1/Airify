@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import {TextInput} from 'react-native-paper';
-import {fontSize, hp} from '../../helper/Constant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 const CustomPaperTextInput = ({
   width,
@@ -16,7 +16,12 @@ const CustomPaperTextInput = ({
   return (
     <Pressable
       onPress={onPress}
-      style={{width: width, marginVertical: marginVertical}}>
+      style={{
+        marginVertical: marginVertical,
+        width: width,
+        marginHorizontal: label === 'Class' && 'Passenger' ? null : wp(4),
+        // marginEnd: label === 'Class' ? wp(4) : null,
+      }}>
       <TextInput
         editable={false}
         label={label}

@@ -163,6 +163,8 @@ const TopUp = ({navigation}) => {
           navigation1={() => {
             navigation.navigate('WalletScreen');
           }}
+          Images1Color={'#fff'}
+          Images2Color={null}
           navigation2={() => {}}
           onPress1={true}
           onPress2={false}

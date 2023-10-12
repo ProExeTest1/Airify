@@ -1,16 +1,9 @@
-import React, {
-  Component,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Button,
   FlatList,
   Image,
   ScrollView,
@@ -21,7 +14,6 @@ import {Images} from '../../helper/IconConstant';
 import {strings} from '../../helper/Strings';
 import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import CheckButton from '../../components/CheckButton';
 import Swiper from 'react-native-swiper';
@@ -34,9 +26,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {DineWay} from '../../redux/action/HomeAction';
 import OtpInputs from 'react-native-otp-inputs';
 import {dummyAirlineData} from '../../helper/dummyData';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
+import {color} from '../../helper/ColorConstant';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [checked, setChecked] = useState(false);
@@ -272,15 +265,17 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                   }}
                 />
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{marginLeft: wp(6)}}>
+                  <Text style={{marginLeft: wp(4), color: color.black}}>
                     {strings.TermsCondition1}
                   </Text>
-                  <Text style={{color: 'blue'}}>{strings.TextTerm}</Text>
+                  <Text style={{color: color.commonBlue}}>
+                    {strings.TextTerm}
+                  </Text>
                 </View>
               </View>
             </View>
             <View style={styles.signUpStyle}>
-              <Text style={{color: 'black'}}>{strings.signUpLine}</Text>
+              <Text style={{color: 'black'}}>{strings.signInLine}</Text>
               <TouchableOpacity
                 style={{marginLeft: wp(1)}}
                 onPress={() => {
@@ -581,7 +576,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: color.white,
   },
   textInputTitleStyle: {
     marginLeft: wp(6),
