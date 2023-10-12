@@ -25,6 +25,8 @@ import auth from '@react-native-firebase/auth';
 import PersonalInfo from '../screen/account/PersonalInfo';
 import Notification from '../screen/account/Notification';
 import TopUp from '../screen/wallet/TopUp';
+import TransactionHistory from '../screen/wallet/TransactionHistory';
+import SelectSeat from '../screen/TicketBooking/SelectSeat';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
@@ -32,7 +34,9 @@ const StackNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={user ? 'TabNavigation' : 'OnBoardingFirst'}>
+        // initialRouteName={user ? 'TabNavigation' : 'OnBoardingFirst'}>
+      >
+        <Stack.Screen name="SelectSeat" component={SelectSeat} />
         <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
@@ -57,6 +61,10 @@ const StackNavigation = () => {
         <Stack.Screen name="Notification" component={Notification} />
 
         <Stack.Screen name="TopUp" component={TopUp} />
+        <Stack.Screen
+          name="TransactionHistory"
+          component={TransactionHistory}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

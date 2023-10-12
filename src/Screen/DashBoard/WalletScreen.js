@@ -20,9 +20,9 @@ import moment from 'moment';
 const WalletScreen = ({navigation}) => {
   const [userData, setUserData] = useState({});
   const [myWallet, setMyWallet] = useState('00.00');
+  const [transactionHistory, setTransactionHistory] = useState([]);
 
   const isFocused = useIsFocused();
-
   const UserData = async () => {
     const journeyData = await firestore()
       .collection('Users')
@@ -38,6 +38,15 @@ const WalletScreen = ({navigation}) => {
       .then(a => a.data().wallet);
     return data;
   };
+
+  const getTransactionHistory = async () => {
+    await firestore()
+      .collection('UserWallet')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(a => setTransactionHistory(a.data().transactionHistory));
+  };
+
   useEffect(() => {
     if (myWallet != SetWalletData()) {
       SetWalletData().then(e => {
@@ -48,6 +57,13 @@ const WalletScreen = ({navigation}) => {
       setMyWallet(myWallet);
     }
   }, [isFocused]);
+
+  useEffect(() => {
+    if (transactionHistory) {
+      getTransactionHistory();
+    }
+  }, [isFocused]);
+
   useEffect(() => {
     console.log('yes');
     UserData();
@@ -82,13 +98,31 @@ const WalletScreen = ({navigation}) => {
         <View style={{flex: 1}}>
           <View style={styles.transactionHistoryHeader}>
             <Text style={styles.headerText}>{strings.transactionHistory}</Text>
-            <TouchableOpacity style={styles.transactionHistoryViewAllBut}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('TransactionHistory')}
+              style={styles.transactionHistoryViewAllBut}>
               <Text style={styles.ViewAllButText}>{strings.ViewAll}</Text>
               <Image style={styles.ViewAllButIcon} source={Images.downArrow} />
             </TouchableOpacity>
           </View>
+          <FlatList
+            data={transactionHistory}
+            scrollEnabled={false}
+            renderItem={({item, index}) => (
+              <View style={styles.FlatListBody}>
+                <View style={styles.headerBody}>
+                  <Text numberOfLines={1} style={styles.headerText}>
+                    {item.title}
+                  </Text>
+                  <Text style={styles.priceText}>{item.price}</Text>
+                </View>
+                <Text style={{color: color.darkLight}}>
+                  {item.date} - {item.time}
+                </Text>
+              </View>
+            )}
+          />
         </View>
-        <FlatList data={[]} />
       </View>
     </View>
   );
@@ -145,11 +179,12 @@ const styles = StyleSheet.create({
   },
   transactionHistoryHeader: {
     flexDirection: 'row',
-    paddingVertical: hp(2),
+    paddingTop: hp(4),
+    paddingBottom: hp(2),
     alignItems: 'center',
   },
   headerText: {
-    fontSize: fontSize(18),
+    fontSize: fontSize(20),
     fontWeight: 'bold',
     flex: 1,
   },
@@ -167,5 +202,22 @@ const styles = StyleSheet.create({
     height: wp(6),
     transform: [{rotate: '270deg'}],
     tintColor: color.commonBlue,
+  },
+  FlatListBody: {
+    paddingVertical: hp(2),
+    borderBottomWidth: 1,
+    borderColor: color.grayLight,
+  },
+  headerBody: {
+    flexDirection: 'row',
+    marginBottom: hp(1),
+  },
+  headerText: {
+    flex: 1,
+    fontSize: fontSize(18),
+    fontWeight: '600',
+  },
+  priceText: {
+    fontSize: fontSize(18),
   },
 });

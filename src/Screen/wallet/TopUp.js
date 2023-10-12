@@ -21,6 +21,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import Modal from 'react-native-modal';
 import {useIsFocused} from '@react-navigation/native';
+import moment from 'moment';
 
 const TopUp = ({navigation}) => {
   const [textInput1, setTextInput1] = useState('');
@@ -136,13 +137,13 @@ const TopUp = ({navigation}) => {
             .doc(auth().currentUser.uid)
             .update({
               transactionHistory: [
-                ...transactionHistory,
                 {
                   title: strings.walletTopUp,
-                  price: `+ $${textInput1}`,
+                  price: `+$${textInput1}`,
                   date: moment(new Date()).format('MMM D,YYYY'),
                   time: new Date().toLocaleTimeString('en-IN'),
                 },
+                ...transactionHistory,
               ],
             });
           navigation.navigate('WalletScreen');
