@@ -238,21 +238,24 @@ export const FaqData = [
   },
 ];
 
-export const PassengerListData = [
-  {
-    id: 1,
-    name: 'Jenis',
-  },
-  {
-    id: 2,
-    name: 'Bhautik',
-  },
-  {
-    id: 3,
-    name: 'Vishal',
-  },
-  {
-    id: 4,
-    name: 'Darshan',
-  },
+export const numberOfStops = ['Direct', '1 Stop', '2+ Stop'];
+
+export const AmenitiesData = [
+  'Baggage',
+  'In-Flight Meal',
+  'In-Flight Entertainment',
+  'Wi-Fi',
+  'Power & USB Port',
+];
+export const RefundAndRescheduleData = ['Refundable', 'Reschedule Available'];
+export const FlightPreferencesData = [
+  'Exclude overnight stop(s)',
+  'Exclude late night flights',
+  'Exclude codeshare flights',
+];
+export const CabinClassData = [
+  'Economy',
+  'Premium Economy',
+  'Business Class',
+  'First Class',
 ];

@@ -26,7 +26,6 @@ import {genderRatioButton} from '../../assets/DummyData/radioButtons';
 import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import CountryPickTextInput from '../../components/CountryPickTextInput';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import axios from 'axios';
 
 const PersonalInfo = ({navigation: {goBack}, navigation}) => {
   const [name, setName] = useState('');
@@ -259,6 +258,7 @@ const styles = StyleSheet.create({
   },
   textInputTitleStyle: {
     marginLeft: wp(6),
+    color: color.black,
   },
   textInputContainer: {
     marginTop: hp(1),

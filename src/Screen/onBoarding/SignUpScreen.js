@@ -1,16 +1,9 @@
-import React, {
-  Component,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  Button,
   FlatList,
   Image,
   ScrollView,
@@ -21,7 +14,6 @@ import {Images} from '../../helper/IconConstant';
 import {strings} from '../../helper/Strings';
 import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import CheckButton from '../../components/CheckButton';
 import Swiper from 'react-native-swiper';
@@ -34,11 +26,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {DineWay} from '../../redux/action/HomeAction';
 import OtpInputs from 'react-native-otp-inputs';
 import {dummyAirlineData} from '../../helper/dummyData';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import {NotificationData, SecurityData} from '../../assets/DummyData/Data';
 import {CountryPicker} from 'react-native-country-codes-picker';
+import {color} from '../../helper/ColorConstant';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [checked, setChecked] = useState(false);
@@ -165,6 +158,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .doc(isUserCreate.user.uid)
         .set({
           wallet: '00.00',
+          transactionHistory: [],
         });
 
       //------------------------------------------------>  Passenger List data
@@ -243,7 +237,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           bottom: 0,
         }}>
         <View style={styles.slide}>
-          <View style={{marginTop: hp(2)}}>
+          <View style={{marginTop: hp(2), flex: 1}}>
             <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
             <OnBoardingTextInput
               textInputIcon={Images.Email}
@@ -286,34 +280,30 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                   }}
                 />
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={{marginLeft: wp(6)}}>
+                  <Text style={{marginLeft: wp(4), color: color.black}}>
                     {strings.TermsCondition1}
                   </Text>
-                  <Text style={{color: 'blue'}}>{strings.TextTerm}</Text>
+                  <Text style={{color: color.commonBlue}}>
+                    {strings.TextTerm}
+                  </Text>
                 </View>
               </View>
             </View>
-            <View style={styles.lineStyle} />
             <View style={styles.signUpStyle}>
-              <OnBoardingText
-                OnBoardingSubText={strings.signInLine}
-                OnBoardingSubTextStyle={{
-                  fontSize: fontSize(14),
-                  fontWeight: '400',
-                }}
-              />
+              <Text style={{color: 'black'}}>{strings.signInLine}</Text>
               <TouchableOpacity
+                style={{marginLeft: wp(1)}}
                 onPress={() => {
                   navigation.navigate('SignInScreen');
                 }}>
-                <OnBoardingText
-                  OnBoardingSubText={strings.signInText}
-                  OnBoardingSubTextStyle={{
+                <Text
+                  style={{
                     color: 'blue',
                     fontSize: fontSize(14),
                     fontWeight: '400',
-                  }}
-                />
+                  }}>
+                  {strings.signUp}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -347,6 +337,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                 setShow(true);
               }}
               countryCode={countryCode}
+              placeholderTextColor={color.darkGray}
+              textInputStyle={styles.textInputCountryPicker}
             />
             <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
             <OnBoardingTextInput
@@ -543,8 +535,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           </View>
         </View>
       </Swiper>
-      <View style={{marginBottom: hp(4)}}>
-        <View style={styles.lineStyle} />
+      <View>
         {index == 0 || index == 1 || index == 5 || index == 6 ? (
           <OnBoardingSingleButton
             buttonText={
@@ -609,10 +600,11 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: color.white,
   },
   textInputTitleStyle: {
     marginLeft: wp(6),
+    color: color.black,
   },
   rememberLineStyle: {
     flexDirection: 'row',
@@ -623,15 +615,20 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   signUpStyle: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: wp(22),
-    alignSelf: 'center',
-    top: hp(4),
+    justifyContent: 'center',
+    paddingTop: hp(4),
+    marginTop: hp(2),
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#ECEFEF',
+    marginHorizontal: wp(6),
   },
   buttonStyle: {
-    marginTop: hp(4),
+    // flex: 1,
+    // bottom: hp(4),
+    marginVertical: hp(3),
     height: hp(6),
   },
   lineStyle: {
@@ -700,6 +697,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: wp(4),
     borderWidth: 1,
+  },
+  textInputCountryPicker: {
+    color: color.black,
+    height: hp(10),
   },
 });
 

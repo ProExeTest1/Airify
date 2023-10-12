@@ -36,8 +36,8 @@ export const strings = {
   RememberMe: 'Remember Me',
   signInText: 'Sign in',
   WelcomeModalMainText: 'Sign in Successful!',
-  WelcomeModalSubText: 'Please Wait...',
-  WelcomeModalSubText2: 'You will be directed to the homepage.',
+  WelcomeModalSubText:
+    'Please Wait... \n You will be directed to the homepage.',
 
   // Forgot Password
   HeaderMain: 'Reset your password 🔑',
@@ -140,6 +140,23 @@ export const strings = {
   one_way: 'One-Way',
   roundTrip: 'Round trip',
   classheader: 'Seat Class',
+  exclusive_offer: 'Exclusive 25% Off on Your Next Flight!',
+  offeerDiscription:
+    'Unlock a world of saving and adventure with Airify! For a limited time. we are thrilled to offer you an exclusive 25% discount on your next flight.',
+  T_and_D: 'Terms and Conditions :',
+  T_and_D_line1: 'Promo code FLYHIGH25 is valis for one time use per user',
+  T_and_D_line2:
+    'The discount is applicable to the base fare of the your ticket and price of ticket',
+  PriceAlertHeader: 'Create Price Alert',
+  PriceAlertDis: 'Never miss a deal! Get notified when flight prices drop.',
+  PriceTarget: 'Price Targets',
+  DepartureTime: 'Departure Time',
+  DirectFlight: 'Only Direct Flights',
+  searchFlight: 'Search Flights',
+  shareResult: 'Share Results',
+  priceAlerts: 'Price Alerts',
+  filter: 'Filter',
+  sort: 'Sort',
   logout: 'Logout',
   logoutText: 'Are you sure you want to logout ?',
   cancel: 'Cancel',
@@ -184,4 +201,20 @@ export const strings = {
   contactDetail: 'Contact Details',
   editPassenger: 'Edit Passenger',
   edit: 'Edit',
+
+  // wallet
+
+  wallet: 'Wallet',
+  yourBalance: 'Your balance',
+  topUp: 'Top Up',
+  walletTopUp: 'Wallet Top Up',
+  continue: 'Continue',
+  selectPaymentMethod: 'Select Payment Method',
+  continueTopUp: 'Continue Top Up',
+  avalableBalance: 'Avalable Balance: ',
+  transactionHistory: 'Transaction History',
+
+  // Ticket Booking
+
+  selectSeat: 'Select Seat',
 };

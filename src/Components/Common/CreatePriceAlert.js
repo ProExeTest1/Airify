@@ -7,13 +7,14 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {OnBoardingTwoButton} from '../index';
+import {MultiSliderComponets, OnBoardingTwoButton} from '../index';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {wp, fontSize, hp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {TimeData} from '../../assets/DummyData/timeData';
+import {strings} from '../../helper/Strings';
 const CreatePriceAlert = ({
   setPriceTargets,
   setDepartureTime,
@@ -29,12 +30,12 @@ const CreatePriceAlert = ({
   return (
     <View style={styles.createAlertBody}>
       <View style={styles.createAlertTitleBody}>
-        <Text style={styles.createAlertTitle}>Create Price Alert</Text>
+        <Text style={styles.createAlertTitle}>{strings.PriceAlertHeader}</Text>
       </View>
       <View style={styles.createAlertNotifiBody}>
         <Image style={styles.createAlertNotifiImg} source={Images.bell}></Image>
         <Text style={styles.createAlertNotifiText}>
-          Never miss a deal! Get notified when flight prices drop.
+          {strings.PriceAlertDis}
         </Text>
       </View>
       <View style={styles.createAlertCardBody}>
@@ -72,39 +73,22 @@ const CreatePriceAlert = ({
       </View>
       <View style={styles.PriceTargetsBody}>
         <Image style={styles.PriceTargetsImg} source={Images.dollarIcon} />
-        <Text style={styles.PriceTargetsTitle}>Price Targets</Text>
+        <Text style={styles.PriceTargetsTitle}>{strings.PriceTarget}</Text>
         <Text
           style={
             styles.PriceTargetsText
           }>{`$${priceTargets[0]} - $${priceTargets[1]}`}</Text>
       </View>
-      <MultiSlider
+      <MultiSliderComponets
         min={700}
         max={2000}
-        selectedStyle={{
-          height: 4,
-          backgroundColor: color.commonBlue,
-        }}
-        unselectedStyle={{height: 4, backgroundColor: '#eeeeee'}}
         values={priceTargets}
         sliderLength={wp(88)}
-        customMarker={() => (
-          <View
-            style={{
-              height: 25,
-              width: 25,
-              backgroundColor: '#fff',
-              borderWidth: 4,
-              borderRadius: 50,
-              borderColor: color.commonBlue,
-            }}></View>
-        )}
-        enabledTwo={true}
         onValuesChangeFinish={a => setPriceTargets(a)}
       />
       <View style={styles.PriceTargetsBody}>
         <Image style={styles.PriceTargetsImg} source={Images.timeIcon} />
-        <Text style={styles.PriceTargetsTitle}>Departure Time</Text>
+        <Text style={styles.PriceTargetsTitle}>{strings.DepartureTime}</Text>
         <ToggleSwitch
           isOn={ToggleSwitchBut1}
           size="medium"
@@ -133,24 +117,15 @@ const CreatePriceAlert = ({
                       : '#e4e4e4',
                 },
               ]}>
-              <Text style={{color: '#7e7e7f', marginBottom: hp(1)}}>
-                {item.title}
-              </Text>
-              <Text
-                style={{
-                  color: '#000',
-                  fontSize: fontSize(16),
-                  fontWeight: '500',
-                }}>
-                {item.time}
-              </Text>
+              <Text style={styles.departureTitleStyle}>{item.title}</Text>
+              <Text style={styles.departureTimeTextStyle}>{item.time}</Text>
             </TouchableOpacity>
           )}
         />
       )}
       <View style={styles.PriceTargetsBody}>
         <Image style={styles.PriceTargetsImg} source={Images.flightIcon} />
-        <Text style={styles.PriceTargetsTitle}>Only Direct Flights</Text>
+        <Text style={styles.PriceTargetsTitle}>{strings.DirectFlight}</Text>
         <ToggleSwitch
           isOn={ToggleSwitchBut2}
           size="medium"
@@ -158,12 +133,7 @@ const CreatePriceAlert = ({
           onToggle={isOn => setToggleSwitchBut2(isOn)}
         />
       </View>
-      <View
-        style={{
-          paddingVertical: hp(4),
-          borderTopWidth: 1,
-          borderColor: '#e2e2e2',
-        }}>
+      <View style={styles.buttonStyle}>
         <OnBoardingTwoButton
           buttonTextOne={'Cancel'}
           buttonTextTwo={'Create'}
@@ -283,5 +253,35 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     marginBottom: hp(1.5),
     alignItems: 'center',
+  },
+  sliderViewStyle: {
+    height: hp(3.07),
+    width: wp(6.6),
+    backgroundColor: '#fff',
+    borderWidth: 4,
+    borderRadius: 100,
+    borderColor: color.commonBlue,
+  },
+  unselectedStyle: {
+    height: 4,
+    backgroundColor: '#eeeeee',
+  },
+  departureTitleStyle: {
+    color: '#7e7e7f',
+    marginBottom: hp(1),
+  },
+  selectedStyle: {
+    height: 4,
+    backgroundColor: color.commonBlue,
+  },
+  departureTimeTextStyle: {
+    color: '#000',
+    fontSize: fontSize(16),
+    fontWeight: '500',
+  },
+  buttonStyle: {
+    paddingVertical: hp(4),
+    borderTopWidth: 1,
+    borderColor: '#e2e2e2',
   },
 });

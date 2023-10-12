@@ -18,7 +18,9 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import {dateAction} from '../../redux/action/DateAction';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {strings} from '../../helper/Strings';
+import { color } from '../../helper/ColorConstant';
 
 const SearchFlightsHeader = ({
   SelectDate,
@@ -33,7 +35,7 @@ const SearchFlightsHeader = ({
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
         <View style={styles.headerTitleBody}>
-          <Text style={styles.headerTitle}>Search Flights</Text>
+          <Text style={styles.headerTitle}>{strings.searchFlight}</Text>
         </View>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image style={styles.BackImg} source={Images.backIcon} />
@@ -50,13 +52,13 @@ const SearchFlightsHeader = ({
                   {borderBottomWidth: 2, borderColor: '#e2e2e2'},
                 ]}>
                 <Image style={styles.dropdownIcon} source={Images.shareIcon} />
-                <Text style={styles.dropdownText}>Share Results</Text>
+                <Text style={styles.dropdownText}>{strings.shareResult}</Text>
               </View>
             </MenuOption>
             <MenuOption onSelect={() => setModalVisible1(true)}>
               <View style={styles.dropdownList}>
                 <Image style={styles.dropdownIcon} source={Images.bell} />
-                <Text style={styles.dropdownText}>Price Alerts</Text>
+                <Text style={styles.dropdownText}>{strings.priceAlerts}</Text>
               </View>
             </MenuOption>
           </MenuOptions>
@@ -76,7 +78,7 @@ const SearchFlightsHeader = ({
           />
           <Text style={styles.FlightsPlaseImgText}>
             {searchFlightData?.passenger} .{' '}
-            {searchFlightData?.class.replace(' Class', '')}
+            {searchFlightData?.class?.replace(' Class', '')}
           </Text>
         </View>
         <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
@@ -127,8 +129,7 @@ const SearchFlightsHeader = ({
                   {item.day.slice(0, 3)}
                 </Text>
               </TouchableOpacity>
-            );
-          }}
+            );}}
         />
       </View>
     </View>
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
   BackImg: {
     height: wp(8),
     width: wp(8),
+    tintColor:color.white,
   },
   headerTitleBody: {
     position: 'absolute',

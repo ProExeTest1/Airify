@@ -9,8 +9,15 @@ import PickerHeaderBar from './Common/PickerHeaderBar';
 import SearchBar from './Common/SearchBar';
 import PassengerPickerModal from './ModalComponents/PassengerPickerModal';
 import ClassPickerModal from './ModalComponents/ClassPickerModal';
+import CheckBox from './Common/CheckBox';
+import MultiSliderComponets from './Common/MultiSliderComponets';
+import GetTime from './Common/GetTime';
+import SwiperFlatlistComponent from './Common/SwiperFlatlistComponent';
+import FlightDetails from './FlightDetailComponents/FlightDetails';
+import RefundandRescheduleInfo from './FlightDetailComponents/RefundandRescheduleInfo';
 import CustomTextInput from './Common/CustomPaperTextInput';
 import CommonHeader from './Common/CommonHeader';
+import FlightDetailsCard from './FlightDetailComponents/FlightDetailsCard';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -24,20 +31,12 @@ export {
   SearchBar,
   PassengerPickerModal,
   ClassPickerModal,
+  CheckBox,
+  MultiSliderComponets,
+  GetTime,
+  SwiperFlatlistComponent,
+  FlightDetails,
+  RefundandRescheduleInfo,
   CommonHeader,
+  FlightDetailsCard,
 };
-
-// import CustomPaperTextInput from "./Common/CustomPaperTextInput";
-// import CustomTextInput from "./Common/CustomTextInput";
-// import TabBarComponents from "./Common/TabBarComponents";
-
-// export {
-//     CustomPaperTextInput,
-//     CustomTextInput,
-//     TabBarComponents,
-//     PickerHeaderBar,
-//     SearchBar,
-//     PassengerPickerModal,
-//     ClassPickerModal,
-
-// }

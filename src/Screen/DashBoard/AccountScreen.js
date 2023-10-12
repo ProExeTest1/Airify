@@ -1,6 +1,5 @@
 import {
   Image,
-  SafeAreaView,
   ScrollView,
   SectionList,
   StyleSheet,
@@ -14,7 +13,7 @@ import {CommonHeader, OnBoardingTwoButton} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 import {SettingData} from '../../assets/DummyData/SettingData';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Modal from 'react-native-modal';
@@ -23,13 +22,14 @@ import {strings} from '../../helper/Strings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AccountScreen = ({navigation}) => {
+  const [modal, setModal] = useState(false);
   const [userData, setUserData] = useState({});
   const [toggleSwitchBut, setToggleSwitchBut] = useState();
   const [selectedLanguage, setSelectedLanguage] = useState();
-  const [modal, setModal] = useState(false);
+  
   useEffect(() => {
-    UserData();
     getData();
+    UserData();
   }, [toggleSwitchBut, selectedLanguage]);
 
   const getData = async () => {
@@ -39,7 +39,7 @@ const AccountScreen = ({navigation}) => {
       const languageData = await AsyncStorage.getItem('selected_Language');
       setSelectedLanguage(JSON.parse(languageData));
     } catch (e) {
-      console.log('e :>> ', e);
+      console.log('getData error :>> ', e);
     }
   };
 
@@ -275,7 +275,10 @@ const styles = StyleSheet.create({
     padding: hp(1.2),
   },
   bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.black},
-  NameStyle: {fontWeight: '500'},
+  NameStyle: {
+    fontWeight: '500',
+    color: color.black,
+  },
   listTouchStyle: {
     flexDirection: 'row',
     alignItems: 'center',

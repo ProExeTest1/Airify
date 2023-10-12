@@ -58,7 +58,12 @@ const WelcomeScreen = ({navigation}) => {
           buttonTextStyle={styles.buttonTextStyle}
         />
       </View>
-      <View>
+      <View
+        style={{
+          borderBottomWidth: 1,
+          borderColor: '#ECEFEF',
+          paddingBottom: hp(4),
+        }}>
         <OnBoardingSingleButton
           buttonStyle={{marginTop: hp(6), height: hp(5)}}
           buttonText={strings.signIn}
@@ -68,22 +73,20 @@ const WelcomeScreen = ({navigation}) => {
         />
       </View>
       <View style={styles.signUpStyle}>
-        <OnBoardingText
-          OnBoardingSubText={strings.signUpLine}
-          OnBoardingSubTextStyle={{fontSize: fontSize(14), fontWeight: '400'}}
-        />
+        <Text style={{color: 'black'}}>{strings.signUpLine}</Text>
         <TouchableOpacity
+          style={{marginLeft: wp(1)}}
           onPress={() => {
             navigation.navigate('SignUpScreen');
           }}>
-          <OnBoardingText
-            OnBoardingSubText={strings.signUp}
-            OnBoardingSubTextStyle={{
+          <Text
+            style={{
               color: 'blue',
               fontSize: fontSize(14),
               fontWeight: '400',
-            }}
-          />
+            }}>
+            {strings.signUp}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -112,9 +115,8 @@ const styles = StyleSheet.create({
   },
   signUpStyle: {
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: wp(22),
-    marginTop: hp(4),
+    marginVertical: hp(3),
+    marginBottom: hp(5),
   },
   filedImageStyle: {
     marginStart: wp(3),

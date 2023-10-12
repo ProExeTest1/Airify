@@ -1,15 +1,8 @@
-import {
-  Alert,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {color} from '../../helper/ColorConstant';
-import {images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
@@ -20,7 +13,6 @@ import {
   returnNormalDateAction,
 } from '../../redux/action/DateAction';
 import {PickerHeaderBar} from '../../components';
-import {fontSize, hp, wp} from '../../helper/Constant';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -82,6 +74,7 @@ const DatePickerScreen = ({navigation, route}) => {
       setReturnPress(true);
     }
   }, []);
+
   const date = new Date(selected).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
@@ -89,14 +82,16 @@ const DatePickerScreen = ({navigation, route}) => {
   const month = new Date(selected).toLocaleDateString('en-IN', {
     month: 'short',
   });
-  // Return date
-  const returndate = new Date(returnDate).toLocaleDateString('en-IN', {
-    weekday: 'short',
-  });
   const returndayname = returndate.split(',');
   const returnmonth = new Date(returnDate).toLocaleDateString('en-IN', {
     month: 'short',
   });
+
+
+  const returndate = new Date(returnDate).toLocaleDateString('en-IN', {
+    weekday: 'short',
+  });
+
 
   const currentDate = new Date()
     .toLocaleDateString('en-IN', {weekday: 'short'})
@@ -107,14 +102,19 @@ const DatePickerScreen = ({navigation, route}) => {
 
   const currentMonth = new Date().toLocaleDateString('en-IN', {month: 'short'});
 
+  // When user press on Ok button it will navigate to home screen and store date data in redux
+
   const onOkPress = () => {
     let tomorrow = new Date();
     tomorrow = moment(tomorrow).add(1, 'day').format('YYYY-MM-DD');
     let selectedDate = moment(selected).format('MM/DD/YYYY');
     let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
     let flag = 0;
+
+    //Condition for date vallidation
+
     if (press) {
-      for (let i = 0; i <= 10; i++) {
+      for (let i = -1; i <= 8; i++) {
         let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
         if (selectedDate == roundDate || selectedreturnDate == roundDate) {
           flag = 1;
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   dateTextStyle: {
     fontSize: fontSize(16, 812),
     fontWeight: '500',
-    color: 'white',
+    color: color.white,
   },
   currentDateStyle: {
     width: wp(95),
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
   searchFontStyle: {
     fontSize: fontSize(20, 812),
-    color: 'white',
+    color: color.white,
     fontWeight: 'bold',
   },
   dateMainViewStyle: {

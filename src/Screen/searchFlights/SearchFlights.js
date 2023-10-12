@@ -1,17 +1,12 @@
 import {
   View,
   Text,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   Image,
-  ScrollView,
   FlatList,
-  TouchableWithoutFeedback,
   Share,
   Alert,
-  Animated,
-  useAnimatedValue,
 } from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -25,18 +20,12 @@ import {CreatePriceAlert} from '../../components/index';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
-import {depatureDateAction} from '../../redux/action/DateAction';
-
+import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import moment from 'moment';
+import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
+import {strings} from '../../helper/Strings';
 
 const SearchFlights = ({navigation}) => {
-  const dispatch = useDispatch();
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const SelectDate = useSelector(e => e.date.normalDate);
-  const setSelectDate = data => {
-    let tem = moment(data.date).format('D/M/YYYY');
-    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
-  };
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -48,6 +37,21 @@ const SearchFlights = ({navigation}) => {
     useState(SearchFlightData);
 
   const [selectedData, setSelectedData] = useState({});
+
+  const dispatch = useDispatch();
+
+  const searchFlightFilterData = useSelector(
+    e => e?.searchFlight?.searchFlightFilterData,
+  );
+
+  const SelectDate = useSelector(e => e.date.normalDate);
+
+  /* ----------------------------------------------------> date function */
+
+  const setSelectDate = data => {
+    let tem = moment(data.date).format('D/M/YYYY');
+    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
+  };
   const onShare = async () => {
     try {
       await Share.share({
@@ -70,6 +74,7 @@ const SearchFlights = ({navigation}) => {
       Alert.alert(error.message);
     }
   };
+
   const addAlert = () => {
     setCreatePriceData({
       priceTargets: priceTargets,
@@ -83,14 +88,20 @@ const SearchFlights = ({navigation}) => {
     });
     setModalVisible1(false);
   };
+
   const closeModal1 = () => {
     setModalVisible1(false);
   };
+
   const closeModal2 = () => {
     setSearchFlightCardData(SearchFlightData);
     setSelectedData({});
     setModalVisible2(false);
   };
+
+  {
+    /* ----------------------------------------------------> sort function */
+  }
 
   const applySortdaata = () => {
     const sortData = SearchFlightData.sort((a, b) => {
@@ -136,8 +147,86 @@ const SearchFlights = ({navigation}) => {
     setSearchFlightCardData(sortData);
     setModalVisible2(false);
   };
+
+  {
+    /* ----------------------------------------------------> card list filter */
+  }
+
+  useEffect(() => {
+    if (searchFlightFilterData?.priceRange) {
+      const filterData = SearchFlightData.filter(item => {
+        let priceRange =
+          searchFlightFilterData?.priceRange[0] <
+            Number(item.price.slice(1).replaceAll(',', '')) &&
+          searchFlightFilterData?.priceRange[1] >
+            Number(item.price.slice(1).replaceAll(',', ''));
+
+        let numberOfStops =
+          searchFlightFilterData?.numberOfStopsData === '2+ Stop'
+            ? Number(item.stop.slice(0, 1)) >= 2
+            : searchFlightFilterData?.numberOfStopsData === item.stop;
+
+        let airlinesList =
+          searchFlightFilterData.airlinesList !== null
+            ? searchFlightFilterData.airlinesList.some(
+                i => i === item.airlineName,
+              )
+            : true;
+
+        let flightDurationTime = item.totalHours.slice(0, -1).split('h ');
+        let flightDuration =
+          searchFlightFilterData?.flightDuration[0] <=
+            Number(flightDurationTime[0]) &&
+          searchFlightFilterData?.flightDuration[1] >
+            Number(flightDurationTime[0]);
+
+        let arrivalTimeList = item.lendTime.slice(0, 2);
+        let searchFlightFilterArrival =
+          searchFlightFilterData?.arrivalTime?.time.split(' - ');
+        let arrivalTime =
+          searchFlightFilterData.arrivalTime !== null
+            ? Number(searchFlightFilterArrival[0].slice(0, 2)) <=
+                Number(arrivalTimeList) &&
+              Number(searchFlightFilterArrival[1].slice(0, 2)) >
+                Number(arrivalTimeList)
+            : true;
+
+        let departureTimeList = item.pickTime.slice(0, 2);
+        let searchFlightFilterdeparture =
+          searchFlightFilterData?.departureTime?.time.split(' - ');
+        let departureTime =
+          searchFlightFilterData.departureTime !== null
+            ? Number(searchFlightFilterdeparture[0].slice(0, 2)) <=
+                Number(departureTimeList) &&
+              Number(searchFlightFilterdeparture[1].slice(0, 2)) >
+                Number(departureTimeList)
+            : true;
+
+        return (
+          priceRange &&
+          numberOfStops &&
+          airlinesList &&
+          flightDuration &&
+          arrivalTime &&
+          departureTime
+        );
+      });
+      console.log(filterData);
+      filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
+    } else {
+      setSearchFlightCardData(SearchFlightData);
+    }
+  }, [searchFlightFilterData]);
+
+  const applydata = () => {
+    setSearchFlightCardData(SearchFlightData);
+    dispatch(SearchFlightFilterData({}));
+    Alert.alert('Filter data not match');
+  };
   return (
     <View style={styles.body}>
+      {/* ----------------------------------------------------> Header components */}
+
       <SearchFlightsHeader
         SelectDate={SelectDate}
         setSelectDate={setSelectDate}
@@ -146,10 +235,15 @@ const SearchFlights = ({navigation}) => {
         setModalVisible1={setModalVisible1}
         navigation={navigation}
       />
+
+      {/* ----------------------------------------------------> Ticket List */}
+
       <TicketList
         SelectDate={SelectDate}
-        SearchFlightCardData={SearchFlightCardData}
+        SearchFlightCard={SearchFlightCardData}
+       
       />
+
       <View style={styles.sortBody}>
         <TouchableOpacity
           onPress={() => setModalVisible2(true)}
@@ -162,9 +256,12 @@ const SearchFlights = ({navigation}) => {
           onPress={() => navigation.navigate('SearchFlightsFilter')}
           style={styles.sortImgBody}>
           <Image style={styles.sortImg} source={Images.filterIcon} />
-          <Text style={styles.sortText}>Filter</Text>
+          <Text style={styles.sortText}>{strings.filter}</Text>
         </TouchableOpacity>
       </View>
+
+      {/* ----------------------------------------------------> Alert Modal */}
+
       <Modal
         style={{margin: 0, justifyContent: 'flex-end'}}
         isVisible={modalVisible1}
@@ -182,6 +279,9 @@ const SearchFlights = ({navigation}) => {
           addAlert={addAlert}
           closeModal={closeModal1}></CreatePriceAlert>
       </Modal>
+
+      {/* ----------------------------------------------------> sort Modal */}
+
       <Modal
         style={{margin: 0, justifyContent: 'flex-end'}}
         isVisible={modalVisible2}
@@ -189,7 +289,7 @@ const SearchFlights = ({navigation}) => {
         onBackdropPress={() => setModalVisible2(false)}>
         <View style={styles.createAlertBody}>
           <View style={styles.createAlertTitleBody}>
-            <Text style={styles.createAlertTitle}>Sort</Text>
+            <Text style={styles.createAlertTitle}>{strings.sort}</Text>
           </View>
           <View style={styles.sortModalBody}>
             <FlatList
@@ -210,7 +310,7 @@ const SearchFlights = ({navigation}) => {
           </View>
           <View
             style={{
-              paddingVertical: hp(4.5),
+              paddingVertical: hp(2),
               borderTopWidth: 1,
               borderColor: '#e2e2e2',
             }}>
