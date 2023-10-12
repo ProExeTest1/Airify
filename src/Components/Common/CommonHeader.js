@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     height: hp(3),
     width: hp(3),
     resizeMode: 'contain',
+    tintColor: color.white,
   },
   headerTextStyle: {
     fontSize: fontSize(22),

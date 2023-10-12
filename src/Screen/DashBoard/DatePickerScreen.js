@@ -116,7 +116,7 @@ const DatePickerScreen = ({navigation, route}) => {
     //Condition for date vallidation
 
     if (press) {
-      for (let i = 0; i <= 10; i++) {
+      for (let i = -1; i <= 8; i++) {
         let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
         if (selectedDate == roundDate || selectedreturnDate == roundDate) {
           flag = 1;

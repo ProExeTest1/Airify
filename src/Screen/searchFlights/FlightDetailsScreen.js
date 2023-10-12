@@ -1,4 +1,5 @@
 import {
+  Button,
   FlatList,
   Image,
   Platform,
@@ -8,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
@@ -17,13 +18,108 @@ import {
   FlightDetailsData,
   FlightDetailsData1,
 } from '../../assets/DummyData/FlightDetailsData';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import Modal from 'react-native-modal';
+import {FlightDetailsCard} from '../../components';
 
 const FlightDetailsScreen = ({navigation}) => {
+  const [savedFlight, setSavedFlight] = useState([]);
+  const [press, setPress] = useState(false);
+  const [value, setValue] = useState();
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
+  // console.log(typeof Number(item?.price));
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  // console.log(Number(searchFlightData.passenger.split(' ')[0]));
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
+  useEffect(() => {
+    getData();
+  }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setPress(false);
+    }, 2000);
+  }, [press]);
+  const getData = async () => {
+    const uid = auth().currentUser.uid;
+    await firestore()
+      .collection('SavedFlights')
+      .doc(uid)
+      .get()
+      .then(res => {
+        setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+      });
+  };
+  const saveFlightDetails = async () => {
+    const uid = auth().currentUser.uid;
+    await firestore()
+      .collection('SavedFlights')
+      .doc(uid)
+      .set({
+        savedFlights: firestore.FieldValue.arrayUnion({
+          airlineName: item?.airlineName,
+          logo: item?.logo,
+          date: `${searchFlightDateData[0].slice(0, 3)},${
+            searchFlightDateData[1]
+          }`,
+          departurePlace: searchFlightData?.from,
+          destinationPlace: searchFlightData?.to,
+          departureTime: item.pickTime,
+          landingTime: item.lendTime,
+          totalHours: item.totalHours,
+          departureShortForm: searchFlightData?.fromShortform,
+          destinationShortForm: searchFlightData?.toShortform,
+          stops: item.stop,
+        }),
+      })
+      .then(async () => {
+        setValue('Saved');
+        setPress(true);
+        await firestore()
+          .collection('SavedFlights')
+          .doc(uid)
+          .get()
+          .then(res => {
+            setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+          });
+      });
+  };
+  const unsaveFlightDetails = async () => {
+    const uid = auth().currentUser.uid;
+    await firestore()
+      .collection('SavedFlights')
+      .doc(uid)
+      .set({
+        savedFlights: firestore.FieldValue.arrayRemove({
+          airlineName: item?.airlineName,
+          logo: item?.logo,
+          date: `${searchFlightDateData[0].slice(0, 3)},${
+            searchFlightDateData[1]
+          }`,
+          departurePlace: searchFlightData?.from,
+          destinationPlace: searchFlightData?.to,
+          departureTime: item.pickTime,
+          landingTime: item.lendTime,
+          totalHours: item.totalHours,
+          departureShortForm: searchFlightData?.fromShortform,
+          destinationShortForm: searchFlightData?.toShortform,
+          stops: item.stop,
+        }),
+      })
+      .then(async () => {
+        setValue('Removed');
+        setPress(true);
+        await firestore()
+          .collection('SavedFlights')
+          .doc(uid)
+          .get()
+          .then(res => {
+            setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+          });
+      });
+  };
   return (
     <View>
       <View style={styles.headerViewStyle}>
@@ -40,9 +136,18 @@ const FlightDetailsScreen = ({navigation}) => {
               />
             </TouchableOpacity>
             <View style={styles.saveShareViewStyle}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  savedFlight.some(a => a === item?.airlineName) === true
+                    ? unsaveFlightDetails()
+                    : saveFlightDetails();
+                }}>
                 <Image
-                  source={Images.saved}
+                  source={
+                    savedFlight.some(a => a === item?.airlineName) === true
+                      ? Images.filled_save
+                      : Images.saved
+                  }
                   style={styles.saveShareIconStyle}
                   resizeMode="contain"
                 />
@@ -58,47 +163,7 @@ const FlightDetailsScreen = ({navigation}) => {
           </View>
         </SafeAreaView>
       </View>
-      <View style={[styles.cardBody, {marginVertical: hp(2)}]}>
-        <View style={styles.cardHeader}>
-          <View
-            style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]}
-          />
-          <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
-
-          <Text style={styles.cardPriceTitle}>{`${searchFlightDateData[0].slice(
-            0,
-            3,
-          )},${searchFlightDateData[1]}`}</Text>
-        </View>
-        <View style={styles.cardDataBody}>
-          <View style={styles.FlightsPlaseBody}>
-            <Text style={styles.FlightsPlaseName}>
-              {searchFlightData?.from}
-            </Text>
-            <Text style={styles.FlightsPlaseNicName}>{item.pickTime}</Text>
-          </View>
-          <View style={styles.FlightsPlaseImgBody}>
-            <Image
-              style={styles.FlightsPlaseImg}
-              source={Images.airplaneWhiteIcon}
-            />
-            <Text style={styles.FlightsPlaseImgText}>{item.totalHours}</Text>
-          </View>
-          <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
-            <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
-            <Text style={styles.FlightsPlaseNicName}>{item.lendTime}</Text>
-          </View>
-        </View>
-        <View style={styles.cardBottemBody}>
-          <Text style={styles.FlightsPlaseName}>
-            {searchFlightData?.fromShortform}
-          </Text>
-          <Text style={styles.FlightsPlaseImgText}>{item.stop}</Text>
-          <Text style={styles.FlightsPlaseName}>
-            {searchFlightData?.toShortform}
-          </Text>
-        </View>
-      </View>
+      <FlightDetailsCard item={item} />
       <View style={styles.cardBody}>
         <View
           style={[
@@ -175,13 +240,39 @@ const FlightDetailsScreen = ({navigation}) => {
       </View>
       <View style={styles.thirdCardStyle}>
         <View>
-          <Text style={styles.priceTextStyle}>Total Price : 1 person(s)</Text>
-          <Text style={styles.cardPrice}>{item?.price}.00</Text>
+          <Text style={styles.priceTextStyle}>
+            Total Price : {searchFlightData.passenger.split(' ')[0]} person(s)
+          </Text>
+          <Text style={styles.cardPrice}>
+            $
+            {parseInt(item?.price.slice(1, 8).split(',').join(''), 10) *
+              Number(searchFlightData.passenger.split(' ')[0])}
+            .00
+          </Text>
         </View>
-        <TouchableOpacity style={styles.continueButtonStyle}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('FillPassengerDetails')}
+          style={styles.continueButtonStyle}>
           <Text style={styles.continueTextStyle}>Continue</Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        backdropOpacity={0}
+        animationOut={'bounceOutUp'}
+        animationIn={'bounceIn'}
+        isVisible={press}
+        style={styles.modalStyle}>
+        <View style={styles.modalViewViewStyle}>
+          <View style={styles.imageViewStyle}>
+            <Image
+              source={Images.tickMark}
+              style={styles.imageStyle}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={styles.modalTextStyle}>{value}!</Text>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -235,24 +326,7 @@ const styles = StyleSheet.create({
     width: '92%',
     alignSelf: 'center',
   },
-  cardHeader: {
-    borderColor: '#e2e2e2',
-    borderBottomWidth: 1,
-    paddingVertical: hp(2.5),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  cardHeaderText: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    flex: 1,
-  },
-  cardHeaderLogo: {
-    height: wp(5.8),
-    width: wp(5.8),
-    borderRadius: 500,
-    marginEnd: wp(3),
-  },
+
   cardPrice: {
     color: color.commonBlue,
     fontSize: fontSize(20),
@@ -263,11 +337,7 @@ const styles = StyleSheet.create({
     color: '#7e7e7f',
     fontSize: fontSize(16),
   },
-  cardDataBody: {
-    paddingTop: hp(2.5),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+
   FlightsPlaseBody: {
     width: wp(20),
   },
@@ -366,5 +436,44 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     color: color.white,
     fontWeight: '600',
+  },
+  modalStyle: {
+    justifyContent: 'flex-start',
+    alignSelf: 'center',
+    top: Platform.OS == 'ios' ? hp(4) : hp(0),
+  },
+  modalViewViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '40%',
+    backgroundColor: color.white,
+    borderRadius: 100,
+    paddingVertical: hp(1.2),
+    paddingHorizontal: wp(1.3),
+    paddingRight: wp(2.6),
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    elevation: 30,
+  },
+  imageViewStyle: {
+    backgroundColor: color.commonBlue,
+    padding: hp(0.9),
+    borderRadius: 100,
+    marginHorizontal: wp(2.3),
+  },
+  imageStyle: {
+    height: hp(2.5),
+    width: hp(2.5),
+    tintColor: color.white,
+  },
+  modalTextStyle: {
+    fontSize: fontSize(22),
+    fontWeight: '600',
+    color: color.black,
+    marginHorizontal: wp(1),
   },
 });

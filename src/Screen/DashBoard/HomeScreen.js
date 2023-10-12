@@ -24,8 +24,6 @@ import {
 
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
-import SwiperFlatList from 'react-native-swiper-flatlist';
-import {dummyData} from '../../assets/DummyData/Data';
 import {useSelector, useDispatch} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
@@ -154,7 +152,7 @@ const HomeScreen = ({navigation}) => {
           </View>
           <TouchableOpacity
             style={styles.bellTouchStyle}
-            onPress={() => navigation.navigate('Notification')}>
+            onPress={() => navigation.navigate('NotificationScreen')}>
             <Image
               source={Images.bell}
               style={styles.bellStyle}
@@ -207,12 +205,20 @@ const HomeScreen = ({navigation}) => {
               icon={Images.takeOff}
               value={
                 change
-                  ? reduxDestinationPlace
+                  ? reduxDestinationPlace &&
+                    destinationData !== 'undefined(undefined)'
                     ? destinationData
-                    : destination
+                    : 'To'
                   : depatureData !== 'undefined(undefined)'
                   ? depatureData
-                  : origin
+                  : 'From'
+                // change
+                //   ? reduxDestinationPlace
+                //     ? destinationData
+                //     : destination
+                //   : depatureData !== 'undefined(undefined)'
+                //   ? depatureData
+                //   : origin
               }
               onChangeText={txt =>
                 change ? setDestination(txt) : setOrigin(txt)
@@ -228,12 +234,13 @@ const HomeScreen = ({navigation}) => {
               icon={Images.landing}
               value={
                 change
-                  ? reduxDepaturePlace
+                  ? reduxDepaturePlace &&
+                    depatureData !== 'undefined(undefined)'
                     ? depatureData
-                    : origin
+                    : 'From'
                   : destinationData !== 'undefined(undefined)'
                   ? destinationData
-                  : destination
+                  : 'To'
               }
               onChangeText={txt =>
                 change ? setOrigin(txt) : setDestination(txt)
@@ -287,7 +294,7 @@ const HomeScreen = ({navigation}) => {
               label={'Class'}
               icon={Images.seat}
               onPress={toggleClassModal}
-              value={passengerClass.split(' ')[0]}
+              value={passengerClass ? passengerClass.split(' ')[0] : null}
             />
           </View>
           <TouchableOpacity

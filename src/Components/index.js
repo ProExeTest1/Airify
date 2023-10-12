@@ -17,6 +17,7 @@ import FlightDetails from './FlightDetailComponents/FlightDetails';
 import RefundandRescheduleInfo from './FlightDetailComponents/RefundandRescheduleInfo';
 import CustomTextInput from './Common/CustomPaperTextInput';
 import CommonHeader from './Common/CommonHeader';
+import FlightDetailsCard from './FlightDetailComponents/FlightDetailsCard';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -37,4 +38,5 @@ export {
   FlightDetails,
   RefundandRescheduleInfo,
   CommonHeader,
+  FlightDetailsCard,
 };

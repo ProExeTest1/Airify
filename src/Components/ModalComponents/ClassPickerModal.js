@@ -21,7 +21,7 @@ const ClassPickerModal = ({
   setClass,
   onCancel,
 }) => {
-  const [index, setIndex] = useState();
+  const [index, setIndex] = useState(1);
   return (
     <View>
       <Modal isVisible={isModalVisible} style={styles.modalStyle}>
@@ -73,7 +73,10 @@ const ClassPickerModal = ({
             <OnBoardingTwoButton
               buttonTextOne={'Cancel'}
               buttonTextTwo={'OK'}
-              onPress1={onCancel}
+              onPress1={() => {
+                onCancel();
+                setIndex(1);
+              }}
               onPress2={toggleModal}
             />
           </View>

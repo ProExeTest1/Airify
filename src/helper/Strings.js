@@ -181,4 +181,8 @@ export const strings = {
   continueTopUp: 'Continue Top Up',
   avalableBalance: 'Avalable Balance: ',
   transactionHistory: 'Transaction History',
+
+  // Ticket Booking
+
+  selectSeat: 'Select Seat',
 };

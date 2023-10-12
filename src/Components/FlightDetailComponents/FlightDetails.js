@@ -75,6 +75,7 @@ const FlightDetails = () => {
           <View style={[styles.flatlistViewStyle, {borderBottomWidth: 1}]}>
             <FlatList
               data={FlightDetailsData}
+              scrollEnabled={false}
               showsVerticalScrollIndicator={false}
               bounces={false}
               renderItem={({item}) => {
@@ -94,6 +95,7 @@ const FlightDetails = () => {
           </View>
           <View style={styles.flatlistViewStyle}>
             <FlatList
+              scrollEnabled={false}
               data={FlightDetailsData1}
               showsVerticalScrollIndicator={false}
               bounces={false}
