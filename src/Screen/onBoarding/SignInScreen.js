@@ -20,6 +20,7 @@ import CheckButton from '../../components/CheckButton';
 import auth from '@react-native-firebase/auth';
 import firestore, {firebase} from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {color} from '../../helper/ColorConstant';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [modal, setModal] = useState(false);
@@ -217,6 +218,7 @@ const styles = StyleSheet.create({
   },
   textInputTitleStyle: {
     marginLeft: wp(6),
+    color: color.black,
   },
   rememberLineStyle: {
     flexDirection: 'row',

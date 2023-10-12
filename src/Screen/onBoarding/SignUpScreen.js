@@ -37,6 +37,8 @@ import {dummyAirlineData} from '../../helper/dummyData';
 import firestore, {firebase} from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
+import {NotificationData, SecurityData} from '../../assets/DummyData/Data';
+import {CountryPicker} from 'react-native-country-codes-picker';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [checked, setChecked] = useState(false);
@@ -56,6 +58,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [name, setName] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const [pin, setPin] = useState('');
+  const [show, setShow] = useState(false);
+  const [countryCode, setCountryCode] = useState('');
 
   useEffect(() => {
     JourneyData();
@@ -64,7 +68,6 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const DineWayData = useSelector(
     response => response?.OnBoarding?.DineWayData,
   );
-
   const onPressAdd = async () => {
     dispatch(DineWay());
   };
@@ -151,8 +154,28 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         JourneyData: selectedJourneyData,
         DineWay: selectedDineWay,
         FlyData: selectedFlyWay,
+        NotificationList: NotificationData,
+        SecurityData: SecurityData,
       });
-      await auth().signOut();
+
+      //------------------------------------------------>  UserWallet data
+
+      await firestore()
+        .collection('UserWallet')
+        .doc(isUserCreate.user.uid)
+        .set({
+          wallet: '00.00',
+        });
+
+      //------------------------------------------------>  Passenger List data
+
+      await firestore()
+        .collection('PassengerList')
+        .doc(isUserCreate.user.uid)
+        .set({
+          PassengerList: [],
+        });
+
       navigation.navigate('SignUpSuccess');
     } catch (error) {
       console.log(error);
@@ -323,7 +346,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               onPress2={() => {
                 setShow(true);
               }}
-              // countryCode={countryCode}
+              countryCode={countryCode}
             />
             <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
             <OnBoardingTextInput
@@ -570,6 +593,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         }}
         onCancel={() => {
           setDatePicker(false);
+        }}
+      />
+      <CountryPicker
+        show={show}
+        pickerButtonOnPress={item => {
+          setShow(false);
+          setCountryCode(item.flag);
         }}
       />
     </View>

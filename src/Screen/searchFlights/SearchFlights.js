@@ -34,7 +34,6 @@ const SearchFlights = ({navigation}) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   const SelectDate = useSelector(e => e.date.normalDate);
   const setSelectDate = data => {
-    console.log('data.date', data.date);
     let tem = moment(data.date).format('D/M/YYYY');
     dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
   };

@@ -3,13 +3,13 @@ import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 
-const SearchBar = ({value, onChangeText}) => {
+const SearchBar = ({value, onChangeText, placeholder, TextInputBody}) => {
   return (
     <View>
-      <View style={styles.TextInputBody}>
+      <View style={[styles.TextInputBody, TextInputBody]}>
         <Image style={styles.SearchImg} source={Images.search} />
         <TextInput
-          placeholder="Search city or airport"
+          placeholder={placeholder}
           placeholderTextColor={'grey'}
           autoCapitalize="none"
           fontSize={fontSize(18)}
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     marginTop: hp(1),
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
     borderRadius: 10,
     paddingVertical: hp(2.5),
     paddingHorizontal: wp(1),

@@ -19,6 +19,12 @@ import SearchFlights from '../screen/searchFlights/SearchFlights';
 import auth from '@react-native-firebase/auth';
 import PersonalInfo from '../screen/account/PersonalInfo';
 import Notification from '../screen/account/Notification';
+import Security from '../screen/account/Security';
+import Language from '../screen/account/Language';
+import AboutAirify from '../screen/account/AboutAirify';
+import HelpCenter from '../screen/account/HelpCenter';
+import PassengerList from '../screen/account/PassengerList';
+import NewPassenger from '../screen/account/NewPassenger';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +51,12 @@ function StackNavigation() {
         <Stack.Screen name="SearchFlights" component={SearchFlights} />
         <Stack.Screen name="PersonalInfo" component={PersonalInfo} />
         <Stack.Screen name="Notification" component={Notification} />
+        <Stack.Screen name="Security" component={Security} />
+        <Stack.Screen name="Language" component={Language} />
+        <Stack.Screen name="HelpCenter" component={HelpCenter} />
+        <Stack.Screen name="AboutAirify" component={AboutAirify} />
+        <Stack.Screen name="PassengerList" component={PassengerList} />
+        <Stack.Screen name="NewPassenger" component={NewPassenger} />
       </Stack.Navigator>
     </NavigationContainer>
   );

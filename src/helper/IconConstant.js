@@ -67,4 +67,11 @@ export const Images = {
   info: require('../assets/icons/info.png'),
   logout: require('../assets/icons/logout.png'),
   planIcon: require('../assets/icons/planIcon.png'),
+  whatsapp: require('../assets/icons/whatsapp.png'),
+  website: require('../assets/icons/world-wide-web.png'),
+  instagram: require('../assets/icons/instagram.png'),
+  headphones: require('../assets/icons/headphones.png'),
+  upArrow: require('../assets/icons/upload.png'),
+  plus: require('../assets/icons/plus.png'),
+  pencil: require('../assets/icons/pencil.png'),
 };

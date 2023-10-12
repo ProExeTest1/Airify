@@ -96,7 +96,10 @@ const PlacePickerScreen = ({navigation, route}) => {
         headerName={headerData}
         navigation={() => navigation.goBack('')}
       />
-      <SearchBar onChangeText={txt => searchFilter(txt)} />
+      <SearchBar
+        onChangeText={txt => searchFilter(txt)}
+        placeholder="Search city or airport"
+      />
       <View style={styles.flatlistViewStyle}>
         <FlatList
           data={search.length > 0 ? search : apiData}

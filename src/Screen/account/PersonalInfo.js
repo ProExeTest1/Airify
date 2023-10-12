@@ -243,8 +243,8 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
           buttonText={strings.save}
           buttonStyle={styles.buttonStyle}
           onPress={() => {
-            // handleSignUp();
-            update();
+            handleSignUp();
+            // update();
           }}
         />
       </ScrollView>

@@ -97,11 +97,6 @@ const SearchFlightsHeader = ({
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}) => {
-            console.log(
-              'item?.date === SelectDate?.date :>> ',
-              item?.date,
-              SelectDate?.date,
-            );
             return (
               <TouchableOpacity
                 onPress={() => {

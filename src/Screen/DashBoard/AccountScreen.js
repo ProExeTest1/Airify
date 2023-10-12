@@ -24,18 +24,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AccountScreen = ({navigation}) => {
   const [userData, setUserData] = useState({});
-  const [toggleSwitchBut, setToggleSwitchBut] = useState(false);
+  const [toggleSwitchBut, setToggleSwitchBut] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState();
   const [modal, setModal] = useState(false);
-
   useEffect(() => {
     UserData();
     getData();
-  }, [toggleSwitchBut]);
+  }, [toggleSwitchBut, selectedLanguage]);
 
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('DarkMode');
       setToggleSwitchBut(JSON.parse(jsonValue));
+      const languageData = await AsyncStorage.getItem('selected_Language');
+      setSelectedLanguage(JSON.parse(languageData));
     } catch (e) {
       console.log('e :>> ', e);
     }
@@ -130,8 +132,12 @@ const AccountScreen = ({navigation}) => {
                         <Text style={styles.listTitleTextStyle}>
                           {item.title}
                         </Text>
-                        <Text style={styles.listTitleTextStyle}>
-                          English (US)
+                        <Text
+                          style={[
+                            styles.listTitleTextStyle,
+                            {color: color.commonBlue},
+                          ]}>
+                          {selectedLanguage?.language}
                         </Text>
                       </View>
                     ) : item.title == 'Dark Mode' ? (
