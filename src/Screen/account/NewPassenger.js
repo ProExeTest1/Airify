@@ -197,70 +197,40 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
       .collection('PassengerList')
       .doc(auth().currentUser.uid)
       .get()
-      .then(
-        async item => {
-          await firestore()
-            .collection('PassengerList')
-            .doc(auth().currentUser.uid)
-            .update({
-              PassengerList: item?.data()?.PassengerList?.map(i => {
-                if (i.uniqID == route?.params?.passengerData?.uniqID) {
-                  return {
-                    FirstName: firstName,
-                    LastName: lastName,
-                    Title: selectedTitle,
-                    BirthDate: birthDate,
-                    CountryCode: countryCode,
-                    PhoneNumber: phoneNo,
-                    Email: email,
-                    IdentityCardNumber: identityCardNo,
-                    IdentityCardIssueCountry: identityCardIssueCountry,
-                    IdentityCardIssueDate: identityCardIssueDate,
-                    IdentityCardExpiryDate: identityCardExpiryDate,
-                    PassportNumber: passportNo,
-                    PassportIssueCountry: passportIssueCountry,
-                    PassportExpiryDate: passportExpiryDate,
-                    Nationality: nationality,
-                    DrivingLicenseNumber: drivingLicenseNo,
-                    DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
-                    DrivingLicenseIssueDate: drivingLicenseIssueDate,
-                    DrivingLicenseExpiryDate: drivingLicenseExpiryDate,
-                    uniqID: i.uniqID,
-                  };
-                }
-                return i;
-              }),
-            });
-        },
-        // item?.data()?.PassengerList?.map(async i => {
-        //   if (i.uniqID == route?.params?.passengerData?.uniqID) {
-        //       PassengerList: [
-        //         ...i.data().PassengerList,
-        // {
-        //   FirstName: firstName,
-        //   LastName: lastName,
-        //   Title: selectedTitle,
-        //   BirthDate: birthDate,
-        //   CountryCode: countryCode,
-        //   PhoneNumber: phoneNo,
-        //   Email: email,
-        //   IdentityCardNumber: identityCardNo,
-        //   IdentityCardIssueCountry: identityCardIssueCountry,
-        //   IdentityCardIssueDate: identityCardIssueDate,
-        //   IdentityCardExpiryDate: identityCardExpiryDate,
-        //   PassportNumber: passportNo,
-        //   PassportIssueCountry: passportIssueCountry,
-        //   PassportExpiryDate: passportExpiryDate,
-        //   Nationality: nationality,
-        //   DrivingLicenseNumber: drivingLicenseNo,
-        //   DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
-        //   DrivingLicenseIssueDate: drivingLicenseIssueDate,
-        //   DrivingLicenseExpiryDate: drivingLicenseExpiryDate,
-        //   uniqID: uuid.v4(),
-        // },
-        //       ],
-        //     });
-      );
+      .then(async item => {
+        await firestore()
+          .collection('PassengerList')
+          .doc(auth().currentUser.uid)
+          .update({
+            PassengerList: item?.data()?.PassengerList?.map(i => {
+              if (i.uniqID == route?.params?.passengerData?.uniqID) {
+                return {
+                  FirstName: firstName,
+                  LastName: lastName,
+                  Title: selectedTitle,
+                  BirthDate: birthDate,
+                  CountryCode: countryCode,
+                  PhoneNumber: phoneNo,
+                  Email: email,
+                  IdentityCardNumber: identityCardNo,
+                  IdentityCardIssueCountry: identityCardIssueCountry,
+                  IdentityCardIssueDate: identityCardIssueDate,
+                  IdentityCardExpiryDate: identityCardExpiryDate,
+                  PassportNumber: passportNo,
+                  PassportIssueCountry: passportIssueCountry,
+                  PassportExpiryDate: passportExpiryDate,
+                  Nationality: nationality,
+                  DrivingLicenseNumber: drivingLicenseNo,
+                  DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
+                  DrivingLicenseIssueDate: drivingLicenseIssueDate,
+                  DrivingLicenseExpiryDate: drivingLicenseExpiryDate,
+                  uniqID: i.uniqID,
+                };
+              }
+              return i;
+            }),
+          });
+      });
     navigation.navigate('PassengerList');
   };
   return (
@@ -277,6 +247,7 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
         onPress2={false}
         Images1={Images.cancel}
         Images2={null}
+        Images1Color={color.white}
         cancelButtonStyle1={styles.cancelStyle}
       />
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>

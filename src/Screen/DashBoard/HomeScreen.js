@@ -133,7 +133,7 @@ const HomeScreen = ({navigation}) => {
         <SafeAreaView style={styles.headerStyle}>
           <View style={styles.profilepicViewStyle}>
             <Image
-              source={Images.demoPic}
+              source={{uri: userData?.profileImageURL}}
               style={styles.profilePicStyle}
               resizeMode="stretch"
             />
@@ -147,7 +147,7 @@ const HomeScreen = ({navigation}) => {
                   ? strings.evening
                   : strings.Night}
               </Text>
-              <Text style={styles.userNameStyle}>Andrew Ainsley</Text>
+              <Text style={styles.userNameStyle}>{userData.Name}</Text>
             </View>
           </View>
           <TouchableOpacity

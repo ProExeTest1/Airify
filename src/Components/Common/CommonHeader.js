@@ -50,7 +50,11 @@ const CommonHeader = ({
             <Image
               source={Images2}
               // style={[styles.cancelButtonStyle, cancelButtonStyle]}
-              style={[styles.cancelButtonStyle, {tintColor: color.white}]}
+              style={[
+                styles.cancelButtonStyle,
+                {tintColor: color.white},
+                cancelButtonStyle,
+              ]}
               resizeMode="contain"
             />
           </TouchableOpacity>

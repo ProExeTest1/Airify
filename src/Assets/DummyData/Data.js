@@ -259,3 +259,27 @@ export const CabinClassData = [
   'Business Class',
   'First Class',
 ];
+
+export const addressData = [
+  {
+    address: '75 9th Ave, New York, NY 10011, USA',
+    label: 'Home',
+    Note: '',
+    contactName: 'Andrew Ainsley',
+    Phone: '9998942131',
+  },
+  {
+    address: '75 9th Ave, New York, NY 10011, USA',
+    label: 'Home',
+    Note: '',
+    contactName: 'Andrew Ainsley',
+    Phone: '9998942131',
+  },
+  {
+    address: '75 9th Ave, New York, NY 10011, USA',
+    label: 'Home',
+    Note: '',
+    contactName: 'Andrew Ainsley',
+    Phone: '9998942131',
+  },
+];

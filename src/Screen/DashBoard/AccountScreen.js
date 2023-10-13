@@ -26,7 +26,7 @@ const AccountScreen = ({navigation}) => {
   const [userData, setUserData] = useState({});
   const [toggleSwitchBut, setToggleSwitchBut] = useState();
   const [selectedLanguage, setSelectedLanguage] = useState();
-  
+
   useEffect(() => {
     getData();
     UserData();

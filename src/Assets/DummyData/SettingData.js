@@ -32,7 +32,7 @@ export const SettingData = [
         id: 5,
         title: 'Saved Address',
         icon: Images.address,
-        // screen: 'SignUpScreen',
+        screen: 'SavedAddress',
       },
       {
         id: 6,

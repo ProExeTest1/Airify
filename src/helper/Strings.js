@@ -217,4 +217,11 @@ export const strings = {
   // Ticket Booking
 
   selectSeat: 'Select Seat',
+
+  // Saved Address
+  savedAddress: 'Saved Address',
+  changeAddress: 'Change Address',
+  addNewAddress: 'Add New Address',
+  addButton: 'Select Location & Continue Fill Address',
+  addressDetail: 'Address Details',
 };

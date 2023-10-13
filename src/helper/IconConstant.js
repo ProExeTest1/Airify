@@ -97,4 +97,7 @@ export const Images = {
   plus: require('../assets/icons/plus.png'),
   pencil: require('../assets/icons/pencil.png'),
   topUpIcon: require('../assets/icons/topUp.png'),
+  loupe: require('../assets/icons/loupe.png'),
+  more: require('../assets/icons/more.png'),
+  location: require('../assets/icons/location-pin.png'),
 };

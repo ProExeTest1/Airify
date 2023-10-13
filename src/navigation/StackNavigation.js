@@ -29,6 +29,9 @@ import TopUp from '../screen/wallet/TopUp';
 import TransactionHistory from '../screen/wallet/TransactionHistory';
 import SelectSeat from '../screen/TicketBooking/SelectSeat';
 import FillPassngerDetails from '../screen/TicketBooking/FillPassngerDetails';
+import SavedAddress from '../screen/account/SavedAddress';
+import AddAddress from '../screen/account/AddAddress';
+import LocationSearch from '../screen/account/LocationSearch';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -81,6 +84,9 @@ const StackNavigation = () => {
           name="TransactionHistory"
           component={TransactionHistory}
         />
+        <Stack.Screen name="SavedAddress" component={SavedAddress} />
+        <Stack.Screen name="LocationSearch" component={LocationSearch} />
+        <Stack.Screen name="AddAddress" component={AddAddress} />
       </Stack.Navigator>
     </NavigationContainer>
   );
