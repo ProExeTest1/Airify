@@ -17,6 +17,7 @@ import {
   FlightDetailsCard,
   FlightServices,
   PriceDetails,
+  TicktBookingProgressBar,
 } from '../../components';
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
@@ -118,26 +119,8 @@ const FillPassengerDetails = ({navigation}) => {
         Images1={Images.backIcon}
         Images2={null}
       />
-      <View style={styles.progressBarStyle}>
-        <View style={styles.progressInnerViewStyle}>
-          <View style={styles.progressViewStyle}>
-            <Text style={styles.progressCountStyle}>1</Text>
-          </View>
-          <View style={styles.lineViewStyle} />
-          <View style={styles.progressViewStyle}>
-            <Text style={styles.progressCountStyle}>1</Text>
-          </View>
-          <View style={styles.lineViewStyle} />
-          <View style={styles.progressViewStyle}>
-            <Text style={styles.progressCountStyle}>1</Text>
-          </View>
-        </View>
-        <View style={styles.progressInnerViewStyle}>
-          <Text style={styles.progressTextStyle}>Book</Text>
-          <Text style={styles.progressTextStyle}>Book</Text>
-          <Text style={styles.progressTextStyle}>Book</Text>
-        </View>
-      </View>
+      <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
+
       <ScrollView bounces={false} style={styles.scrollViewStyle}>
         <FlightDetailsCard item={item} />
         <View style={styles.cardBody}>
@@ -157,6 +140,7 @@ const FillPassengerDetails = ({navigation}) => {
         </View>
         <View style={styles.cardBody}>
           <CardHeader
+            onPress={() => navigation.navigate('SelectSeat')}
             FirstImage={Images.account}
             SecondImage={Images.edit_pencil}
             header={strings.contact_details}
