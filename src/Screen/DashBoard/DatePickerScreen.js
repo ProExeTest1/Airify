@@ -13,6 +13,7 @@ import {
   returnNormalDateAction,
 } from '../../redux/action/DateAction';
 import {PickerHeaderBar} from '../../components';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -88,7 +89,7 @@ const DatePickerScreen = ({navigation, route}) => {
   const returndate = new Date(returnDate).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
-  const returndayname = returndate.split(',');
+  const returndayname = returndate?.split(',');
   const returnmonth = new Date(returnDate).toLocaleDateString('en-IN', {
     month: 'short',
   });
@@ -152,10 +153,10 @@ const DatePickerScreen = ({navigation, route}) => {
         dispatch(dateAction(choosenDate));
         navigation.navigate('TabNavigation');
       } else {
-        Alert.alert('Choose minimum 10 days');
+        AlertConstant('Choose maximum 10 days from the today');
       }
     } else {
-      Alert.alert('Please choose date');
+      AlertConstant('Please choose date');
     }
   };
   return (
@@ -174,7 +175,11 @@ const DatePickerScreen = ({navigation, route}) => {
             </Text>
           </View>
           <Text>------</Text>
-          <View style={styles.ReturndateViewStyle}>
+          <View
+            style={[
+              styles.ReturndateViewStyle,
+              {paddingHorizontal: returnPress && press ? wp(6) : wp(9)},
+            ]}>
             <Text>
               {press && returnPress && returnday !== undefined
                 ? `${returndayname[0]}, ${returnmonth} ${returnday} ${returnyear}`
@@ -234,8 +239,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: color.commonBlue,
     justifyContent: 'center',
-    alignItems: 'center',
-    width: wp(40),
+    paddingHorizontal: wp(6),
     paddingVertical: hp(1.8),
     marginVertical: hp(2.2),
   },
@@ -243,8 +247,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    width: wp(40),
+
     paddingVertical: hp(1.8),
     marginVertical: hp(2.2),
   },
@@ -254,14 +257,13 @@ const styles = StyleSheet.create({
     color: color.white,
   },
   currentDateStyle: {
-    width: wp(95),
+    marginHorizontal: wp(2.5),
     alignSelf: 'center',
   },
   searchButtonStyle: {
     alignItems: 'center',
-    alignSelf: 'center',
     justifyContent: 'center',
-    width: wp(84),
+    marginHorizontal: wp(5),
     height: hp(7),
     borderRadius: 16,
     backgroundColor: 'blue',

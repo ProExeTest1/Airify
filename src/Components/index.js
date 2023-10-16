@@ -19,6 +19,12 @@ import CustomTextInput from './Common/CustomPaperTextInput';
 import CommonHeader from './Common/CommonHeader';
 import FlightDetailsCard from './FlightDetailComponents/FlightDetailsCard';
 import TicktBookingProgressBar from './Common/TicktBookingProgressBar';
+import FlightServices from './FlightDetailComponents/FlightServices';
+import DropDownPaperTextInput from './TicketBookingComponents/DropDownPaperTextInput';
+import DropDownMenu from './TicketBookingComponents/DropDownMenu';
+import CardHeader from './TicketBookingComponents/CardHeader';
+import PriceDetails from './TicketBookingComponents/PriceDetails';
+
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -41,4 +47,9 @@ export {
   CommonHeader,
   FlightDetailsCard,
   TicktBookingProgressBar,
+  FlightServices,
+  DropDownPaperTextInput,
+  DropDownMenu,
+  CardHeader,
+  PriceDetails,
 };

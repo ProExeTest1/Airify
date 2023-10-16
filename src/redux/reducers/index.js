@@ -4,11 +4,13 @@ import placeReducer from './placeReducer';
 import searchFlightReducer from './searchFlightReducer';
 import homeReducer from './homeReducer';
 import SelectSeatData from './SelectSeatReducer';
+import userDataReducer from './userDataReducer';
 
 export const rootReducer = combineReducers({
   date: dateReducer,
   place: placeReducer,
   searchFlight: searchFlightReducer,
   OnBoarding: homeReducer,
+  userData: userDataReducer,
   SelectSeatData: SelectSeatData,
 });

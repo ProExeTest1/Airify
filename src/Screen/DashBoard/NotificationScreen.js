@@ -85,18 +85,7 @@ const NotificationScreen = ({navigation}) => {
           renderSectionHeader={({section: {time}}) => (
             <View style={styles.listHeaderViewStyle}>
               <Text style={styles.header}>{time}</Text>
-              <View
-                style={[
-                  styles.listHeaderLineStyle,
-                  {
-                    width:
-                      time === 'Today'
-                        ? '80%'
-                        : time === 'Yesterday'
-                        ? '73%'
-                        : '67%',
-                  },
-                ]}></View>
+              <View style={styles.listHeaderLineStyle} />
             </View>
           )}
         />
@@ -155,8 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: hp(2.4),
-    width: '95%',
-    alignSelf: 'center',
+    paddingHorizontal: wp(5),
   },
   listImageDiffStyle: {
     height: hp(7),
@@ -174,22 +162,23 @@ const styles = StyleSheet.create({
     width: hp(3),
   },
   listTextViewStyle: {
-    width: '75%',
-    marginHorizontal: 15,
+    marginHorizontal: wp(2.8),
+    flex: 1,
   },
   listTitleTextStyle: {
     fontSize: fontSize(18),
+    flex: 1,
     fontWeight: '600',
     marginVertical: hp(1),
     color: color.black,
   },
   listDiscriptionTextStyle: {
     color: color.black,
+    flex: 1,
   },
   forwardIconStyle: {
     height: wp(4.4),
     width: hp(4.4),
-    right: 20,
   },
   listHeaderViewStyle: {
     flexDirection: 'row',
@@ -200,8 +189,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: color.grey,
     marginHorizontal: wp(3),
-    height: 0,
-    position: 'absolute',
-    right: 0,
+    flex: 1,
   },
 });

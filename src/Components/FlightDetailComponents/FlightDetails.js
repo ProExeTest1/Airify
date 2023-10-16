@@ -49,7 +49,7 @@ const FlightDetails = () => {
           resizeMode="contain"
         />
       </View>
-      <View style={{flex: 3}}>
+      <View style={{flex: 1}}>
         <Text style={styles.cardHeaderText}>
           {depatureData}, {reduxDepaturePlace.country}
         </Text>
@@ -167,8 +167,7 @@ const styles = StyleSheet.create({
   },
   mainViewStyle: {
     height: '77%',
-    width: '92%',
-    alignSelf: 'center',
+    marginHorizontal: wp(4),
     borderRadius: 10,
     flexDirection: 'row',
     paddingVertical: hp(2.4),
@@ -177,8 +176,8 @@ const styles = StyleSheet.create({
   },
   firstViewStyle: {
     flexDirection: 'column',
-    flex: 1,
     justifyContent: 'space-between',
+    marginRight: wp(4),
   },
   timeTextStyle: {
     color: color.black,

@@ -22,8 +22,9 @@ import Notification from '../screen/account/Notification';
 import TopUp from '../screen/wallet/TopUp';
 import TransactionHistory from '../screen/wallet/TransactionHistory';
 import SelectSeat from '../screen/TicketBooking/SelectSeat';
-import FillPassngerDetails from '../screen/TicketBooking/FillPassngerDetails';
 import PatmentConfirmation from '../screen/TicketBooking/PatmentConfirmation';
+import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
+
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
@@ -62,7 +63,7 @@ const StackNavigation = () => {
         <Stack.Screen name="TopUp" component={TopUp} />
         <Stack.Screen
           name="FillPassengerDetails"
-          component={FillPassngerDetails}
+          component={FillPassengerDetails}
         />
         <Stack.Screen
           name="TransactionHistory"
