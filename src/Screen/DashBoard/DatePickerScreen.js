@@ -82,16 +82,14 @@ const DatePickerScreen = ({navigation, route}) => {
   const month = new Date(selected).toLocaleDateString('en-IN', {
     month: 'short',
   });
-  const returndayname = returndate.split(',');
+  const returndayname = returndate?.split(',');
   const returnmonth = new Date(returnDate).toLocaleDateString('en-IN', {
     month: 'short',
   });
 
-
   const returndate = new Date(returnDate).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
-
 
   const currentDate = new Date()
     .toLocaleDateString('en-IN', {weekday: 'short'})

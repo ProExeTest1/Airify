@@ -31,7 +31,10 @@ const NotificationScreen = ({navigation}) => {
           <View style={styles.headerTextViewStyle}>
             <Text style={styles.headerTextStyle}>Notification</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Notification');
+            }}>
             <Image
               source={Images.setting}
               style={styles.cancelButtonStyle}

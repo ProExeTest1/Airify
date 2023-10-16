@@ -9,17 +9,23 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
 import {addressData} from '../../redux/action/AddressAction';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {useRoute} from '@react-navigation/native';
 
 const LocationSearch = ({navigation: {goBack}, navigation}) => {
-  const [lat, setLat] = useState(lat ? lat : 21.204999014301976);
-  const [lng, setLng] = useState(lng ? lng : 72.84880445413961);
+  const [lat, setLat] = useState(lat ? lat : 37.78825);
+  const [lng, setLng] = useState(lng ? lng : -122.4324);
+
   useEffect(() => {
     fetchDataDetail(lat, lng);
   }, [lat, lng]);
+
   const dispatch = useDispatch();
+
   const userSelectedAddress = useSelector(
     address => address?.AddressData?.addressData,
   );
+
+  const route = useRoute();
   const fetchDataDetail = (lat, lng) => {
     if (lat != '' && lng != '') {
       fetch(
@@ -46,16 +52,13 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {
-          navigation.navigate('AddAddress');
-        }}
         onPress1={true}
         onPress2={true}
         Images1={Images.backIcon}
         Images2={Images.loupe}
         cancelButtonStyle={styles.plusIconStyle}
+        Images1Color={color.white}
       />
-
       <MapView
         style={{
           justifyContent: 'flex-end',
@@ -63,15 +66,15 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
           flex: 1,
         }}
         region={{
-          latitude: 21.204999014301976,
-          longitude: 72.84880445413961,
+          latitude: 37.78825,
+          longitude: -122.4324,
           latitudeDelta: 0.05,
           longitudeDelta: 0.05,
         }}>
         <Marker
           coordinate={{
-            latitude: lat || 21.204999014301976,
-            longitude: lng || 72.84880445413961,
+            latitude: lat || 37.78825,
+            longitude: lng || -122.4324,
           }}
           title="Test"
           description="This is for test"
@@ -93,7 +96,15 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
           ]}>
           {userSelectedAddress?.display_name}
         </Text>
-        <OnBoardingSingleButton buttonText={strings.addButton} />
+        <OnBoardingSingleButton
+          buttonText={strings.addButton}
+          onPress={() => {
+            navigation.navigate('AddAddress', {
+              data: route?.params?.data,
+              mode: 'Edit',
+            });
+          }}
+        />
       </View>
     </View>
   );

@@ -53,6 +53,7 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
         Images1={Images.backIcon}
         Images2={Images.plus}
         cancelButtonStyle={styles.plusIconStyle}
+        Images1Color={color.white}
       />
       <View style={[styles.headerStyle, {backgroundColor: color.commonBlue}]}>
         <Text style={[styles.mainHeaderText, {color: color.white}]}>

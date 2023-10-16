@@ -32,6 +32,9 @@ import FillPassngerDetails from '../screen/TicketBooking/FillPassngerDetails';
 import SavedAddress from '../screen/account/SavedAddress';
 import AddAddress from '../screen/account/AddAddress';
 import LocationSearch from '../screen/account/LocationSearch';
+import DiscountVoucher from '../screen/account/DiscountVoucher';
+import AirifyReward from '../screen/account/AirifyReward';
+import AirifyPoint from '../screen/account/AirifyPoint';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -40,7 +43,7 @@ const StackNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={user ? 'TabNavigation' : 'OnBoardingFirst'}>
+        initialRouteName={user ? 'TabNavigation' : 'WelcomeScreen'}>
         <Stack.Screen name="SelectSeat" component={SelectSeat} />
         <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
@@ -87,6 +90,9 @@ const StackNavigation = () => {
         <Stack.Screen name="SavedAddress" component={SavedAddress} />
         <Stack.Screen name="LocationSearch" component={LocationSearch} />
         <Stack.Screen name="AddAddress" component={AddAddress} />
+        <Stack.Screen name="DiscountVoucher" component={DiscountVoucher} />
+        <Stack.Screen name="AirifyReward" component={AirifyReward} />
+        <Stack.Screen name="AirifyPoint" component={AirifyPoint} />
       </Stack.Navigator>
     </NavigationContainer>
   );

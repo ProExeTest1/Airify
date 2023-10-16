@@ -22,6 +22,7 @@ const HelpCenter = ({navigation: {goBack}, navigation}) => {
         onPress2={false}
         Images1={Images.backIcon}
         Images2={null}
+        Images1Color={color.white}
       />
       <View style={styles.buttonViewStyle}>
         <TouchableOpacity

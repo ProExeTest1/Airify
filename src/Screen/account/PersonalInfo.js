@@ -118,7 +118,9 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
         onPress2={false}
         Images1={Images.backIcon}
         Images2={null}
+        Images1Color={color.white}
       />
+
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={{marginTop: hp(2)}}>
           <ImagePickerData

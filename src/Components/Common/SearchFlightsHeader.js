@@ -20,7 +20,7 @@ import {
 import {dateAction} from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
 import {strings} from '../../helper/Strings';
-import { color } from '../../helper/ColorConstant';
+import {color} from '../../helper/ColorConstant';
 
 const SearchFlightsHeader = ({
   SelectDate,
@@ -129,7 +129,8 @@ const SearchFlightsHeader = ({
                   {item.day.slice(0, 3)}
                 </Text>
               </TouchableOpacity>
-            );}}
+            );
+          }}
         />
       </View>
     </View>
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
   BackImg: {
     height: wp(8),
     width: wp(8),
-    tintColor:color.white,
+    tintColor: color.white,
   },
   headerTitleBody: {
     position: 'absolute',

@@ -49,7 +49,6 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
     if (mode == 'Edit') {
       EditData();
     }
-    // UpdatePassengerData();
   }, []);
   const addNewPassengerList = async () => {
     if (!firstName.trim().match('[a-zA-Z ]{3,30}')) {

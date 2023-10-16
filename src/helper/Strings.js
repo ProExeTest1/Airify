@@ -224,4 +224,31 @@ export const strings = {
   addNewAddress: 'Add New Address',
   addButton: 'Select Location & Continue Fill Address',
   addressDetail: 'Address Details',
+
+  // Address Details
+
+  addressLabel: 'Address Labels',
+  note: 'Note (Optional)',
+  contactName: 'Contact Name',
+  ContactPhoneNo: 'Contact Phone Number',
+  setPrimary: 'Set As Primary Address',
+
+  mainAddress: 'Main Address',
+  pinpoint: '📍 Pinpoint already',
+  deleteAddress: 'Delete Address',
+
+  // discount voucher
+
+  discountVoucher: 'Discounts / Vouchers',
+  ValidUntil: 'Valid Until',
+  minTransaction: 'Min Transaction',
+
+  airifyReward: 'Airify Rewards',
+  getSpecialReward: 'Get Special Rewards!',
+  getSpecialRewardSub:
+    'Get special offers, & even free travel every \n time your friend joins via your referral code.',
+  copyCode: 'Copy or share the referral code below.',
+  shareCode: 'Share Referral Code',
+
+  airifyPoint: 'Airify Point',
 };

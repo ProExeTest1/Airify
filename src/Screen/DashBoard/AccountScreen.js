@@ -30,7 +30,7 @@ const AccountScreen = ({navigation}) => {
   useEffect(() => {
     getData();
     UserData();
-  }, [toggleSwitchBut, selectedLanguage]);
+  }, []);
 
   const getData = async () => {
     try {
@@ -221,18 +221,21 @@ const AccountScreen = ({navigation}) => {
                 {color: color.black, marginTop: hp(2)},
               ]}
             />
-            <OnBoardingTwoButton
-              buttonTextOne={strings.cancel}
-              buttonTextTwo={strings.logoutYes}
-              onPress1={() => {
-                closeModal();
-              }}
-              onPress2={() => {
-                auth().signOut();
-                navigation.navigate('SignInScreen');
-                closeModal();
-              }}
-            />
+            <View style={styles.TwoButtonViewStyle}>
+              <OnBoardingTwoButton
+                TwoButtonStyle={styles.TwoButtonStyle}
+                buttonTextOne={strings.cancel}
+                buttonTextTwo={strings.logoutYes}
+                onPress1={() => {
+                  closeModal();
+                }}
+                onPress2={() => {
+                  auth().signOut();
+                  navigation.navigate('WelcomeScreen');
+                  closeModal();
+                }}
+              />
+            </View>
           </View>
         </View>
       </Modal>
@@ -359,5 +362,8 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(5),
     marginTop: hp(2),
     paddingHorizontal: wp(42),
+  },
+  TwoButtonViewStyle: {
+    marginTop: hp(4),
   },
 });

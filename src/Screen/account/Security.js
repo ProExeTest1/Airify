@@ -20,7 +20,7 @@ const Security = ({navigation: {goBack}, navigation}) => {
   const [securityData, setSecurityData] = useState([]);
   useEffect(() => {
     SecurityData();
-  }, []);
+  }, [securityData]);
 
   const SecurityData = async () => {
     try {
@@ -45,6 +45,7 @@ const Security = ({navigation: {goBack}, navigation}) => {
         onPress2={false}
         Images1={Images.backIcon}
         Images2={null}
+        Images1Color={color.white}
       />
       <View style={styles.flatListBodyViewStyle}>
         <FlatList

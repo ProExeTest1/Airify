@@ -1,14 +1,13 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
   TextInput,
   Image,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import {hp, wp} from '../helper/Constant';
-import {Images} from '../helper/IconConstant';
+import {hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
 
 const DatePickerTextInput = ({
   textInputPlaceholder,
@@ -25,20 +24,19 @@ const DatePickerTextInput = ({
   const [focus, setFocus] = useState(false);
 
   return (
-    <TouchableOpacity
-      disabled={onPress ? false : true}
-      onPress={onPress}
-      style={[styles.container, container]}>
-      <Image
-        source={textInputIcon}
-        style={[styles.textInputIconStyle, textInputIconStyle]}
-      />
+    <View style={[styles.container, container]}>
+      <TouchableOpacity onPress={onPress} style={{}}>
+        <Image
+          source={textInputIcon}
+          style={[styles.textInputIconStyle, textInputIconStyle]}
+        />
+      </TouchableOpacity>
       <TextInput
         placeholder={textInputPlaceholder}
         value={value}
         autoCorrect={false}
-        editable={onPress ? false : true}
-        onPressIn={onPress}
+        editable={true}
+        // onPressIn={onPress}
         onChangeText={onChangeText}
         style={[styles.textInputStyle, textInputStyle]}
         secureTextEntry={focus}
@@ -83,7 +81,7 @@ const DatePickerTextInput = ({
           />
         </TouchableOpacity>
       ) : null}
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
     height: hp(6),
     paddingStart: wp(2),
     borderRadius: wp(2),
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#E6E6E6',
   },
   textInputIconStyle: {
     height: hp(2),

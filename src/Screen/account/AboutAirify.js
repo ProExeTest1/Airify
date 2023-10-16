@@ -28,6 +28,7 @@ const AboutAirify = ({navigation: {goBack}, navigation}) => {
         onPress2={false}
         Images1={Images.backIcon}
         Images2={null}
+        Images1Color={color.white}
       />
       <View style={styles.iconViewStyle}>
         <Image source={Images.welcomeScreenIcon} style={styles.iconStyle} />
