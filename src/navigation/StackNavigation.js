@@ -20,7 +20,8 @@ import auth from '@react-native-firebase/auth';
 import PersonalInfo from '../screen/account/PersonalInfo';
 import Notification from '../screen/account/Notification';
 import TopUp from '../screen/wallet/TopUp';
-import FillPassngerDetails from '../screen/TicketBooking/FillPassngerDetails';
+import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
+import {Provider} from 'react-native-paper';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
@@ -58,7 +59,7 @@ const StackNavigation = () => {
         <Stack.Screen name="TopUp" component={TopUp} />
         <Stack.Screen
           name="FillPassengerDetails"
-          component={FillPassngerDetails}
+          component={FillPassengerDetails}
         />
       </Stack.Navigator>
     </NavigationContainer>

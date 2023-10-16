@@ -30,6 +30,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import {color} from '../../helper/ColorConstant';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [checked, setChecked] = useState(false);
@@ -74,14 +75,14 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation = index => {
     if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      alert('Please Enter Valid Email');
+      AlertConstant('Please Enter Valid Email');
       return;
     } else if (
       !Password.trim().match(
         /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
       )
     ) {
-      alert('Please Enter Valid Password');
+      AlertConstant('Please Enter Valid Password');
       return;
     } else {
       swiperRef.current.scrollBy(1);
@@ -90,16 +91,16 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation2 = index => {
     if (!pickerResponse.trim()) {
-      alert('Please Select Profile Image');
+      AlertConstant('Please Select Profile Image');
       return;
     } else if (!phoneNo.trim()) {
-      alert('Please Enter Phone Number');
+      AlertConstant('Please Enter Phone Number');
       return;
     } else if (!name.trim().match('[a-zA-Z ]{3,30}')) {
-      alert('Please Enter Valid name');
+      AlertConstant('Please Enter Valid name');
       return;
     } else if (!date.trim()) {
-      alert('Please Enter Date of Birth');
+      AlertConstant('Please Enter Date of Birth');
       return;
     } else {
       swiperRef.current.scrollBy(1);

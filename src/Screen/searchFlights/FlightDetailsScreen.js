@@ -241,12 +241,12 @@ const FlightDetailsScreen = ({navigation}) => {
       <View style={styles.thirdCardStyle}>
         <View>
           <Text style={styles.priceTextStyle}>
-            Total Price : {searchFlightData.passenger.split(' ')[0]} person(s)
+            Total Price : {searchFlightData?.passenger?.split(' ')[0]} person(s)
           </Text>
           <Text style={styles.cardPrice}>
             $
             {parseInt(item?.price.slice(1, 8).split(',').join(''), 10) *
-              Number(searchFlightData.passenger.split(' ')[0])}
+              Number(searchFlightData?.passenger?.split(' ')[0])}
             .00
           </Text>
         </View>
@@ -317,16 +317,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: wp(17),
   },
+
   cardBody: {
     backgroundColor: color.white,
     paddingHorizontal: wp(4),
     marginBottom: hp(2),
     borderRadius: 10,
     borderColor: '#000',
-    width: '92%',
-    alignSelf: 'center',
+    marginHorizontal: wp(4),
   },
-
   cardPrice: {
     color: color.commonBlue,
     fontSize: fontSize(20),
@@ -472,7 +471,7 @@ const styles = StyleSheet.create({
   },
   modalTextStyle: {
     fontSize: fontSize(22),
-    fontWeight: '600',
+    fontWeight: 'bold',
     color: color.black,
     marginHorizontal: wp(1),
   },

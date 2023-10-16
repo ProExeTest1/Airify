@@ -5,7 +5,7 @@ import {
   PickerHeaderBar,
   RefundandRescheduleInfo,
 } from '../../components';
-import {fontSize, hp} from '../../helper/Constant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {
   RefundableTermsAndConditions,
@@ -62,8 +62,10 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
             style={[
               styles.optionTextStyle,
               {color: press === 'Reschedule' ? color.white : color.black},
-            ]}>
-            Reschedule I...
+            ]}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
+            Reschedule info
           </Text>
         </TouchableOpacity>
       </View>
@@ -100,6 +102,7 @@ const styles = StyleSheet.create({
   optionTextStyle: {
     fontSize: fontSize(16),
     fontWeight: '600',
+    marginHorizontal: wp(1),
   },
   optionTouchStyle: {
     borderRadius: 7,

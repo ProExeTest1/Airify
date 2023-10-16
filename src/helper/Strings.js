@@ -185,4 +185,12 @@ export const strings = {
   // Ticket Booking
 
   selectSeat: 'Select Seat',
+  FlightAmenities: 'Flight Amenities',
+  contact_details: 'Contact Details',
+  passenger_details: 'Passenger(s) Details',
+  seat_numberString: 'Seat Number',
+  Pice_Detail_string: 'Price Details',
+  travel_inssurance: 'Travel Insurance',
+  tax: 'Tax',
+  total_price: 'Total Price',
 };

@@ -1,5 +1,4 @@
 import {
-  Alert,
   Dimensions,
   Image,
   Platform,
@@ -7,7 +6,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
   useColorScheme,
@@ -29,6 +27,8 @@ import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {AlertConstant} from '../../helper/AlertConstant';
+import {UserDataAction} from '../../redux/action/UserDataAction';
 
 const HomeScreen = ({navigation}) => {
   const theme = useColorScheme();
@@ -40,23 +40,22 @@ const HomeScreen = ({navigation}) => {
   const reduxReturnDate = useSelector(state => state.date.returnDate);
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
   //Maintaining textInput value with redux data
-  let depatureData =
-    reduxDepaturePlace.city + '(' + reduxDepaturePlace.airport + ')';
+  let depatureData = reduxDepaturePlace
+    ? reduxDepaturePlace.city + '(' + reduxDepaturePlace.airport + ')'
+    : null;
   const reduxDestinationPlace = useSelector(
     state => state.place.destinationPlace,
   );
-  let destinationData =
-    reduxDestinationPlace.city + '(' + reduxDestinationPlace.airport + ')';
+  let destinationData = reduxDestinationPlace
+    ? reduxDestinationPlace.city + '(' + reduxDestinationPlace.airport + ')'
+    : null;
   const ndate = new Date();
   const hours = ndate.getHours();
-
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
   const [depatureDate, setDepatureDate] = useState();
   const [seat, setSeat] = useState();
   const [passengerClass, setPassengerClass] = useState('');
   const [returnDate, setReturnDate] = useState();
-  const [press, setPress] = useState(false);
+  const [press, setPress] = useState('One-way');
   const [change, setChnage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [isClassModalVisible, setClassModalVisible] = useState(false);
@@ -98,21 +97,10 @@ const HomeScreen = ({navigation}) => {
         );
         navigation.navigate('SearchFlights');
       } else {
-        if (Platform.OS === 'android') {
-          ToastAndroid.show(
-            'Destination Place and Departure Place does not be same',
-            ToastAndroid.SHORT,
-          );
-        } else if (Platform.OS === 'ios') {
-          Alert.alert('Destination Place and Departure Place does not be same');
-        }
+        AlertConstant('Destination Place and Departure Place does not be same');
       }
     } else {
-      if (Platform.OS === 'android') {
-        ToastAndroid.show('Please Fill All Details', ToastAndroid.SHORT);
-      } else if (Platform.OS === 'ios') {
-        Alert.alert('Please Fill All Details');
-      }
+      AlertConstant('Please Fill All Details');
     }
   };
 
@@ -121,7 +109,30 @@ const HomeScreen = ({navigation}) => {
       .collection('Users')
       .doc(auth().currentUser.uid)
       .get();
+    dispatch(UserDataAction(journeyData.data()));
     setUserData(journeyData.data());
+  };
+  const TripOption = ({tripType}) => {
+    return (
+      <TouchableOpacity
+        style={[
+          styles.optionTouchStyle,
+          tripType == 'One-way' ? {marginEnd: wp(3.5)} : {marginStart: wp(3.5)},
+          {
+            backgroundColor:
+              press === tripType ? color.commonBlue : color.white,
+          },
+        ]}
+        onPress={() => setPress(tripType)}>
+        <Text
+          style={[
+            styles.optionTextStyle,
+            {color: press === tripType ? color.white : 'black'},
+          ]}>
+          {tripType}
+        </Text>
+      </TouchableOpacity>
+    );
   };
   return (
     <View style={{flex: 1}}>
@@ -133,7 +144,7 @@ const HomeScreen = ({navigation}) => {
         <SafeAreaView style={styles.headerStyle}>
           <View style={styles.profilepicViewStyle}>
             <Image
-              source={Images.demoPic}
+              source={{uri: userData?.profileImageURL}}
               style={styles.profilePicStyle}
               resizeMode="stretch"
             />
@@ -147,7 +158,7 @@ const HomeScreen = ({navigation}) => {
                   ? strings.evening
                   : strings.Night}
               </Text>
-              <Text style={styles.userNameStyle}>Andrew Ainsley</Text>
+              <Text style={styles.userNameStyle}>{userData.Name}</Text>
             </View>
           </View>
           <TouchableOpacity
@@ -162,72 +173,36 @@ const HomeScreen = ({navigation}) => {
         </SafeAreaView>
         <View style={styles.seatBookingMainViewStyle}>
           <View style={styles.optionStyle}>
-            <TouchableOpacity
-              style={[
-                styles.optionTouchStyle,
-                {
-                  backgroundColor: !press ? color.commonBlue : color.white,
-                  marginEnd: wp(4),
-                },
-              ]}
-              onPress={() => setPress(false)}>
-              <Text
-                style={[
-                  styles.optionTextStyle,
-                  {color: !press ? color.white : 'black'},
-                ]}>
-                {strings.one_way}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.optionTouchStyle,
-                {backgroundColor: press ? color.commonBlue : color.white},
-              ]}
-              onPress={() => setPress(true)}>
-              <Text
-                style={[
-                  styles.optionTextStyle,
-                  {color: press ? color.white : 'black'},
-                ]}>
-                {strings.roundTrip}
-              </Text>
-            </TouchableOpacity>
+            <TripOption tripType={'One-way'} />
+            <TripOption tripType={'Round-trip'} />
           </View>
           <View>
             <CustomPaperTextInput
               marginVertical={hp(1)}
-              placeholder={'From'}
               label={'From'}
+              marginHorizontal={wp(4)}
               onPress={() =>
                 navigation.navigate('PlacePicker', {data: 'Select Origin'})
               }
               icon={Images.takeOff}
               value={
-                change
-                  ? reduxDestinationPlace &&
-                    destinationData !== 'undefined(undefined)'
-                    ? destinationData
-                    : 'To'
-                  : depatureData !== 'undefined(undefined)'
-                  ? depatureData
-                  : 'From'
-                // change
-                //   ? reduxDestinationPlace
-                //     ? destinationData
-                //     : destination
-                //   : depatureData !== 'undefined(undefined)'
-                //   ? depatureData
-                //   : origin
+                !change
+                  ? reduxDepaturePlace &&
+                    depatureData !== 'undefined(undefined)'
+                    ? depatureData
+                    : null
+                  : destinationData !== 'undefined(undefined)'
+                  ? destinationData
+                  : null
               }
               onChangeText={txt =>
                 change ? setDestination(txt) : setOrigin(txt)
               }
             />
             <CustomPaperTextInput
-              placeholder={'Destination'}
               label={'To'}
               marginVertical={hp(1)}
+              marginHorizontal={wp(4)}
               onPress={() =>
                 navigation.navigate('PlacePicker', {data: 'Select Destination'})
               }
@@ -237,10 +212,10 @@ const HomeScreen = ({navigation}) => {
                   ? reduxDepaturePlace &&
                     depatureData !== 'undefined(undefined)'
                     ? depatureData
-                    : 'From'
+                    : null
                   : destinationData !== 'undefined(undefined)'
                   ? destinationData
-                  : 'To'
+                  : null
               }
               onChangeText={txt =>
                 change ? setOrigin(txt) : setDestination(txt)
@@ -259,17 +234,18 @@ const HomeScreen = ({navigation}) => {
           <CustomPaperTextInput
             placeholder={'Depature Date'}
             marginVertical={hp(1)}
+            marginHorizontal={wp(4)}
             label={'Depature Date'}
             disabled={true}
             icon={Images.calendar}
             value={reduxDepatureDate ? reduxDepatureDate : depatureDate}
             onPress={() => navigation.navigate('DatePicker')}
-            onChangeText={txt => setDepatureDate(txt)}
           />
-          {press ? (
+          {press === 'Round-trip' ? (
             <CustomPaperTextInput
               placeholder={'Return Date'}
               marginVertical={hp(1)}
+              marginHorizontal={wp(4)}
               label={'Return Date'}
               icon={Images.calendar}
               onPress={() =>
@@ -282,16 +258,18 @@ const HomeScreen = ({navigation}) => {
           <View style={styles.customInputStyle}>
             <CustomPaperTextInput
               placeholder={'Seat'}
-              width={'42%'}
               label={'Passenger'}
+              width={'45%'}
+              // marginHorizontal={wp(4)}
               icon={Images.passenger}
               onPress={toggleModal}
               value={seat}
             />
             <CustomPaperTextInput
               placeholder={'Class'}
-              width={'44%'}
               label={'Class'}
+              width={'50%'}
+              // marginHorizontal={wp(3)}
               icon={Images.seat}
               onPress={toggleClassModal}
               value={passengerClass ? passengerClass.split(' ')[0] : null}
@@ -412,8 +390,10 @@ const styles = StyleSheet.create({
   },
   optionStyle: {
     flexDirection: 'row',
+    flex: 1,
     justifyContent: 'space-between',
-    paddingHorizontal: wp(4),
+    // paddingHorizontal: wp(4),
+    marginHorizontal: wp(4),
   },
   optionTouchStyle: {
     borderRadius: 30,
@@ -430,7 +410,9 @@ const styles = StyleSheet.create({
   },
   customInputStyle: {
     flexDirection: 'row',
+    marginHorizontal: wp(4),
     marginVertical: hp(1.2),
+    justifyContent: 'space-between',
   },
   searchButtonStyle: {
     alignItems: 'center',

@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
 import {Images} from '../../helper/IconConstant';
@@ -18,8 +17,9 @@ import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import Modal from 'react-native-modal';
 import CheckButton from '../../components/CheckButton';
 import auth from '@react-native-firebase/auth';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [modal, setModal] = useState(false);
@@ -36,14 +36,14 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation = () => {
     if (!Email?.trim()?.match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      Alert.alert('Please Enter valid Email');
+      AlertConstant('Please Enter valid Email');
       return;
     } else if (
       !Password.trim().match(
         /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
       )
     ) {
-      alert('Please Enter Valid Password');
+      AlertConstant('Please Enter Valid Password');
       return;
     } else {
       openModal();
@@ -83,7 +83,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
       navigation.navigate('TabNavigation');
     } catch (error) {
       console.log(error.message);
-      Alert.alert(error.message);
+      AlertConstant(error.message);
     }
   };
 

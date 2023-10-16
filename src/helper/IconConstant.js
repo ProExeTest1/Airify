@@ -22,7 +22,6 @@ export const Images = {
   downArrow: require('../assets/icons/down-arrow.png'),
   calender: require('../assets/icons/calendar.png'),
   checkIcon: require('../assets/icons/check.png'),
-  //
   takeOff: require('../assets/icons/departure.png'),
   landing: require('../assets/icons/landing.png'),
   TabHomeIcon: require('../assets/icons/hut.png'),
@@ -90,4 +89,8 @@ export const Images = {
   logout: require('../assets/icons/logout.png'),
   planIcon: require('../assets/icons/planIcon.png'),
   topUpIcon: require('../assets/icons/topUp.png'),
+  flyPlaneIcon: require('../assets/icons/departures.png'),
+  edit_pencil: require('../assets/icons/edit_linear_pencil.png'),
+  multi_passenger: require('../assets/icons/users.png'),
+  plusIcon: require('../assets/icons/plusImage.png'),
 };

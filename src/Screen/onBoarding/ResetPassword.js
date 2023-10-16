@@ -1,21 +1,21 @@
-import React, {Component, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, StyleSheet, T} from 'react-native';
 import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
 import {Images} from '../../helper/IconConstant';
 import {strings} from '../../helper/Strings';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import OnBoardingText from '../../components/OnBoardingText';
-import {fontSize, hp, wp} from '../../helper/Constant';
+
+import {hp, wp} from '../../helper/Constant';
 import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import auth, {firebase} from '@react-native-firebase/auth';
-import {useDispatch} from 'react-redux';
-import {otp} from '../../redux/action/HomeAction';
+import auth from '@react-native-firebase/auth';
+
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');
   const validation = () => {
     if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      alert('Please Enter Email which are use in login');
+      AlertConstant('Please Enter Email which are use in login');
       return;
     } else {
       sendOTP();
@@ -27,7 +27,7 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
       await auth()
         .sendPasswordResetEmail(email)
         .then(() => {
-          alert('Password reset email has been sent successfully.');
+          AlertConstant('Password reset email has been sent successfully.');
         })
         .catch(err => {
           console.log('err :>> ', err);

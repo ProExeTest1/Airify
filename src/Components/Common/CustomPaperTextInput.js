@@ -11,7 +11,10 @@ const CustomPaperTextInput = ({
   onChangeText,
   value,
   marginVertical,
+  marginRight,
+  marginLeft,
   onPress,
+  marginHorizontal,
 }) => {
   return (
     <Pressable
@@ -19,8 +22,9 @@ const CustomPaperTextInput = ({
       style={{
         marginVertical: marginVertical,
         width: width,
-        marginHorizontal: label === 'Class' && 'Passenger' ? null : wp(4),
-        // marginEnd: label === 'Class' ? wp(4) : null,
+        marginHorizontal: marginHorizontal,
+        marginLeft: marginLeft,
+        marginRight: marginRight,
       }}>
       <TextInput
         editable={false}

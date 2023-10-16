@@ -33,7 +33,7 @@ const SpecialOfferScreen = ({route, navigation}) => {
     <View style={styles.container}>
       <PickerHeaderBar
         headerName={headerData}
-        navigation={() => navigation.goBack('')}
+        navigation={() => navigation.goBack()}
       />
       <View style={styles.innerContainer}>
         <SwiperFlatlistComponent showPagination={true} />
@@ -78,11 +78,11 @@ const SpecialOfferScreen = ({route, navigation}) => {
         </View>
         <Text style={styles.titleStyle}>{strings.T_and_D}</Text>
         <View style={styles.termsTextViewStyle}>
-          <Text style={[styles.textStyle, {marginHorizontal: wp(2)}]}>•</Text>
+          <Text style={styles.dottextStyle}>•</Text>
           <Text style={styles.textStyle}>{strings.T_and_D_line1}</Text>
         </View>
         <View style={styles.termsTextViewStyle}>
-          <Text style={[styles.textStyle, {marginHorizontal: wp(2)}]}>•</Text>
+          <Text style={styles.dottextStyle}>•</Text>
           <Text style={styles.textStyle}>{strings.T_and_D_line2}</Text>
         </View>
         <TouchableOpacity style={styles.claimDiscountButtonStyle}>
@@ -101,8 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   innerContainer: {
-    width: '90%',
-    alignSelf: 'center',
+    marginHorizontal: wp(5),
     marginVertical: hp(2),
   },
   titleStyle: {
@@ -111,20 +110,22 @@ const styles = StyleSheet.create({
     marginTop: hp(0.5),
     color: color.black,
   },
+  dottextStyle: {
+    fontSize: fontSize(16),
+    color: '#565656',
+    marginHorizontal: wp(2),
+  },
   textStyle: {
     fontSize: fontSize(16),
     color: '#565656',
   },
   termsTextViewStyle: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginVertical: hp(0.8),
-    width: '95%',
   },
   claimDiscountButtonStyle: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: wp(90),
     height: hp(7),
     borderRadius: 12,
     backgroundColor: 'blue',
