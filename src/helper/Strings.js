@@ -185,4 +185,5 @@ export const strings = {
   // Ticket Booking
 
   selectSeat: 'Select Seat',
+  payNow: 'Pay Now',
 };

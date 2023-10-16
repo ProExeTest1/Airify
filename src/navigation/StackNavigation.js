@@ -23,6 +23,7 @@ import TopUp from '../screen/wallet/TopUp';
 import TransactionHistory from '../screen/wallet/TransactionHistory';
 import SelectSeat from '../screen/TicketBooking/SelectSeat';
 import FillPassngerDetails from '../screen/TicketBooking/FillPassngerDetails';
+import PatmentConfirmation from '../screen/TicketBooking/PatmentConfirmation';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
@@ -30,8 +31,7 @@ const StackNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        // initialRouteName={user ? 'TabNavigation' : 'OnBoardingFirst'}>
-      >
+        initialRouteName={user ? 'TabNavigation' : 'OnBoardingFirst'}>
         <Stack.Screen name="SelectSeat" component={SelectSeat} />
         <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
@@ -67,6 +67,10 @@ const StackNavigation = () => {
         <Stack.Screen
           name="TransactionHistory"
           component={TransactionHistory}
+        />
+        <Stack.Screen
+          name="PatmentConfirmation"
+          component={PatmentConfirmation}
         />
       </Stack.Navigator>
     </NavigationContainer>

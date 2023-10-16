@@ -18,27 +18,17 @@ import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useIsFocused} from '@react-navigation/native';
-
 function App() {
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
-
   TextInput.defaultProps = TextInput.defaultProps || {};
   TextInput.defaultProps.allowFontScaling = false;
-
   LogBox.ignoreAllLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
-
   React.useEffect(() => {
     SplashScreen.hide();
+    seatingArrange();
   });
-  const getArrayFromFireStore = async () => {
-    const dd = await firestore()
-      .collection('AirlineSeatBookData')
-      .doc('JaTwXgqSHSESiR6CDzdy')
-      .get()
-      .then(i => i.data().AirlineSeatBookData);
-  };
   const functi = async () => {
     await firestore()
       .collection('AirlineSeatBookData')
@@ -52,7 +42,6 @@ function App() {
             AirlineSeatBookData: data
               .data()
               .AirlineSeatBookData.map((item, index) => {
-                console.log(index);
                 if (index === getDate().length - 1) {
                   return {
                     date: getDate()[getDate().length - 1].date,
@@ -69,9 +58,7 @@ function App() {
               }),
           });
       });
-
     // const date = getDate();
-
     // const addAllFlight = date.map((item, index) => {
     //   return {
     //     date: item.date,
@@ -91,8 +78,7 @@ function App() {
     //     AirlineSeatBookData: addAllFlight,
     //   });
   };
-
-  useEffect(async () => {
+  const seatingArrange = async () => {
     if (
       new Date().toLocaleDateString('en-IN') !==
       (await firestore()
@@ -103,8 +89,7 @@ function App() {
     ) {
       functi();
     }
-  });
-
+  };
   return (
     <Provider store={store}>
       <MenuProvider>
@@ -116,11 +101,9 @@ function App() {
     </Provider>
   );
 }
-
 const styles = StyleSheet.create({
   Header: {
     flex: 1,
   },
 });
-
 export default App;

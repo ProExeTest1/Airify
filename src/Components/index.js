@@ -18,6 +18,7 @@ import RefundandRescheduleInfo from './FlightDetailComponents/RefundandReschedul
 import CustomTextInput from './Common/CustomPaperTextInput';
 import CommonHeader from './Common/CommonHeader';
 import FlightDetailsCard from './FlightDetailComponents/FlightDetailsCard';
+import TicktBookingProgressBar from './Common/TicktBookingProgressBar';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -39,4 +40,5 @@ export {
   RefundandRescheduleInfo,
   CommonHeader,
   FlightDetailsCard,
+  TicktBookingProgressBar,
 };

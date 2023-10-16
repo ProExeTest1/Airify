@@ -88,6 +88,9 @@ export const Images = {
   helpCenter: require('../assets/icons/helpCenter.png'),
   info: require('../assets/icons/info.png'),
   logout: require('../assets/icons/logout.png'),
-  planIcon: require('../assets/icons/planIcon.png'),
   topUpIcon: require('../assets/icons/topUp.png'),
+  planIcon: require('../assets/icons/planIcon.png'),
+  myWalletIcon: require('../assets/icons/myWallet.png'),
+  paymentMethedIcon: require('../assets/icons/paymentMethed.png'),
+  coinsIcon: require('../assets/icons/coins.png'),
 };

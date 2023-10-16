@@ -21,9 +21,9 @@ import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
-import moment from 'moment';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 import {strings} from '../../helper/Strings';
+import moment from 'moment';
 
 const SearchFlights = ({navigation}) => {
   const [modalVisible1, setModalVisible1] = useState(false);
@@ -48,9 +48,16 @@ const SearchFlights = ({navigation}) => {
 
   /* ----------------------------------------------------> date function */
 
-  const setSelectDate = data => {
-    let tem = moment(data.date).format('D/M/YYYY');
-    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
+  const setSelectDate = ({date}) => {
+    let dateChange = date.split('/');
+    // console.log(`${moment(tem).format('dddd,MMM D YYYY')}`);
+    dispatch(
+      depatureDateAction(
+        `${moment(
+          new Date(`${dateChange[1]}/${dateChange[0]}/${dateChange[2]}`),
+        ).format('dddd,MMM D YYYY')}`,
+      ),
+    );
   };
   const onShare = async () => {
     try {
@@ -241,7 +248,6 @@ const SearchFlights = ({navigation}) => {
       <TicketList
         SelectDate={SelectDate}
         SearchFlightCard={SearchFlightCardData}
-       
       />
 
       <View style={styles.sortBody}>
