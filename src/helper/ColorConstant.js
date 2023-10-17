@@ -8,4 +8,9 @@ export const color = {
   red: 'red',
   grayLight: '#e2e2e2',
   darkLight: '#7e7e7f',
+  lightGray2: '#EEEEEF',
+  Grey: '#F5F5F5',
+  lightWhite: '#FAFAFA',
+  grey1: '#EEEEEE',
+  darkGray: '#A6A6A7',
 };

@@ -24,17 +24,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const AccountScreen = ({navigation}) => {
   const [modal, setModal] = useState(false);
   const [userData, setUserData] = useState({});
-  const [toggleSwitchBut, setToggleSwitchBut] = useState(false);
+  const [toggleSwitchBut, setToggleSwitchBut] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState();
 
   useEffect(() => {
     getData();
     UserData();
-  }, [toggleSwitchBut]);
+  }, []);
 
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('DarkMode');
       setToggleSwitchBut(JSON.parse(jsonValue));
+      const languageData = await AsyncStorage.getItem('selected_Language');
+      setSelectedLanguage(JSON.parse(languageData));
     } catch (e) {
       console.log('getData error :>> ', e);
     }
@@ -129,8 +132,12 @@ const AccountScreen = ({navigation}) => {
                         <Text style={styles.listTitleTextStyle}>
                           {item.title}
                         </Text>
-                        <Text style={styles.listTitleTextStyle}>
-                          English (US)
+                        <Text
+                          style={[
+                            styles.listTitleTextStyle,
+                            {color: color.commonBlue},
+                          ]}>
+                          {selectedLanguage?.language}
                         </Text>
                       </View>
                     ) : item.title == 'Dark Mode' ? (
@@ -214,18 +221,21 @@ const AccountScreen = ({navigation}) => {
                 {color: color.black, marginTop: hp(2)},
               ]}
             />
-            <OnBoardingTwoButton
-              buttonTextOne={strings.cancel}
-              buttonTextTwo={strings.logoutYes}
-              onPress1={() => {
-                closeModal();
-              }}
-              onPress2={() => {
-                auth().signOut();
-                navigation.navigate('SignInScreen');
-                closeModal();
-              }}
-            />
+            <View style={styles.TwoButtonViewStyle}>
+              <OnBoardingTwoButton
+                TwoButtonStyle={styles.TwoButtonStyle}
+                buttonTextOne={strings.cancel}
+                buttonTextTwo={strings.logoutYes}
+                onPress1={() => {
+                  closeModal();
+                }}
+                onPress2={() => {
+                  auth().signOut();
+                  navigation.navigate('WelcomeScreen');
+                  closeModal();
+                }}
+              />
+            </View>
           </View>
         </View>
       </Modal>
@@ -352,5 +362,8 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(5),
     marginTop: hp(2),
     paddingHorizontal: wp(42),
+  },
+  TwoButtonViewStyle: {
+    marginTop: hp(4),
   },
 });

@@ -17,35 +17,33 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {useDispatch, useSelector} from 'react-redux';
 import {airlineCity} from '../../assets/DummyData/AirlineCity';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
 
 const SelectSeat = ({navigation}) => {
+  const temp = useSelector(e => e.SelectSeatData.SelectSeatData);
   const searchFlightCardData = useSelector(
     state => state.searchFlight.searchFlightCardData,
   );
   const dispatch = useDispatch();
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   const SelectDate = useSelector(e => e.date.depatureDate);
-  const seatData = useSelector(e => e.SelectSeatData.SelectSeatData);
+
   const [FirebaseData, setFirebaseData] = useState({});
+  const [seatData, setseatData] = useState(temp);
   const [OccuiedData, setOccuiedData] = useState([]);
 
-  const [seatNameData, setseatNameData] = useState({
-    name: 'kenil panchani',
-    seatNo: false,
-  });
+  console.log(FirebaseData);
 
-  const setseatData = e => {
-    dispatch(SelectSeatActionData(e));
-  };
+  const [seatNameData, setseatNameData] = useState(temp[0]);
   const setSelectSeat = seat => {
     setseatData(
       seatData.map(i => {
         if (i.name === seatNameData.name) {
-          i.seatNo = seat;
-          return i;
+          return {
+            name: i.name,
+            seatNo: seat,
+          };
         }
         return i;
       }),
@@ -54,20 +52,20 @@ const SelectSeat = ({navigation}) => {
   const getFirebaseData = async () => {
     await firestore()
       .collection('AirlineSeatBookData')
-      .doc('JaTwXgqSHSESiR6CDzdy')
-      .get()
-      .then(a =>
-        setFirebaseData(
-          a
-            .data()
-            .AirlineSeatBookData.find(
-              i => i.date === new Date(SelectDate).toLocaleDateString('en-IN'),
-            ),
-        ),
-      )
-      .then(() => {
+      .onSnapshot(querySnapshot => {
+        const users = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+          });
+        });
+        const setAllData = users[0]?.AirlineSeatBookData?.find(
+          i => i?.date == new Date(SelectDate)?.toLocaleDateString('en-IN'),
+        );
+        setFirebaseData(setAllData);
         setOccuiedData(
-          FirebaseData.flightData.find(i => {
+          setAllData?.flightData?.find(i => {
             return (
               i.flightData.airlineName == searchFlightCardData.airlineName &&
               i.flightData.lendTime == searchFlightCardData.lendTime &&
@@ -78,6 +76,7 @@ const SelectSeat = ({navigation}) => {
             );
           }).selectSeat,
         );
+
         setseatData(
           seatData.map(item => {
             if (OccuiedData.some(i => item.seatNo === i)) {
@@ -90,24 +89,24 @@ const SelectSeat = ({navigation}) => {
             return item;
           }),
         );
+        console.log(OccuiedData, '<<<>>>>', seatData);
       });
   };
   const setSeat = async () => {
     const selectedSeat = seatData.filter(i => i.seatNo).map(e => e.seatNo);
-    if (selectedSeat.length === 3) {
-      console.log('kli');
-      navigation.navigate('FillPassengerDetails');
-      // dispatch();
+    if (selectedSeat.length === seatData.length) {
+      dispatch(SelectSeatActionData(seatData));
+      setseatData([]);
+      console.log(temp, 'temp temp temp temp tmep tmep');
     } else {
       Alert.alert('please select seat');
     }
+    navigation.navigate('FillPassengerDetails');
   };
 
   useEffect(() => {
     getFirebaseData();
-  }, [FirebaseData]);
-  // console.log(FirebaseData);
-
+  }, []);
   return (
     <View style={{flex: 1}}>
       <CommonHeader

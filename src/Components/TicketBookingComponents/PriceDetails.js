@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     borderRadius: 10,
     borderColor: '#000',
-    marginHorizontal: wp(4),
   },
   plusIconStyle: {
     height: hp(2),

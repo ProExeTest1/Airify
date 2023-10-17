@@ -5,6 +5,7 @@ import searchFlightReducer from './searchFlightReducer';
 import homeReducer from './homeReducer';
 import SelectSeatData from './SelectSeatReducer';
 import userDataReducer from './userDataReducer';
+import AddressReducer from './AddressReducer';
 
 export const rootReducer = combineReducers({
   date: dateReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   OnBoarding: homeReducer,
   userData: userDataReducer,
   SelectSeatData: SelectSeatData,
+  AddressData: AddressReducer,
 });

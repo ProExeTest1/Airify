@@ -7,16 +7,23 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {CommonHeader, TicktBookingProgressBar} from '../../components';
+import {
+  CommonHeader,
+  FlightDetailsCard,
+  PriceDetails,
+  TicktBookingProgressBar,
+} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import ToggleSwitch from 'toggle-switch-react-native';
+import {useSelector} from 'react-redux';
 
 const PatmentConfirmation = ({navigation}) => {
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
   const [ToggleSwitchBut2, setToggleSwitchBut2] = useState(false);
+  const item = useSelector(state => state.searchFlight.searchFlightCardData);
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
@@ -33,49 +40,48 @@ const PatmentConfirmation = ({navigation}) => {
         Images2={null}
       />
       <TicktBookingProgressBar progress={2}></TicktBookingProgressBar>
-      <View style={{flex: 1}}>
-        <View style={styles.ScrollBody}>
-          <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
-            <View style={styles.boxBody}>
-              <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-                <Image style={styles.boxIcon} source={Images.payment}></Image>
-                <Text style={styles.boxTitle}>Payment Method</Text>
-                <Image style={styles.skipIcon} source={Images.forward}></Image>
-              </View>
-              <View style={styles.StopsButBody}></View>
+      <View style={styles.ScrollBody}>
+        <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+          <FlightDetailsCard item={item} />
+          <View style={styles.boxBody}>
+            <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
+              <Image style={styles.boxIcon} source={Images.payment}></Image>
+              <Text style={styles.boxTitle}>Payment Method</Text>
+              <Image style={styles.skipIcon} source={Images.forward}></Image>
             </View>
-            <View style={styles.boxBody}>
-              <View style={styles.boxTitleBody}>
-                <Image style={styles.boxIcon} source={Images.coinsIcon}></Image>
-                <View style={[styles.boxTitle, {paddingEnd: wp(5)}]}>
-                  <Text
-                    style={styles.boxTitle}>{`You Have ${6450} Points`}</Text>
-                  <Text style={{marginTop: hp(1)}}>
-                    100 points equals $1. You will get 4,000 points after this
-                    booking
-                  </Text>
-                </View>
-                <View>
-                  <ToggleSwitch
-                    isOn={ToggleSwitchBut1}
-                    size="medium"
-                    onColor={color.commonBlue}
-                    onToggle={isOn => setToggleSwitchBut1(isOn)}
-                  />
-                </View>
+            <View style={styles.StopsButBody}></View>
+          </View>
+          <View style={styles.boxBody}>
+            <View style={styles.boxTitleBody}>
+              <Image style={styles.boxIcon} source={Images.coinsIcon}></Image>
+              <View style={[styles.boxTitle, {paddingEnd: wp(5)}]}>
+                <Text style={styles.boxTitle}>{`You Have ${6450} Points`}</Text>
+                <Text style={{marginTop: hp(1)}}>
+                  100 points equals $1. You will get 4,000 points after this
+                  booking
+                </Text>
               </View>
-              <View style={styles.StopsButBody}></View>
-            </View>
-            <View style={styles.boxBody}>
-              <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-                <Image style={styles.boxIcon} source={Images.discount}></Image>
-                <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
-                <Image style={styles.skipIcon} source={Images.forward}></Image>
+              <View>
+                <ToggleSwitch
+                  isOn={ToggleSwitchBut1}
+                  size="medium"
+                  onColor={color.commonBlue}
+                  onToggle={isOn => setToggleSwitchBut1(isOn)}
+                />
               </View>
-              <View style={styles.StopsButBody}></View>
             </View>
-          </ScrollView>
-        </View>
+            <View style={styles.StopsButBody}></View>
+          </View>
+          <View style={styles.boxBody}>
+            <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
+              <Image style={styles.boxIcon} source={Images.discount}></Image>
+              <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
+              <Image style={styles.skipIcon} source={Images.forward}></Image>
+            </View>
+            <View style={styles.StopsButBody}></View>
+          </View>
+          <PriceDetails />
+        </ScrollView>
       </View>
       <View style={styles.bottomButtonBody}>
         <TouchableOpacity onPress={() => {}} style={styles.okButton}>

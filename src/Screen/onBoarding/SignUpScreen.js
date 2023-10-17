@@ -29,6 +29,8 @@ import {dummyAirlineData} from '../../helper/dummyData';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
+import {NotificationData, SecurityData} from '../../assets/DummyData/Data';
+import {CountryPicker} from 'react-native-country-codes-picker';
 import {color} from '../../helper/ColorConstant';
 import {AlertConstant} from '../../helper/AlertConstant';
 
@@ -50,6 +52,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [name, setName] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const [pin, setPin] = useState('');
+  const [show, setShow] = useState(false);
+  const [countryCode, setCountryCode] = useState('');
 
   useEffect(() => {
     JourneyData();
@@ -58,7 +62,6 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const DineWayData = useSelector(
     response => response?.OnBoarding?.DineWayData,
   );
-
   const onPressAdd = async () => {
     dispatch(DineWay());
   };
@@ -145,6 +148,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         JourneyData: selectedJourneyData,
         DineWay: selectedDineWay,
         FlyData: selectedFlyWay,
+        NotificationList: NotificationData,
+        SecurityData: SecurityData,
       });
 
       //------------------------------------------------>  UserWallet data
@@ -156,6 +161,25 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           wallet: '00.00',
           transactionHistory: [],
         });
+
+      //------------------------------------------------>  Passenger List data
+
+      await firestore()
+        .collection('PassengerList')
+        .doc(isUserCreate.user.uid)
+        .set({
+          PassengerList: [],
+        });
+
+      //------------------------------------------------>  SavedUserAddress data
+
+      await firestore()
+        .collection('SavedUserAddress')
+        .doc(isUserCreate.user.uid)
+        .set({
+          SavedUserAddress: [],
+        });
+
       navigation.navigate('SignUpSuccess');
     } catch (error) {
       console.log(error);
@@ -322,7 +346,9 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               onPress2={() => {
                 setShow(true);
               }}
-              // countryCode={countryCode}
+              countryCode={countryCode}
+              placeholderTextColor={color.darkGray}
+              textInputStyle={styles.textInputCountryPicker}
             />
             <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
             <OnBoardingTextInput
@@ -570,6 +596,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           setDatePicker(false);
         }}
       />
+      <CountryPicker
+        show={show}
+        pickerButtonOnPress={item => {
+          setShow(false);
+          setCountryCode(item.flag);
+        }}
+      />
     </View>
   );
 };
@@ -581,6 +614,7 @@ const styles = StyleSheet.create({
   },
   textInputTitleStyle: {
     marginLeft: wp(6),
+    color: color.black,
   },
   rememberLineStyle: {
     flexDirection: 'row',
@@ -673,6 +707,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: wp(4),
     borderWidth: 1,
+  },
+  textInputCountryPicker: {
+    color: color.black,
+    height: hp(10),
   },
 });
 

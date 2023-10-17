@@ -10,26 +10,24 @@ import {color} from '../../helper/ColorConstant';
 const WelcomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <View
+      {/* <View
         style={{
           flex: 1,
           alignItems: 'center',
           justifyContent: 'space-around',
           paddingTop: hp(4),
-        }}>
-        <Image
-          source={Images.welcomeScreenIcon}
-          style={styles.welcomeScreenIconStyle}
-        />
-        <OnBoardingText
-          OnBoardingMainText={strings.AppName}
-          OnBoardingMainTextStyle={styles.appStyle}
-        />
-        <OnBoardingText
-          OnBoardingSubText={strings.subContent}
-          OnBoardingSubTextStyle={styles.subContentStyle}
-        />
-      </View>
+        }}> */}
+      <Image
+        source={Images.welcomeScreenIcon}
+        style={styles.welcomeScreenIconStyle}
+      />
+      <OnBoardingText
+        OnBoardingMainText={strings.AppName}
+        OnBoardingMainTextStyle={styles.appStyle}
+        OnBoardingSubTextStyle={styles.subContentStyle}
+        OnBoardingSubText={strings.subContent}
+      />
+      {/* </View> */}
       <View style={{flex: 1}}>
         <OnBoardingSingleButton
           buttonTextStyle={styles.buttonTextStyle}
@@ -104,9 +102,11 @@ const styles = StyleSheet.create({
   welcomeScreenIconStyle: {
     height: hp(10),
     width: hp(10),
+    marginTop: hp(10),
   },
   subContentStyle: {
     fontSize: fontSize(14),
+    marginTop: hp(3),
   },
   buttonStyle: {
     marginVertical: hp(1),
@@ -124,6 +124,9 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     color: color.black,
     flex: 1,
+  },
+  appStyle: {
+    marginTop: hp(6),
   },
 });
 

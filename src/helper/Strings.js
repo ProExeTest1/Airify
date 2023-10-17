@@ -36,8 +36,8 @@ export const strings = {
   RememberMe: 'Remember Me',
   signInText: 'Sign in',
   WelcomeModalMainText: 'Sign in Successful!',
-  WelcomeModalSubText: 'Please Wait...',
-  WelcomeModalSubText2: 'You will be directed to the homepage.',
+  WelcomeModalSubText:
+    'Please Wait... \n You will be directed to the homepage.',
 
   // Forgot Password
   HeaderMain: 'Reset your password 🔑',
@@ -169,6 +169,38 @@ export const strings = {
   country: 'Country',
   address: 'Address',
   notification: 'Notification',
+  security: 'Security',
+  changePassword: 'Change Password',
+  language: 'Language',
+  aboutAirify: 'About Airify',
+  Version: 'Airify v10.7.5',
+  helpCenter: 'Help Center',
+
+  FAQ: 'FAQ',
+  contactUs: 'Contact Us',
+
+  search: 'Search',
+  passengerList: 'Passenger List',
+  no: 'No.',
+  name: 'Name',
+  newPassenger: 'Add New Passenger',
+
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  title: 'Title',
+  countryCode: 'Country Code',
+  identityCard: 'Identity Card',
+  identityCardNo: 'Identity Card Number',
+  issueCountry: 'Country of Issue',
+  issueDate: 'Date of Issue',
+  expiryDate: 'Expiry Date',
+  passPort: 'Passport',
+  nationality: 'Nationality',
+  driLicense: 'Driving License',
+  driLicenseNo: 'Driving License Number',
+  contactDetail: 'Contact Details',
+  editPassenger: 'Edit Passenger',
+  edit: 'Edit',
 
   // wallet
 
@@ -194,4 +226,39 @@ export const strings = {
   travel_inssurance: 'Travel Insurance',
   tax: 'Tax',
   total_price: 'Total Price',
+  fillInDetails: 'Fill In Details',
+
+  // Saved Address
+  savedAddress: 'Saved Address',
+  changeAddress: 'Change Address',
+  addNewAddress: 'Add New Address',
+  addButton: 'Select Location & Continue Fill Address',
+  addressDetail: 'Address Details',
+
+  // Address Details
+
+  addressLabel: 'Address Labels',
+  note: 'Note (Optional)',
+  contactName: 'Contact Name',
+  ContactPhoneNo: 'Contact Phone Number',
+  setPrimary: 'Set As Primary Address',
+
+  mainAddress: 'Main Address',
+  pinpoint: '📍 Pinpoint already',
+  deleteAddress: 'Delete Address',
+
+  // discount voucher
+
+  discountVoucher: 'Discounts / Vouchers',
+  ValidUntil: 'Valid Until',
+  minTransaction: 'Min Transaction',
+
+  airifyReward: 'Airify Rewards',
+  getSpecialReward: 'Get Special Rewards!',
+  getSpecialRewardSub:
+    'Get special offers, & even free travel every \n time your friend joins via your referral code.',
+  copyCode: 'Copy or share the referral code below.',
+  shareCode: 'Share Referral Code',
+
+  airifyPoint: 'Airify Point',
 };

@@ -50,7 +50,6 @@ const WalletScreen = ({navigation}) => {
   useEffect(() => {
     if (myWallet != SetWalletData()) {
       SetWalletData().then(e => {
-        console.log('jwodesf ihfidgfogi', e);
         setMyWallet(e);
       });
     } else {

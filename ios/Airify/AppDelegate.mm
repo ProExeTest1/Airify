@@ -2,6 +2,7 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <Firebase.h>
+// #import <GoogleMaps/GoogleMaps.h>
 
 @implementation AppDelegate
 
@@ -9,6 +10,7 @@
 {
   self.moduleName = @"Airify";
   [FIRApp configure];
+  // [GMSServices provideAPIKey:@"AIzaSyCr91UDaL3Iovz3C-jc0AjxWshX4MNrSvE"];
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};

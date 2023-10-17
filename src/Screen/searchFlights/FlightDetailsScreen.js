@@ -57,7 +57,7 @@ const FlightDetailsScreen = ({navigation}) => {
     await firestore()
       .collection('SavedFlights')
       .doc(uid)
-      .set({
+      .update({
         savedFlights: firestore.FieldValue.arrayUnion({
           airlineName: item?.airlineName,
           logo: item?.logo,
@@ -91,7 +91,7 @@ const FlightDetailsScreen = ({navigation}) => {
     await firestore()
       .collection('SavedFlights')
       .doc(uid)
-      .set({
+      .update({
         savedFlights: firestore.FieldValue.arrayRemove({
           airlineName: item?.airlineName,
           logo: item?.logo,
@@ -245,7 +245,7 @@ const FlightDetailsScreen = ({navigation}) => {
           </Text>
           <Text style={styles.cardPrice}>
             $
-            {parseInt(item?.price.slice(1, 8).split(',').join(''), 10) *
+            {parseInt(item?.price?.slice(1, 8).split(',').join(''), 10) *
               Number(searchFlightData?.passenger?.split(' ')[0])}
             .00
           </Text>

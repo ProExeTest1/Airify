@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(24),
     textAlign: 'center',
     marginTop: hp(2),
-    fontWeight: '600',
+    fontWeight: 'bold',
     width: wp(75),
     color: color.black,
   },
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: wp(63),
     color: color.black,
-    bottom: hp(4),
   },
 });
 
