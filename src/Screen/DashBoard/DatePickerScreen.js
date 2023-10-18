@@ -1,11 +1,10 @@
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {Images} from '../../helper/IconConstant';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   dateAction,
   depatureDateAction,
@@ -62,6 +61,7 @@ LocaleConfig.defaultLocale = 'fr';
 const DatePickerScreen = ({navigation, route}) => {
   const returndata = route?.params?.return;
   const dispatch = useDispatch();
+  const reduxDepatureDate = useSelector(state => state?.date?.normalDate);
   const [selected, setSelected] = useState('');
   const [day, setDay] = useState();
   const [returnday, seReturnDay] = useState();
@@ -69,7 +69,7 @@ const DatePickerScreen = ({navigation, route}) => {
   const [returnyear, setReturnYear] = useState();
   const [press, setPress] = useState(false);
   const [returnPress, setReturnPress] = useState(false);
-  const [returnDate, setReturnDate] = useState(false);
+  const [returnDate, setReturnDate] = useState();
   useEffect(() => {
     if (returndata == 'returnDate') {
       setReturnPress(true);
@@ -113,7 +113,7 @@ const DatePickerScreen = ({navigation, route}) => {
     let selectedDate = moment(selected).format('MM/DD/YYYY');
     let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
     let flag = 0;
-
+    let flag2 = 0;
     //Condition for date vallidation
 
     if (press) {
@@ -123,21 +123,35 @@ const DatePickerScreen = ({navigation, route}) => {
           flag = 1;
         }
       }
-      if (flag === 1 && returndata == 'returnDate') {
-        const date = new Date(returnDate).toLocaleDateString('en-IN', {
-          weekday: 'long',
-        });
-        const dayname = date.split(',');
-        const finalDate =
-          dayname[0] + ',' + returnmonth + ' ' + returnday + ' ' + returnyear;
-        dispatch(returnDateAction(finalDate));
-        let selectedDate = moment(returnDate).format('D/M/YYYY');
-        let choosenDate = {
-          date: selectedDate,
-          day: dayname[0],
-        };
-        dispatch(returnNormalDateAction(choosenDate));
-        navigation.navigate('TabNavigation');
+      if (returndata == 'returnDate') {
+        const aa = reduxDepatureDate?.date?.split('/');
+        const validateReturnDate = aa[1] + '/' + aa[0] + '/' + aa[2];
+        for (let i = 1; i <= 10; i++) {
+          let roundDate = moment(validateReturnDate)
+            .add(i, 'day')
+            .format('MM/DD/YYYY');
+          if (selectedreturnDate == roundDate) {
+            flag2 = 1;
+          }
+        }
+        if (flag2 === 1) {
+          const date = new Date(returnDate).toLocaleDateString('en-IN', {
+            weekday: 'long',
+          });
+          const dayname = date.split(',');
+          const finalDate =
+            dayname[0] + ',' + returnmonth + ' ' + returnday + ' ' + returnyear;
+          dispatch(returnDateAction(finalDate));
+          let selectedDate = moment(returnDate).format('D/M/YYYY');
+          let choosenDate = {
+            date: selectedDate,
+            day: dayname[0],
+          };
+          dispatch(returnNormalDateAction(choosenDate));
+          navigation.navigate('TabNavigation');
+        } else {
+          AlertConstant('Invalid Return Date');
+        }
       } else if (flag === 1) {
         const date = new Date(selected).toLocaleDateString('en-IN', {
           weekday: 'long',

@@ -1,4 +1,9 @@
-import {SEARCH_FLIGHT_CARD_DATA, SEARCH_FLIGHT_FILTER_DATA} from '../type';
+import {
+  SEARCH_FLIGHT_CARD_DATA,
+  SEARCH_FLIGHT_FILTER_DATA,
+  SEARCH_FLIGHT_RETURN_CARD_DATA,
+  SEARCH_FLIGHT_RETURN_DATA,
+} from '../type';
 
 export const SearchFlightCardData = depaturePlace => async dispatch => {
   dispatch({type: SEARCH_FLIGHT_CARD_DATA, payload: depaturePlace});
@@ -6,3 +11,10 @@ export const SearchFlightCardData = depaturePlace => async dispatch => {
 export const SearchFlightFilterData = depaturePlace => async dispatch => {
   dispatch({type: SEARCH_FLIGHT_FILTER_DATA, payload: depaturePlace});
 };
+export const SearchFlightReturnAction = returnData => async dispatch => {
+  dispatch({type: SEARCH_FLIGHT_RETURN_DATA, payload: returnData});
+};
+export const SearchFlightReturnCardAction =
+  returnCardData => async dispatch => {
+    dispatch({type: SEARCH_FLIGHT_RETURN_CARD_DATA, payload: returnCardData});
+  };

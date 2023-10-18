@@ -17,10 +17,13 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import {dateAction} from '../../redux/action/DateAction';
+import {
+  dateAction,
+  returnNormalDateAction,
+} from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
 import {strings} from '../../helper/Strings';
-import { color } from '../../helper/ColorConstant';
+import {color} from '../../helper/ColorConstant';
 
 const SearchFlightsHeader = ({
   SelectDate,
@@ -29,20 +32,31 @@ const SearchFlightsHeader = ({
   dispatch,
   setModalVisible1,
   navigation,
+  headerName,
+  tripType,
 }) => {
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const searchFlightData = useSelector(e =>
+    tripType === 'Round-trip'
+      ? e?.searchFlight?.searchFlightReturnData
+      : e?.place?.searchFlightData,
+  );
+  // console.log(tripType, 'tripType');
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
         <View style={styles.headerTitleBody}>
-          <Text style={styles.headerTitle}>{strings.searchFlight}</Text>
+          <Text style={styles.headerTitle}>{headerName}</Text>
         </View>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image style={styles.BackImg} source={Images.backIcon} />
         </TouchableOpacity>
         <Menu>
           <MenuTrigger>
-            <Image style={styles.BackImg} source={Images.menuIcon} />
+            <Image
+              style={styles.BackImg}
+              source={Images.menuIcon}
+              resizeMode="contain"
+            />
           </MenuTrigger>
           <MenuOptions style={styles.dropdownBody}>
             <MenuOption onSelect={() => onShare()}>
@@ -99,16 +113,22 @@ const SearchFlightsHeader = ({
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}) => {
-            console.log(
-              'item?.date === SelectDate?.date :>> ',
-              item?.date,
-              SelectDate?.date,
-            );
+            // console.log(
+            //   'item?.date === SelectDate?.date :>> ',
+            //   item?.date,
+            //   SelectDate?.date,
+            // );
+            // console.log(item);
             return (
               <TouchableOpacity
                 onPress={() => {
                   setSelectDate(item);
-                  dispatch(dateAction(item));
+                  if (tripType === 'Round-trip') {
+                    console.log(item, 'item');
+                    dispatch(returnNormalDateAction(item));
+                  } else {
+                    dispatch(dateAction(item));
+                  }
                 }}
                 style={[
                   styles.dateIconBody,
@@ -134,7 +154,8 @@ const SearchFlightsHeader = ({
                   {item.day.slice(0, 3)}
                 </Text>
               </TouchableOpacity>
-            );}}
+            );
+          }}
         />
       </View>
     </View>
@@ -154,9 +175,9 @@ const styles = StyleSheet.create({
     marginBottom: hp(3),
   },
   BackImg: {
-    height: wp(8),
-    width: wp(8),
-    tintColor:color.white,
+    height: wp(7),
+    width: wp(7),
+    tintColor: color.white,
   },
   headerTitleBody: {
     position: 'absolute',

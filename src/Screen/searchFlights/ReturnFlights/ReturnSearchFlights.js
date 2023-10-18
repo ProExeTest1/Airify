@@ -9,25 +9,32 @@ import {
   Alert,
 } from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {Images} from '../../helper/IconConstant';
-import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
-import {TicketList} from '../../components/index';
-import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
-import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
-import {CreatePriceAlert} from '../../components/index';
-import {RadioButton} from 'react-native-radio-buttons-group';
-import {color} from '../../helper/ColorConstant';
-import {radioButtons} from '../../assets/DummyData/radioButtons';
-import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
+import {SearchFlightData} from '../../../assets/DummyData/SearchFlightData';
 import moment from 'moment';
-import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
-import {strings} from '../../helper/Strings';
+import {
+  depatureDateAction,
+  returnDateAction,
+  returnNormalDateAction,
+} from '../../../redux/action/DateAction';
+import {SearchFlightFilterData} from '../../../redux/action/SearchFlightAction';
+import {
+  CreatePriceAlert,
+  OnBoardingTwoButton,
+  SearchFlightsHeader,
+  TicketList,
+} from '../../../components';
+import {Images} from '../../../helper/IconConstant';
+import {strings} from '../../../helper/Strings';
+import Modal from 'react-native-modal';
+import {RadioButton} from 'react-native-radio-buttons-group';
+import {fontSize, hp, wp} from '../../../helper/Constant';
+import {color} from '../../../helper/ColorConstant';
+import {radioButtons} from '../../../assets/DummyData/radioButtons';
 
-const SearchFlights = ({navigation, route}) => {
+const ReturnSearchFlights = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  console.log(tripType);
+  console.log(tripType, 'hekldsfjksfj');
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -46,22 +53,20 @@ const SearchFlights = ({navigation, route}) => {
     e => e?.searchFlight?.searchFlightFilterData,
   );
 
-  const SelectDate = useSelector(e => e.date.normalDate);
-
   /* ----------------------------------------------------> date function */
 
   const setSelectDate = ({date}) => {
     let dateChange = date.split('/');
-    console.log(dateChange);
-    // console.log(`${moment(tem).format('dddd,MMM D YYYY')}`);
     dispatch(
-      depatureDateAction(
+      returnDateAction(
         `${moment(
           new Date(`${dateChange[1]}/${dateChange[0]}/${dateChange[2]}`),
-        ).format('dddd,MMM D YYYY')}`,
+        )?.format('dddd,MMM D YYYY')}`,
       ),
     );
   };
+  const SelectDate = useSelector(e => e.date.returnNormalDate);
+  console.log(SelectDate, 'selected-j----->>>');
   const onShare = async () => {
     try {
       await Share.share({
@@ -221,7 +226,7 @@ const SearchFlights = ({navigation, route}) => {
           departureTime
         );
       });
-      console.log(filterData);
+      // console.log(filterData);
       filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);
@@ -233,7 +238,6 @@ const SearchFlights = ({navigation, route}) => {
     dispatch(SearchFlightFilterData({}));
     Alert.alert('Filter data not match');
   };
-
   return (
     <View style={styles.body}>
       {/* ----------------------------------------------------> Header components */}
@@ -243,13 +247,10 @@ const SearchFlights = ({navigation, route}) => {
         setSelectDate={setSelectDate}
         onShare={onShare}
         dispatch={dispatch}
-        headerName={
-          tripType === 'Round-Trip'
-            ? strings.select_departure_flight
-            : strings.searchFlight
-        }
+        headerName={strings.select_return_flight}
         setModalVisible1={setModalVisible1}
         navigation={navigation}
+        tripType={tripType}
       />
 
       {/* ----------------------------------------------------> Ticket List */}
@@ -257,7 +258,7 @@ const SearchFlights = ({navigation, route}) => {
       <TicketList
         SelectDate={SelectDate}
         SearchFlightCard={SearchFlightCardData}
-        tripType1={tripType}
+        tripType={'Round-Trip'}
       />
 
       <View style={styles.sortBody}>
@@ -342,6 +343,7 @@ const SearchFlights = ({navigation, route}) => {
     </View>
   );
 };
+export default ReturnSearchFlights;
 const styles = StyleSheet.create({
   body: {
     flex: 1,
@@ -408,4 +410,3 @@ const styles = StyleSheet.create({
     borderColor: '#e2e2e2',
   },
 });
-export default SearchFlights;

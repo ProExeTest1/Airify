@@ -17,6 +17,7 @@ import {
   FlightDetailsCard,
   FlightServices,
   PriceDetails,
+  ReturnDepartureSwitch,
 } from '../../components';
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
@@ -28,21 +29,35 @@ import {useDispatch, useSelector} from 'react-redux';
 import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 
-const FillPassengerDetails = ({navigation}) => {
+const FillPassengerDetails = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [passengerLength, setPassengerLength] = useState();
+  const [ticketType, setTicketType] = useState('Departure');
   const [dropdown, setDropdownTop] = useState();
   const [passengerList, setPassengerList] = useState([]);
   const [flatlistIndex, setFlatlistIndex] = useState();
   const DropdownButton = useRef();
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
+  const item = useSelector(state =>
+    ticketType === 'Departure'
+      ? state.searchFlight.searchFlightCardData
+      : state.searchFlight.searchFlightReturnCardData,
+  );
+  const searchFlightData = useSelector(e =>
+    ticketType === 'Departure'
+      ? e?.place?.searchFlightData
+      : e?.searchFlight?.searchFlightReturnData,
+  );
+
+  const searchFlightDateData = useSelector(e =>
+    ticketType === 'Departure' ? e?.date?.depatureDate : e?.date?.returnDate,
+  ).split(',');
   const userData = useSelector(state => state.userData.userdata);
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
-  const insurancePrice = Math.round((totalSeat * ticketPrice * 2.8) / 100);
-  const travelTax = Math.round((totalSeat * ticketPrice * 1.5) / 100);
+
   let newArr = Array.from({length: totalSeat}, (_, index) => ({
     id: index + 1,
     name: '',
@@ -52,11 +67,27 @@ const FillPassengerDetails = ({navigation}) => {
   useEffect(() => {
     passengers();
   }, []);
-  const onContinue = () => {
-    if (passengerLength < newArr.length) {
-      AlertConstant('Please first add passengers to click on plus icon');
+
+  const ontoggleSwitch = () => {
+    if (ticketType === 'Departure') {
+      setTicketType('Return');
     } else {
-      dispatch(SelectSeatActionData(flatlistData));
+      setTicketType('Departure');
+    }
+  };
+  const onContinue = () => {
+    if (tripType === 'Round-Trip' && ticketType === 'Departure') {
+      if (passengerLength < newArr.length) {
+        AlertConstant('Please first add passengers to click on plus icon');
+      } else {
+        setTicketType('Return');
+      }
+    } else {
+      if (passengerLength < newArr.length) {
+        AlertConstant('Please first add passengers to click on plus icon');
+      } else {
+        dispatch(SelectSeatActionData(flatlistData));
+      }
     }
   };
   const toggleDropDown = index => {
@@ -118,6 +149,7 @@ const FillPassengerDetails = ({navigation}) => {
         Images1={Images.backIcon}
         Images2={null}
       />
+
       <View style={styles.progressBarStyle}>
         <View style={styles.progressInnerViewStyle}>
           <View style={styles.progressViewStyle}>
@@ -138,8 +170,23 @@ const FillPassengerDetails = ({navigation}) => {
           <Text style={styles.progressTextStyle}>Book</Text>
         </View>
       </View>
-      <ScrollView bounces={false} style={styles.scrollViewStyle}>
-        <FlightDetailsCard item={item} />
+      {tripType === 'Round-Trip' ? (
+        <ReturnDepartureSwitch
+          onPress={ontoggleSwitch}
+          ticketType={ticketType}
+        />
+      ) : null}
+      <ScrollView
+        bounces={false}
+        style={[
+          styles.scrollViewStyle,
+          {marginTop: tripType === 'Round-Trip' ? hp(1) : hp(0)},
+        ]}>
+        <FlightDetailsCard
+          searchFlightData={searchFlightData}
+          searchFlightDateData={searchFlightDateData}
+          item={item}
+        />
         <View style={styles.cardBody}>
           <View style={styles.flatlistViewStyle}>
             <Image
@@ -223,7 +270,12 @@ const FillPassengerDetails = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
-        <PriceDetails />
+        <PriceDetails
+          item={item}
+          totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
+          ticketPrice={ticketPrice}
+          totalSeat={totalSeat}
+        />
       </ScrollView>
       <View style={styles.bottomButtonBody}>
         <TouchableOpacity

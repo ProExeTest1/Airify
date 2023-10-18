@@ -5,11 +5,13 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {useSelector} from 'react-redux';
 
-const FlightDetailsCard = ({item}) => {
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
-    ',',
-  );
+const FlightDetailsCard = ({
+  item,
+  ticketType,
+  searchFlightData,
+  searchFlightDateData,
+}) => {
+  // console.log(searchFlightDateData, 'hfghjfb=======>>>>>');
   return (
     <View style={[styles.cardBody, {marginVertical: hp(2)}]}>
       <View style={styles.cardHeader}>

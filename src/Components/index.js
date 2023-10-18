@@ -23,6 +23,7 @@ import DropDownPaperTextInput from './TicketBookingComponents/DropDownPaperTextI
 import DropDownMenu from './TicketBookingComponents/DropDownMenu';
 import CardHeader from './TicketBookingComponents/CardHeader';
 import PriceDetails from './TicketBookingComponents/PriceDetails';
+import ReturnDepartureSwitch from './Common/ReturnDepartureSwitch';
 export {
   CustomPaperTextInput,
   CustomTextInput,
@@ -49,4 +50,5 @@ export {
   DropDownMenu,
   CardHeader,
   PriceDetails,
+  ReturnDepartureSwitch,
 };

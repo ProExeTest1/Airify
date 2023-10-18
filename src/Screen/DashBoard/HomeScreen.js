@@ -29,6 +29,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {UserDataAction} from '../../redux/action/UserDataAction';
+import {SearchFlightReturnAction} from '../../redux/action/SearchFlightAction';
 
 const HomeScreen = ({navigation}) => {
   const theme = useColorScheme();
@@ -38,6 +39,7 @@ const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
+
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
   //Maintaining textInput value with redux data
   let depatureData = reduxDepaturePlace
@@ -51,10 +53,8 @@ const HomeScreen = ({navigation}) => {
     : null;
   const ndate = new Date();
   const hours = ndate.getHours();
-  const [depatureDate, setDepatureDate] = useState();
   const [seat, setSeat] = useState();
   const [passengerClass, setPassengerClass] = useState('');
-  const [returnDate, setReturnDate] = useState();
   const [press, setPress] = useState('One-way');
   const [change, setChnage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -83,19 +83,55 @@ const HomeScreen = ({navigation}) => {
   };
   // It will naviagte to searchFlight screen and store all inputs in redux
   const SearchFlightsBut = () => {
-    if (depatureData && destinationData && seat && passengerClass) {
+    if (
+      depatureData &&
+      destinationData &&
+      seat &&
+      passengerClass &&
+      reduxDepatureDate
+    ) {
       if (depatureData !== destinationData) {
-        dispatch(
-          SearchFlightAction({
-            from: reduxDepaturePlace.city,
-            fromShortform: reduxDepaturePlace.airport,
-            to: reduxDestinationPlace.city,
-            toShortform: reduxDestinationPlace.airport,
-            passenger: seat,
-            class: passengerClass,
-          }),
-        );
-        navigation.navigate('SearchFlights');
+        if (reduxReturnDate && press === 'Round-trip') {
+          if (reduxReturnDate !== reduxDepatureDate) {
+            dispatch(
+              SearchFlightReturnAction({
+                from: reduxDestinationPlace.city,
+                fromShortform: reduxDestinationPlace.airport,
+                to: reduxDepaturePlace.city,
+                toShortform: reduxDepaturePlace.airport,
+                passenger: seat,
+                class: passengerClass,
+              }),
+            );
+            dispatch(
+              SearchFlightAction({
+                from: reduxDepaturePlace.city,
+                fromShortform: reduxDepaturePlace.airport,
+                to: reduxDestinationPlace.city,
+                toShortform: reduxDestinationPlace.airport,
+                passenger: seat,
+                class: passengerClass,
+              }),
+            );
+            navigation.navigate('SearchFlights', {TripType: 'Round-Trip'});
+          } else {
+            AlertConstant(
+              'Return date and departure date does not be same please change it!',
+            );
+          }
+        } else {
+          dispatch(
+            SearchFlightAction({
+              from: reduxDepaturePlace.city,
+              fromShortform: reduxDepaturePlace.airport,
+              to: reduxDestinationPlace.city,
+              toShortform: reduxDestinationPlace.airport,
+              passenger: seat,
+              class: passengerClass,
+            }),
+          );
+          navigation.navigate('SearchFlights', {TripType: 'One-Way'});
+        }
       } else {
         AlertConstant('Destination Place and Departure Place does not be same');
       }
@@ -195,9 +231,6 @@ const HomeScreen = ({navigation}) => {
                   ? destinationData
                   : null
               }
-              onChangeText={txt =>
-                change ? setDestination(txt) : setOrigin(txt)
-              }
             />
             <CustomPaperTextInput
               label={'To'}
@@ -217,9 +250,6 @@ const HomeScreen = ({navigation}) => {
                   ? destinationData
                   : null
               }
-              onChangeText={txt =>
-                change ? setOrigin(txt) : setDestination(txt)
-              }
             />
             <TouchableOpacity
               onPress={() => toggleChange()}
@@ -238,7 +268,7 @@ const HomeScreen = ({navigation}) => {
             label={'Depature Date'}
             disabled={true}
             icon={Images.calendar}
-            value={reduxDepatureDate ? reduxDepatureDate : depatureDate}
+            value={reduxDepatureDate ? reduxDepatureDate : null}
             onPress={() => navigation.navigate('DatePicker')}
           />
           {press === 'Round-trip' ? (
@@ -251,8 +281,7 @@ const HomeScreen = ({navigation}) => {
               onPress={() =>
                 navigation.navigate('DatePicker', {return: 'returnDate'})
               }
-              value={reduxReturnDate ? reduxReturnDate : returnDate}
-              onChangeText={txt => setReturnDate(txt)}
+              value={reduxReturnDate ? reduxReturnDate : null}
             />
           ) : null}
           <View style={styles.customInputStyle}>
@@ -260,7 +289,6 @@ const HomeScreen = ({navigation}) => {
               placeholder={'Seat'}
               label={'Passenger'}
               width={'45%'}
-              // marginHorizontal={wp(4)}
               icon={Images.passenger}
               onPress={toggleModal}
               value={seat}
@@ -269,7 +297,6 @@ const HomeScreen = ({navigation}) => {
               placeholder={'Class'}
               label={'Class'}
               width={'50%'}
-              // marginHorizontal={wp(3)}
               icon={Images.seat}
               onPress={toggleClassModal}
               value={passengerClass ? passengerClass.split(' ')[0] : null}
@@ -392,7 +419,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'space-between',
-    // paddingHorizontal: wp(4),
     marginHorizontal: wp(4),
   },
   optionTouchStyle: {
@@ -402,7 +428,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: hp(1.6),
-    //
     flex: 1,
   },
   optionTextStyle: {

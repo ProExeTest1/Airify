@@ -22,6 +22,7 @@ import Notification from '../screen/account/Notification';
 import TopUp from '../screen/wallet/TopUp';
 import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
 import {Provider} from 'react-native-paper';
+import ReturnSearchFlights from '../screen/searchFlights/ReturnFlights/ReturnSearchFlights';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
@@ -60,6 +61,10 @@ const StackNavigation = () => {
         <Stack.Screen
           name="FillPassengerDetails"
           component={FillPassengerDetails}
+        />
+        <Stack.Screen
+          name="ReturnSearchFlight"
+          component={ReturnSearchFlights}
         />
       </Stack.Navigator>
     </NavigationContainer>

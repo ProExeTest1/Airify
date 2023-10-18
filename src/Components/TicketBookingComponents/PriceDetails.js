@@ -7,11 +7,11 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {strings} from '../../helper/Strings';
 
-const PriceDetails = () => {
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
-  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+const PriceDetails = ({totalPassenger, totalSeat, ticketPrice, item}) => {
+  // const item = useSelector(state => state.searchFlight.searchFlightCardData);
+  // const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  // const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
+  // const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
   const insurancePrice = Math.round((totalSeat * ticketPrice * 2.8) / 100);
   const travelTax = Math.round((totalSeat * ticketPrice * 1.5) / 100);
   return (
@@ -23,10 +23,7 @@ const PriceDetails = () => {
       <View style={styles.ticketPriceViewStyle}>
         <View style={styles.priceViewStyle}>
           <Text numberOfLines={1} style={styles.priceTextStyle}>
-            {item.airlineName}{' '}
-            {`(${strings.Adult}) x ${Number(
-              searchFlightData.passenger.split(' ')[0],
-            )} `}
+            {item.airlineName} {`(${strings.Adult}) x ${totalPassenger} `}
           </Text>
           <Text numberOfLines={1} style={styles.priceTextStyle}>
             ${totalSeat * ticketPrice}.00
