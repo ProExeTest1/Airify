@@ -137,16 +137,16 @@ const TopUp = ({navigation}) => {
             .doc(auth().currentUser.uid)
             .update({
               transactionHistory: [
-                ...transactionHistory,
                 {
                   title: strings.walletTopUp,
-                  price: `+ $${textInput1}`,
+                  price: `+$${textInput1}`,
                   date: moment(new Date()).format('MMM D,YYYY'),
                   time: new Date().toLocaleTimeString('en-IN'),
                 },
+                ...transactionHistory,
               ],
             });
-          navigation.navigate('WalletScreen');
+          navigation.goBack();
         });
     } else {
       Alert.alert('plsss enter valid ');
@@ -161,8 +161,10 @@ const TopUp = ({navigation}) => {
         <CommonHeader
           headerName={strings.walletTopUp}
           navigation1={() => {
-            navigation.navigate('WalletScreen');
+            navigation.goBack();
           }}
+          Images1Color={'#fff'}
+          Images2Color={null}
           navigation2={() => {}}
           onPress1={true}
           onPress2={false}

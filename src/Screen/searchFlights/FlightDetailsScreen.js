@@ -222,11 +222,13 @@ const FlightDetailsScreen = ({navigation, route}) => {
         />
       ) : null}
       <ScrollView bounces={false} style={styles.ScrollViewStyle}>
-        <FlightDetailsCard
-          searchFlightData={searchFlightData}
-          searchFlightDateData={searchFlightDateData}
-          item={item}
-        />
+        <View style={{paddingHorizontal: wp(4), marginTop: hp(2), flex: 1}}>
+          <FlightDetailsCard
+            searchFlightData={searchFlightData}
+            searchFlightDateData={searchFlightDateData}
+            item={item}
+          />
+        </View>
         <View style={styles.cardBody}>
           <View
             style={[
@@ -262,7 +264,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
           </Text>
           <Text style={styles.cardPrice}>
             $
-            {parseInt(item?.price.slice(1, 8).split(',').join(''), 10) *
+            {parseInt(item?.price?.slice(1, 8).split(',').join(''), 10) *
               Number(searchFlightData?.passenger?.split(' ')[0])}
             .00
           </Text>

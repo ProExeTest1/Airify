@@ -37,8 +37,8 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
           ) {
             return (
               i.pickTime >
-              `${new Date(Date.now() + 1800000).getHours()}:${new Date(
-                Date.now() + 1800000,
+              `${new Date(Date.now() + 3600000 * 3).getHours()}:${new Date(
+                Date.now() + 3600000 * 3,
               ).getMinutes()}`
             );
           }

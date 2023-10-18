@@ -7,13 +7,24 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {strings} from '../../helper/Strings';
 
-const PriceDetails = ({totalPassenger, totalSeat, ticketPrice, item}) => {
-  // const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  // const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  // const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
-  // const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+const PriceDetails = ({
+  totalPassenger,
+  totalSeat,
+  ticketPrice,
+  item,
+  ToggleSwitchBut1,
+  TotalPoints,
+}) => {
+  const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
   const insurancePrice = Math.round((totalSeat * ticketPrice * 2.8) / 100);
   const travelTax = Math.round((totalSeat * ticketPrice * 1.5) / 100);
+  const discount = DiscountData?.discountPR
+    ? Math.round((totalSeat * ticketPrice * DiscountData?.discountPR) / 100)
+    : 0;
+  console.log(ToggleSwitchBut1);
+  const TotalPoint = TotalPoints ? TotalPoints : 0;
+  const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
+  const havePonts = TotalPoint % 100;
   return (
     <View style={styles.cardBody}>
       <CardHeader
@@ -23,7 +34,7 @@ const PriceDetails = ({totalPassenger, totalSeat, ticketPrice, item}) => {
       <View style={styles.ticketPriceViewStyle}>
         <View style={styles.priceViewStyle}>
           <Text numberOfLines={1} style={styles.priceTextStyle}>
-            {item.airlineName} {`(${strings.Adult}) x ${totalPassenger} `}
+            {item?.airlineName} {`(${strings.Adult}) x ${totalPassenger} `}
           </Text>
           <Text numberOfLines={1} style={styles.priceTextStyle}>
             ${totalSeat * ticketPrice}.00
@@ -41,13 +52,35 @@ const PriceDetails = ({totalPassenger, totalSeat, ticketPrice, item}) => {
           </Text>
           <Text style={styles.priceTextStyle}>${travelTax}.00</Text>
         </View>
+        {DiscountData?.id && (
+          <View style={styles.priceViewStyle}>
+            <Text numberOfLines={1} style={styles.priceTextStyle}>
+              Discount{`(${DiscountData.discountPR}%)`}
+            </Text>
+            <Text style={styles.priceTextStyle}>-${discount}.00</Text>
+          </View>
+        )}
+        {ToggleSwitchBut1 && (
+          <View style={styles.priceViewStyle}>
+            <Text numberOfLines={1} style={styles.priceTextStyle}>
+              Points Used
+            </Text>
+            <Text style={styles.priceTextStyle}>-${validPoint}.00</Text>
+          </View>
+        )}
       </View>
       <View style={styles.priceViewStyle}>
         <Text numberOfLines={1} style={styles.priceTextStyle}>
           {strings.total_price}
         </Text>
         <Text numberOfLines={1} style={styles.priceTextStyle}>
-          ${totalSeat * ticketPrice + insurancePrice + travelTax}.00
+          $
+          {totalSeat * ticketPrice +
+            insurancePrice +
+            travelTax -
+            discount -
+            validPoint}
+          .00
         </Text>
       </View>
     </View>
@@ -79,7 +112,6 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     borderRadius: 10,
     borderColor: '#000',
-    marginHorizontal: wp(4),
   },
   plusIconStyle: {
     height: hp(2),

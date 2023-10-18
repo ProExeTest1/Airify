@@ -113,12 +113,6 @@ const SearchFlightsHeader = ({
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item, index}) => {
-            // console.log(
-            //   'item?.date === SelectDate?.date :>> ',
-            //   item?.date,
-            //   SelectDate?.date,
-            // );
-            // console.log(item);
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -175,8 +169,8 @@ const styles = StyleSheet.create({
     marginBottom: hp(3),
   },
   BackImg: {
-    height: wp(7),
-    width: wp(7),
+    height: wp(8),
+    width: wp(8),
     tintColor: color.white,
   },
   headerTitleBody: {

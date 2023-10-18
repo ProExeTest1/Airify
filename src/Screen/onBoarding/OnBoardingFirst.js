@@ -34,15 +34,19 @@ const OnBoardingFirst = ({navigation, props}) => {
         }}>
         <View style={styles.slide}>
           <OnBoardingImage onBoardingImage={Images.onBoardingImageOne} />
-          <OnBoardingText OnBoardingMainText={strings.OnBoardingOneMainText} />
-          <OnBoardingText OnBoardingSubText={strings.OnBoardingOneSubText} />
+          <OnBoardingText
+            OnBoardingMainText={strings.OnBoardingOneMainText}
+            OnBoardingSubText={strings.OnBoardingOneSubText}
+            OnBoardingSubTextStyle={{marginTop: hp(1)}}
+          />
         </View>
         <View style={styles.slide}>
           <OnBoardingImage onBoardingImage={Images.onBoardingImageSecond} />
           <OnBoardingText
             OnBoardingMainText={strings.OnBoardingSecondMainText}
+            OnBoardingSubText={strings.OnBoardingSecondSubText}
+            OnBoardingSubTextStyle={{marginTop: hp(1)}}
           />
-          <OnBoardingText OnBoardingSubText={strings.OnBoardingSecondSubText} />
         </View>
         <View style={styles.slide}>
           <OnBoardingImage
@@ -50,10 +54,10 @@ const OnBoardingFirst = ({navigation, props}) => {
             onBoardingImage={Images.onBoardingImageThird}
           />
           <OnBoardingText
-            OnBoardingMainTextStyle={styles.OnBoardingMainTextStyle}
             OnBoardingMainText={strings.OnBoardingThirdMainText}
+            OnBoardingSubText={strings.OnBoardingThirdSubText}
+            OnBoardingSubTextStyle={{marginTop: hp(1)}}
           />
-          <OnBoardingText OnBoardingSubText={strings.OnBoardingThirdSubText} />
         </View>
       </Swiper>
       <View
@@ -102,9 +106,6 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     marginTop: hp(4),
-  },
-  OnBoardingMainTextStyle: {
-    width: wp(80),
   },
 });
 

@@ -147,7 +147,6 @@ const PlacePickerScreen = ({navigation, route}) => {
                         <Text style={styles.smallTextStyle}>
                           {firstLatter + secondlatter}
                         </Text>
-
                         <Text style={styles.smallTextStyle}>-</Text>
                         <Text style={styles.smallTextStyle}>
                           Internation Airport of {item.capital}

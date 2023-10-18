@@ -20,6 +20,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {color} from '../../helper/ColorConstant';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [modal, setModal] = useState(false);
@@ -127,7 +128,9 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
                 setChecked(!checked);
               }}
             />
-            <Text style={{marginLeft: wp(6)}}>{strings.RememberMe}</Text>
+            <Text style={{marginLeft: wp(6), color: color.black}}>
+              {strings.RememberMe}
+            </Text>
           </View>
           <View style={{marginLeft: wp(12)}}>
             <TouchableOpacity
@@ -176,11 +179,12 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           justifyContent: 'center',
           margin: wp(0),
           paddingHorizontal: wp(10),
+          alignItems: 'center',
+          flex: 1,
         }}>
         <View
           style={{
             backgroundColor: 'white',
-            height: hp(55),
             borderRadius: 16,
             alignItems: 'center',
           }}>
@@ -192,13 +196,13 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
             OnBoardingMainText={strings.WelcomeModalMainText}
             OnBoardingMainTextStyle={{color: 'blue'}}
             OnBoardingSubText={strings.WelcomeModalSubText}
-            OnBoardingSubTextStyle={{width: wp(50), marginTop: hp(6)}}
+            OnBoardingSubTextStyle={{marginVertical: hp(4)}}
           />
-          <OnBoardingText
-            OnBoardingSubText={strings.WelcomeModalSubText2}
-            OnBoardingSubTextStyle={{bottom: hp(7)}}
+          <ActivityIndicator
+            size="large"
+            color="#0000ff"
+            style={{marginBottom: hp(2)}}
           />
-          <ActivityIndicator size="large" color="#0000ff" />
         </View>
       </Modal>
     </View>
@@ -212,6 +216,7 @@ const styles = StyleSheet.create({
   },
   textInputTitleStyle: {
     marginLeft: wp(6),
+    color: color.black,
   },
   rememberLineStyle: {
     flexDirection: 'row',

@@ -21,9 +21,9 @@ import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
-import moment from 'moment';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 import {strings} from '../../helper/Strings';
+import moment from 'moment';
 
 const SearchFlights = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -52,8 +52,6 @@ const SearchFlights = ({navigation, route}) => {
 
   const setSelectDate = ({date}) => {
     let dateChange = date.split('/');
-    console.log(dateChange);
-    // console.log(`${moment(tem).format('dddd,MMM D YYYY')}`);
     dispatch(
       depatureDateAction(
         `${moment(

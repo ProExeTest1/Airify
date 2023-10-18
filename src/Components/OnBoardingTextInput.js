@@ -106,10 +106,12 @@ const styles = StyleSheet.create({
     height: hp(2),
     width: hp(2),
     tintColor: '#A0A0A0',
+    color: color.black,
   },
   textInputStyle: {
     marginLeft: wp(2),
     flex: 1,
+    color: color.black,
   },
 });
 

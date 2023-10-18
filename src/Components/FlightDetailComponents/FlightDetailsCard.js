@@ -13,12 +13,12 @@ const FlightDetailsCard = ({
 }) => {
   // console.log(searchFlightDateData, 'hfghjfb=======>>>>>');
   return (
-    <View style={[styles.cardBody, {marginVertical: hp(2)}]}>
+    <View style={styles.cardBody}>
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
 
-        <Text style={styles.cardPriceTitle}>{`${searchFlightDateData[0].slice(
+        <Text style={styles.cardPriceTitle}>{`${searchFlightDateData[0]?.slice(
           0,
           3,
         )},${searchFlightDateData[1]}`}</Text>
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     borderRadius: 10,
     borderColor: '#000',
-    width: '92%',
+    flex: 1,
+    width: '100%',
     alignSelf: 'center',
   },
   cardHeader: {

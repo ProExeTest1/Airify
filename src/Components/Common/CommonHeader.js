@@ -19,6 +19,10 @@ const CommonHeader = ({
   Images2,
   onPress1,
   onPress2,
+  cancelButtonStyle,
+  cancelButtonStyle1,
+  Images1Color,
+  Images2Color,
 }) => {
   return (
     <SafeAreaView style={styles.headerViewStyle}>
@@ -33,6 +37,11 @@ const CommonHeader = ({
               style={[
                 styles.cancelButtonStyle,
                 {borderRadius: Images.planIcon === Images1 ? hp(4 / 2) : 0},
+                cancelButtonStyle1,
+                {
+                  borderRadius: Images.planIcon === Images1 ? hp(4 / 2) : 0,
+                  tintColor: Images1Color,
+                },
               ]}
               resizeMode="contain"
             />
@@ -40,7 +49,12 @@ const CommonHeader = ({
           <TouchableOpacity disabled={!onPress2} onPress={navigation2}>
             <Image
               source={Images2}
-              style={[styles.cancelButtonStyle, {tintColor: color.white}]}
+              // style={[styles.cancelButtonStyle, cancelButtonStyle]}
+              style={[
+                styles.cancelButtonStyle,
+                {tintColor: color.white},
+                cancelButtonStyle,
+              ]}
               resizeMode="contain"
             />
           </TouchableOpacity>
@@ -57,10 +71,9 @@ const styles = StyleSheet.create({
     height: hp(3),
     width: hp(3),
     resizeMode: 'contain',
-    tintColor: color.white,
   },
   headerTextStyle: {
-    fontSize: fontSize(22),
+    fontSize: fontSize(18),
     fontWeight: 'bold',
     color: color.white,
   },

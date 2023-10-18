@@ -18,6 +18,7 @@ import {
   FlightServices,
   PriceDetails,
   ReturnDepartureSwitch,
+  TicktBookingProgressBar,
 } from '../../components';
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
@@ -54,7 +55,7 @@ const FillPassengerDetails = ({navigation, route}) => {
     ticketType === 'Departure' ? e?.date?.depatureDate : e?.date?.returnDate,
   ).split(',');
   const userData = useSelector(state => state.userData.userdata);
-
+  const SelectSeat = useSelector(e => e.SelectSeatData.SelectSeatData);
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
 
@@ -64,6 +65,10 @@ const FillPassengerDetails = ({navigation, route}) => {
     seatNo: false,
   }));
   const [flatlistData, setFlatlistData] = useState(newArr);
+  const setFlatlistDataa = i => {
+    console.log('hiiii');
+    dispatch(SelectSeatActionData(i));
+  };
   useEffect(() => {
     passengers();
   }, []);
@@ -77,19 +82,20 @@ const FillPassengerDetails = ({navigation, route}) => {
   };
   const onContinue = () => {
     if (tripType === 'Round-Trip' && ticketType === 'Departure') {
-      if (passengerLength < newArr.length) {
+      if (passengerLength < newArr.length && SelectSeat.every(i => i.seatNo)) {
         AlertConstant('Please first add passengers to click on plus icon');
       } else {
         setTicketType('Return');
       }
     } else {
-      if (passengerLength < newArr.length) {
+      if (passengerLength < newArr.length && SelectSeat.every(i => i.seatNo)) {
         AlertConstant('Please first add passengers to click on plus icon');
       } else {
-        dispatch(SelectSeatActionData(flatlistData));
+        navigation?.navigate('PaymentConfirmation');
       }
     }
   };
+  // console.log(passengerList);
   const toggleDropDown = index => {
     visible ? setVisible(false) : openDropdown();
     setFlatlistIndex(index);
@@ -108,6 +114,11 @@ const FillPassengerDetails = ({navigation, route}) => {
       return x;
     });
     setFlatlistData(newData);
+    setFlatlistDataa(
+      newData.map(i => {
+        return {name: i.name, seatNo: i.seatNo};
+      }),
+    );
     setVisible(false);
   };
   const renderItem = ({item}) => {
@@ -134,10 +145,12 @@ const FillPassengerDetails = ({navigation, route}) => {
         setPassengerLength(res.data().PassengerList.length);
       });
   };
+
+  console.log(flatlistData);
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
-        headerName={strings.selectSeat}
+        headerName={strings.fillInDetails}
         navigation1={() => {
           navigation.goBack();
         }}
@@ -150,26 +163,7 @@ const FillPassengerDetails = ({navigation, route}) => {
         Images2={null}
       />
 
-      <View style={styles.progressBarStyle}>
-        <View style={styles.progressInnerViewStyle}>
-          <View style={styles.progressViewStyle}>
-            <Text style={styles.progressCountStyle}>1</Text>
-          </View>
-          <View style={styles.lineViewStyle} />
-          <View style={styles.progressViewStyle}>
-            <Text style={styles.progressCountStyle}>1</Text>
-          </View>
-          <View style={styles.lineViewStyle} />
-          <View style={styles.progressViewStyle}>
-            <Text style={styles.progressCountStyle}>1</Text>
-          </View>
-        </View>
-        <View style={styles.progressInnerViewStyle}>
-          <Text style={styles.progressTextStyle}>Book</Text>
-          <Text style={styles.progressTextStyle}>Book</Text>
-          <Text style={styles.progressTextStyle}>Book</Text>
-        </View>
-      </View>
+      <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
       {tripType === 'Round-Trip' ? (
         <ReturnDepartureSwitch
           onPress={ontoggleSwitch}
@@ -182,11 +176,13 @@ const FillPassengerDetails = ({navigation, route}) => {
           styles.scrollViewStyle,
           {marginTop: tripType === 'Round-Trip' ? hp(1) : hp(0)},
         ]}>
-        <FlightDetailsCard
-          searchFlightData={searchFlightData}
-          searchFlightDateData={searchFlightDateData}
-          item={item}
-        />
+        <View style={{paddingHorizontal: wp(4), marginTop: hp(2)}}>
+          <FlightDetailsCard
+            item={item}
+            searchFlightData={searchFlightData}
+            searchFlightDateData={searchFlightDateData}
+          />
+        </View>
         <View style={styles.cardBody}>
           <View style={styles.flatlistViewStyle}>
             <Image
@@ -205,7 +201,6 @@ const FillPassengerDetails = ({navigation, route}) => {
         <View style={styles.cardBody}>
           <CardHeader
             FirstImage={Images.account}
-            SecondImage={Images.edit_pencil}
             header={strings.contact_details}
             imageStyle={styles.cardheaderIconStyle}
           />
@@ -227,6 +222,9 @@ const FillPassengerDetails = ({navigation, route}) => {
             SecondImage={Images.plusIcon}
             header={strings.passenger_details}
             imageStyle={styles.plusIconStyle}
+            onPress={() => {
+              navigation.navigate('NewPassenger');
+            }}
           />
           <View style={styles.passengerInputViewStyle}>
             <FlatList
@@ -248,7 +246,14 @@ const FillPassengerDetails = ({navigation, route}) => {
 
                     {visible && item.id === flatlistIndex && (
                       <DropDownMenu
-                        data={passengerList}
+                        data={passengerList?.filter(i =>
+                          flatlistData?.every(e => {
+                            console.log(
+                              e.name != `${i.FirstName}${i.LastName}`,
+                            );
+                            return e.name != `${i.FirstName}${i.LastName}`;
+                          }),
+                        )}
                         dropdownTop={dropdown}
                         renderItem={renderItem}
                         style={styles.dropDownMenuStyle}
@@ -261,7 +266,14 @@ const FillPassengerDetails = ({navigation, route}) => {
           </View>
         </View>
         <View style={styles.cardBody}>
-          <TouchableOpacity onPress={() => navigation.navigate('SelectSeat')}>
+          <TouchableOpacity
+            onPress={() => {
+              flatlistData?.every(i => i.name.length > 0)
+                ? navigation.navigate('SelectSeat')
+                : Alert.alert(
+                    'please fill passenger details if no any passenger list so press + sine and add passenger details',
+                  );
+            }}>
             <CardHeader
               FirstImage={Images.seat}
               SecondImage={Images.forward}
@@ -269,13 +281,71 @@ const FillPassengerDetails = ({navigation, route}) => {
               imageStyle={styles.plusIconStyle}
             />
           </TouchableOpacity>
+          <View
+            style={{
+              marginVertical: hp(2),
+              backgroundColor: color.lightGray,
+              borderRadius: 5,
+            }}>
+            {flatlistData.length > 1 && SelectSeat?.every(i => i.seatNo) && (
+              <View
+                style={{
+                  paddingVertical: hp(1.5),
+                  flexDirection: 'row',
+                }}>
+                <View style={{width: wp(13), alignItems: 'center'}}>
+                  <Text style={styles.searNumberListTitleText}>No.</Text>
+                </View>
+                <View style={{flex: 1}}>
+                  <Text style={styles.searNumberListTitleText}>
+                    Passenger(s)
+                  </Text>
+                </View>
+                <View style={{width: wp(18), alignItems: 'center'}}>
+                  <Text style={styles.searNumberListTitleText}>Seat</Text>
+                </View>
+              </View>
+            )}
+            {SelectSeat?.every(i => (i.seatNo === false ? false : true)) && (
+              <FlatList
+                data={SelectSeat}
+                renderItem={({item, index}) => (
+                  <View
+                    style={{
+                      paddingVertical: hp(1.5),
+                      flexDirection: 'row',
+                    }}>
+                    {flatlistData.length > 1 && (
+                      <View style={{width: wp(13), alignItems: 'center'}}>
+                        <Text style={styles.searNumberListTitleText}>
+                          {index + 1}
+                        </Text>
+                      </View>
+                    )}
+                    <View style={{flex: 1}}>
+                      <Text style={styles.searNumberListTitleText}>
+                        {item.name}
+                      </Text>
+                    </View>
+                    <View style={{width: wp(18), alignItems: 'center'}}>
+                      <Text style={styles.searNumberListTitleText}>
+                        {item.seatNo}
+                      </Text>
+                    </View>
+                  </View>
+                )}
+              />
+            )}
+          </View>
         </View>
-        <PriceDetails
-          item={item}
-          totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
-          ticketPrice={ticketPrice}
-          totalSeat={totalSeat}
-        />
+        <View style={{marginHorizontal: wp(4)}}>
+          <PriceDetails
+            item={item}
+            totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
+            ticketPrice={ticketPrice}
+            totalSeat={totalSeat}
+          />
+        </View>
       </ScrollView>
       <View style={styles.bottomButtonBody}>
         <TouchableOpacity
@@ -440,5 +510,9 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     fontWeight: '500',
     color: '#383838',
+  },
+  searNumberListTitleText: {
+    fontSize: fontSize(17),
+    fontWeight: '500',
   },
 });
