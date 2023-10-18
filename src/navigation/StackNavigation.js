@@ -36,6 +36,7 @@ import DiscountVoucher from '../screen/account/DiscountVoucher';
 import AirifyReward from '../screen/account/AirifyReward';
 import AirifyPoint from '../screen/account/AirifyPoint';
 import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
+import ReturnSearchFlights from '../screen/searchFlights/ReturnFlights/ReturnSearchFlights';
 import UseDiscountVoucher from '../screen/TicketBooking/UseDiscountVoucher';
 import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
 import ConfirmPin from '../screen/TicketBooking/ConfirmPin';
@@ -86,6 +87,10 @@ const StackNavigation = () => {
         <Stack.Screen
           name="FillPassengerDetails"
           component={FillPassengerDetails}
+        />
+        <Stack.Screen
+          name="ReturnSearchFlight"
+          component={ReturnSearchFlights}
         />
         <Stack.Screen
           name="TransactionHistory"

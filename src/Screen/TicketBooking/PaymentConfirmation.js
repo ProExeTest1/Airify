@@ -35,6 +35,14 @@ const PatmentConfirmation = ({navigation}) => {
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
   const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
+  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
+  const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
+    ',',
+  );
+  const TotalPoint = Number(PointsData.TotalPoints);
+  const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
+  const havePonts = ToggleSwitchBut1 ? TotalPoint % 100 : TotalPoint;
   const PaymentMethodData = useSelector(
     e => e.SelectSeatData.SelectPaymentMethod,
   );
@@ -86,16 +94,28 @@ const PatmentConfirmation = ({navigation}) => {
   };
   const payNow = () => {
     if (PaymentMethodData?.type) {
-      // dispatch(totalPaymentListAction({}));
-      console.log({
-        seat: {
-          totalSeat: 1,
-          totalSeatPrice: 1500,
-        },
-        travalInsurance: 45,
-        tax: 23,
-        pointsUser: -40,
-      });
+      dispatch(
+        totalPaymentListAction({
+          seat: {
+            totalSeat: totalSeat,
+            totalSeatPrice: ticketPrice * totalSeat,
+          },
+          travalInsurance: Math.round((totalSeat * ticketPrice * 2.8) / 100),
+          tax: Math.round((totalSeat * ticketPrice * 1.5) / 100),
+          points: {
+            pointsUse: validPoint * 100,
+            havePoint: havePonts,
+            getPoint: ticketPrice / 2,
+            usePointPrice: -validPoint,
+          },
+          discount: {
+            ValidDiscount: DiscountData?.id ? true : false,
+            discountData: DiscountData,
+            useDiscountPrice:
+              -(totalSeat * ticketPrice * DiscountData.discountPR) / 100,
+          },
+        }),
+      );
       navigation?.navigate('ConfirmPin');
     } else {
       Alert.alert('please select Payment Method');
@@ -107,9 +127,6 @@ const PatmentConfirmation = ({navigation}) => {
   useEffect(() => {
     getFirebaseData();
   }, []);
-  const TotalPoint = PointsData.TotalPoints;
-  const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
-  const havePonts = TotalPoint % 100;
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
@@ -128,7 +145,11 @@ const PatmentConfirmation = ({navigation}) => {
       <TicktBookingProgressBar progress={2}></TicktBookingProgressBar>
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
-          <FlightDetailsCard item={item} />
+          <FlightDetailsCard
+            searchFlightData={searchFlightData}
+            searchFlightDateData={searchFlightDateData}
+            item={item}
+          />
           <View style={styles.boxBody}>
             <TouchableOpacity
               onPress={() => navigation.navigate('PaymentMethod')}>
@@ -212,6 +233,10 @@ const PatmentConfirmation = ({navigation}) => {
             )}
           </View>
           <PriceDetails
+            item={item}
+            totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
+            ticketPrice={ticketPrice}
+            totalSeat={totalSeat}
             ToggleSwitchBut1={ToggleSwitchBut1}
             TotalPoints={PointsData.TotalPoints}
           />

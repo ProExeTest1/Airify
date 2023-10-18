@@ -15,6 +15,7 @@ import {
 const FlightPackageDetailsScreen = ({navigation, route}) => {
   const headerData = route?.params?.header;
   const [press, setPress] = useState('Flight');
+
   return (
     <View style={{flex: 1}}>
       <PickerHeaderBar

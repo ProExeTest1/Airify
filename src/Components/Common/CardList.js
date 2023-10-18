@@ -3,12 +3,17 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import React from 'react';
 import {Images} from '../../helper/IconConstant';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {color} from '../../helper/ColorConstant';
-import {flightDetailsAction} from '../../redux/action/FlightDetailAction';
 
-const CardList = ({setCartFlightData, item, index,}) => {
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+const CardList = ({setCartFlightData, item, index, tripType}) => {
+  const searchFlightData = useSelector(e =>
+    tripType === 'Round-Trip'
+      ? e?.searchFlight?.searchFlightReturnData
+      : e?.place?.searchFlightData,
+  );
+
+  // console.log(tripType);
   return (
     <TouchableOpacity
       onPress={() => {

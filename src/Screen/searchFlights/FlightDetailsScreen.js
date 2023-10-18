@@ -1,9 +1,8 @@
 import {
-  Button,
-  FlatList,
   Image,
   Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -14,26 +13,52 @@ import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {useSelector} from 'react-redux';
-import {
-  FlightDetailsData,
-  FlightDetailsData1,
-} from '../../assets/DummyData/FlightDetailsData';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Modal from 'react-native-modal';
-import {FlightDetailsCard} from '../../components';
+import {
+  FlightDetailsCard,
+  FlightServices,
+  ReturnDepartureSwitch,
+} from '../../components';
+import {strings} from '../../helper/Strings';
+import {ShareConstant} from '../../helper/ShareConstant';
+import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 
-const FlightDetailsScreen = ({navigation}) => {
+const FlightDetailsScreen = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
+  console.log(tripType, 'tripType');
   const [savedFlight, setSavedFlight] = useState([]);
   const [press, setPress] = useState(false);
   const [value, setValue] = useState();
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  // console.log(typeof Number(item?.price));
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  // console.log(Number(searchFlightData.passenger.split(' ')[0]));
-  const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
-    ',',
+  const [ticketType, setTicketType] = useState('Departure');
+  const item = useSelector(state =>
+    ticketType === 'Departure'
+      ? state.searchFlight.searchFlightCardData
+      : state.searchFlight.searchFlightReturnCardData,
   );
+
+  const searchFlightData = useSelector(e =>
+    ticketType === 'Departure'
+      ? e?.place?.searchFlightData
+      : e?.searchFlight?.searchFlightReturnData,
+  );
+  const ontoggleSwitch = () => {
+    if (ticketType === 'Departure') {
+      setTicketType('Return');
+    } else {
+      setTicketType('Departure');
+    }
+  };
+  const searchFlightDateData = useSelector(e =>
+    ticketType === 'Departure' ? e?.date?.depatureDate : e?.date?.returnDate,
+  ).split(',');
+  const SelectDate = useSelector(e =>
+    ticketType === 'Departure'
+      ? e?.date?.normalDate
+      : e?.date?.returnNormalDate,
+  );
+
   useEffect(() => {
     getData();
   }, []);
@@ -49,7 +74,7 @@ const FlightDetailsScreen = ({navigation}) => {
       .doc(uid)
       .get()
       .then(res => {
-        setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+        setSavedFlight(res._data.savedFlights);
       });
   };
   const saveFlightDetails = async () => {
@@ -72,6 +97,8 @@ const FlightDetailsScreen = ({navigation}) => {
           departureShortForm: searchFlightData?.fromShortform,
           destinationShortForm: searchFlightData?.toShortform,
           stops: item.stop,
+          flightPrice: item?.price,
+          ticketType: ticketType,
         }),
       })
       .then(async () => {
@@ -82,7 +109,7 @@ const FlightDetailsScreen = ({navigation}) => {
           .doc(uid)
           .get()
           .then(res => {
-            setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+            setSavedFlight(res._data.savedFlights);
           });
       });
   };
@@ -106,6 +133,8 @@ const FlightDetailsScreen = ({navigation}) => {
           departureShortForm: searchFlightData?.fromShortform,
           destinationShortForm: searchFlightData?.toShortform,
           stops: item.stop,
+          flightPrice: item?.price,
+          ticketType: ticketType,
         }),
       })
       .then(async () => {
@@ -116,7 +145,7 @@ const FlightDetailsScreen = ({navigation}) => {
           .doc(uid)
           .get()
           .then(res => {
-            setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+            setSavedFlight(res._data.savedFlights);
           });
       });
   };
@@ -138,13 +167,33 @@ const FlightDetailsScreen = ({navigation}) => {
             <View style={styles.saveShareViewStyle}>
               <TouchableOpacity
                 onPress={() => {
-                  savedFlight.some(a => a === item?.airlineName) === true
+                  savedFlight.some(
+                    a =>
+                      a.airlineName == item.airlineName &&
+                      a.landingTime == item.lendTime &&
+                      a.departurePlace == searchFlightData?.from &&
+                      a.destinationPlace == searchFlightData?.to &&
+                      a.departureTime == item.pickTime &&
+                      a.flightPrice == item.price &&
+                      a.stops == item.stop &&
+                      a.totalHours == item.totalHours,
+                  ) === true
                     ? unsaveFlightDetails()
                     : saveFlightDetails();
                 }}>
                 <Image
                   source={
-                    savedFlight.some(a => a === item?.airlineName) === true
+                    savedFlight.some(
+                      a =>
+                        a.airlineName == item.airlineName &&
+                        a.landingTime == item.lendTime &&
+                        a.departurePlace == searchFlightData?.from &&
+                        a.destinationPlace == searchFlightData?.to &&
+                        a.departureTime == item.pickTime &&
+                        a.flightPrice == item.price &&
+                        a.stops == item.stop &&
+                        a.totalHours == item.totalHours,
+                    ) === true
                       ? Images.filled_save
                       : Images.saved
                   }
@@ -152,7 +201,10 @@ const FlightDetailsScreen = ({navigation}) => {
                   resizeMode="contain"
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  ShareConstant(SearchFlightData.airlineName);
+                }}>
                 <Image
                   source={Images.shareIcon}
                   style={styles.saveShareIconStyle}
@@ -163,84 +215,48 @@ const FlightDetailsScreen = ({navigation}) => {
           </View>
         </SafeAreaView>
       </View>
-
-      <View style={{paddingHorizontal: wp(4), marginTop: hp(2), flex: 1}}>
-        <FlightDetailsCard item={item} />
-      </View>
-      <View style={styles.cardBody}>
-        <View
-          style={[
-            styles.flatlistViewStyle,
-            {
-              marginTop: hp(1),
-            },
-          ]}>
-          <Image
-            source={Images.aeroPlane}
-            style={styles.aeroPlaneImageStyle}
-            resizeMode="contain"
-          />
-          <View style={styles.secondCardHeaderStyle}>
-            <Text style={styles.secondCardheaderTextStyle}>Original</Text>
-            <Text style={styles.cardPrice}>
-              {item?.price}
-              <Text style={styles.cardPriceTitle}>/pax</Text>
-            </Text>
-          </View>
-        </View>
-        <View style={styles.flatlistViewStyle}>
-          <FlatList
-            data={FlightDetailsData}
-            showsVerticalScrollIndicator={false}
-            bounces={false}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.flatlist1InnerViewStyle}>
-                  <Image
-                    source={item.image}
-                    style={styles.flatlistIconStyle}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.flatlistTextStyle}>{item.text}</Text>
-                </View>
-              );
-            }}
-            keyExtractor={item => item.id}
+      {tripType === 'Round-Trip' ? (
+        <ReturnDepartureSwitch
+          onPress={ontoggleSwitch}
+          ticketType={ticketType}
+        />
+      ) : null}
+      <ScrollView bounces={false} style={styles.ScrollViewStyle}>
+        <View style={{paddingHorizontal: wp(4), marginTop: hp(2), flex: 1}}>
+          <FlightDetailsCard
+            searchFlightData={searchFlightData}
+            searchFlightDateData={searchFlightDateData}
+            item={item}
           />
         </View>
-        <View style={styles.flatlistViewStyle}>
-          <FlatList
-            data={FlightDetailsData1}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            bounces={false}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.flatlist2InnerViewStyle}>
-                  <Image
-                    source={item.image}
-                    style={styles.flatlistIconStyle}
-                    resizeMode="contain"
-                  />
-                </View>
-              );
-            }}
-            keyExtractor={item => item.id}
-          />
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('FlightPackageDetails', {header: 'Details'})
-            }
-            style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.detailsTextStyle}>Details</Text>
+        <View style={styles.cardBody}>
+          <View
+            style={[
+              styles.flatlistViewStyle,
+              {
+                marginTop: hp(1),
+              },
+            ]}>
             <Image
-              source={Images.forward}
-              style={styles.forwardStyle}
+              source={Images.aeroPlane}
+              style={styles.aeroPlaneImageStyle}
               resizeMode="contain"
             />
-          </TouchableOpacity>
+            <View style={styles.secondCardHeaderStyle}>
+              <Text style={styles.secondCardheaderTextStyle}>Original</Text>
+              <Text style={styles.cardPrice}>
+                {item?.price}
+                <Text style={styles.cardPriceTitle}>/pax</Text>
+              </Text>
+            </View>
+          </View>
+          <FlightServices
+            DetailsNavigation={() =>
+              navigation?.navigate('FlightPackageDetails', {header: 'Details'})
+            }
+          />
         </View>
-      </View>
+      </ScrollView>
       <View style={styles.thirdCardStyle}>
         <View>
           <Text style={styles.priceTextStyle}>
@@ -254,9 +270,19 @@ const FlightDetailsScreen = ({navigation}) => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('FillPassengerDetails')}
+          onPress={() => {
+            if (tripType === 'Round-Trip' && ticketType === 'Departure') {
+              setTicketType('Return');
+            } else {
+              navigation.navigate('FillPassengerDetails', {TripType: tripType});
+            }
+          }}
           style={styles.continueButtonStyle}>
-          <Text style={styles.continueTextStyle}>Continue</Text>
+          <Text style={styles.continueTextStyle}>
+            {tripType === 'Round-Trip' && ticketType === 'Departure'
+              ? 'Confirm'
+              : strings.continue}
+          </Text>
         </TouchableOpacity>
       </View>
       <Modal
@@ -286,6 +312,7 @@ const styles = StyleSheet.create({
   headerViewStyle: {
     backgroundColor: color.commonBlue,
   },
+  ScrollViewStyle: {marginTop: hp(1)},
   backIconStyle: {
     height: hp(3),
     width: hp(3),
@@ -406,7 +433,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: Platform.OS == 'ios' ? hp(4) : hp(2),
+    paddingVertical: hp(2),
   },
   flatlistTextStyle: {
     fontSize: fontSize(18),

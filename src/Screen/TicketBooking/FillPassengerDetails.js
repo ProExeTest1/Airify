@@ -17,6 +17,7 @@ import {
   FlightDetailsCard,
   FlightServices,
   PriceDetails,
+  ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
 import {strings} from '../../helper/Strings';
@@ -29,22 +30,35 @@ import {useDispatch, useSelector} from 'react-redux';
 import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 
-const FillPassengerDetails = ({navigation}) => {
+const FillPassengerDetails = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [passengerLength, setPassengerLength] = useState();
+  const [ticketType, setTicketType] = useState('Departure');
   const [dropdown, setDropdownTop] = useState();
   const [passengerList, setPassengerList] = useState([]);
   const [flatlistIndex, setFlatlistIndex] = useState();
   const DropdownButton = useRef();
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
+  const item = useSelector(state =>
+    ticketType === 'Departure'
+      ? state.searchFlight.searchFlightCardData
+      : state.searchFlight.searchFlightReturnCardData,
+  );
+  const searchFlightData = useSelector(e =>
+    ticketType === 'Departure'
+      ? e?.place?.searchFlightData
+      : e?.searchFlight?.searchFlightReturnData,
+  );
+
+  const searchFlightDateData = useSelector(e =>
+    ticketType === 'Departure' ? e?.date?.depatureDate : e?.date?.returnDate,
+  ).split(',');
   const userData = useSelector(state => state.userData.userdata);
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   const SelectSeat = useSelector(e => e.SelectSeatData.SelectSeatData);
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
-  const insurancePrice = Math.round((totalSeat * ticketPrice * 2.8) / 100);
-  const travelTax = Math.round((totalSeat * ticketPrice * 1.5) / 100);
+
   let newArr = Array.from({length: totalSeat}, (_, index) => ({
     id: index + 1,
     name: '',
@@ -59,12 +73,30 @@ const FillPassengerDetails = ({navigation}) => {
     passengers();
   }, []);
 
-  const onContinue = () => {
-    if (passengerLength < newArr.length && SelectSeat.every(i => i.seatNo)) {
-      AlertConstant('Please first add passengers to click on plus icon');
+  const ontoggleSwitch = () => {
+    if (ticketType === 'Departure') {
+      setTicketType('Return');
     } else {
       // dispatch(SelectSeatActionData(flatlistData));
       navigation?.navigate('PaymentConfirmation');
+      setTicketType('Departure');
+    }
+  };
+  console.log(SelectSeat.every(i => i.seatNo));
+  console.log('>>>>>>>>><<<<<<<<<<<<<<', SelectSeat.length, newArr);
+  const onContinue = () => {
+    if (tripType === 'Round-Trip' && ticketType === 'Departure') {
+      if (!SelectSeat.every(i => i.seatNo)) {
+        AlertConstant('Please first add passengers to click on plus icon');
+      } else {
+        setTicketType('Return');
+      }
+    } else {
+      if (!SelectSeat.every(i => i.seatNo)) {
+        AlertConstant('Please first add passengers to click on plus icon');
+      } else {
+        navigation?.navigate('PaymentConfirmation');
+      }
     }
   };
   // console.log(passengerList);
@@ -134,11 +166,26 @@ const FillPassengerDetails = ({navigation}) => {
         Images1={Images.backIcon}
         Images2={null}
       />
-      <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
 
-      <ScrollView bounces={false} style={styles.scrollViewStyle}>
+      <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
+      {tripType === 'Round-Trip' ? (
+        <ReturnDepartureSwitch
+          onPress={ontoggleSwitch}
+          ticketType={ticketType}
+        />
+      ) : null}
+      <ScrollView
+        bounces={false}
+        style={[
+          styles.scrollViewStyle,
+          {marginTop: tripType === 'Round-Trip' ? hp(1) : hp(0)},
+        ]}>
         <View style={{paddingHorizontal: wp(4), marginTop: hp(2)}}>
-          <FlightDetailsCard item={item} />
+          <FlightDetailsCard
+            item={item}
+            searchFlightData={searchFlightData}
+            searchFlightDateData={searchFlightDateData}
+          />
         </View>
         <View style={styles.cardBody}>
           <View style={styles.flatlistViewStyle}>
@@ -244,26 +291,25 @@ const FillPassengerDetails = ({navigation}) => {
               backgroundColor: color.lightGray,
               borderRadius: 5,
             }}>
-            {flatlistData.length > 1 &&
-              SelectSeat?.every(i => (i.seatNo === false ? false : true)) && (
-                <View
-                  style={{
-                    paddingVertical: hp(1.5),
-                    flexDirection: 'row',
-                  }}>
-                  <View style={{width: wp(13), alignItems: 'center'}}>
-                    <Text style={styles.searNumberListTitleText}>No.</Text>
-                  </View>
-                  <View style={{flex: 1}}>
-                    <Text style={styles.searNumberListTitleText}>
-                      Passenger(s)
-                    </Text>
-                  </View>
-                  <View style={{width: wp(18), alignItems: 'center'}}>
-                    <Text style={styles.searNumberListTitleText}>Seat</Text>
-                  </View>
+            {flatlistData.length > 1 && SelectSeat?.every(i => i.seatNo) && (
+              <View
+                style={{
+                  paddingVertical: hp(1.5),
+                  flexDirection: 'row',
+                }}>
+                <View style={{width: wp(13), alignItems: 'center'}}>
+                  <Text style={styles.searNumberListTitleText}>No.</Text>
                 </View>
-              )}
+                <View style={{flex: 1}}>
+                  <Text style={styles.searNumberListTitleText}>
+                    Passenger(s)
+                  </Text>
+                </View>
+                <View style={{width: wp(18), alignItems: 'center'}}>
+                  <Text style={styles.searNumberListTitleText}>Seat</Text>
+                </View>
+              </View>
+            )}
             {SelectSeat?.every(i => (i.seatNo === false ? false : true)) && (
               <FlatList
                 data={SelectSeat}
@@ -297,7 +343,12 @@ const FillPassengerDetails = ({navigation}) => {
           </View>
         </View>
         <View style={{marginHorizontal: wp(4)}}>
-          <PriceDetails />
+          <PriceDetails
+            item={item}
+            totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
+            ticketPrice={ticketPrice}
+            totalSeat={totalSeat}
+          />
         </View>
       </ScrollView>
       <View style={styles.bottomButtonBody}>

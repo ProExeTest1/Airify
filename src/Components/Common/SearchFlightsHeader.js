@@ -17,7 +17,10 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import {dateAction} from '../../redux/action/DateAction';
+import {
+  dateAction,
+  returnNormalDateAction,
+} from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
@@ -29,21 +32,31 @@ const SearchFlightsHeader = ({
   dispatch,
   setModalVisible1,
   navigation,
+  headerName,
+  tripType,
 }) => {
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  console.log(searchFlightData);
+  const searchFlightData = useSelector(e =>
+    tripType === 'Round-trip'
+      ? e?.searchFlight?.searchFlightReturnData
+      : e?.place?.searchFlightData,
+  );
+  // console.log(tripType, 'tripType');
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
         <View style={styles.headerTitleBody}>
-          <Text style={styles.headerTitle}>{strings.searchFlight}</Text>
+          <Text style={styles.headerTitle}>{headerName}</Text>
         </View>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image style={styles.BackImg} source={Images.backIcon} />
         </TouchableOpacity>
         <Menu>
           <MenuTrigger>
-            <Image style={styles.BackImg} source={Images.menuIcon} />
+            <Image
+              style={styles.BackImg}
+              source={Images.menuIcon}
+              resizeMode="contain"
+            />
           </MenuTrigger>
           <MenuOptions style={styles.dropdownBody}>
             <MenuOption onSelect={() => onShare()}>
@@ -104,7 +117,12 @@ const SearchFlightsHeader = ({
               <TouchableOpacity
                 onPress={() => {
                   setSelectDate(item);
-                  dispatch(dateAction(item));
+                  if (tripType === 'Round-trip') {
+                    console.log(item, 'item');
+                    dispatch(returnNormalDateAction(item));
+                  } else {
+                    dispatch(dateAction(item));
+                  }
                 }}
                 style={[
                   styles.dateIconBody,

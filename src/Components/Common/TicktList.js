@@ -3,18 +3,30 @@ import React from 'react';
 import CardList from './CardList';
 import {wp} from '../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
-import {SearchFlightCardData} from '../../redux/action/SearchFlightAction';
-import { useNavigation } from '@react-navigation/native';
+import {
+  SearchFlightCardData,
+  SearchFlightReturnCardAction,
+} from '../../redux/action/SearchFlightAction';
+import {useNavigation} from '@react-navigation/native';
 
-const TicktList = ({SelectDate, SearchFlightCard,}) => {
+const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const setCartFlightData = item => {
-    dispatch(SearchFlightCardData(item));
-    navigation.navigate('FlightDetails')
-    
+    if (tripType1 === 'Round-Trip') {
+      dispatch(SearchFlightCardData(item));
+      navigation.navigate('ReturnSearchFlight', {TripType: 'Round-trip'});
+    } else {
+      if (tripType == 'Round-Trip') {
+        dispatch(SearchFlightReturnCardAction(item));
+        navigation.navigate('FlightDetails', {TripType: 'Round-Trip'});
+      } else {
+        dispatch(SearchFlightCardData(item));
+        navigation.navigate('FlightDetails', {TripType: 'One-Way'});
+      }
+    }
   };
-  // console.log(useSelector(a => a?.searchFlight?.searchFlightCardData),"hello hello");
+
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
@@ -35,15 +47,16 @@ const TicktList = ({SelectDate, SearchFlightCard,}) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}) => {
-          console.log(
-            new Date().toLocaleString('en-IN').split(',')[0],
-            SelectDate?.date,
-          );
+          // console.log(
+          //   new Date().toLocaleString('en-IN').split(',')[0],
+          //   SelectDate?.date,
+          // );
           return (
             <CardList
               setCartFlightData={setCartFlightData}
               item={item}
               index={index}
+              tripType={tripType}
             />
           );
         }}

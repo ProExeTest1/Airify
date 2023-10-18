@@ -153,6 +153,8 @@ export const strings = {
   DepartureTime: 'Departure Time',
   DirectFlight: 'Only Direct Flights',
   searchFlight: 'Search Flights',
+  select_departure_flight: 'Select Departure Flight',
+  select_return_flight: 'Select Return Flight',
   shareResult: 'Share Results',
   priceAlerts: 'Price Alerts',
   filter: 'Filter',
