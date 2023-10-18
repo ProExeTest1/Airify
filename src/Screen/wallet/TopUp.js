@@ -146,7 +146,7 @@ const TopUp = ({navigation}) => {
                 ...transactionHistory,
               ],
             });
-          navigation.navigate('WalletScreen');
+          navigation.goBack();
         });
     } else {
       Alert.alert('plsss enter valid ');
@@ -161,7 +161,7 @@ const TopUp = ({navigation}) => {
         <CommonHeader
           headerName={strings.walletTopUp}
           navigation1={() => {
-            navigation.navigate('WalletScreen');
+            navigation.goBack();
           }}
           Images1Color={'#fff'}
           Images2Color={null}

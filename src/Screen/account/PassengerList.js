@@ -41,17 +41,6 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
             return false;
           }
         });
-        // querySnapshot.forEach(documentSnapshot => {
-        //   console.log(documentSnapshot.id);
-        //   users.push({
-        //     ...documentSnapshot.data(),
-        //     key: documentSnapshot.id,
-        //   });
-        // });
-        // users.map(item => {
-        // console.log('item', item?.PassengerList);
-        // setPassengerList(item?.PassengerList);
-        // });
       });
   };
 

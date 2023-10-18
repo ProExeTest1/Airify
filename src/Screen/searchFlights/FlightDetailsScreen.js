@@ -121,7 +121,7 @@ const FlightDetailsScreen = ({navigation}) => {
       });
   };
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.headerViewStyle}>
         <SafeAreaView>
           <View style={styles.safeHeaderViewStyle}>
@@ -163,7 +163,10 @@ const FlightDetailsScreen = ({navigation}) => {
           </View>
         </SafeAreaView>
       </View>
-      <FlightDetailsCard item={item} />
+
+      <View style={{paddingHorizontal: wp(4), marginTop: hp(2), flex: 1}}>
+        <FlightDetailsCard item={item} />
+      </View>
       <View style={styles.cardBody}>
         <View
           style={[

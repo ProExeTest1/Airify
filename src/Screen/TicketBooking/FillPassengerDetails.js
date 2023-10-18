@@ -60,7 +60,7 @@ const FillPassengerDetails = ({navigation}) => {
   }, []);
 
   const onContinue = () => {
-    if (passengerLength < newArr.length) {
+    if (passengerLength < newArr.length && SelectSeat.every(i => i.seatNo)) {
       AlertConstant('Please first add passengers to click on plus icon');
     } else {
       // dispatch(SelectSeatActionData(flatlistData));
@@ -203,8 +203,8 @@ const FillPassengerDetails = ({navigation}) => {
 
                     {visible && item.id === flatlistIndex && (
                       <DropDownMenu
-                        data={passengerList.filter(i =>
-                          flatlistData.every(e => {
+                        data={passengerList?.filter(i =>
+                          flatlistData?.every(e => {
                             console.log(
                               e.name != `${i.FirstName}${i.LastName}`,
                             );
@@ -225,7 +225,7 @@ const FillPassengerDetails = ({navigation}) => {
         <View style={styles.cardBody}>
           <TouchableOpacity
             onPress={() => {
-              flatlistData.every(i => i.name.length > 0)
+              flatlistData?.every(i => i.name.length > 0)
                 ? navigation.navigate('SelectSeat')
                 : Alert.alert(
                     'please fill passenger details if no any passenger list so press + sine and add passenger details',
@@ -245,7 +245,7 @@ const FillPassengerDetails = ({navigation}) => {
               borderRadius: 5,
             }}>
             {flatlistData.length > 1 &&
-              SelectSeat.every(i => (i.seatNo === false ? false : true)) && (
+              SelectSeat?.every(i => (i.seatNo === false ? false : true)) && (
                 <View
                   style={{
                     paddingVertical: hp(1.5),
@@ -264,7 +264,7 @@ const FillPassengerDetails = ({navigation}) => {
                   </View>
                 </View>
               )}
-            {SelectSeat.every(i => (i.seatNo === false ? false : true)) && (
+            {SelectSeat?.every(i => (i.seatNo === false ? false : true)) && (
               <FlatList
                 data={SelectSeat}
                 renderItem={({item, index}) => (

@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   CommonHeader,
   FlightDetailsCard,
@@ -18,12 +19,77 @@ import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {useSelector} from 'react-redux';
-
+import {useDispatch, useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import {DiscountDataAction} from '../../redux/action/SelectSeatAction';
 const PatmentConfirmation = ({navigation}) => {
+  const dispatch = useDispatch();
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
-  const [ToggleSwitchBut2, setToggleSwitchBut2] = useState(false);
+  const [WalletData, setWalletData] = useState({});
+
+  const [PointsData, setPointsData] = useState({});
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
+  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
+  const PaymentMethodData = useSelector(
+    e => e.SelectSeatData.SelectPaymentMethod,
+  );
+  console.log('>>>>>>>>>>>>>', PaymentMethodData);
+  const getFirebaseData = async () => {
+    await firestore()
+      .collection('Points')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+        users.filter(item => {
+          if (item.key == auth().currentUser.uid) {
+            setPointsData(item);
+            return true;
+          } else {
+            return true;
+          }
+        });
+      });
+  };
+  const getFirebaseWalletData = async () => {
+    await firestore()
+      .collection('UserWallet')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+        console.log(users);
+        users.filter(item => {
+          if (item.key == auth().currentUser.uid) {
+            setWalletData(item);
+            return true;
+          } else {
+            return true;
+          }
+        });
+      });
+  };
+  useEffect(() => {
+    getFirebaseWalletData();
+  }, []);
+  useEffect(() => {
+    getFirebaseData();
+  }, []);
+  const TotalPoint = PointsData.TotalPoints;
+  const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
+  const havePonts = TotalPoint % 100;
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
@@ -44,21 +110,44 @@ const PatmentConfirmation = ({navigation}) => {
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
           <FlightDetailsCard item={item} />
           <View style={styles.boxBody}>
-            <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-              <Image style={styles.boxIcon} source={Images.payment}></Image>
-              <Text style={styles.boxTitle}>Payment Method</Text>
-              <Image style={styles.skipIcon} source={Images.forward}></Image>
-            </View>
-            <View style={styles.StopsButBody}></View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PaymentMethod')}>
+              <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
+                <Image style={styles.boxIcon} source={Images.payment}></Image>
+                <Text style={styles.boxTitle}>Payment Method</Text>
+                <Image style={styles.skipIcon} source={Images.forward}></Image>
+              </View>
+              <View style={styles.StopsButBody}></View>
+            </TouchableOpacity>
+            {PaymentMethodData?.type && (
+              <View style={styles.discountBody}>
+                <View style={{flexDirection: 'row', flex: 1}}>
+                  <View style={styles.PaymentMethodBody}>
+                    <Image
+                      style={styles.PaymentMethodIcon}
+                      source={Images.wallet}
+                    />
+                    <Text style={styles.PaymentMethodName}>My Wallet</Text>
+                    <Text style={styles.walletPraice}>
+                      ${WalletData.wallet}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            )}
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
               <Image style={styles.boxIcon} source={Images.coinsIcon}></Image>
               <View style={[styles.boxTitle, {paddingEnd: wp(5)}]}>
-                <Text style={styles.boxTitle}>{`You Have ${6450} Points`}</Text>
+                <Text
+                  style={
+                    styles.boxTitle
+                  }>{`You Have ${PointsData.TotalPoints} Points`}</Text>
                 <Text style={{marginTop: hp(1)}}>
-                  100 points equals $1. You will get 4,000 points after this
-                  booking
+                  {`100 points equals $1. You will get ${
+                    ticketPrice / 2
+                  } points after this booking`}
                 </Text>
               </View>
               <View>
@@ -66,21 +155,46 @@ const PatmentConfirmation = ({navigation}) => {
                   isOn={ToggleSwitchBut1}
                   size="medium"
                   onColor={color.commonBlue}
-                  onToggle={isOn => setToggleSwitchBut1(isOn)}
+                  onToggle={isOn => {
+                    Number(PointsData.TotalPoints) > 100
+                      ? setToggleSwitchBut1(isOn)
+                      : Alert.alert(
+                          'your points is not valid please increase your point',
+                        );
+                  }}
                 />
               </View>
             </View>
             <View style={styles.StopsButBody}></View>
           </View>
+
           <View style={styles.boxBody}>
-            <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-              <Image style={styles.boxIcon} source={Images.discount}></Image>
-              <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
-              <Image style={styles.skipIcon} source={Images.forward}></Image>
-            </View>
-            <View style={styles.StopsButBody}></View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UseDiscountVoucher')}>
+              <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
+                <Image style={styles.boxIcon} source={Images.discount}></Image>
+                <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
+                <Image style={styles.skipIcon} source={Images.forward}></Image>
+              </View>
+              <View style={styles.StopsButBody}></View>
+            </TouchableOpacity>
+            {DiscountData?.id && (
+              <View style={styles.discountBody}>
+                <View style={styles.discountBut}>
+                  <Text style={styles.discountText}>{DiscountData?.id}</Text>
+                  <TouchableOpacity
+                    onPress={() => dispatch(DiscountDataAction({}))}
+                    style={{marginStart: wp(4)}}>
+                    <Text style={styles.discountText}>X</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
-          <PriceDetails />
+          <PriceDetails
+            ToggleSwitchBut1={ToggleSwitchBut1}
+            TotalPoints={PointsData.TotalPoints}
+          />
         </ScrollView>
       </View>
       <View style={styles.bottomButtonBody}>
@@ -163,5 +277,49 @@ const styles = StyleSheet.create({
   skipIcon: {
     height: wp(4),
     width: wp(4),
+  },
+  discountBody: {
+    paddingVertical: hp(2),
+    borderTopWidth: 1,
+    borderColor: color.grayLight,
+    alignItems: 'flex-start',
+    flex: 1,
+  },
+  discountBut: {
+    backgroundColor: color.commonBlue,
+    paddingVertical: hp(1.5),
+    paddingHorizontal: wp(6),
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 200,
+  },
+  discountText: {
+    color: '#fff',
+    fontSize: fontSize(17),
+    fontWeight: '500',
+  },
+  PaymentMethodBody: {
+    flex: 1,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  PaymentMethodIcon: {
+    height: wp(8),
+    width: wp(8),
+    tintColor: color.commonBlue,
+    marginEnd: wp(4),
+  },
+  PaymentMethodName: {
+    flex: 1,
+    fontSize: fontSize(18),
+    fontWeight: '600',
+  },
+  walletPraice: {
+    fontSize: fontSize(18),
+    fontWeight: '600',
+    marginEnd: wp(3),
+    color: color.commonBlue,
   },
 });

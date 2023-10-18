@@ -162,6 +162,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           transactionHistory: [],
         });
 
+      //------------------------------------------------>  Points data
+
+      await firestore().collection('Points').doc(isUserCreate.user.uid).set({
+        TotalPoints: '0',
+        PointsHistory: [],
+      });
+
       //------------------------------------------------>  Passenger List data
 
       await firestore()

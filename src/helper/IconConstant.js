@@ -109,4 +109,9 @@ export const Images = {
   more: require('../assets/icons/more.png'),
   location: require('../assets/icons/location-pin.png'),
   delete: require('../assets/icons/delete.png'),
+  paypalIcon: require('../assets/icons/paypal.png'),
+  visaIcon: require('../assets/icons/visa.png'),
+  // paypalIcon: require('../assets/icons/paypal.png'),
+  // paypalIcon: require('../assets/icons/paypal.png'),
+  // paypalIcon: require('../assets/icons/paypal.png'),
 };

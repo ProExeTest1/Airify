@@ -36,6 +36,8 @@ import DiscountVoucher from '../screen/account/DiscountVoucher';
 import AirifyReward from '../screen/account/AirifyReward';
 import AirifyPoint from '../screen/account/AirifyPoint';
 import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
+import UseDiscountVoucher from '../screen/TicketBooking/UseDiscountVoucher';
+import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -98,6 +100,11 @@ const StackNavigation = () => {
         <Stack.Screen name="DiscountVoucher" component={DiscountVoucher} />
         <Stack.Screen name="AirifyReward" component={AirifyReward} />
         <Stack.Screen name="AirifyPoint" component={AirifyPoint} />
+        <Stack.Screen
+          name="UseDiscountVoucher"
+          component={UseDiscountVoucher}
+        />
+        <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
       </Stack.Navigator>
     </NavigationContainer>
   );
