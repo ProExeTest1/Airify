@@ -22,7 +22,10 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import {DiscountDataAction} from '../../redux/action/SelectSeatAction';
+import {
+  DiscountDataAction,
+  totalPaymentListAction,
+} from '../../redux/action/SelectSeatAction';
 const PatmentConfirmation = ({navigation}) => {
   const dispatch = useDispatch();
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
@@ -80,6 +83,23 @@ const PatmentConfirmation = ({navigation}) => {
           }
         });
       });
+  };
+  const payNow = () => {
+    if (PaymentMethodData?.type) {
+      // dispatch(totalPaymentListAction({}));
+      console.log({
+        seat: {
+          totalSeat: 1,
+          totalSeatPrice: 1500,
+        },
+        travalInsurance: 45,
+        tax: 23,
+        pointsUser: -40,
+      });
+      navigation?.navigate('ConfirmPin');
+    } else {
+      Alert.alert('please select Payment Method');
+    }
   };
   useEffect(() => {
     getFirebaseWalletData();
@@ -198,7 +218,11 @@ const PatmentConfirmation = ({navigation}) => {
         </ScrollView>
       </View>
       <View style={styles.bottomButtonBody}>
-        <TouchableOpacity onPress={() => {}} style={styles.okButton}>
+        <TouchableOpacity
+          onPress={() => {
+            payNow();
+          }}
+          style={styles.okButton}>
           <Text style={styles.okButtonText}>{strings.payNow}</Text>
         </TouchableOpacity>
       </View>

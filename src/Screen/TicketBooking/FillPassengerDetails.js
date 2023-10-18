@@ -64,7 +64,7 @@ const FillPassengerDetails = ({navigation}) => {
       AlertConstant('Please first add passengers to click on plus icon');
     } else {
       // dispatch(SelectSeatActionData(flatlistData));
-      navigation?.navigate('PatmentConfirmation');
+      navigation?.navigate('PaymentConfirmation');
     }
   };
   // console.log(passengerList);

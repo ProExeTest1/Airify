@@ -35,7 +35,7 @@ const UseDiscountVoucher = ({navigation: {goBack}, navigation}) => {
         ticketPrice * totalSeat
       ) {
         dispatch(DiscountDataAction(DiscountData));
-        navigation.navigate('PatmentConfirmation');
+        navigation.navigate('PaymentConfirmation');
       } else {
         Alert.alert('this voucher not valid for you');
       }

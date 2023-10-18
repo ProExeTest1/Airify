@@ -28,7 +28,7 @@ import NewPassenger from '../screen/account/NewPassenger';
 import TopUp from '../screen/wallet/TopUp';
 import TransactionHistory from '../screen/wallet/TransactionHistory';
 import SelectSeat from '../screen/TicketBooking/SelectSeat';
-import PatmentConfirmation from '../screen/TicketBooking/PatmentConfirmation';
+import PaymentConfirmation from '../screen/TicketBooking/PaymentConfirmation';
 import SavedAddress from '../screen/account/SavedAddress';
 import AddAddress from '../screen/account/AddAddress';
 import LocationSearch from '../screen/account/LocationSearch';
@@ -38,6 +38,7 @@ import AirifyPoint from '../screen/account/AirifyPoint';
 import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
 import UseDiscountVoucher from '../screen/TicketBooking/UseDiscountVoucher';
 import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
+import ConfirmPin from '../screen/TicketBooking/ConfirmPin';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -91,8 +92,8 @@ const StackNavigation = () => {
           component={TransactionHistory}
         />
         <Stack.Screen
-          name="PatmentConfirmation"
-          component={PatmentConfirmation}
+          name="PaymentConfirmation"
+          component={PaymentConfirmation}
         />
         <Stack.Screen name="SavedAddress" component={SavedAddress} />
         <Stack.Screen name="LocationSearch" component={LocationSearch} />
@@ -105,6 +106,7 @@ const StackNavigation = () => {
           component={UseDiscountVoucher}
         />
         <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+        <Stack.Screen name="ConfirmPin" component={ConfirmPin} />
       </Stack.Navigator>
     </NavigationContainer>
   );
