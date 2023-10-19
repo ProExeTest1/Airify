@@ -14,7 +14,7 @@ import {CommonHeader} from '../../components';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {pointDummy} from '../../assets/DummyData/Data';
 
-const AirifyPoint = ({navigation: {goBack}, navigation}) => {
+const pointHistory = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -24,42 +24,22 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
         }}
         onPress1={true}
         onPress2={false}
-        Images1={Images.backIcon}
-        Images2={Images.info}
+        Images1={Images.cancel}
+        Images2={null}
         cancelButtonStyle1={styles.plusIconStyle}
         Images1Color={color.white}
       />
-      <View style={styles.bodyView}>
-        <View style={styles.mainCartViewStyle}>
-          <View style={styles.mainCartSubView}>
-            <Text style={styles.mainCartTextHeader}>{strings.totalPoint}</Text>
-            <Image source={Images.scanner} style={styles.scannerStyle} />
-          </View>
-          <Text style={styles.pointTextStyle}>- 300</Text>
-          <Text style={styles.infoLine}>{strings.line}</Text>
-        </View>
-      </View>
       <View style={styles.bodyView}>
         <View style={styles.flatListHeader}>
           <Text style={{fontSize: fontSize(20), fontWeight: 'bold'}}>
             {strings.pointHistory}
           </Text>
-          <TouchableOpacity
-            style={styles.flatListHeader}
-            onPress={() => {
-              navigation.navigate('pointHistory');
-            }}>
-            <Text style={{color: color.commonBlue, fontWeight: 'bold'}}>
-              {strings.ViewAll}
-            </Text>
-            <Image source={Images.upArrow} style={styles.arrowStyle} />
-          </TouchableOpacity>
         </View>
         <FlatList
           bounces={false}
           showsVerticalScrollIndicator={false}
           data={pointDummy}
-          ListFooterComponent={() => <View style={{marginBottom: hp(35)}} />}
+          ListFooterComponent={() => <View style={{marginBottom: hp(15)}} />}
           renderItem={({item}) => {
             return (
               <View style={styles.flatListView}>
@@ -152,6 +132,11 @@ const styles = StyleSheet.create({
   mainTextStyle: {
     fontWeight: 'bold',
   },
+  plusIconStyle: {
+    height: hp(2.5),
+    width: hp(2.5),
+    resizeMode: 'contain',
+  },
 });
 
-export default AirifyPoint;
+export default pointHistory;

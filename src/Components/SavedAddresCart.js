@@ -1,13 +1,12 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-import {fontSize, hp, wp} from '../../helper/Constant';
+import {fontSize, hp, wp} from '../helper/Constant';
 import React from 'react';
-import {Images} from '../../helper/IconConstant';
+import {Images} from '../helper/IconConstant';
 import {useDispatch, useSelector} from 'react-redux';
-import {color} from '../../helper/ColorConstant';
-import {flightDetailsAction} from '../../redux/action/FlightDetailAction';
+import {color} from '../helper/ColorConstant';
 
-const CardList = ({setCartFlightData, item, index}) => {
+const SavedAddressCart = () => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   return (
     <TouchableOpacity
@@ -125,4 +124,5 @@ const styles = StyleSheet.create({
     paddingTop: hp(1),
   },
 });
-export default CardList;
+
+export default SavedAddressCart;

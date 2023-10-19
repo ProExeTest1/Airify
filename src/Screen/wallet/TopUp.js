@@ -29,8 +29,6 @@ const TopUp = ({navigation}) => {
   const [myWallet, setMyWallet] = useState('00.00');
   const [transactionHistory, setTransactionHistory] = useState([]);
 
-  // const Focused = useIsFocused();
-  // console.log(transactionHistory);
   const UserData = async () => {
     const journeyData = await firestore()
       .collection('Users')

@@ -28,9 +28,7 @@ const FlightDetailsScreen = ({navigation}) => {
   const [press, setPress] = useState(false);
   const [value, setValue] = useState();
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  // console.log(typeof Number(item?.price));
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  // console.log(Number(searchFlightData.passenger.split(' ')[0]));
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
@@ -72,6 +70,7 @@ const FlightDetailsScreen = ({navigation}) => {
           departureShortForm: searchFlightData?.fromShortform,
           destinationShortForm: searchFlightData?.toShortform,
           stops: item.stop,
+          flightPrice: item?.price,
         }),
       })
       .then(async () => {
@@ -106,6 +105,7 @@ const FlightDetailsScreen = ({navigation}) => {
           departureShortForm: searchFlightData?.fromShortform,
           destinationShortForm: searchFlightData?.toShortform,
           stops: item.stop,
+          flightPrice: item?.price,
         }),
       })
       .then(async () => {

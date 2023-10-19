@@ -4,17 +4,15 @@ import CardList from './CardList';
 import {wp} from '../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
 import {SearchFlightCardData} from '../../redux/action/SearchFlightAction';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
-const TicktList = ({SelectDate, SearchFlightCard,}) => {
+const TicktList = ({SelectDate, SearchFlightCard}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const setCartFlightData = item => {
     dispatch(SearchFlightCardData(item));
-    navigation.navigate('FlightDetails')
-    
+    navigation.navigate('FlightDetails');
   };
-  // console.log(useSelector(a => a?.searchFlight?.searchFlightCardData),"hello hello");
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
@@ -35,10 +33,6 @@ const TicktList = ({SelectDate, SearchFlightCard,}) => {
         bounces={false}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}) => {
-          console.log(
-            new Date().toLocaleString('en-IN').split(',')[0],
-            SelectDate?.date,
-          );
           return (
             <CardList
               setCartFlightData={setCartFlightData}

@@ -64,7 +64,6 @@ const WalletScreen = ({navigation}) => {
   }, [isFocused]);
 
   useEffect(() => {
-    console.log('yes');
     UserData();
   }, []);
   return (

@@ -4,6 +4,7 @@ import placeReducer from './placeReducer';
 import searchFlightReducer from './searchFlightReducer';
 import homeReducer from './homeReducer';
 import AddressReducer from './AddressReducer';
+import SaveFlightReducer from './SaveFlightReducer';
 
 export const rootReducer = combineReducers({
   date: dateReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   searchFlight: searchFlightReducer,
   OnBoarding: homeReducer,
   AddressData: AddressReducer,
+  SaveFlight: SaveFlightReducer,
 });

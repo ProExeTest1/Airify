@@ -47,7 +47,6 @@ function App() {
             AirlineSeatBookData: data
               .data()
               .AirlineSeatBookData.map((item, index) => {
-                console.log(index);
                 if (index === getDate().length - 1) {
                   return {
                     date: getDate()[getDate().length - 1].date,

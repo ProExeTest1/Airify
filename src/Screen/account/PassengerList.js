@@ -13,6 +13,7 @@ import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore, {firebase} from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const PassengerList = ({navigation: {goBack}, navigation}) => {
   const [passengerList, setPassengerList] = useState([]);
@@ -32,8 +33,13 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
             key: documentSnapshot.id,
           });
         });
-        users.map(item => {
-          setPassengerList(item?.PassengerList);
+        users.filter(item => {
+          if (item.key == auth().currentUser.uid) {
+            setPassengerList(item?.PassengerList);
+            return false;
+          } else {
+            return false;
+          }
         });
       });
   };

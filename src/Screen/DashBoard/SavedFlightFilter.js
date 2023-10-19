@@ -26,8 +26,16 @@ import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import CheckBox from '../../components/Common/CheckBox';
 import {useDispatch, useSelector} from 'react-redux';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
+import {useRoute} from '@react-navigation/native';
+import {
+  activeFlightFilter,
+  expiredFlightFilter,
+} from '../../redux/action/SavedFlights';
 
-const SearchFlightsFilter = ({navigation}) => {
+const SavedFlightFilter = ({navigation}) => {
+  const route = useRoute();
+  const expireFlight = useSelector(e => e?.SaveFlight?.expireFlight);
+  const savedFlight = useSelector(e => e?.SaveFlight?.activeFlight);
   const func = () => {
     temp = [];
     SearchFlightData?.map((item, index) => {
@@ -39,9 +47,9 @@ const SearchFlightsFilter = ({navigation}) => {
     });
     return temp;
   };
-  const searchFlightFilterData = useSelector(
-    e => e?.searchFlight?.searchFlightFilterData,
-  );
+  const searchFlightFilterData = route.params?.header
+    ? savedFlight
+    : expireFlight;
   let dispatch = useDispatch();
   const [priceTargets1, setPriceTargets1] = useState(
     searchFlightFilterData?.priceRange
@@ -137,36 +145,55 @@ const SearchFlightsFilter = ({navigation}) => {
   };
   const close = () => {
     dispatch(SearchFlightFilterData({}));
-    navigation.navigate('SearchFlights');
+    navigation.navigate('SavedScreen');
   };
   const applySortdata = () => {
     dispatch(
-      SearchFlightFilterData({
-        airlinesList: AirlinesList?.length > 0 ? AirlinesList : null,
-        amenitiesList: amenitiesList?.length > 0 ? amenitiesList : null,
-        arrivalTime: departureTime1?.title ? departureTime1 : null,
-        cabinClassList: CabinClassList?.length > 0 ? CabinClassList : null,
-        departureTime: departureTime2?.title ? departureTime2 : null,
-        flightDuration: priceTargets3?.length > 0 ? priceTargets3 : null,
-        flightPreferencesList:
-          FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
-        numberOfStopsData:
-          numberOfStopsData.length > 0 ? numberOfStopsData : null,
-        priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
-        stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
-        refundAndRescheduleList:
-          RefundAndRescheduleList.length > 0 ? RefundAndRescheduleList : null,
-      }),
+      route.params?.header
+        ? activeFlightFilter({
+            airlinesList: AirlinesList?.length > 0 ? AirlinesList : null,
+            amenitiesList: amenitiesList?.length > 0 ? amenitiesList : null,
+            arrivalTime: departureTime1?.title ? departureTime1 : null,
+            cabinClassList: CabinClassList?.length > 0 ? CabinClassList : null,
+            departureTime: departureTime2?.title ? departureTime2 : null,
+            flightDuration: priceTargets3?.length > 0 ? priceTargets3 : null,
+            flightPreferencesList:
+              FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
+            numberOfStopsData:
+              numberOfStopsData.length > 0 ? numberOfStopsData : null,
+            priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+            stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
+            refundAndRescheduleList:
+              RefundAndRescheduleList.length > 0
+                ? RefundAndRescheduleList
+                : null,
+          })
+        : expiredFlightFilter({
+            airlinesList: AirlinesList?.length > 0 ? AirlinesList : null,
+            amenitiesList: amenitiesList?.length > 0 ? amenitiesList : null,
+            arrivalTime: departureTime1?.title ? departureTime1 : null,
+            cabinClassList: CabinClassList?.length > 0 ? CabinClassList : null,
+            departureTime: departureTime2?.title ? departureTime2 : null,
+            flightDuration: priceTargets3?.length > 0 ? priceTargets3 : null,
+            flightPreferencesList:
+              FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
+            numberOfStopsData:
+              numberOfStopsData.length > 0 ? numberOfStopsData : null,
+            priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+            stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
+            refundAndRescheduleList:
+              RefundAndRescheduleList.length > 0
+                ? RefundAndRescheduleList
+                : null,
+          }),
     );
-    navigation.navigate('SearchFlights');
+    navigation.navigate('SavedScreen');
   };
   return (
     <View style={styles.body}>
       <PickerHeaderBar
         headerName={'Filter'}
-        navigation={() =>
-          navigation.navigate('SearchFlights')
-        }></PickerHeaderBar>
+        navigation={() => navigation.navigate('SavedScreen')}></PickerHeaderBar>
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
           <View style={{paddingTop: hp(4)}}></View>
@@ -531,8 +558,6 @@ const SearchFlightsFilter = ({navigation}) => {
   );
 };
 
-export default SearchFlightsFilter;
-
 const styles = StyleSheet.create({
   body: {
     flex: 1,
@@ -604,3 +629,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default SavedFlightFilter;

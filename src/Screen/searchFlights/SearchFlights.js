@@ -211,7 +211,6 @@ const SearchFlights = ({navigation}) => {
           departureTime
         );
       });
-      console.log(filterData);
       filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);

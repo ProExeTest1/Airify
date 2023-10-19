@@ -35,6 +35,8 @@ import LocationSearch from '../screen/account/LocationSearch';
 import DiscountVoucher from '../screen/account/DiscountVoucher';
 import AirifyReward from '../screen/account/AirifyReward';
 import AirifyPoint from '../screen/account/AirifyPoint';
+import pointHistory from '../screen/account/PointHistory';
+import SavedFlightFilter from '../screen/dashBoard/SavedFlightFilter';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -93,6 +95,8 @@ const StackNavigation = () => {
         <Stack.Screen name="DiscountVoucher" component={DiscountVoucher} />
         <Stack.Screen name="AirifyReward" component={AirifyReward} />
         <Stack.Screen name="AirifyPoint" component={AirifyPoint} />
+        <Stack.Screen name="pointHistory" component={pointHistory} />
+        <Stack.Screen name="SavedFlightFilter" component={SavedFlightFilter} />
       </Stack.Navigator>
     </NavigationContainer>
   );
