@@ -247,7 +247,9 @@ export const AmenitiesData = [
   'Wi-Fi',
   'Power & USB Port',
 ];
+
 export const RefundAndRescheduleData = ['Refundable', 'Reschedule Available'];
+
 export const FlightPreferencesData = [
   'Exclude overnight stop(s)',
   'Exclude late night flights',

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FlatList,
   Image,
@@ -6,26 +7,26 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {MultiSliderComponets, OnBoardingTwoButton} from '../index';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {wp, fontSize, hp} from '../../helper/Constant';
+
+import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
+import {wp, fontSize, hp} from '../../helper/Constant';
 import {TimeData} from '../../assets/DummyData/timeData';
-import {strings} from '../../helper/Strings';
+import {MultiSliderComponets, OnBoardingTwoButton} from '../index';
+
 const CreatePriceAlert = ({
+  addAlert,
+  closeModal,
+  priceTargets,
+  departureTime,
   setPriceTargets,
+  ToggleSwitchBut1,
+  ToggleSwitchBut2,
   setDepartureTime,
   setToggleSwitchBut1,
   setToggleSwitchBut2,
-  priceTargets,
-  departureTime,
-  ToggleSwitchBut1,
-  ToggleSwitchBut2,
-  addAlert,
-  closeModal,
 }) => {
   return (
     <View style={styles.createAlertBody}>
@@ -127,18 +128,18 @@ const CreatePriceAlert = ({
         <Image style={styles.PriceTargetsImg} source={Images.flightIcon} />
         <Text style={styles.PriceTargetsTitle}>{strings.DirectFlight}</Text>
         <ToggleSwitch
-          isOn={ToggleSwitchBut2}
           size="medium"
+          isOn={ToggleSwitchBut2}
           onColor={color.commonBlue}
           onToggle={isOn => setToggleSwitchBut2(isOn)}
         />
       </View>
       <View style={styles.buttonStyle}>
         <OnBoardingTwoButton
+          onPress2={addAlert}
+          onPress1={closeModal}
           buttonTextOne={'Cancel'}
           buttonTextTwo={'Create'}
-          onPress1={closeModal}
-          onPress2={addAlert}
         />
       </View>
     </View>
@@ -150,47 +151,47 @@ export default CreatePriceAlert;
 const styles = StyleSheet.create({
   cardDataBody: {
     paddingTop: hp(2.5),
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   FlightsPlaseBody: {
     width: wp(20),
   },
   FlightsPlaseImgBody: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
   },
   FlightsPlaseImg: {
-    height: hp(5.5),
     width: hp(19),
+    height: hp(5.5),
   },
   FlightsPlaseImgText: {
     color: '#7e7e7f',
-    fontSize: fontSize(11),
     marginTop: hp(1),
+    fontSize: fontSize(11),
   },
   FlightsPlaseNicName: {
-    fontSize: fontSize(21),
     color: '#000',
     fontWeight: 'bold',
     marginTop: hp(1.5),
+    fontSize: fontSize(21),
   },
   FlightsPlaseName: {
     color: '#7e7e7f',
     fontWeight: '500',
   },
   cardBottemBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: hp(2.5),
     paddingTop: hp(1),
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: hp(2.5),
+    justifyContent: 'space-between',
   },
   createAlertBody: {
-    backgroundColor: '#fff',
     paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
+    backgroundColor: '#fff',
     borderTopEndRadius: 20,
+    paddingHorizontal: wp(6),
     borderTopStartRadius: 20,
   },
   createAlertTitleBody: {
@@ -200,66 +201,66 @@ const styles = StyleSheet.create({
     borderColor: '#e2e2e2',
   },
   createAlertTitle: {
-    fontSize: fontSize(20),
     fontWeight: '600',
+    fontSize: fontSize(20),
   },
   createAlertNotifiBody: {
     flexDirection: 'row',
-    paddingVertical: hp(3),
     alignItems: 'center',
+    paddingVertical: hp(3),
   },
   createAlertNotifiImg: {
-    height: wp(6),
     width: wp(6),
+    height: wp(6),
     marginEnd: wp(4),
   },
   createAlertNotifiText: {
-    fontSize: fontSize(17),
     width: wp(78),
     fontWeight: '500',
+    fontSize: fontSize(17),
   },
   createAlertCardBody: {
-    backgroundColor: '#fafafa',
     borderWidth: 1,
-    borderColor: '#e4e4e4',
     borderRadius: 10,
-    paddingHorizontal: wp(4),
     marginBottom: hp(1),
+    borderColor: '#e4e4e4',
+    paddingHorizontal: wp(4),
+    backgroundColor: '#fafafa',
   },
   PriceTargetsBody: {
-    paddingVertical: hp(1.5),
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
+    paddingVertical: hp(1.5),
   },
   PriceTargetsImg: {
-    height: wp(7.5),
     width: wp(7.5),
+    height: wp(7.5),
     marginEnd: wp(4),
   },
   PriceTargetsTitle: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
     flex: 1,
+    fontWeight: '500',
+    fontSize: fontSize(18),
   },
   PriceTargetsText: {
     fontSize: fontSize(20),
   },
   departureTimeBody: {
     flex: 1,
-    backgroundColor: '#fafafa',
     borderWidth: 1,
     borderRadius: 10,
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
-    marginBottom: hp(1.5),
     alignItems: 'center',
+    marginBottom: hp(1.5),
+    paddingVertical: hp(2),
+    paddingHorizontal: wp(4),
+    backgroundColor: '#fafafa',
   },
   sliderViewStyle: {
-    height: hp(3.07),
     width: wp(6.6),
-    backgroundColor: '#fff',
     borderWidth: 4,
+    height: hp(3.07),
     borderRadius: 100,
+    backgroundColor: '#fff',
     borderColor: color.commonBlue,
   },
   unselectedStyle: {
@@ -276,12 +277,12 @@ const styles = StyleSheet.create({
   },
   departureTimeTextStyle: {
     color: '#000',
-    fontSize: fontSize(16),
     fontWeight: '500',
+    fontSize: fontSize(16),
   },
   buttonStyle: {
-    paddingVertical: hp(4),
     borderTopWidth: 1,
+    paddingVertical: hp(4),
     borderColor: '#e2e2e2',
   },
 });

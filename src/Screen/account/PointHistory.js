@@ -1,33 +1,27 @@
-import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import {color} from '../../helper/ColorConstant';
+import React from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+
 import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
 import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {pointDummy} from '../../assets/DummyData/Data';
 
-const pointHistory = ({navigation: {goBack}, navigation}) => {
+const pointHistory = ({navigation: {goBack}}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
-        headerName={strings.airifyPoint}
-        navigation1={() => {
-          goBack();
-        }}
+        Images2={null}
         onPress1={true}
         onPress2={false}
         Images1={Images.cancel}
-        Images2={null}
-        cancelButtonStyle1={styles.plusIconStyle}
         Images1Color={color.white}
+        headerName={strings.airifyPoint}
+        cancelButtonStyle1={styles.plusIconStyle}
+        navigation1={() => {
+          goBack();
+        }}
       />
       <View style={styles.bodyView}>
         <View style={styles.flatListHeader}>
@@ -37,8 +31,8 @@ const pointHistory = ({navigation: {goBack}, navigation}) => {
         </View>
         <FlatList
           bounces={false}
-          showsVerticalScrollIndicator={false}
           data={pointDummy}
+          showsVerticalScrollIndicator={false}
           ListFooterComponent={() => <View style={{marginBottom: hp(15)}} />}
           renderItem={({item}) => {
             return (
@@ -67,74 +61,74 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   mainCartViewStyle: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(1),
     borderRadius: 4,
+    paddingVertical: hp(1),
     paddingHorizontal: wp(4),
+    backgroundColor: color.commonBlue,
   },
   mainCartSubView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   mainCartTextHeader: {
-    fontSize: fontSize(12),
     color: color.white,
     marginBottom: hp(1),
+    fontSize: fontSize(12),
   },
   scannerStyle: {
-    height: hp(5),
     width: wp(5),
+    height: hp(5),
     resizeMode: 'contain',
     tintColor: color.white,
   },
   pointTextStyle: {
-    fontSize: fontSize(24),
     color: color.white,
-    marginBottom: hp(1),
     fontWeight: 'bold',
+    marginBottom: hp(1),
+    fontSize: fontSize(24),
   },
   infoLine: {
-    fontSize: fontSize(11),
     color: color.white,
     marginBottom: hp(1),
+    fontSize: fontSize(11),
   },
   bodyView: {paddingHorizontal: wp(6), paddingVertical: hp(2)},
   flatListHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   arrowStyle: {
-    marginLeft: wp(4),
-    height: hp(3),
     width: wp(3),
+    height: hp(3),
+    marginLeft: wp(4),
     resizeMode: 'contain',
-    transform: [{rotate: '90deg'}],
     tintColor: color.commonBlue,
+    transform: [{rotate: '90deg'}],
   },
   dotStyle: {
-    height: hp(0.3),
     width: hp(0.3),
+    height: hp(0.3),
     borderRadius: hp(0.3),
     backgroundColor: color.black,
   },
   flatListView: {
-    paddingVertical: hp(1),
     borderBottomWidth: 1,
+    paddingVertical: hp(1),
     borderColor: color.lightGray,
   },
   flatListSubView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingVertical: hp(1),
+    justifyContent: 'space-between',
   },
   mainTextStyle: {
     fontWeight: 'bold',
   },
   plusIconStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     resizeMode: 'contain',
   },
 });

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   Text,
@@ -7,28 +8,28 @@ import {
   Platform,
   FlatList,
 } from 'react-native';
-import React, {useState} from 'react';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {Images} from '../../helper/IconConstant';
-import {getDate} from '../../assets/DummyData/GetDate';
 import {
   Menu,
   MenuOption,
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import {dateAction} from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
+
 import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {getDate} from '../../assets/DummyData/GetDate';
+import {dateAction} from '../../redux/action/DateAction';
 
 const SearchFlightsHeader = ({
-  SelectDate,
-  setSelectDate,
   onShare,
   dispatch,
-  setModalVisible1,
+  SelectDate,
   navigation,
+  setSelectDate,
+  setModalVisible1,
 }) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   return (
@@ -94,11 +95,11 @@ const SearchFlightsHeader = ({
         </View>
         <View style={styles.dateline}></View>
         <FlatList
-          data={getDate()}
           bounces={false}
+          data={getDate()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) => {
+          renderItem={({item}) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -143,32 +144,32 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? hp(6) : hp(2),
   },
   headerNevBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: wp(4),
-    alignItems: 'center',
     marginBottom: hp(3),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: wp(4),
+    justifyContent: 'space-between',
   },
   BackImg: {
-    height: wp(8),
     width: wp(8),
+    height: wp(8),
     tintColor: color.white,
   },
   headerTitleBody: {
-    position: 'absolute',
     width: wp(100),
+    position: 'absolute',
     alignItems: 'center',
   },
   headerTitle: {
     color: '#fff',
-    fontSize: fontSize(22),
     fontWeight: 'bold',
+    fontSize: fontSize(22),
   },
   FlightsPlaseNicName: {
-    fontSize: fontSize(22),
     color: '#fff',
     fontWeight: 'bold',
     marginBottom: hp(1.5),
+    fontSize: fontSize(22),
   },
   FlightsPlaseName: {
     color: '#fff',
@@ -178,68 +179,68 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
   },
   FlightsPlaseImgBody: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
   },
   FlightsPlaseImg: {
-    height: hp(5.5),
     width: hp(20),
+    height: hp(5.5),
   },
   FlightsPlaseImgText: {
     color: '#fff',
     fontSize: fontSize(14),
   },
   dateListBody: {
-    flexDirection: 'row',
     paddingStart: wp(8),
+    flexDirection: 'row',
     paddingBottom: hp(3),
   },
   dateIconBody: {
-    borderColor: '#fff',
+    width: hp(7),
+    height: hp(7),
     borderWidth: 1,
     borderRadius: 10,
-    height: hp(7),
-    width: hp(7),
+    marginEnd: wp(2.5),
+    borderColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginEnd: wp(2.5),
   },
   dateIcon: {
-    tintColor: '#fff',
-    height: hp(3.2),
     width: hp(3.2),
+    height: hp(3.2),
+    tintColor: '#fff',
   },
   dateline: {
-    borderColor: '#fff',
     borderWidth: 0.5,
     marginEnd: wp(2.5),
+    borderColor: '#fff',
   },
   date: {
-    fontSize: fontSize(18),
     fontWeight: 'bold',
     marginBottom: hp(0.3),
+    fontSize: fontSize(18),
   },
   dropdownBody: {
+    top: wp(10),
+    width: wp(50),
+    borderRadius: 10,
     position: 'absolute',
     backgroundColor: '#fff',
-    top: wp(10),
-    borderRadius: 10,
-    width: wp(50),
   },
   dropdownList: {
+    paddingStart: wp(3),
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: hp(1.5),
-    paddingStart: wp(3),
   },
   dropdownIcon: {
-    height: wp(6.5),
     width: wp(6.5),
+    height: wp(6.5),
     marginEnd: wp(4),
   },
   dropdownText: {
-    fontSize: fontSize(18),
     fontWeight: '500',
+    fontSize: fontSize(18),
   },
 });
 

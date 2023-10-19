@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,23 +7,23 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import {CountryPicker} from 'react-native-country-codes-picker';
-import {hp, wp} from '../helper/Constant';
+
 import {strings} from '../helper/Strings';
+import {hp, wp} from '../helper/Constant';
 import {Images} from '../helper/IconConstant';
 import {color} from '../helper/ColorConstant';
 
 const CountryPickTextInput = ({
   value,
-  onChangeText,
-  placeholder,
-  countryCode,
-  disabled,
   onPress1,
   onPress2,
+  disabled,
   editable,
-  placeholderTextColor,
+  countryCode,
+  placeholder,
+  onChangeText,
   textInputStyle,
+  placeholderTextColor,
 }) => {
   return (
     <View
@@ -46,13 +46,13 @@ const CountryPickTextInput = ({
         )}
         <View style={styles.InputViewStyle}>
           <TextInput
+            value={value}
+            editable={editable}
+            keyboardType="number-pad"
             placeholder={placeholder}
+            onChangeText={onChangeText}
             placeholderTextColor={placeholderTextColor}
             style={[styles.textInputStyle, textInputStyle]}
-            value={value}
-            onChangeText={onChangeText}
-            keyboardType="number-pad"
-            editable={editable}
           />
         </View>
       </TouchableOpacity>
@@ -62,29 +62,29 @@ const CountryPickTextInput = ({
 
 const styles = StyleSheet.create({
   textInputIconStyle: {
-    height: hp(2),
     width: hp(2),
-    tintColor: '#A0A0A0',
+    height: hp(2),
     marginLeft: wp(1),
+    tintColor: '#A0A0A0',
   },
   viewStyle: {
+    padding: 10,
     width: '90%',
     height: hp(6.5),
-    backgroundColor: '#E6E6E6',
-    padding: 10,
     borderRadius: wp(2),
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#E6E6E6',
   },
   InputViewStyle: {
+    color: color.black,
     flexDirection: 'row',
     paddingVertical: hp(1),
-    color: color.black,
   },
   textInputStyle: {
+    flex: 1,
     marginLeft: wp(4),
     color: color.black,
-    flex: 1,
   },
 });
 

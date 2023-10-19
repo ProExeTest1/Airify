@@ -1,51 +1,45 @@
-import React, {Component, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, TextInput, Image, TouchableOpacity} from 'react-native';
+
 import {hp, wp} from '../helper/Constant';
-import {Images} from '../helper/IconConstant';
 import {color} from '../helper/ColorConstant';
+import {Images} from '../helper/IconConstant';
 
 const OnBoardingTextInput = ({
-  textInputPlaceholder,
-  textInputIcon,
-  textInputIconStyle,
   value,
-  onChangeText,
-  textInputStyle,
-  container,
-  onPressCalender,
   onPress,
+  container,
+  onChangeText,
   keyboardType,
+  textInputIcon,
+  textInputStyle,
+  onPressCalender,
+  textInputIconStyle,
+  textInputPlaceholder,
 }) => {
   const [focus, setFocus] = useState(false);
 
   return (
     <TouchableOpacity
-      disabled={onPress ? false : true}
       onPress={onPress}
+      disabled={onPress ? false : true}
       style={[styles.container, container]}>
       <Image
         source={textInputIcon}
         style={[styles.textInputIconStyle, textInputIconStyle]}
       />
       <TextInput
-        placeholder={textInputPlaceholder}
         value={value}
         autoCorrect={false}
-        autoCapitalize="none"
-        editable={onPress ? false : true}
         onPressIn={onPress}
-        placeholderTextColor={color.grey}
-        onChangeText={onChangeText}
-        style={[styles.textInputStyle, textInputStyle]}
+        autoCapitalize="none"
         secureTextEntry={focus}
+        onChangeText={onChangeText}
         keyboardType={keyboardType}
+        editable={onPress ? false : true}
+        placeholderTextColor={color.grey}
+        placeholder={textInputPlaceholder}
+        style={[styles.textInputStyle, textInputStyle]}
       />
       {textInputPlaceholder == 'Password' ||
       textInputPlaceholder == 'Confirm New Password' ? (
@@ -59,9 +53,9 @@ const OnBoardingTextInput = ({
           }}>
           <Image
             style={{
-              paddingRight: 15,
-              height: hp(2),
               width: hp(2),
+              height: hp(2),
+              paddingRight: 15,
               tintColor: '#A0A0A0',
             }}
             source={focus ? Images.HidePassword : Images.ViewPassword}
@@ -77,9 +71,9 @@ const OnBoardingTextInput = ({
           }}>
           <Image
             style={{
-              paddingRight: 15,
-              height: hp(2),
               width: hp(2),
+              height: hp(2),
+              paddingRight: 15,
               tintColor: '#A0A0A0',
             }}
             source={Images.calender}
@@ -92,25 +86,25 @@ const OnBoardingTextInput = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    height: hp(6),
     width: wp(90),
+    borderRadius: wp(2),
+    paddingStart: wp(2),
+    alignSelf: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
     marginVertical: hp(2),
-    alignSelf: 'center',
-    height: hp(6),
-    paddingStart: wp(2),
-    borderRadius: wp(2),
     backgroundColor: '#E6E6E6',
   },
   textInputIconStyle: {
-    height: hp(2),
     width: hp(2),
+    height: hp(2),
     tintColor: '#A0A0A0',
     color: color.black,
   },
   textInputStyle: {
-    marginLeft: wp(2),
     flex: 1,
+    marginLeft: wp(2),
     color: color.black,
   },
 });

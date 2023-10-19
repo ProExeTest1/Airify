@@ -9,8 +9,8 @@ import SaveFlightReducer from './SaveFlightReducer';
 export const rootReducer = combineReducers({
   date: dateReducer,
   place: placeReducer,
-  searchFlight: searchFlightReducer,
   OnBoarding: homeReducer,
   AddressData: AddressReducer,
   SaveFlight: SaveFlightReducer,
+  searchFlight: searchFlightReducer,
 });

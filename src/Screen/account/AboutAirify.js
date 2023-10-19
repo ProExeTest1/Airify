@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,27 +8,28 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
+
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {aboutAirifyData} from '../../assets/DummyData/Data';
 
-const AboutAirify = ({navigation: {goBack}, navigation}) => {
+const AboutAirify = ({navigation: {goBack}}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.aboutAirify}
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {}}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
-        Images1Color={color.white}
       />
       <View style={styles.iconViewStyle}>
         <Image source={Images.welcomeScreenIcon} style={styles.iconStyle} />
@@ -42,9 +43,9 @@ const AboutAirify = ({navigation: {goBack}, navigation}) => {
               <TouchableOpacity style={styles.flatListView}>
                 <Text style={styles.flatListText}>{item.title}</Text>
                 <Image
+                  resizeMode="contain"
                   source={Images.forward}
                   style={styles.forwardIconStyle}
-                  resizeMode="contain"
                 />
               </TouchableOpacity>
             );
@@ -61,40 +62,40 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   iconViewStyle: {
+    paddingTop: hp(5),
     alignItems: 'center',
     borderBottomWidth: 1,
+    paddingVertical: hp(4),
     borderColor: '#ECEFEF',
     marginHorizontal: wp(5),
     justifyContent: 'center',
-    paddingTop: hp(5),
-    paddingVertical: hp(4),
   },
   iconStyle: {
-    height: hp(14),
     width: hp(14),
+    height: hp(14),
     borderRadius: hp(14 / 2),
   },
   versionStyle: {
-    fontSize: fontSize(18),
     fontWeight: '600',
     color: color.black,
+    fontSize: fontSize(18),
   },
   flatListView: {
-    paddingHorizontal: wp(5),
-    paddingVertical: hp(2),
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
+    paddingVertical: hp(2),
+    paddingHorizontal: wp(5),
     justifyContent: 'space-around',
   },
   flatListText: {
-    fontSize: fontSize(16),
-    fontWeight: '500',
     flex: 1,
+    fontWeight: '500',
     color: color.black,
+    fontSize: fontSize(16),
   },
   forwardIconStyle: {
-    height: wp(3),
     width: hp(3),
+    height: wp(3),
     resizeMode: 'contain',
   },
 });

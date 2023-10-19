@@ -1,39 +1,33 @@
-import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
+import React from 'react';
+import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
+
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {DiscountVoucherDummy} from '../../assets/DummyData/Discount';
 
-const DiscountVoucher = ({navigation: {goBack}, navigation}) => {
+const DiscountVoucher = ({navigation: {goBack}}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.discountVoucher}
         navigation1={() => {
           goBack();
         }}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
         cancelButtonStyle1={styles.plusIconStyle}
-        Images1Color={color.white}
       />
       <View style={styles.flatListOuterViewStyle}>
         <FlatList
           bounces={false}
-          showsVerticalScrollIndicator={false}
           data={DiscountVoucherDummy}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <View style={styles.flatListInnerViewStyle}>
@@ -61,11 +55,6 @@ const DiscountVoucher = ({navigation: {goBack}, navigation}) => {
                       <Text>{item.MinTransaction}</Text>
                     </View>
                   </View>
-                  {/* <View style={styles.useButtonView}>
-                    <TouchableOpacity style={styles.useTouchableStyle}>
-                      <Text style={{color: '#fff'}}>Use</Text>
-                    </TouchableOpacity>
-                  </View> */}
                 </View>
               </View>
             );
@@ -81,51 +70,51 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatListOuterViewStyle: {
+    marginBottom: hp(13),
     paddingHorizontal: wp(6),
     paddingVertical: hp(2.5),
-    marginBottom: hp(13),
   },
   flatListInnerViewStyle: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
     borderRadius: 6,
     marginVertical: hp(1),
+    paddingVertical: hp(2),
+    backgroundColor: '#fff',
+    paddingHorizontal: wp(4),
   },
   cartTitleTextStyle: {
-    fontSize: fontSize(18),
     fontWeight: '600',
     marginBottom: hp(1),
+    fontSize: fontSize(18),
   },
   cartView: {
-    flexDirection: 'row',
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'flex-end',
   },
   timeIconStyle: {
-    height: hp(4),
     width: wp(4),
-    resizeMode: 'contain',
+    height: hp(4),
     marginRight: wp(2),
+    resizeMode: 'contain',
   },
   secondViewStyle: {
-    flexDirection: 'row',
     flex: 1,
+    flexDirection: 'row',
     alignItems: 'flex-end',
     marginHorizontal: wp(4),
   },
   useButtonView: {
     flex: 1,
+    borderLeftWidth: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    borderLeftWidth: 1,
     borderColor: color.grayLight,
   },
   useTouchableStyle: {
-    backgroundColor: color.commonBlue,
     borderRadius: 100,
     paddingVertical: hp(1),
     paddingHorizontal: wp(8.5),
+    backgroundColor: color.commonBlue,
   },
 });
 

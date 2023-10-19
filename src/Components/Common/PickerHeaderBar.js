@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Image,
   Platform,
@@ -7,10 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {fontSize, hp, wp} from '../../helper/Constant';
+
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const PickerHeaderBar = ({headerName, navigation}) => {
   return (
@@ -22,9 +23,9 @@ const PickerHeaderBar = ({headerName, navigation}) => {
         </View>
         <TouchableOpacity onPress={navigation}>
           <Image
+            resizeMode="contain"
             source={Images.cancel}
             style={styles.cancelButtonStyle}
-            resizeMode="contain"
           />
         </TouchableOpacity>
       </View>
@@ -39,31 +40,31 @@ const styles = StyleSheet.create({
     backgroundColor: color.commonBlue,
   },
   cancelButtonStyle: {
-    height: hp(2),
     width: hp(2),
+    height: hp(2),
     tintColor: color.white,
     marginVertical: Platform.OS === 'android' ? hp(-1) : null,
   },
   headerTextStyle: {
-    fontSize: fontSize(22),
     fontWeight: 'bold',
     color: color.white,
+    fontSize: fontSize(22),
   },
   safeHeaderViewStyle: {
-    paddingHorizontal: wp(7),
     paddingVertical: hp(3),
+    paddingHorizontal: wp(7),
   },
   headerinnerViewStyle: {
+    justifyContent: 'center',
+    paddingHorizontal: wp(8),
     backgroundColor: color.commonBlue,
     height: Platform.OS == 'ios' ? hp(6) : hp(0),
-    paddingHorizontal: wp(8),
-    justifyContent: 'center',
     marginBottom: Platform.OS === 'android' ? hp(3) : null,
   },
   headerTextViewStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
     width: wp(100),
+    alignItems: 'center',
+    position: 'absolute',
+    justifyContent: 'center',
   },
 });

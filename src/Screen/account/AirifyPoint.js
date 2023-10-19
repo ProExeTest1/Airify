@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,10 +7,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {color} from '../../helper/ColorConstant';
+
 import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
 import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {pointDummy} from '../../assets/DummyData/Data';
 
@@ -18,16 +19,16 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        onPress1={true}
+        onPress2={false}
+        Images2={Images.info}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.airifyPoint}
         navigation1={() => {
           goBack();
         }}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={Images.info}
         cancelButtonStyle1={styles.plusIconStyle}
-        Images1Color={color.white}
       />
       <View style={styles.bodyView}>
         <View style={styles.mainCartViewStyle}>
@@ -57,8 +58,8 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
         </View>
         <FlatList
           bounces={false}
-          showsVerticalScrollIndicator={false}
           data={pointDummy}
+          showsVerticalScrollIndicator={false}
           ListFooterComponent={() => <View style={{marginBottom: hp(35)}} />}
           renderItem={({item}) => {
             return (
@@ -87,67 +88,67 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   mainCartViewStyle: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(1),
     borderRadius: 4,
+    paddingVertical: hp(1),
     paddingHorizontal: wp(4),
+    backgroundColor: color.commonBlue,
   },
   mainCartSubView: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
   mainCartTextHeader: {
-    fontSize: fontSize(12),
     color: color.white,
     marginBottom: hp(1),
+    fontSize: fontSize(12),
   },
   scannerStyle: {
-    height: hp(5),
     width: wp(5),
+    height: hp(5),
     resizeMode: 'contain',
     tintColor: color.white,
   },
   pointTextStyle: {
-    fontSize: fontSize(24),
+    fontWeight: 'bold',
     color: color.white,
     marginBottom: hp(1),
-    fontWeight: 'bold',
+    fontSize: fontSize(24),
   },
   infoLine: {
-    fontSize: fontSize(11),
     color: color.white,
     marginBottom: hp(1),
+    fontSize: fontSize(11),
   },
   bodyView: {paddingHorizontal: wp(6), paddingVertical: hp(2)},
   flatListHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   arrowStyle: {
-    marginLeft: wp(4),
-    height: hp(3),
     width: wp(3),
+    height: hp(3),
+    marginLeft: wp(4),
     resizeMode: 'contain',
-    transform: [{rotate: '90deg'}],
     tintColor: color.commonBlue,
+    transform: [{rotate: '90deg'}],
   },
   dotStyle: {
-    height: hp(0.3),
     width: hp(0.3),
+    height: hp(0.3),
     borderRadius: hp(0.3),
     backgroundColor: color.black,
   },
   flatListView: {
-    paddingVertical: hp(1),
     borderBottomWidth: 1,
+    paddingVertical: hp(1),
     borderColor: color.lightGray,
   },
   flatListSubView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingVertical: hp(1),
+    justifyContent: 'space-between',
   },
   mainTextStyle: {
     fontWeight: 'bold',

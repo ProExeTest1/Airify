@@ -1,8 +1,9 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+
 import {wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
 
 const CheckBox = ({onClick, isChecked}) => {
   return (
@@ -23,16 +24,16 @@ export default CheckBox;
 
 const styles = StyleSheet.create({
   CheckBoxBody: {
+    width: wp(5.5),
+    borderWidth: 1,
+    height: wp(5.5),
+    borderRadius: 5,
     paddingVertical: wp(0.5),
     paddingHorizontal: wp(0.5),
-    height: wp(5.5),
-    width: wp(5.5),
-    borderRadius: 5,
     borderColor: color.commonBlue,
-    borderWidth: 1,
   },
   CheckBoxImg: {
-    height: wp(4),
     width: wp(4),
+    height: wp(4),
   },
 });

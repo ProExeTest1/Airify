@@ -1,8 +1,9 @@
-import {Image, SectionList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Image, SectionList, StyleSheet, Text, View} from 'react-native';
+
 import {color} from '../../helper/ColorConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const RefundandRescheduleInfo = ({sectionData, header}) => {
   return (
@@ -10,9 +11,9 @@ const RefundandRescheduleInfo = ({sectionData, header}) => {
       <View style={styles.refundouterViewStyle}>
         <View style={styles.imageViewStyle}>
           <Image
+            resizeMode="contain"
             source={Images.tickMark}
             style={styles.imageStyle}
-            resizeMode="contain"
           />
         </View>
         <Text style={styles.refundTextStyle}>{header}</Text>
@@ -47,51 +48,51 @@ export default RefundandRescheduleInfo;
 
 const styles = StyleSheet.create({
   mainViewStyle: {
-    width: '92%',
-    alignSelf: 'center',
     flex: 1,
+    width: '92%',
     borderRadius: 10,
+    alignSelf: 'center',
     paddingVertical: hp(2.4),
     backgroundColor: color.white,
   },
   refundouterViewStyle: {flexDirection: 'row', alignItems: 'center'},
   imageViewStyle: {
-    backgroundColor: color.commonBlue,
     padding: hp(0.9),
     borderRadius: 100,
     marginHorizontal: wp(2.3),
+    backgroundColor: color.commonBlue,
   },
   imageStyle: {
-    height: hp(1.3),
     width: hp(1.3),
+    height: hp(1.3),
     tintColor: color.white,
   },
   refundTextStyle: {
-    fontSize: fontSize(22),
     fontWeight: '600',
-    color: color.commonBlue,
+    fontSize: fontSize(22),
     marginHorizontal: wp(1),
+    color: color.commonBlue,
   },
   titleTextStyle: {
-    fontSize: fontSize(19),
+    marginTop: hp(2),
     fontWeight: '500',
     color: color.black,
-    marginTop: hp(2),
+    fontSize: fontSize(19),
   },
   titleViewStyle: {
-    borderTopWidth: 0.5,
     width: '100%',
+    borderTopWidth: 0.5,
+    marginVertical: hp(2),
     borderColor: '#e2e2e2',
     marginHorizontal: wp(2.3),
-    marginVertical: hp(2),
   },
   textStyle: {
-    fontSize: fontSize(17),
     color: '#383838',
+    fontSize: fontSize(17),
   },
   textViewStyle: {
-    flexDirection: 'row',
     width: '85%',
+    flexDirection: 'row',
     marginVertical: hp(0.5),
     marginHorizontal: wp(5.3),
   },

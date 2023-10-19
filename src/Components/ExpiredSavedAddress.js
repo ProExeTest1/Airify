@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,27 +7,29 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import moment from 'moment';
-import {color} from '../helper/ColorConstant';
-import {fontSize, hp, wp} from '../helper/Constant';
-import {Images} from '../helper/IconConstant';
 import {useDispatch} from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
+import {color} from '../helper/ColorConstant';
+import {Images} from '../helper/IconConstant';
+import {fontSize, hp, wp} from '../helper/Constant';
 import {expiredFlight} from '../redux/action/SavedFlights';
 
 const ExpiredSavedAddress = ({onPress}) => {
+  const dispatch = useDispatch();
   const [expireAddressData, setExpireAddressData] = useState([]);
+
   useEffect(() => {
     ExpireAddressData();
   }, []);
-  const dispatch = useDispatch();
+
   const ExpireAddressData = async () => {
     await firestore()
       .collection('SavedFlights')
       .onSnapshot(querySnapshot => {
         const users = [];
-
         querySnapshot.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot.data(),
@@ -60,8 +62,8 @@ const ExpiredSavedAddress = ({onPress}) => {
     <View style={styles.container}>
       <FlatList
         bounces={false}
-        showsVerticalScrollIndicator={false}
         data={expireAddressData}
+        showsVerticalScrollIndicator={false}
         renderItem={({item, index}) => {
           return (
             <TouchableOpacity
@@ -78,8 +80,8 @@ const ExpiredSavedAddress = ({onPress}) => {
                 <Image
                   source={Images.filled_save}
                   style={{
-                    height: hp(2.5),
                     width: hp(2.5),
+                    height: hp(2.5),
                     resizeMode: 'contain',
                     tintColor: color.commonBlue,
                   }}
@@ -126,18 +128,18 @@ const ExpiredSavedAddress = ({onPress}) => {
                 style={[
                   styles.cardBottemBody,
                   {
+                    paddingTop: hp(2),
                     borderTopWidth: 1,
                     borderColor: color.grayLight,
-                    paddingTop: hp(2),
                   },
                 ]}>
                 <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
                 <View
                   style={{
-                    backgroundColor: color.Grey,
+                    borderRadius: 4,
                     paddingVertical: hp(1),
                     paddingHorizontal: wp(2),
-                    borderRadius: 4,
+                    backgroundColor: color.Grey,
                   }}>
                   <Text>Expired</Text>
                 </View>
@@ -156,36 +158,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
   },
   cardBody: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    marginBottom: hp(2),
-    borderRadius: 10,
-    borderColor: color.grayLight,
-    borderWidth: 1,
     flex: 1,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: hp(2),
+    paddingHorizontal: wp(4),
+    backgroundColor: color.white,
+    borderColor: color.grayLight,
   },
   cardHeader: {
-    borderColor: color.grayLight,
+    alignItems: 'center',
+    flexDirection: 'row',
     borderBottomWidth: 1,
     paddingVertical: hp(2.5),
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderColor: color.grayLight,
   },
   cardHeaderText: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
     flex: 1,
+    fontWeight: 'bold',
+    fontSize: fontSize(18),
   },
   cardHeaderLogo: {
-    height: wp(5.8),
     width: wp(5.8),
-    borderRadius: 500,
+    height: wp(5.8),
     marginEnd: wp(3),
+    borderRadius: 500,
   },
   cardPrice: {
-    color: color.commonBlue,
-    fontSize: fontSize(20),
     fontWeight: '600',
+    fontSize: fontSize(20),
+    color: color.commonBlue,
   },
   cardPriceTitle: {
     color: color.darkLight,
@@ -200,8 +202,8 @@ const styles = StyleSheet.create({
     width: wp(20),
   },
   FlightsPlaseImgBody: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
   },
   FlightsPlaseImg: {
     height: hp(5),
@@ -212,21 +214,21 @@ const styles = StyleSheet.create({
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
-    fontSize: fontSize(21),
     color: '#000',
     fontWeight: 'bold',
     marginTop: hp(1.5),
+    fontSize: fontSize(21),
   },
   FlightsPlaseName: {
-    color: color.darkLight,
     fontWeight: '500',
+    color: color.darkLight,
   },
   cardBottemBody: {
+    paddingTop: hp(1),
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: hp(2.5),
-    paddingTop: hp(1),
+    justifyContent: 'space-between',
   },
 });
 

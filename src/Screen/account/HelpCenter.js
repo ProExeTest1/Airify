@@ -1,28 +1,29 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {color} from '../../helper/ColorConstant';
+
+import Faq from '../../components/Faq';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
 import ContactUS from '../../components/ContactUs';
-import Faq from '../../components/Faq';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
-const HelpCenter = ({navigation: {goBack}, navigation}) => {
+const HelpCenter = ({navigation: {goBack}}) => {
   const [selectedOption, setSelectedOption] = useState(true);
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.helpCenter}
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {}}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
-        Images1Color={color.white}
       />
       <View style={styles.buttonViewStyle}>
         <TouchableOpacity
@@ -81,23 +82,23 @@ const styles = StyleSheet.create({
     backgroundColor: color.Grey,
   },
   buttonViewStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginHorizontal: wp(2),
-    backgroundColor: color.lightGray2,
     borderRadius: wp(2),
+    flexDirection: 'row',
     marginVertical: hp(2),
+    marginHorizontal: wp(2),
+    justifyContent: 'space-around',
+    backgroundColor: color.lightGray2,
   },
   buttonStyle: {
     flex: 1,
-    height: hp(5),
     width: wp(48),
+    height: hp(5),
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonTextStyle: {
-    fontSize: fontSize(15),
     fontWeight: 'bold',
+    fontSize: fontSize(15),
   },
 });
 

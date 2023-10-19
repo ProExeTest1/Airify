@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,25 +7,25 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+
+import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
 
 const TextInputPassenger = ({
-  placeholder,
   value,
-  onChangeText,
-  passengerTextInputStyle,
-  TextInputLabel,
-  textInputLabelStyle,
-  onPressCalender,
-  onPressCountryPicker,
-  editable,
-  textInputIcon,
-  disabled,
   onPress,
+  editable,
+  disabled,
+  placeholder,
+  onChangeText,
   calenderIcon,
+  textInputIcon,
+  TextInputLabel,
+  onPressCalender,
+  textInputLabelStyle,
+  onPressCountryPicker,
+  passengerTextInputStyle,
 }) => {
   const [focus, setFocus] = useState(false);
 
@@ -94,25 +94,25 @@ const TextInputPassenger = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: color.white,
     marginHorizontal: wp(3),
+    backgroundColor: color.white,
   },
   passengerTextInputStyle: {
-    fontSize: fontSize(16),
     flex: 1,
+    fontSize: fontSize(16),
   },
   textInputLabelStyle: {
-    fontSize: fontSize(14),
     fontWeight: '500',
+    fontSize: fontSize(14),
     marginVertical: hp(1.5),
     marginHorizontal: wp(1),
   },
   inputView: {
-    flexDirection: 'row',
-    backgroundColor: color.lightWhite,
-    paddingVertical: hp(2.5),
     borderRadius: wp(4),
+    flexDirection: 'row',
     paddingHorizontal: wp(6),
+    paddingVertical: hp(2.5),
+    backgroundColor: color.lightWhite,
   },
 });
 

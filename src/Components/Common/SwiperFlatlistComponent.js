@@ -1,26 +1,27 @@
-import {Dimensions, Image, StyleSheet, View} from 'react-native';
 import React from 'react';
+import {Dimensions, Image, StyleSheet, View} from 'react-native';
 import SwiperFlatList from 'react-native-swiper-flatlist';
-import {dummyData} from '../../assets/DummyData/Data';
+
 import {hp, wp} from '../../helper/Constant';
+import {dummyData} from '../../assets/DummyData/Data';
 
 const SwiperFlatlistComponent = ({showPagination}) => {
   return (
     <View>
       <SwiperFlatList
         autoplay
-        disableGesture={true}
-        autoplayDelay={3}
         autoplayLoop
         data={dummyData}
+        autoplayDelay={3}
+        disableGesture={true}
         showPagination={showPagination}
         renderItem={({item}) => {
           return (
             <View style={styles.child}>
               <Image
                 source={item.image}
-                style={styles.offerimageStyle}
                 resizeMode="stretch"
+                style={styles.offerimageStyle}
               />
             </View>
           );
@@ -38,8 +39,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   offerimageStyle: {
-    height: hp(25),
     width: wp(88),
+    height: hp(25),
     borderRadius: 14,
   },
 });

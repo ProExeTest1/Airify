@@ -1,9 +1,10 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
 import {useSelector} from 'react-redux';
+import React from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
+
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const FlightDetailsCard = ({item}) => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
@@ -55,38 +56,38 @@ export default FlightDetailsCard;
 
 const styles = StyleSheet.create({
   cardBody: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    marginBottom: hp(2),
+    width: '92%',
     borderRadius: 10,
     borderColor: '#000',
-    width: '92%',
     alignSelf: 'center',
+    marginBottom: hp(2),
+    paddingHorizontal: wp(4),
+    backgroundColor: color.white,
   },
   cardHeader: {
-    borderColor: '#e2e2e2',
     borderBottomWidth: 1,
-    paddingVertical: hp(2.5),
     flexDirection: 'row',
     alignItems: 'center',
+    borderColor: '#e2e2e2',
+    paddingVertical: hp(2.5),
   },
   cardHeaderText: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
     flex: 1,
+    fontWeight: 'bold',
     color: color.black,
+    fontSize: fontSize(18),
   },
   cardHeaderLogo: {
-    height: wp(5.8),
     width: wp(5.8),
-    borderRadius: 500,
+    height: wp(5.8),
     marginEnd: wp(3),
+    borderRadius: 500,
   },
   cardPrice: {
-    color: color.commonBlue,
-    fontSize: fontSize(20),
     fontWeight: '600',
+    fontSize: fontSize(20),
     marginVertical: hp(1.2),
+    color: color.commonBlue,
   },
   cardPriceTitle: {
     color: '#7e7e7f',
@@ -101,8 +102,8 @@ const styles = StyleSheet.create({
     width: wp(20),
   },
   FlightsPlaseImgBody: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
   },
   FlightsPlaseImg: {
     height: hp(5),
@@ -113,20 +114,20 @@ const styles = StyleSheet.create({
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
-    fontSize: fontSize(21),
     color: '#000',
     fontWeight: 'bold',
     marginTop: hp(1.5),
+    fontSize: fontSize(21),
   },
   FlightsPlaseName: {
     color: '#7e7e7f',
     fontWeight: '500',
   },
   cardBottemBody: {
+    paddingTop: hp(1),
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingBottom: hp(2.5),
-    paddingTop: hp(1),
+    justifyContent: 'space-between',
   },
 });

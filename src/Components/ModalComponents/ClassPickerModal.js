@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -6,20 +7,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
 import Modal from 'react-native-modal';
-import {ClassData} from '../../assets/DummyData/Data';
+
 import {strings} from '../../helper/Strings';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {ClassData} from '../../assets/DummyData/Data';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';
 
 const ClassPickerModal = ({
-  isModalVisible,
-  toggleModal,
-  setClass,
   onCancel,
+  setClass,
+  toggleModal,
+  isModalVisible,
 }) => {
   const [index, setIndex] = useState(1);
   return (
@@ -58,9 +59,9 @@ const ClassPickerModal = ({
                     </View>
                     {item.id == index ? (
                       <Image
+                        resizeMode="contain"
                         source={Images.tickMark}
                         style={styles.imageStyle}
-                        resizeMode="contain"
                       />
                     ) : null}
                   </TouchableOpacity>
@@ -71,8 +72,8 @@ const ClassPickerModal = ({
           </View>
           <View style={styles.buttonViewStyle}>
             <OnBoardingTwoButton
-              buttonTextOne={'Cancel'}
               buttonTextTwo={'OK'}
+              buttonTextOne={'Cancel'}
               onPress1={() => {
                 onCancel();
                 setIndex(1);
@@ -90,35 +91,35 @@ export default ClassPickerModal;
 
 const styles = StyleSheet.create({
   modalStyle: {
-    justifyContent: 'flex-end',
     width: '100%',
-    alignSelf: 'center',
     marginBottom: 0,
+    alignSelf: 'center',
+    justifyContent: 'flex-end',
   },
   modalViewStyle: {
-    backgroundColor: 'white',
     borderTopEndRadius: 20,
+    backgroundColor: 'white',
     borderTopStartRadius: 20,
   },
   toggleLineStyle: {
-    borderWidth: 1.5,
     width: wp(15),
+    borderWidth: 1.5,
     alignSelf: 'center',
     marginVertical: hp(1.2),
     borderColor: color.grey,
   },
   headerStyle: {
+    width: '90%',
+    alignSelf: 'center',
     borderBottomWidth: 0.3,
     borderColor: color.grey,
     marginVertical: hp(1.2),
-    width: '90%',
-    alignSelf: 'center',
   },
   headerTextStyle: {
+    color: 'black',
+    fontWeight: 'bold',
     textAlign: 'center',
     fontSize: fontSize(22),
-    fontWeight: 'bold',
-    color: 'black',
     marginVertical: hp(2.4),
   },
   cardViewStyle: {
@@ -128,64 +129,64 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 10,
     alignSelf: 'center',
-    marginVertical: hp(0.9),
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: hp(0.9),
   },
   titleTextStyle: {
-    fontSize: fontSize(20),
     color: 'black',
     fontWeight: '600',
+    fontSize: fontSize(20),
   },
   discriptionTextStyle: {
-    fontSize: fontSize(15),
     color: color.grey,
+    fontSize: fontSize(15),
     marginVertical: hp(0.9),
   },
   textViewStyle: {
     width: '90%',
   },
   cancelButtonTextStyle: {
-    fontSize: fontSize(20),
     fontWeight: 'bold',
+    fontSize: fontSize(20),
     color: color.commonBlue,
   },
   okButtonTextStyle: {
-    fontSize: fontSize(20),
-    fontWeight: 'bold',
     color: 'white',
+    fontWeight: 'bold',
+    fontSize: fontSize(20),
   },
   okButtonStyle: {
-    backgroundColor: color.commonBlue,
-    height: hp(6),
     width: wp(38),
-    marginHorizontal: wp(3.4),
+    height: hp(6),
     borderRadius: 12,
-    justifyContent: 'center',
     alignItems: 'center',
     marginVertical: hp(1.2),
+    justifyContent: 'center',
+    marginHorizontal: wp(3.4),
+    backgroundColor: color.commonBlue,
   },
   cancelButtonStyle: {
-    backgroundColor: '#EBF0FE',
-    height: hp(6),
     width: wp(38),
-    marginHorizontal: wp(3.4),
+    height: hp(6),
     borderRadius: 12,
-    justifyContent: 'center',
     alignItems: 'center',
     marginVertical: hp(1.2),
+    justifyContent: 'center',
+    backgroundColor: '#EBF0FE',
+    marginHorizontal: wp(3.4),
   },
   buttonViewStyle: {
-    paddingVertical: hp(4),
-    borderTopWidth: 1,
     width: '90%',
-    alignSelf: 'center',
-    borderColor: '#e2e2e2',
+    borderTopWidth: 1,
     marginBottom: hp(2),
+    alignSelf: 'center',
+    paddingVertical: hp(4),
+    borderColor: '#e2e2e2',
   },
   imageStyle: {
-    height: hp(2.4),
     width: hp(2.4),
+    height: hp(2.4),
     marginHorizontal: wp(2.6),
     tintColor: color.commonBlue,
   },

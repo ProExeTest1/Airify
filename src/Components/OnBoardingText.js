@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {fontSize, hp, wp} from '../helper/Constant';
+
 import {color} from '../helper/ColorConstant';
+import {fontSize, hp, wp} from '../helper/Constant';
 
 const OnBoardingText = ({
-  OnBoardingMainText,
   OnBoardingSubText,
+  OnBoardingMainText,
   OnBoardingSubTextStyle,
   OnBoardingMainTextStyle,
 }) => {
@@ -26,18 +27,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   OnBoardingMainTextStyle: {
-    fontSize: fontSize(24),
-    textAlign: 'center',
+    width: wp(75),
     marginTop: hp(2),
     fontWeight: 'bold',
-    width: wp(75),
     color: color.black,
+    textAlign: 'center',
+    fontSize: fontSize(24),
   },
   OnBoardingSubTextStyle: {
-    fontSize: fontSize(12),
-    textAlign: 'center',
     width: wp(63),
     color: color.black,
+    textAlign: 'center',
+    fontSize: fontSize(12),
   },
 });
 

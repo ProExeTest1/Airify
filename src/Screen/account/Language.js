@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,22 +7,24 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
-import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
-import {languageDummyJson} from '../../assets/DummyData/languageDummyJson';
-import {fontSize, hp, wp} from '../../helper/Constant';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Language = ({navigation: {goBack}, navigation}) => {
-  const [selectedLanguage, setSelectedLanguage] = useState({});
+import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {languageDummyJson} from '../../assets/DummyData/languageDummyJson';
+
+const Language = ({navigation: {goBack}}) => {
   const [languageData, setLanguageData] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState({});
 
   useEffect(() => {
     data();
     getData();
   }, []);
+
   const data = () => {
     const det = languageDummyJson.data.countries.map(i =>
       i.languages.map(e => {
@@ -55,23 +57,23 @@ const Language = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.language}
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {}}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
-        Images1Color={color.white}
       />
       <View>
         <FlatList
-          extraData={selectedLanguage}
           bounces={false}
-          showsVerticalScrollIndicator={false}
           data={languageData}
+          extraData={selectedLanguage}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
@@ -98,8 +100,8 @@ const Language = ({navigation: {goBack}, navigation}) => {
                   <Image
                     source={Images.checkIcon}
                     style={{
-                      height: hp(3),
                       width: hp(3),
+                      height: hp(3),
                       tintColor: 'blue',
                       paddingStart: 'auto',
                     }}
@@ -120,23 +122,23 @@ const styles = StyleSheet.create({
     backgroundColor: color.grayLight,
   },
   flagIconStyle: {
-    height: hp(6),
     width: hp(6),
+    height: hp(6),
   },
   flatListStyle: {
+    borderWidth: 2,
     borderRadius: wp(2),
     flexDirection: 'row',
-    paddingVertical: hp(3),
     marginVertical: hp(1),
+    paddingVertical: hp(3),
     marginHorizontal: wp(6),
     paddingHorizontal: wp(4),
     backgroundColor: color.white,
-    borderWidth: 2,
     justifyContent: 'space-between',
   },
   textStyle: {
-    fontSize: fontSize(20),
     paddingRight: wp(2),
+    fontSize: fontSize(20),
   },
   textViewStyle: {
     flexDirection: 'row',

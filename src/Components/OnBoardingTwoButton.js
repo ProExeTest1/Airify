@@ -1,12 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+
 import {hp, wp} from '../helper/Constant';
 
 const OnBoardingTwoButton = ({
-  buttonTextOne,
-  buttonTextTwo,
   onPress1,
   onPress2,
+  buttonTextOne,
+  buttonTextTwo,
   twoButtonStyle,
   TwoButtonStyle,
 }) => {
@@ -17,9 +18,9 @@ const OnBoardingTwoButton = ({
         onPress={onPress1}>
         <Text
           style={{
-            textAlign: 'center',
             color: 'blue',
             fontWeight: '500',
+            textAlign: 'center',
           }}>
           {buttonTextOne}
         </Text>
@@ -29,9 +30,9 @@ const OnBoardingTwoButton = ({
         onPress={onPress2}>
         <Text
           style={{
-            textAlign: 'center',
             color: 'white',
             fontWeight: '500',
+            textAlign: 'center',
           }}>
           {buttonTextTwo}
         </Text>
@@ -42,18 +43,18 @@ const OnBoardingTwoButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    marginTop: hp(4),
     alignItems: 'center',
     flexDirection: 'row',
-    marginTop: hp(4),
+    justifyContent: 'center',
   },
   buttonStyle: {
-    height: hp(5),
     width: wp(40),
+    height: hp(5),
     marginRight: wp(2),
+    borderRadius: wp(2),
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: wp(2),
     backgroundColor: '#EEF2FF',
   },
 });

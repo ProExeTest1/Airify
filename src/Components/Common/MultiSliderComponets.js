@@ -1,26 +1,27 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+
 import {color} from '../../helper/ColorConstant';
 
 const MultiSliderComponets = ({
   min,
   max,
-  sliderLength,
   values,
+  sliderLength,
   onValuesChangeFinish,
 }) => {
   return (
     <MultiSlider
       min={min}
       max={max}
+      values={values}
+      enabledTwo={true}
+      sliderLength={sliderLength}
       selectedStyle={styles.MultiSliderStyle}
       unselectedStyle={styles.MultiSliderSelectedStyle}
-      values={values}
-      sliderLength={sliderLength}
-      customMarker={() => <View style={styles.MultiSliderCustomMarker}></View>}
-      enabledTwo={true}
       onValuesChangeFinish={a => onValuesChangeFinish(a)}
+      customMarker={() => <View style={styles.MultiSliderCustomMarker}></View>}
     />
   );
 };
@@ -37,11 +38,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#eeeeee',
   },
   MultiSliderCustomMarker: {
-    height: 20,
     width: 20,
-    backgroundColor: '#fff',
+    height: 20,
     borderWidth: 4,
     borderRadius: 50,
+    backgroundColor: '#fff',
     borderColor: color.commonBlue,
   },
 });

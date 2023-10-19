@@ -1,10 +1,11 @@
-import {View, StyleSheet, FlatList} from 'react-native';
 import React from 'react';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {View, StyleSheet, FlatList} from 'react-native';
+
 import CardList from './CardList';
 import {wp} from '../../helper/Constant';
-import {useDispatch, useSelector} from 'react-redux';
 import {SearchFlightCardData} from '../../redux/action/SearchFlightAction';
-import {useNavigation} from '@react-navigation/native';
 
 const TicktList = ({SelectDate, SearchFlightCard}) => {
   const navigation = useNavigation();
@@ -35,13 +36,13 @@ const TicktList = ({SelectDate, SearchFlightCard}) => {
         renderItem={({item, index}) => {
           return (
             <CardList
-              setCartFlightData={setCartFlightData}
               item={item}
               index={index}
+              setCartFlightData={setCartFlightData}
             />
           );
         }}
-        key={({item, index}) => index}
+        key={({index}) => index}
       />
     </View>
   );

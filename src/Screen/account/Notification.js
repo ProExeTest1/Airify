@@ -1,17 +1,18 @@
-import React, {Component, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
-import {CommonHeader} from '../../components';
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
-import {NotificationData} from '../../assets/DummyData/Data';
-import {fontSize, hp, wp} from '../../helper/Constant';
+import auth from '@react-native-firebase/auth';
+import React, {useEffect, useState} from 'react';
 import ToggleSwitch from 'toggle-switch-react-native';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 
-const Notification = ({navigation: {goBack}, navigation}) => {
+import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+
+const Notification = ({navigation: {goBack}}) => {
   const [NotificationList, setNotificationList] = useState([]);
+
   useEffect(() => {
     NotificationData();
   }, [NotificationList]);
@@ -30,22 +31,22 @@ const Notification = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.notification}
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {}}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
-        Images1Color={color.white}
       />
       <View style={styles.flatListBodyViewStyle}>
         <FlatList
-          showsVerticalScrollIndicator={false}
           bounces={false}
           data={NotificationList}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <View style={styles.FlatListView}>
@@ -89,12 +90,12 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     flex: 1,
-    fontSize: fontSize(18),
     fontWeight: '500',
+    fontSize: fontSize(18),
   },
   flatListBodyViewStyle: {
-    paddingHorizontal: wp(4),
     flex: 1,
+    paddingHorizontal: wp(4),
   },
 });
 

@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,12 +9,6 @@ import {
   Alert,
   Share,
 } from 'react-native';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import firestore, {firebase} from '@react-native-firebase/firestore';
 import {useSelector} from 'react-redux';
 import {
   Menu,
@@ -23,9 +17,17 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
+import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const SavedAddress = ({navigation: {goBack}, navigation}) => {
   const [addressData, setAddressData] = useState([]);
+
   useEffect(() => {
     SavedAddress();
   }, []);
@@ -118,26 +120,26 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        onPress1={true}
+        onPress2={true}
+        Images2={Images.plus}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.savedAddress}
+        cancelButtonStyle={styles.plusIconStyle}
         navigation1={() => {
           goBack();
         }}
         navigation2={() => {
           navigation.navigate('LocationSearch');
         }}
-        onPress1={true}
-        onPress2={true}
-        Images1={Images.backIcon}
-        Images2={Images.plus}
-        cancelButtonStyle={styles.plusIconStyle}
-        Images1Color={color.white}
       />
       <View style={styles.FlatListViewStyle}>
         <FlatList
           bounces={false}
-          showsVerticalScrollIndicator={false}
           data={addressData}
-          renderItem={({item, index}) => {
+          showsVerticalScrollIndicator={false}
+          renderItem={({item}) => {
             return (
               <View style={styles.flatListInnerViewStyleL}>
                 <View style={styles.cardViewHeaderStyle}>
@@ -264,34 +266,34 @@ const styles = StyleSheet.create({
     backgroundColor: color.Grey,
   },
   plusIconStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     resizeMode: 'contain',
   },
   buttonStyle: {
-    backgroundColor: color.white,
-    borderWidth: 1,
-    borderColor: color.commonBlue,
-    marginBottom: hp(2),
     flex: 1,
+    borderWidth: 1,
+    marginBottom: hp(2),
+    backgroundColor: color.white,
+    borderColor: color.commonBlue,
   },
   buttonTextStyle: {
     color: color.commonBlue,
   },
   FlatListViewStyle: {flex: 1, paddingVertical: hp(1)},
   flatListInnerViewStyleL: {
-    backgroundColor: color.white,
+    borderRadius: wp(2),
     marginVertical: hp(1),
     marginHorizontal: wp(6),
-    borderRadius: wp(2),
     paddingHorizontal: wp(4),
+    backgroundColor: color.white,
   },
   cardViewHeaderStyle: {
-    paddingVertical: hp(1),
-    borderBottomWidth: 1,
-    borderColor: color.lightGray,
-    flexDirection: 'row',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    paddingVertical: hp(1),
+    borderColor: color.lightGray,
     justifyContent: 'space-between',
   },
   cardViewStyle: {
@@ -301,13 +303,13 @@ const styles = StyleSheet.create({
   },
   shareIconStyle: {height: hp(3), width: hp(3), resizeMode: 'contain'},
   primaryTextStyle: {
-    borderColor: color.commonBlue,
-    borderRadius: wp(1),
     borderWidth: 1,
+    borderRadius: wp(1),
     alignItems: 'center',
-    paddingHorizontal: wp(2),
     marginHorizontal: wp(4),
+    paddingHorizontal: wp(2),
     paddingVertical: hp(0.5),
+    borderColor: color.commonBlue,
   },
   dataStyle: {
     paddingVertical: hp(1),
@@ -317,61 +319,61 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonViewStyle: {
+    paddingTop: hp(1),
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: hp(2),
-    paddingTop: hp(1),
     marginHorizontal: wp(2),
     justifyContent: 'space-between',
   },
   ChangeAddressButtonStyle: {
-    paddingVertical: hp(1.5),
     borderWidth: 1,
-    borderColor: color.commonBlue,
     borderRadius: wp(2),
+    paddingVertical: hp(1.5),
     paddingHorizontal: wp(4),
+    borderColor: color.commonBlue,
   },
   ChangeAddressButtonTextStyle: {
-    color: color.commonBlue,
     textAlign: 'center',
+    color: color.commonBlue,
   },
   optionViewStyle: {
-    backgroundColor: color.black,
-    paddingVertical: hp(1),
-    position: 'absolute',
-    flexDirection: 'row',
     flex: 1,
-    alignSelf: 'flex-end',
+    zIndex: 1,
     bottom: -25,
     right: wp(4),
-    zIndex: 1,
+    position: 'absolute',
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    paddingVertical: hp(1),
+    backgroundColor: color.black,
   },
   dropdownBody: {
+    right: 0,
+    top: wp(12),
+    width: wp(65),
+    borderRadius: 10,
     position: 'absolute',
     backgroundColor: color.white,
-    top: wp(12),
-    borderRadius: 10,
-    width: wp(65),
-    right: 0,
   },
   dropdownList: {
+    paddingStart: wp(3),
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: hp(1.5),
-    paddingStart: wp(3),
   },
   dropdownIcon: {
-    height: wp(6.5),
     width: wp(6.5),
+    height: wp(6.5),
     marginEnd: wp(4),
   },
   dropdownText: {
-    fontSize: fontSize(18),
     fontWeight: '500',
+    fontSize: fontSize(18),
   },
   BackImg: {
-    height: wp(8),
     width: wp(8),
+    height: wp(8),
     tintColor: color.commonBlue,
   },
 });
