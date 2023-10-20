@@ -66,7 +66,6 @@ const FillPassengerDetails = ({navigation, route}) => {
   }));
   const [flatlistData, setFlatlistData] = useState(newArr);
   const setFlatlistDataa = i => {
-    console.log('hiiii');
     dispatch(SelectSeatActionData(i));
   };
   useEffect(() => {
@@ -82,24 +81,27 @@ const FillPassengerDetails = ({navigation, route}) => {
       setTicketType('Departure');
     }
   };
-  console.log(SelectSeat.every(i => i.seatNo));
-  console.log('>>>>>>>>><<<<<<<<<<<<<<', SelectSeat.length, newArr);
   const onContinue = () => {
     if (tripType === 'Round-Trip' && ticketType === 'Departure') {
-      if (!SelectSeat.every(i => i.seatNo)) {
-        AlertConstant('Please first add passengers to click on plus icon');
-      } else {
+      if (
+        SelectSeat.every(i => i.seatNo) &&
+        flatlistData?.every(i => i.name.length > 0)
+      ) {
         setTicketType('Return');
+      } else {
+        AlertConstant('Please first add passengers to click on plus icon');
       }
     } else {
-      if (!SelectSeat.every(i => i.seatNo)) {
-        AlertConstant('Please first add passengers to click on plus icon');
-      } else {
+      if (
+        SelectSeat.every(i => i.seatNo) &&
+        flatlistData?.every(i => i.name.length > 0)
+      ) {
         navigation?.navigate('PaymentConfirmation');
+      } else {
+        AlertConstant('Please first add passengers to click on plus icon');
       }
     }
   };
-  // console.log(passengerList);
   const toggleDropDown = index => {
     visible ? setVisible(false) : openDropdown();
     setFlatlistIndex(index);
@@ -150,13 +152,14 @@ const FillPassengerDetails = ({navigation, route}) => {
       });
   };
 
-  console.log(flatlistData);
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
         headerName={strings.fillInDetails}
         navigation1={() => {
           navigation.goBack();
+          // dispatch(ReturnSelectSeatActionData([]));
+          dispatch(SelectSeatActionData([]));
         }}
         navigation2={() => {}}
         Images1Color={'#fff'}
@@ -252,9 +255,6 @@ const FillPassengerDetails = ({navigation, route}) => {
                       <DropDownMenu
                         data={passengerList?.filter(i =>
                           flatlistData?.every(e => {
-                            console.log(
-                              e.name != `${i.FirstName}${i.LastName}`,
-                            );
                             return e.name != `${i.FirstName}${i.LastName}`;
                           }),
                         )}

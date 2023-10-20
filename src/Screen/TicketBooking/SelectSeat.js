@@ -97,11 +97,10 @@ const SelectSeat = ({navigation}) => {
     if (selectedSeat.length === seatData.length) {
       dispatch(SelectSeatActionData(seatData));
       setseatData([]);
-      console.log(temp, 'temp temp temp temp tmep tmep');
+      navigation.navigate('FillPassengerDetails');
     } else {
       Alert.alert('please select seat');
     }
-    navigation.navigate('FillPassengerDetails');
   };
 
   useEffect(() => {
@@ -232,10 +231,10 @@ const SelectSeat = ({navigation}) => {
                         ) : (
                           <TouchableOpacity
                             disabled={
-                              OccuiedData.some(i => i === item) ? true : false
+                              OccuiedData?.some(i => i === item) ? true : false
                             }
                             onPress={() => {
-                              seatData.some(i => i.seatNo === item)
+                              seatData?.some(i => i.seatNo === item)
                                 ? null
                                 : setSelectSeat(item);
                             }}
@@ -246,7 +245,7 @@ const SelectSeat = ({navigation}) => {
                                   i => i.seatNo === item,
                                 )
                                   ? color.commonBlue
-                                  : OccuiedData.some(i => i === item)
+                                  : OccuiedData?.some(i => i === item)
                                   ? '#8596b3'
                                   : '#cdd0d6',
                               },
@@ -261,7 +260,7 @@ const SelectSeat = ({navigation}) => {
                                 style={[
                                   styles.seatRowNumberText,
                                   {
-                                    color: OccuiedData.some(i => i === item)
+                                    color: OccuiedData?.some(i => i === item)
                                       ? '#fff'
                                       : color.commonBlue,
                                   },

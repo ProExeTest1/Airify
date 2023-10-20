@@ -21,10 +21,10 @@ const PriceDetails = ({
   const discount = DiscountData?.discountPR
     ? Math.round((totalSeat * ticketPrice * DiscountData?.discountPR) / 100)
     : 0;
-  console.log(ToggleSwitchBut1);
   const TotalPoint = TotalPoints ? TotalPoints : 0;
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = TotalPoint % 100;
+  console.log('totalSeat', totalSeat);
   return (
     <View style={styles.cardBody}>
       <CardHeader

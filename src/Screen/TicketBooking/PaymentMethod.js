@@ -27,9 +27,13 @@ const PaymentMethod = ({navigation}) => {
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
 
-  console.log('>>>>>>>>>>>>>>', Number(WalletData?.wallet?.split(',')[0]));
   const setDataFunction = () => {
-    if (totalSeat * ticketPrice <= Number(WalletData?.wallet?.split(',')[0])) {
+    if (
+      totalSeat * ticketPrice +
+        Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+        Math.round((totalSeat * ticketPrice * 1.5) / 100) <=
+      WalletData?.wallet
+    ) {
       dispatch(SelectpaymentMethodAction(selectOpc));
       navigation.goBack();
     } else {
@@ -60,10 +64,15 @@ const PaymentMethod = ({navigation}) => {
         });
       });
   };
-  console.log(WalletData);
+  console.log(
+    totalSeat * ticketPrice +
+      Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+      Math.round((totalSeat * ticketPrice * 1.5) / 100),
+  );
   useEffect(() => {
     getFirebaseData();
   }, []);
+  console.log(WalletData?.wallet);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -101,9 +110,12 @@ const PaymentMethod = ({navigation}) => {
                 styles.walletPraice,
                 {
                   color:
-                    totalSeat * ticketPrice <=
-                    Number(WalletData?.wallet?.split(',')[0])
-                      ? color.commonBlue
+                    totalSeat * ticketPrice +
+                      Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+                      Math.round((totalSeat * ticketPrice * 1.5) / 100) <=
+                    WalletData?.wallet
+                      ? // Number(WalletData?.wallet?.split(',')[0])
+                        color.commonBlue
                       : 'red',
                 },
               ]}>

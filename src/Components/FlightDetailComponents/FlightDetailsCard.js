@@ -26,25 +26,25 @@ const FlightDetailsCard = ({
       <View style={styles.cardDataBody}>
         <View style={styles.FlightsPlaseBody}>
           <Text style={styles.FlightsPlaseName}>{searchFlightData?.from}</Text>
-          <Text style={styles.FlightsPlaseNicName}>{item.pickTime}</Text>
+          <Text style={styles.FlightsPlaseNicName}>{item?.pickTime}</Text>
         </View>
         <View style={styles.FlightsPlaseImgBody}>
           <Image
             style={styles.FlightsPlaseImg}
             source={Images.airplaneWhiteIcon}
           />
-          <Text style={styles.FlightsPlaseImgText}>{item.totalHours}</Text>
+          <Text style={styles.FlightsPlaseImgText}>{item?.totalHours}</Text>
         </View>
         <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
           <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
-          <Text style={styles.FlightsPlaseNicName}>{item.lendTime}</Text>
+          <Text style={styles.FlightsPlaseNicName}>{item?.lendTime}</Text>
         </View>
       </View>
       <View style={styles.cardBottemBody}>
         <Text style={styles.FlightsPlaseName}>
           {searchFlightData?.fromShortform}
         </Text>
-        <Text style={styles.FlightsPlaseImgText}>{item.stop}</Text>
+        <Text style={styles.FlightsPlaseImgText}>{item?.stop}</Text>
         <Text style={styles.FlightsPlaseName}>
           {searchFlightData?.toShortform}
         </Text>

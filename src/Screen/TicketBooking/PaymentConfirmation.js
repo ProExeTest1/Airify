@@ -24,6 +24,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {
   DiscountDataAction,
+  SelectpaymentMethodAction,
   totalPaymentListAction,
 } from '../../redux/action/SelectSeatAction';
 const PatmentConfirmation = ({navigation}) => {
@@ -43,10 +44,12 @@ const PatmentConfirmation = ({navigation}) => {
   const TotalPoint = Number(PointsData.TotalPoints);
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = ToggleSwitchBut1 ? TotalPoint % 100 : TotalPoint;
+  const Discount = Number(DiscountData.discountPR)
+    ? Number(DiscountData.discountPR)
+    : 0;
   const PaymentMethodData = useSelector(
     e => e.SelectSeatData.SelectPaymentMethod,
   );
-  console.log('>>>>>>>>>>>>>', PaymentMethodData);
   const getFirebaseData = async () => {
     await firestore()
       .collection('Points')
@@ -81,7 +84,6 @@ const PatmentConfirmation = ({navigation}) => {
             key: documentSnapshot.id,
           });
         });
-        console.log(users);
         users.filter(item => {
           if (item.key == auth().currentUser.uid) {
             setWalletData(item);
@@ -112,8 +114,14 @@ const PatmentConfirmation = ({navigation}) => {
             ValidDiscount: DiscountData?.id ? true : false,
             discountData: DiscountData,
             useDiscountPrice:
-              -(totalSeat * ticketPrice * DiscountData.discountPR) / 100,
+              (Number(totalSeat) * Number(ticketPrice) * Discount) / 100,
           },
+          totalPayment:
+            totalSeat * ticketPrice +
+            Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+            Math.round((totalSeat * ticketPrice * 1.5) / 100) -
+            (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) / 100 -
+            Number(validPoint),
         }),
       );
       navigation?.navigate('ConfirmPin');
@@ -133,6 +141,8 @@ const PatmentConfirmation = ({navigation}) => {
         headerName={'Payment Confirmaion'}
         navigation1={() => {
           navigation.goBack();
+          dispatch(DiscountDataAction({}));
+          dispatch(SelectpaymentMethodAction({}));
         }}
         navigation2={() => {}}
         Images1Color={'#fff'}

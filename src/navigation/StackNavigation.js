@@ -40,6 +40,8 @@ import ReturnSearchFlights from '../screen/searchFlights/ReturnFlights/ReturnSea
 import UseDiscountVoucher from '../screen/TicketBooking/UseDiscountVoucher';
 import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
 import ConfirmPin from '../screen/TicketBooking/ConfirmPin';
+import TransactionDetails from '../screen/generateTicket/TransactionDetails';
+import Congratulation from '../screen/TicketBooking/Congratulation';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -48,7 +50,9 @@ const StackNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={user ? 'TabNavigation' : 'WelcomeScreen'}>
+        initialRouteName={user ? 'TabNavigation' : 'WelcomeScreen'}
+        // initialRouteName={user ? 'TransactionDetails' : 'WelcomeScreen'}
+      >
         <Stack.Screen name="SelectSeat" component={SelectSeat} />
         <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
@@ -112,6 +116,11 @@ const StackNavigation = () => {
         />
         <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
         <Stack.Screen name="ConfirmPin" component={ConfirmPin} />
+        <Stack.Screen
+          name="TransactionDetails"
+          component={TransactionDetails}
+        />
+        <Stack.Screen name="Congratulation" component={Congratulation} />
       </Stack.Navigator>
     </NavigationContainer>
   );
