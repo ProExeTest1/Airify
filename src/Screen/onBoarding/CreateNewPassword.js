@@ -1,22 +1,16 @@
-import React, {Component, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import {Images} from '../../helper/IconConstant';
-import {strings} from '../../helper/Strings';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import React, {useState} from 'react';
 import Modal from 'react-native-modal';
+import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
 
-const CreateNewPassword = ({navigation: {goBack}, navigation}) => {
+import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
+import {hp, wp} from '../../helper/Constant';
+import OnBoardingText from '../../components/OnBoardingText';
+import OnBoardingTextInput from '../../components/OnBoardingTextInput';
+import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
+import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+
+const CreateNewPassword = ({navigation: {goBack}}) => {
   const [modal, setModal] = useState(false);
   const openModal = () => {
     setModal(true);
@@ -28,12 +22,12 @@ const CreateNewPassword = ({navigation: {goBack}, navigation}) => {
     <View style={styles.container}>
       <View style={{flex: 0.27, backgroundColor: 'blue'}}>
         <OnBoardingModuleHeader
-          backImage={Images.backIcon}
           onPress={() => {
             goBack();
           }}
-          MainText={strings.welcome}
           SubText={strings.subText}
+          MainText={strings.welcome}
+          backImage={Images.backIcon}
         />
       </View>
       <View style={{flex: 0.73, marginTop: hp(4)}}>
@@ -50,17 +44,17 @@ const CreateNewPassword = ({navigation: {goBack}, navigation}) => {
         <View style={styles.buttonViewStyle}>
           <View style={styles.lineStyle} />
           <OnBoardingSingleButton
+            onPress={openModal}
             buttonText={strings.SavePass}
             buttonStyle={styles.buttonStyle}
-            onPress={openModal}
           />
         </View>
       </View>
       <Modal
-        onBackdropPress={closeModal}
-        onDismiss={closeModal}
-        backdropOpacity={0.8}
         isVisible={modal}
+        backdropOpacity={0.8}
+        onDismiss={closeModal}
+        onBackdropPress={closeModal}
         style={{
           justifyContent: 'center',
           margin: wp(0),
@@ -68,18 +62,18 @@ const CreateNewPassword = ({navigation: {goBack}, navigation}) => {
         }}>
         <View style={styles.modalView}>
           <Image
-            source={Images.passResetSuccess}
             style={styles.modalImageStyle}
+            source={Images.passResetSuccess}
           />
           <OnBoardingText
-            OnBoardingMainText={strings.PasswordChangeSuccessText}
             OnBoardingMainTextStyle={{color: 'blue'}}
             OnBoardingSubText={strings.WelcomeModalSubText}
+            OnBoardingMainText={strings.PasswordChangeSuccessText}
             OnBoardingSubTextStyle={{width: wp(50), marginTop: hp(2)}}
           />
           <OnBoardingText
-            OnBoardingSubText={strings.WelcomeModalSubText2}
             OnBoardingSubTextStyle={{bottom: hp(3)}}
+            OnBoardingSubText={strings.WelcomeModalSubText2}
           />
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
@@ -97,41 +91,41 @@ const styles = StyleSheet.create({
     marginLeft: wp(6),
   },
   rememberLineStyle: {
+    marginTop: hp(2),
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: hp(2),
   },
   forgotPasswordStyle: {
     color: 'blue',
   },
   signUpStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: wp(22),
     alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: wp(22),
+    justifyContent: 'space-around',
   },
   buttonStyle: {
-    marginTop: hp(4),
     height: hp(6),
+    marginTop: hp(4),
   },
   lineStyle: {
     height: 1,
+    marginTop: hp(4),
     backgroundColor: '#ECEFEF',
     marginHorizontal: wp(5),
-    marginTop: hp(4),
   },
   modalImageStyle: {
-    height: hp(30),
     width: wp(70),
+    height: hp(30),
     marginTop: hp(2),
   },
   buttonViewStyle: {flex: 1, justifyContent: 'flex-end', marginBottom: hp(4)},
   modalView: {
-    backgroundColor: 'white',
     height: hp(58),
     borderRadius: 16,
     alignItems: 'center',
+    backgroundColor: 'white',
   },
 });
 

@@ -1,44 +1,29 @@
-import {
-  Image,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
 import React from 'react';
-import {color} from '../../helper/ColorConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {Images} from '../../helper/IconConstant';
-import {CommonHeader} from '../../components';
+import {StyleSheet, Text, View} from 'react-native';
+
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const FillPassngerDetails = ({navigation}) => {
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        Images2Color={null}
+        Images1Color={'#fff'}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
         headerName={strings.selectSeat}
         navigation1={() => {
           navigation.goBack();
         }}
-        navigation2={() => {}}
-        Images1Color={'#fff'}
-        Images2Color={null}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
       />
-      <View
-        style={{
-          height: hp(10),
-          backgroundColor: color.commonBlue,
-          alignItems: 'center',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: wp(12),
-        }}>
+      <View style={styles.MainView}>
         <View style={styles.progressInnerViewStyle}>
           <View style={styles.progressViewStyle}>
             <Text style={styles.progressCountStyle}>1</Text>
@@ -73,17 +58,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   progressViewStyle: {
-    backgroundColor: '#0041C0',
-    height: hp(4),
     width: hp(4),
+    height: hp(4),
     borderRadius: 100,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0041C0',
   },
   progressCountStyle: {
-    fontSize: fontSize(17),
     fontWeight: '600',
     color: color.white,
+    fontSize: fontSize(17),
   },
   progressInnerViewStyle: {alignItems: 'center'},
   lineViewStyle: {
@@ -93,4 +78,12 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(5),
   },
   progressTextStyle: {color: '#DBDDE1', marginTop: hp(0.5)},
+  MainView: {
+    height: hp(10),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: wp(12),
+    justifyContent: 'space-between',
+    backgroundColor: color.commonBlue,
+  },
 });

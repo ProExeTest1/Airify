@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   Dimensions,
@@ -12,58 +13,58 @@ import {
   View,
   useColorScheme,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Images} from '../../helper/IconConstant';
+import auth from '@react-native-firebase/auth';
+import {useSelector, useDispatch} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
 
+import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {
   ClassPickerModal,
   CustomPaperTextInput,
   PassengerPickerModal,
   SwiperFlatlistComponent,
 } from '../../components/index';
-
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
-import {useSelector, useDispatch} from 'react-redux';
-import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
 const HomeScreen = ({navigation}) => {
   const theme = useColorScheme();
-  useEffect(() => {
-    UserData();
-  }, []);
   const dispatch = useDispatch();
-  const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
+  const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
-  //Maintaining textInput value with redux data
-  let depatureData =
-    reduxDepaturePlace.city + '(' + reduxDepaturePlace.airport + ')';
   const reduxDestinationPlace = useSelector(
     state => state.place.destinationPlace,
   );
+  const [seat, setSeat] = useState();
+  const [adult, setAdult] = useState(1);
+  const [child, setChild] = useState(0);
+  const [origin, setOrigin] = useState('');
+  const [press, setPress] = useState(false);
+  const [change, setChnage] = useState(false);
+  const [userData, setUserData] = useState({});
+  const [returnDate, setReturnDate] = useState();
+  const [destination, setDestination] = useState('');
+  const [depatureDate, setDepatureDate] = useState();
+  const [passengerClass, setPassengerClass] = useState('');
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [twoYearBelowChild, setTwoYearBelowChild] = useState(0);
+  const [isClassModalVisible, setClassModalVisible] = useState(false);
+
+  useEffect(() => {
+    UserData();
+  }, []);
+
+  //Maintaining textInput value with redux data
+  let depatureData =
+    reduxDepaturePlace.city + '(' + reduxDepaturePlace.airport + ')';
   let destinationData =
     reduxDestinationPlace.city + '(' + reduxDestinationPlace.airport + ')';
   const ndate = new Date();
   const hours = ndate.getHours();
 
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
-  const [depatureDate, setDepatureDate] = useState();
-  const [seat, setSeat] = useState();
-  const [passengerClass, setPassengerClass] = useState('');
-  const [returnDate, setReturnDate] = useState();
-  const [press, setPress] = useState(false);
-  const [change, setChnage] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isClassModalVisible, setClassModalVisible] = useState(false);
-  const [adult, setAdult] = useState(1);
-  const [child, setChild] = useState(0);
-  const [twoYearBelowChild, setTwoYearBelowChild] = useState(0);
-  const [userData, setUserData] = useState({});
   const seatcount = () => {
     setSeat(adult + child + twoYearBelowChild + ' ' + 'seat');
     setAdult(1);
@@ -257,42 +258,42 @@ const HomeScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <CustomPaperTextInput
-            placeholder={'Depature Date'}
-            marginVertical={hp(1)}
-            label={'Depature Date'}
             disabled={true}
+            marginVertical={hp(1)}
             icon={Images.calendar}
-            value={reduxDepatureDate ? reduxDepatureDate : depatureDate}
-            onPress={() => navigation.navigate('DatePicker')}
+            label={'Depature Date'}
+            placeholder={'Depature Date'}
             onChangeText={txt => setDepatureDate(txt)}
+            onPress={() => navigation.navigate('DatePicker')}
+            value={reduxDepatureDate ? reduxDepatureDate : depatureDate}
           />
           {press ? (
             <CustomPaperTextInput
-              placeholder={'Return Date'}
-              marginVertical={hp(1)}
               label={'Return Date'}
+              marginVertical={hp(1)}
               icon={Images.calendar}
+              placeholder={'Return Date'}
+              onChangeText={txt => setReturnDate(txt)}
+              value={reduxReturnDate ? reduxReturnDate : returnDate}
               onPress={() =>
                 navigation.navigate('DatePicker', {return: 'returnDate'})
               }
-              value={reduxReturnDate ? reduxReturnDate : returnDate}
-              onChangeText={txt => setReturnDate(txt)}
             />
           ) : null}
           <View style={styles.customInputStyle}>
             <CustomPaperTextInput
-              placeholder={'Seat'}
+              value={seat}
               width={'42%'}
               label={'Passenger'}
-              icon={Images.passenger}
+              placeholder={'Seat'}
               onPress={toggleModal}
-              value={seat}
+              icon={Images.passenger}
             />
             <CustomPaperTextInput
-              placeholder={'Class'}
               width={'44%'}
               label={'Class'}
               icon={Images.seat}
+              placeholder={'Class'}
               onPress={toggleClassModal}
               value={passengerClass ? passengerClass.split(' ')[0] : null}
             />
@@ -317,9 +318,9 @@ const HomeScreen = ({navigation}) => {
                 {strings.ViewAll}
               </Text>
               <Image
+                resizeMode="contain"
                 source={Images.forward}
                 style={styles.forwardStyle}
-                resizeMode="contain"
               />
             </TouchableOpacity>
           </View>
@@ -358,34 +359,33 @@ export default HomeScreen;
 const {width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   text: {
-    fontSize: width * 0.6,
     textAlign: 'center',
+    fontSize: width * 0.6,
   },
   ScrollViewStyle: {
     flex: 1,
-    // backgroundColor: color.black,
   },
   headerViewStyle: {
-    backgroundColor: color.commonBlue,
     height: hp(35),
     width: wp(100),
     position: 'absolute',
+    backgroundColor: color.commonBlue,
   },
   headerStyle: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     marginHorizontal: wp(6.66),
     justifyContent: 'space-between',
     marginTop: Platform.OS === 'android' ? hp(3) : null,
   },
   profilepicViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: hp(2),
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   profilePicStyle: {
-    height: hp(7.38),
     width: hp(7.38),
+    height: hp(7.38),
     borderRadius: 100,
   },
   headertextStyle: {marginHorizontal: wp(2.6)},
@@ -393,37 +393,35 @@ const styles = StyleSheet.create({
   userNameStyle: {
     fontWeight: 'bold',
     color: color.white,
-    fontSize: fontSize(20, 812),
     marginVertical: hp(0.6),
+    fontSize: fontSize(20, 812),
   },
   bellTouchStyle: {
     borderWidth: 1,
-    borderRadius: 100,
-    borderColor: color.white,
     padding: hp(1.2),
+    borderRadius: 100,
     marginBottom: hp(2),
+    borderColor: color.white,
   },
   bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.white},
   seatBookingMainViewStyle: {
-    paddingVertical: hp(2.4),
-    backgroundColor: color.white,
     borderRadius: 16,
     marginHorizontal: wp(6),
+    paddingVertical: hp(2.4),
+    backgroundColor: color.white,
   },
   optionStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingHorizontal: wp(4),
+    justifyContent: 'space-between',
   },
   optionTouchStyle: {
+    flex: 1,
     borderRadius: 30,
     borderWidth: 0.5,
-    // backgroundColor:'black',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: hp(1.6),
-    //
-    flex: 1,
   },
   optionTextStyle: {
     fontWeight: '700',
@@ -433,18 +431,18 @@ const styles = StyleSheet.create({
     marginVertical: hp(1.2),
   },
   searchButtonStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
     height: hp(7),
     borderRadius: 16,
+    alignItems: 'center',
     backgroundColor: 'blue',
     marginVertical: hp(1.2),
     marginHorizontal: wp(4),
+    justifyContent: 'center',
   },
   searchFontStyle: {
-    fontSize: fontSize(20, 812),
     color: 'white',
     fontWeight: 'bold',
+    fontSize: fontSize(20, 812),
   },
   offerStyle: {
     width: wp(88),
@@ -455,28 +453,28 @@ const styles = StyleSheet.create({
     width: wp(88),
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginVertical: hp(1.2),
+    justifyContent: 'space-between',
   },
   specialOfferTextStyle: {
-    fontSize: fontSize(20, 812),
     fontWeight: 'bold',
     color: color.black,
+    fontSize: fontSize(20, 812),
   },
   forwardStyle: {height: hp(1.8), width: hp(1.8), tintColor: color.commonBlue},
   updownStyle: {
-    height: hp(3.6),
     width: hp(3.6),
+    height: hp(3.6),
     tintColor: 'white',
   },
   updownTouchStyle: {
-    backgroundColor: color.commonBlue,
-    borderRadius: 100,
-    padding: hp(1.6),
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
     top: '35%',
     right: wp(10),
+    padding: hp(1.6),
+    borderRadius: 100,
+    alignItems: 'center',
+    position: 'absolute',
+    justifyContent: 'center',
+    backgroundColor: color.commonBlue,
   },
 });

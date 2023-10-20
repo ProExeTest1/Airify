@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,43 +9,39 @@ import {
   Share,
   Alert,
 } from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {Images} from '../../helper/IconConstant';
-import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
-import {TicketList} from '../../components/index';
-import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
+import moment from 'moment';
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
-import {CreatePriceAlert} from '../../components/index';
 import {RadioButton} from 'react-native-radio-buttons-group';
-import {color} from '../../helper/ColorConstant';
-import {radioButtons} from '../../assets/DummyData/radioButtons';
-import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
-import moment from 'moment';
-import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
+
 import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {TicketList} from '../../components/index';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {CreatePriceAlert} from '../../components/index';
+import {radioButtons} from '../../assets/DummyData/radioButtons';
+import {depatureDateAction} from '../../redux/action/DateAction';
+import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
+import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
+import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 
 const SearchFlights = ({navigation}) => {
+  const dispatch = useDispatch();
+  const [selectedData, setSelectedData] = useState({});
+  const [departureTime, setDepartureTime] = useState({});
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
-  const [priceTargets, setPriceTargets] = useState([1000, 1500]);
-  const [departureTime, setDepartureTime] = useState({});
   const [CreatePriceData, setCreatePriceData] = useState({});
+  const [priceTargets, setPriceTargets] = useState([1000, 1500]);
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
   const [ToggleSwitchBut2, setToggleSwitchBut2] = useState(false);
+  const SelectDate = useSelector(e => e.date.normalDate);
   const [SearchFlightCardData, setSearchFlightCardData] =
     useState(SearchFlightData);
-
-  const [selectedData, setSelectedData] = useState({});
-
-  const dispatch = useDispatch();
-
   const searchFlightFilterData = useSelector(
     e => e?.searchFlight?.searchFlightFilterData,
   );
-
-  const SelectDate = useSelector(e => e.date.normalDate);
 
   /* ----------------------------------------------------> date function */
 
@@ -333,45 +330,45 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(7),
   },
   sortBody: {
-    position: 'absolute',
-    paddingVertical: hp(1.8),
-    paddingHorizontal: wp(4),
+    elevation: 8,
     width: wp(55),
     bottom: hp(5),
-    alignSelf: 'center',
-    borderRadius: 500,
-    backgroundColor: '#fff',
-    shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 7},
-    shadowOpacity: 0.2,
     shadowRadius: 10,
-    elevation: 8,
+    borderRadius: 500,
+    shadowOpacity: 0.2,
+    alignSelf: 'center',
+    position: 'absolute',
     flexDirection: 'row',
+    shadowColor: '#000000',
+    backgroundColor: '#fff',
+    paddingVertical: hp(1.8),
+    paddingHorizontal: wp(4),
+    shadowOffset: {width: 0, height: 7},
   },
   sortImgBody: {
     flex: 1,
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center',
   },
   sortLine: {
-    borderColor: '#e2e2e2',
-    borderEndWidth: 2,
     height: '100%',
+    borderEndWidth: 2,
+    borderColor: '#e2e2e2',
   },
   sortText: {
-    fontSize: fontSize(20),
     fontWeight: '500',
+    fontSize: fontSize(20),
   },
   sortImg: {
-    height: wp(6),
     width: wp(6),
+    height: wp(6),
   },
   createAlertBody: {
-    backgroundColor: '#fff',
     paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
+    backgroundColor: '#fff',
     borderTopEndRadius: 20,
+    paddingHorizontal: wp(6),
     borderTopStartRadius: 20,
   },
   createAlertTitleBody: {
@@ -381,11 +378,11 @@ const styles = StyleSheet.create({
     borderColor: '#e2e2e2',
   },
   createAlertTitle: {
-    fontSize: fontSize(20),
     fontWeight: '600',
+    fontSize: fontSize(20),
   },
+  paddingVertical: hp(1),
   sortModalBody: {
-    paddingVertical: hp(1),
     borderBottomWidth: 1,
     borderColor: '#e2e2e2',
   },

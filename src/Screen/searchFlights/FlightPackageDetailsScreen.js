@@ -1,12 +1,13 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp} from '../../helper/Constant';
 import {
   FlightDetails,
   PickerHeaderBar,
   RefundandRescheduleInfo,
 } from '../../components';
-import {fontSize, hp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
 import {
   RefundableTermsAndConditions,
   RescheduleTermsAndConditons,
@@ -15,6 +16,7 @@ import {
 const FlightPackageDetailsScreen = ({navigation, route}) => {
   const headerData = route?.params?.header;
   const [press, setPress] = useState('Flight');
+
   return (
     <View style={{flex: 1}}>
       <PickerHeaderBar
@@ -88,23 +90,23 @@ export default FlightPackageDetailsScreen;
 
 const styles = StyleSheet.create({
   optionViewStyle: {
+    width: '92%',
+    height: hp(5.5),
+    borderRadius: 7,
+    alignSelf: 'center',
     flexDirection: 'row',
+    marginVertical: hp(2),
     backgroundColor: '#EBEBEC',
     justifyContent: 'space-around',
-    width: '92%',
-    alignSelf: 'center',
-    borderRadius: 7,
-    marginVertical: hp(2),
-    height: hp(5.5),
   },
   optionTextStyle: {
-    fontSize: fontSize(16),
     fontWeight: '600',
+    fontSize: fontSize(16),
   },
   optionTouchStyle: {
-    borderRadius: 7,
-    height: hp(5.5),
     width: '33%',
+    height: hp(5.5),
+    borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center',
   },

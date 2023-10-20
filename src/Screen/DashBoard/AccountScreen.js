@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -7,19 +8,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import Modal from 'react-native-modal';
 import auth from '@react-native-firebase/auth';
-import {CommonHeader, OnBoardingTwoButton} from '../../components';
+import ToggleSwitch from 'toggle-switch-react-native';
+import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import firestore from '@react-native-firebase/firestore';
-import {SettingData} from '../../assets/DummyData/SettingData';
-import ToggleSwitch from 'toggle-switch-react-native';
-import Modal from 'react-native-modal';
 import TextData from '../../components/TextData';
-import {strings} from '../../helper/Strings';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {SettingData} from '../../assets/DummyData/SettingData';
+import {CommonHeader, OnBoardingTwoButton} from '../../components';
 
 const AccountScreen = ({navigation}) => {
   const [modal, setModal] = useState(false);
@@ -69,21 +70,21 @@ const AccountScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
-        headerName={strings.account}
-        navigation1={() => {}}
-        navigation2={() => {}}
+        Images2={null}
         onPress1={false}
         onPress2={false}
+        navigation1={() => {}}
+        navigation2={() => {}}
         Images1={Images.planIcon}
-        Images2={null}
+        headerName={strings.account}
       />
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={styles.headerStyle}>
           <View style={styles.profilePicViewStyle}>
             <Image
-              source={{uri: userData?.profileImageURL}}
-              style={styles.profilePicStyle}
               resizeMode="stretch"
+              style={styles.profilePicStyle}
+              source={{uri: userData?.profileImageURL}}
             />
             <View style={styles.headertextStyle}>
               <Text style={styles.NameStyle}>{userData?.Name}</Text>
@@ -92,17 +93,17 @@ const AccountScreen = ({navigation}) => {
           </View>
           <TouchableOpacity style={styles.bellTouchStyle}>
             <Image
+              resizeMode="stretch"
               source={Images.quCode}
               style={styles.bellStyle}
-              resizeMode="stretch"
             />
           </TouchableOpacity>
         </View>
         <View style={styles.sectionListStyle}>
           <SectionList
-            showsVerticalScrollIndicator={true}
             sections={SettingData}
             keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={true}
             renderItem={({item}) => {
               return (
                 <TouchableOpacity
@@ -167,8 +168,8 @@ const AccountScreen = ({navigation}) => {
                     ) : item.title == 'Dark Mode' ? (
                       <View style={{right: 20}}>
                         <ToggleSwitch
-                          isOn={toggleSwitchBut}
                           size="medium"
+                          isOn={toggleSwitchBut}
                           onColor={color.commonBlue}
                           onToggle={isOn => {
                             setToggleSwitchBut(isOn);
@@ -202,10 +203,10 @@ const AccountScreen = ({navigation}) => {
         </View>
       </ScrollView>
       <Modal
-        onBackdropPress={closeModal}
-        onDismiss={closeModal}
-        backdropOpacity={0.8}
         isVisible={modal}
+        backdropOpacity={0.8}
+        onDismiss={closeModal}
+        onBackdropPress={closeModal}
         style={styles.modalStyle}>
         <View style={styles.modalViewStyle}>
           <View style={styles.modalsubViewStyle}>
@@ -223,9 +224,9 @@ const AccountScreen = ({navigation}) => {
             />
             <View style={styles.TwoButtonViewStyle}>
               <OnBoardingTwoButton
-                TwoButtonStyle={styles.TwoButtonStyle}
                 buttonTextOne={strings.cancel}
                 buttonTextTwo={strings.logoutYes}
+                TwoButtonStyle={styles.TwoButtonStyle}
                 onPress1={() => {
                   closeModal();
                 }}
@@ -251,31 +252,31 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   headerStyle: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
+    paddingVertical: hp(2),
     marginHorizontal: wp(6.66),
     justifyContent: 'space-between',
-    paddingVertical: hp(2),
   },
   profilePicViewStyle: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   profilePicStyle: {
-    height: hp(7.38),
     width: hp(7.38),
+    height: hp(7.38),
     borderRadius: 100,
   },
   headertextStyle: {marginHorizontal: 10},
   userNameStyle: {
+    marginVertical: 5,
     color: color.black,
     fontSize: fontSize(12),
-    marginVertical: 5,
   },
   bellTouchStyle: {
+    padding: hp(1.2),
     borderRadius: 100,
     borderColor: color.black,
-    padding: hp(1.2),
   },
   bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.black},
   NameStyle: {
@@ -283,45 +284,45 @@ const styles = StyleSheet.create({
     color: color.black,
   },
   listTouchStyle: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     marginVertical: hp(2.4),
     marginHorizontal: wp(6),
   },
   listImageDiffStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     resizeMode: 'contain',
   },
   listImageViewStyle: {
     borderWidth: 1,
+    padding: hp(1.7),
     borderRadius: 100,
     borderColor: color.grey,
-    padding: hp(1.7),
   },
   listImageStyle: {
-    height: hp(4),
     width: hp(4),
+    height: hp(4),
   },
   listTextViewStyle: {
     width: '75%',
     marginHorizontal: 15,
   },
   listTitleTextStyle: {
-    fontSize: fontSize(16),
     fontWeight: '600',
+    fontSize: fontSize(16),
   },
   listDiscriptionTextStyle: {
     color: color.black,
   },
   forwardIconStyle: {
-    height: wp(3),
     width: hp(3),
+    height: wp(3),
     resizeMode: 'contain',
   },
   listHeaderViewStyle: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     marginHorizontal: wp(3),
   },
   listHeaderLineStyle: {
@@ -334,18 +335,18 @@ const styles = StyleSheet.create({
   },
   listConditionStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   modalStyle: {
-    justifyContent: 'flex-end',
     margin: wp(0),
+    justifyContent: 'flex-end',
   },
   modalViewStyle: {
-    backgroundColor: 'white',
     height: hp(30),
     borderRadius: 16,
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   modalsubViewStyle: {
     marginTop: hp(5),
@@ -353,15 +354,15 @@ const styles = StyleSheet.create({
   },
   modalLogoutTextStyle: {
     color: color.red,
-    fontSize: fontSize(18),
     fontWeight: '700',
+    fontSize: fontSize(18),
   },
   lineStyle: {
     height: 2,
-    backgroundColor: color.lightGray,
-    marginHorizontal: wp(5),
     marginTop: hp(2),
+    marginHorizontal: wp(5),
     paddingHorizontal: wp(42),
+    backgroundColor: color.lightGray,
   },
   TwoButtonViewStyle: {
     marginTop: hp(4),

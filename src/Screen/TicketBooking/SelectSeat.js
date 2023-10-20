@@ -1,54 +1,46 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {CommonHeader} from '../../components';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const SelectSeat = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        Images2Color={null}
+        Images1Color={'#fff'}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
         headerName={strings.selectSeat}
         navigation1={() => {
           navigation.goBack();
         }}
-        navigation2={() => {}}
-        Images1Color={'#fff'}
-        Images2Color={null}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
       />
       <View style={styles.selectSeatHeaderBody}>
         <FlatList
-          data={['kenil panchani', 'kenil panchani', 'kenil panchani']}
           bounces={false}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item, index}) => (
+          data={['kenil panchani', 'kenil panchani', 'kenil panchani']}
+          renderItem={({index}) => (
             <View
               style={[
                 styles.FlatListBody,
                 {marginStart: index === 0 ? wp(6) : wp(0)},
               ]}>
-              <View
-                style={{
-                  backgroundColor: color.commonBlue,
-                  height: wp(7),
-                  width: wp(7),
-                  borderRadius: 50,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginEnd: wp(3),
-                }}>
+              <View style={styles.flatListView}>
                 <Text
                   style={{
                     color: '#fff',
-                    fontSize: fontSize(16),
                     fontWeight: 'bold',
+                    fontSize: fontSize(16),
                   }}>
                   {index + 1}
                 </Text>
@@ -67,20 +59,28 @@ export default SelectSeat;
 const styles = StyleSheet.create({
   selectSeatHeaderBody: {
     height: hp(10),
-    backgroundColor: color.commonBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
     paddingTop: hp(1),
+    alignItems: 'center',
     paddingBottom: hp(2),
+    justifyContent: 'center',
+    backgroundColor: color.commonBlue,
   },
   FlatListBody: {
-    flexDirection: 'row',
     width: wp(38),
-
     marginEnd: wp(4),
-    backgroundColor: '#fff',
     borderRadius: 10,
-    paddingHorizontal: wp(3),
+    flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingHorizontal: wp(3),
+  },
+  flatListView: {
+    width: wp(7),
+    height: wp(7),
+    marginEnd: wp(3),
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: color.commonBlue,
   },
 });

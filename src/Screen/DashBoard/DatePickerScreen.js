@@ -1,18 +1,18 @@
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {color} from '../../helper/ColorConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {Images} from '../../helper/IconConstant';
-import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {CalendarList, LocaleConfig} from 'react-native-calendars';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
+import {PickerHeaderBar} from '../../components';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {
   dateAction,
   depatureDateAction,
   returnDateAction,
   returnNormalDateAction,
 } from '../../redux/action/DateAction';
-import {PickerHeaderBar} from '../../components';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -59,16 +59,17 @@ LocaleConfig.locales['fr'] = {
 LocaleConfig.defaultLocale = 'fr';
 
 const DatePickerScreen = ({navigation, route}) => {
-  const returndata = route?.params?.return;
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState('');
   const [day, setDay] = useState();
-  const [returnday, seReturnDay] = useState();
   const [year, setYear] = useState();
-  const [returnyear, setReturnYear] = useState();
+  const returndata = route?.params?.return;
   const [press, setPress] = useState(false);
-  const [returnPress, setReturnPress] = useState(false);
+  const [returnday, seReturnDay] = useState();
+  const [selected, setSelected] = useState('');
+  const [returnyear, setReturnYear] = useState();
   const [returnDate, setReturnDate] = useState(false);
+  const [returnPress, setReturnPress] = useState(false);
+
   useEffect(() => {
     if (returndata == 'returnDate') {
       setReturnPress(true);
@@ -197,15 +198,15 @@ const DatePickerScreen = ({navigation, route}) => {
             markedDates={{
               [selected]: {
                 selected: true,
-                selectedColor: color.commonBlue,
                 disableTouchEvent: true,
                 selectedDotColor: 'orange',
+                selectedColor: color.commonBlue,
               },
               [returnDate]: {
                 selected: true,
-                selectedColor: color.commonBlue,
                 disableTouchEvent: true,
                 selectedDotColor: 'orange',
+                selectedColor: color.commonBlue,
               },
             }}
           />
@@ -227,50 +228,50 @@ export default DatePickerScreen;
 
 const styles = StyleSheet.create({
   dateViewStyle: {
-    borderRadius: 30,
-    backgroundColor: color.commonBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
     width: wp(40),
-    paddingVertical: hp(1.8),
+    borderRadius: 30,
+    alignItems: 'center',
     marginVertical: hp(2.2),
+    justifyContent: 'center',
+    paddingVertical: hp(1.8),
+    backgroundColor: color.commonBlue,
   },
   ReturndateViewStyle: {
-    borderRadius: 30,
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     width: wp(40),
-    paddingVertical: hp(1.8),
+    borderWidth: 1,
+    borderRadius: 30,
+    alignItems: 'center',
     marginVertical: hp(2.2),
+    justifyContent: 'center',
+    paddingVertical: hp(1.8),
   },
   dateTextStyle: {
-    fontSize: fontSize(16, 812),
     fontWeight: '500',
     color: color.white,
+    fontSize: fontSize(16, 812),
   },
   currentDateStyle: {
     width: wp(95),
     alignSelf: 'center',
   },
   searchButtonStyle: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    width: wp(84),
     height: hp(7),
+    width: wp(84),
     borderRadius: 16,
+    alignSelf: 'center',
+    alignItems: 'center',
     backgroundColor: 'blue',
     marginVertical: hp(1.2),
+    justifyContent: 'center',
   },
   searchFontStyle: {
-    fontSize: fontSize(20, 812),
-    color: color.white,
     fontWeight: 'bold',
+    color: color.white,
+    fontSize: fontSize(20, 812),
   },
   dateMainViewStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

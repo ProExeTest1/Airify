@@ -1,30 +1,18 @@
-import {
-  Alert,
-  FlatList,
-  Image,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import auth from '@react-native-firebase/auth';
 import React, {useEffect, useState} from 'react';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
+import {useIsFocused} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import {useIsFocused} from '@react-navigation/native';
 
 const TransactionHistory = ({navigation}) => {
-  const [transactionHistory, setTransactionHistory] = useState([]);
-
   const isFocused = useIsFocused();
+  const [transactionHistory, setTransactionHistory] = useState([]);
 
   const getTransactionHistory = async () => {
     await firestore()
@@ -43,17 +31,17 @@ const TransactionHistory = ({navigation}) => {
     <View style={{flex: 1}}>
       <View style={styles.TopUpBody}>
         <CommonHeader
+          Images2={null}
+          onPress1={true}
+          onPress2={false}
+          Images2Color={null}
+          Images1Color={'#fff'}
+          navigation2={() => {}}
+          Images1={Images.backIcon}
           headerName={strings.walletTopUp}
           navigation1={() => {
             navigation.navigate('WalletScreen');
           }}
-          navigation2={() => {}}
-          Images1Color={'#fff'}
-          Images2Color={null}
-          onPress1={true}
-          onPress2={false}
-          Images1={Images.backIcon}
-          Images2={null}
         />
         <View style={{flex: 1, paddingHorizontal: wp(8)}}>
           <FlatList
@@ -86,18 +74,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   FlatListBody: {
-    paddingVertical: hp(2),
     borderBottomWidth: 1,
+    paddingVertical: hp(2),
     borderColor: color.grayLight,
   },
   headerBody: {
-    flexDirection: 'row',
     marginBottom: hp(1),
+    flexDirection: 'row',
   },
   headerText: {
     flex: 1,
-    fontSize: fontSize(18),
     fontWeight: '600',
+    fontSize: fontSize(18),
   },
   priceText: {
     fontSize: fontSize(18),

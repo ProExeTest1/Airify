@@ -1,5 +1,5 @@
+import React, {useEffect, useState} from 'react';
 import {
-  Button,
   FlatList,
   Image,
   Platform,
@@ -9,26 +9,26 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+import Modal from 'react-native-modal';
 import {useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {FlightDetailsCard} from '../../components';
+import {fontSize, hp, wp} from '../../helper/Constant';
 import {
   FlightDetailsData,
   FlightDetailsData1,
 } from '../../assets/DummyData/FlightDetailsData';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
-import Modal from 'react-native-modal';
-import {FlightDetailsCard} from '../../components';
 
 const FlightDetailsScreen = ({navigation}) => {
-  const [savedFlight, setSavedFlight] = useState([]);
-  const [press, setPress] = useState(false);
   const [value, setValue] = useState();
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
+  const [press, setPress] = useState(false);
+  const [savedFlight, setSavedFlight] = useState([]);
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const item = useSelector(state => state.searchFlight.searchFlightCardData);
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
@@ -130,9 +130,9 @@ const FlightDetailsScreen = ({navigation}) => {
             </View>
             <TouchableOpacity onPress={() => navigation.goBack('')}>
               <Image
+                resizeMode="contain"
                 source={Images.backIcon}
                 style={styles.backIconStyle}
-                resizeMode="contain"
               />
             </TouchableOpacity>
             <View style={styles.saveShareViewStyle}>
@@ -148,15 +148,15 @@ const FlightDetailsScreen = ({navigation}) => {
                       ? Images.filled_save
                       : Images.saved
                   }
-                  style={styles.saveShareIconStyle}
                   resizeMode="contain"
+                  style={styles.saveShareIconStyle}
                 />
               </TouchableOpacity>
               <TouchableOpacity>
                 <Image
+                  resizeMode="contain"
                   source={Images.shareIcon}
                   style={styles.saveShareIconStyle}
-                  resizeMode="contain"
                 />
               </TouchableOpacity>
             </View>
@@ -173,9 +173,9 @@ const FlightDetailsScreen = ({navigation}) => {
             },
           ]}>
           <Image
+            resizeMode="contain"
             source={Images.aeroPlane}
             style={styles.aeroPlaneImageStyle}
-            resizeMode="contain"
           />
           <View style={styles.secondCardHeaderStyle}>
             <Text style={styles.secondCardheaderTextStyle}>Original</Text>
@@ -187,16 +187,16 @@ const FlightDetailsScreen = ({navigation}) => {
         </View>
         <View style={styles.flatlistViewStyle}>
           <FlatList
+            bounces={false}
             data={FlightDetailsData}
             showsVerticalScrollIndicator={false}
-            bounces={false}
             renderItem={({item}) => {
               return (
                 <View style={styles.flatlist1InnerViewStyle}>
                   <Image
                     source={item.image}
-                    style={styles.flatlistIconStyle}
                     resizeMode="contain"
+                    style={styles.flatlistIconStyle}
                   />
                   <Text style={styles.flatlistTextStyle}>{item.text}</Text>
                 </View>
@@ -207,17 +207,17 @@ const FlightDetailsScreen = ({navigation}) => {
         </View>
         <View style={styles.flatlistViewStyle}>
           <FlatList
-            data={FlightDetailsData1}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
             bounces={false}
+            horizontal={true}
+            data={FlightDetailsData1}
+            showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
               return (
                 <View style={styles.flatlist2InnerViewStyle}>
                   <Image
                     source={item.image}
-                    style={styles.flatlistIconStyle}
                     resizeMode="contain"
+                    style={styles.flatlistIconStyle}
                   />
                 </View>
               );
@@ -231,9 +231,9 @@ const FlightDetailsScreen = ({navigation}) => {
             style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.detailsTextStyle}>Details</Text>
             <Image
+              resizeMode="contain"
               source={Images.forward}
               style={styles.forwardStyle}
-              resizeMode="contain"
             />
           </TouchableOpacity>
         </View>
@@ -258,16 +258,16 @@ const FlightDetailsScreen = ({navigation}) => {
       </View>
       <Modal
         backdropOpacity={0}
-        animationOut={'bounceOutUp'}
-        animationIn={'bounceIn'}
         isVisible={press}
+        animationIn={'bounceIn'}
+        animationOut={'bounceOutUp'}
         style={styles.modalStyle}>
         <View style={styles.modalViewViewStyle}>
           <View style={styles.imageViewStyle}>
             <Image
+              resizeMode="contain"
               source={Images.tickMark}
               style={styles.imageStyle}
-              resizeMode="contain"
             />
           </View>
           <Text style={styles.modalTextStyle}>{value}!</Text>
@@ -284,66 +284,64 @@ const styles = StyleSheet.create({
     backgroundColor: color.commonBlue,
   },
   backIconStyle: {
-    height: hp(3),
     width: hp(3),
+    height: hp(3),
     tintColor: color.white,
   },
   headerTextStyle: {
-    fontSize: fontSize(22),
     fontWeight: 'bold',
     color: color.white,
+    fontSize: fontSize(22),
   },
   saveShareIconStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     tintColor: color.white,
   },
   safeHeaderViewStyle: {
+    flexDirection: 'row',
     paddingHorizontal: wp(7),
     justifyContent: 'space-between',
     paddingVertical: Platform.OS == 'ios' ? hp(2) : hp(3),
-    flexDirection: 'row',
   },
   headerTextViewStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: wp(100),
     alignSelf: 'center',
     position: 'absolute',
-    width: wp(100),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   saveShareViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     width: wp(17),
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   cardBody: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    marginBottom: hp(2),
+    width: '92%',
     borderRadius: 10,
     borderColor: '#000',
-    width: '92%',
     alignSelf: 'center',
+    marginBottom: hp(2),
+    paddingHorizontal: wp(4),
+    backgroundColor: color.white,
   },
-
   cardPrice: {
-    color: color.commonBlue,
-    fontSize: fontSize(20),
     fontWeight: '600',
+    fontSize: fontSize(20),
+    color: color.commonBlue,
     marginVertical: hp(1.2),
   },
   cardPriceTitle: {
     color: '#7e7e7f',
     fontSize: fontSize(16),
   },
-
   FlightsPlaseBody: {
     width: wp(20),
   },
   FlightsPlaseImgBody: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
   },
   FlightsPlaseImg: {
     height: hp(5),
@@ -354,61 +352,61 @@ const styles = StyleSheet.create({
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
-    fontSize: fontSize(21),
     color: '#000',
     fontWeight: 'bold',
     marginTop: hp(1.5),
+    fontSize: fontSize(21),
   },
   FlightsPlaseName: {
     color: '#7e7e7f',
     fontWeight: '500',
   },
   cardBottemBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: hp(2.5),
     paddingTop: hp(1),
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: hp(2.5),
+    justifyContent: 'space-between',
   },
   flatlistIconStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     tintColor: '#383838',
   },
   forwardStyle: {
-    height: hp(1.8),
     width: hp(1.8),
+    height: hp(1.8),
     tintColor: color.commonBlue,
   },
   flatlistViewStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: '#e2e2e2',
     borderBottomWidth: 1,
+    borderColor: '#e2e2e2',
     paddingVertical: hp(1.6),
   },
   aeroPlaneImageStyle: {
-    height: hp(6),
     width: hp(6),
+    height: hp(6),
   },
   secondCardHeaderStyle: {
     marginHorizontal: wp(5),
   },
   secondCardheaderTextStyle: {
-    fontSize: fontSize(18),
     fontWeight: 'bold',
+    fontSize: fontSize(18),
   },
   thirdCardStyle: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
     borderColor: '#000',
     flexDirection: 'row',
+    paddingHorizontal: wp(4),
+    backgroundColor: color.white,
     justifyContent: 'space-between',
     paddingVertical: Platform.OS == 'ios' ? hp(4) : hp(2),
   },
   flatlistTextStyle: {
-    fontSize: fontSize(18),
     color: '#383838',
+    fontSize: fontSize(18),
     marginHorizontal: wp(3),
   },
   flatlist1InnerViewStyle: {
@@ -425,55 +423,55 @@ const styles = StyleSheet.create({
   },
   priceTextStyle: {color: '#383838'},
   continueButtonStyle: {
-    height: hp(6.5),
     width: '50%',
-    backgroundColor: color.commonBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: hp(6.5),
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: color.commonBlue,
   },
   continueTextStyle: {
-    fontSize: fontSize(18),
-    color: color.white,
     fontWeight: '600',
+    color: color.white,
+    fontSize: fontSize(18),
   },
   modalStyle: {
-    justifyContent: 'flex-start',
     alignSelf: 'center',
+    justifyContent: 'flex-start',
     top: Platform.OS == 'ios' ? hp(4) : hp(0),
   },
   modalViewViewStyle: {
+    width: '40%',
+    elevation: 30,
+    shadowRadius: 6,
+    borderRadius: 100,
+    shadowOpacity: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
-    width: '40%',
-    backgroundColor: color.white,
-    borderRadius: 100,
+    paddingRight: wp(2.6),
     paddingVertical: hp(1.2),
     paddingHorizontal: wp(1.3),
-    paddingRight: wp(2.6),
+    backgroundColor: color.white,
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    elevation: 30,
   },
   imageViewStyle: {
-    backgroundColor: color.commonBlue,
     padding: hp(0.9),
     borderRadius: 100,
     marginHorizontal: wp(2.3),
+    backgroundColor: color.commonBlue,
   },
   imageStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     tintColor: color.white,
   },
   modalTextStyle: {
-    fontSize: fontSize(22),
     fontWeight: '600',
     color: color.black,
+    fontSize: fontSize(22),
     marginHorizontal: wp(1),
   },
 });

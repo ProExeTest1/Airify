@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -6,44 +7,43 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useDebugValue, useEffect, useState} from 'react';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
+import Modal from 'react-native-modal';
+import auth from '@react-native-firebase/auth';
+import {useDispatch, useSelector} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
+import {RadioButton} from 'react-native-radio-buttons-group';
+import firestore, {firebase} from '@react-native-firebase/firestore';
+
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {radioButtons} from '../../assets/DummyData/radioButtons';
 import ActiveSavedAddress from '../../components/ActiveSavedAddress';
 import ExpiredSavedAddress from '../../components/ExpiredSavedAddress';
-import Modal from 'react-native-modal';
 import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
-import auth from '@react-native-firebase/auth';
-import firestore, {firebase} from '@react-native-firebase/firestore';
-import {RadioButton} from 'react-native-radio-buttons-group';
-import {radioButtons} from '../../assets/DummyData/radioButtons';
-import {useDispatch, useSelector} from 'react-redux';
 import {
   activeFlightFilter,
   expiredFlightFilter,
 } from '../../redux/action/SavedFlights';
-import {useIsFocused} from '@react-navigation/native';
 
 const SavedScreen = ({navigation}) => {
-  const expireFlight = useSelector(e => e?.SaveFlight?.expireFlight);
-  const savedFlight = useSelector(e => e?.SaveFlight?.activeFlight);
-  const [selectedOption, setSelectedOption] = useState(true);
+  const isFocus = useIsFocused();
+  const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
-  const [finalModal, setFinalModal] = useState(false);
   const [savedItem, setSavedItem] = useState({});
-  const [modalVisible2, setModalVisible2] = useState(false);
-  const [SearchFlightCardData, setSearchFlightCardData] = useState(savedFlight);
-
+  const [finalModal, setFinalModal] = useState(false);
   const [selectedData, setSelectedData] = useState({});
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(true);
+  const savedFlight = useSelector(e => e?.SaveFlight?.activeFlight);
+  const expireFlight = useSelector(e => e?.SaveFlight?.expireFlight);
+  const [SearchFlightCardData, setSearchFlightCardData] = useState(savedFlight);
+  const savedFlightFilter = useSelector(e => e?.SaveFlight?.activeFlightFilter);
   const expireFlightFilter = useSelector(
     e => e?.SaveFlight?.expireFlightFilter,
   );
-  const isFocus = useIsFocused();
-  const dispatch = useDispatch();
-  const savedFlightFilter = useSelector(e => e?.SaveFlight?.activeFlightFilter);
   const openModal = item => {
     setSavedItem(item);
     setModal(true);
@@ -508,63 +508,63 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonViewStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginHorizontal: wp(4),
-    backgroundColor: color.lightGray2,
     borderRadius: wp(2),
+    flexDirection: 'row',
     marginVertical: hp(2),
+    marginHorizontal: wp(4),
+    justifyContent: 'space-around',
+    backgroundColor: color.lightGray2,
   },
   buttonStyle: {
     flex: 1,
-    paddingVertical: hp(1),
     alignItems: 'center',
+    paddingVertical: hp(1),
     justifyContent: 'center',
   },
   buttonTextStyle: {
-    fontSize: fontSize(14),
     fontWeight: '600',
+    fontSize: fontSize(14),
   },
   modalStyle: {
-    justifyContent: 'flex-end',
     margin: wp(0),
+    justifyContent: 'flex-end',
   },
   modalViewStyle: {
-    backgroundColor: 'white',
     height: hp(60),
     borderRadius: 16,
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   cardBody: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    marginBottom: hp(2),
-    borderRadius: 10,
-    borderColor: color.grayLight,
     borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: hp(2),
+    paddingHorizontal: wp(4),
+    backgroundColor: color.white,
+    borderColor: color.grayLight,
   },
   cardHeader: {
-    borderColor: color.grayLight,
+    alignItems: 'center',
+    flexDirection: 'row',
     borderBottomWidth: 1,
     paddingVertical: hp(2.5),
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderColor: color.grayLight,
   },
   cardHeaderText: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
     flex: 1,
+    fontWeight: 'bold',
+    fontSize: fontSize(18),
   },
   cardHeaderLogo: {
-    height: wp(5.8),
     width: wp(5.8),
-    borderRadius: 500,
+    height: wp(5.8),
     marginEnd: wp(3),
+    borderRadius: 500,
   },
   cardPrice: {
-    color: color.commonBlue,
-    fontSize: fontSize(20),
     fontWeight: '600',
+    fontSize: fontSize(20),
+    color: color.commonBlue,
   },
   cardPriceTitle: {
     color: color.darkLight,
@@ -572,15 +572,15 @@ const styles = StyleSheet.create({
   },
   cardDataBody: {
     paddingTop: hp(2.5),
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   FlightsPlaseBody: {
     width: wp(20),
   },
   FlightsPlaseImgBody: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
   },
   FlightsPlaseImg: {
     height: hp(5),
@@ -591,73 +591,73 @@ const styles = StyleSheet.create({
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
-    fontSize: fontSize(21),
     color: '#000',
     fontWeight: 'bold',
     marginTop: hp(1.5),
+    fontSize: fontSize(21),
   },
   FlightsPlaseName: {
-    color: color.darkLight,
     fontWeight: '500',
+    color: color.darkLight,
   },
   cardBottemBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: hp(2.5),
     paddingTop: hp(1),
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: hp(2.5),
+    justifyContent: 'space-between',
   },
   headerStyle: {
     borderBottomWidth: 1,
-    borderColor: color.grayLight,
-    paddingVertical: hp(3),
     marginVertical: hp(2),
+    paddingVertical: hp(3),
     paddingHorizontal: wp(14),
+    borderColor: color.grayLight,
   },
   headerTextStyle: {
     fontWeight: 'bold',
     fontSize: fontSize(20),
   },
   sortBody: {
-    position: 'absolute',
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(4),
+    elevation: 8,
     width: wp(55),
     bottom: hp(4),
-    alignSelf: 'center',
-    borderRadius: 500,
-    backgroundColor: '#fff',
-    shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 7},
-    shadowOpacity: 0.2,
     shadowRadius: 10,
-    elevation: 8,
+    borderRadius: 500,
+    shadowOpacity: 0.2,
+    alignSelf: 'center',
+    position: 'absolute',
     flexDirection: 'row',
+    shadowColor: '#000000',
+    backgroundColor: '#fff',
+    paddingVertical: hp(1.5),
+    paddingHorizontal: wp(4),
+    shadowOffset: {width: 0, height: 7},
   },
   sortImgBody: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
     alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   sortLine: {
-    borderColor: '#e2e2e2',
-    borderEndWidth: 2,
     height: '100%',
+    borderEndWidth: 2,
+    borderColor: '#e2e2e2',
   },
   sortText: {
-    fontSize: fontSize(20),
     fontWeight: '500',
+    fontSize: fontSize(20),
   },
   sortImg: {
-    height: wp(6),
     width: wp(6),
+    height: wp(6),
   },
   createAlertBody: {
-    backgroundColor: '#fff',
     paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
     borderTopEndRadius: 20,
+    backgroundColor: '#fff',
+    paddingHorizontal: wp(6),
     borderTopStartRadius: 20,
   },
   createAlertTitleBody: {
@@ -667,12 +667,12 @@ const styles = StyleSheet.create({
     borderColor: '#e2e2e2',
   },
   createAlertTitle: {
-    fontSize: fontSize(20),
     fontWeight: '600',
+    fontSize: fontSize(20),
   },
   sortModalBody: {
-    paddingVertical: hp(1),
     borderBottomWidth: 1,
     borderColor: '#e2e2e2',
+    paddingVertical: hp(1),
   },
 });

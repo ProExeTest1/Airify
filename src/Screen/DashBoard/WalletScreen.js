@@ -1,3 +1,4 @@
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -6,16 +7,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {CommonHeader} from '../../components';
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import {useIsFocused} from '@react-navigation/native';
-import moment from 'moment';
+import firestore from '@react-native-firebase/firestore';
+
+import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const WalletScreen = ({navigation}) => {
   const [userData, setUserData] = useState({});
@@ -69,13 +69,13 @@ const WalletScreen = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <CommonHeader
-        headerName={strings.wallet}
-        navigation1={() => {}}
-        navigation2={() => {}}
         onPress1={false}
         onPress2={false}
-        Images1={Images.planIcon}
+        navigation2={() => {}}
+        navigation1={() => {}}
         Images2={Images.search}
+        Images1={Images.planIcon}
+        headerName={strings.wallet}
       />
       <View style={styles.walletBody}>
         <View style={styles.mywalletCardBody}>
@@ -106,7 +106,7 @@ const WalletScreen = ({navigation}) => {
           <FlatList
             data={transactionHistory}
             scrollEnabled={false}
-            renderItem={({item, index}) => (
+            renderItem={({item}) => (
               <View style={styles.FlatListBody}>
                 <View style={styles.headerBody}>
                   <Text numberOfLines={1} style={styles.headerText}>
@@ -131,79 +131,79 @@ export default WalletScreen;
 const styles = StyleSheet.create({
   walletBody: {
     flex: 1,
-    paddingHorizontal: wp(6),
     paddingTop: hp(3),
+    paddingHorizontal: wp(6),
   },
   mywalletCardBody: {
-    paddingHorizontal: wp(6),
-    paddingVertical: hp(3),
-    backgroundColor: color.commonBlue,
     borderRadius: 10,
+    paddingVertical: hp(3),
+    paddingHorizontal: wp(6),
+    backgroundColor: color.commonBlue,
   },
   mywalletCardName: {
-    fontSize: fontSize(18),
     fontWeight: 'bold',
     color: color.white,
     marginBottom: hp(3),
+    fontSize: fontSize(18),
   },
   mywalletCardBalanceTitle: {
-    fontSize: fontSize(16),
     fontWeight: '500',
     color: color.white,
     marginBottom: hp(1),
+    fontSize: fontSize(16),
   },
   mywalletCardBalanceBody: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
   mywalletCardBalance: {
-    fontSize: fontSize(25),
     fontWeight: 'bold',
     color: color.white,
+    fontSize: fontSize(25),
   },
   topUpBut: {
-    paddingVertical: hp(1.3),
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(4),
     borderRadius: 50,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingVertical: hp(1.3),
+    paddingHorizontal: wp(4),
   },
   topUpIcon: {
-    height: wp(5),
     width: wp(5),
+    height: wp(5),
     marginEnd: wp(1),
   },
   transactionHistoryHeader: {
-    flexDirection: 'row',
     paddingTop: hp(4),
+    flexDirection: 'row',
     paddingBottom: hp(2),
     alignItems: 'center',
   },
   headerText: {
-    fontSize: fontSize(20),
-    fontWeight: 'bold',
     flex: 1,
+    fontWeight: 'bold',
+    fontSize: fontSize(20),
   },
   transactionHistoryViewAllBut: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   ViewAllButText: {
-    color: color.commonBlue,
-    fontWeight: '600',
     marginEnd: wp(3),
+    fontWeight: '600',
+    color: color.commonBlue,
   },
   ViewAllButIcon: {
     width: wp(6),
     height: wp(6),
-    transform: [{rotate: '270deg'}],
     tintColor: color.commonBlue,
+    transform: [{rotate: '270deg'}],
   },
   FlatListBody: {
-    paddingVertical: hp(2),
     borderBottomWidth: 1,
+    paddingVertical: hp(2),
     borderColor: color.grayLight,
   },
   headerBody: {
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     flex: 1,
-    fontSize: fontSize(18),
     fontWeight: '600',
+    fontSize: fontSize(18),
   },
   priceText: {
     fontSize: fontSize(18),

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Image,
   Platform,
@@ -8,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -46,9 +47,9 @@ const NotificationScreen = ({navigation}) => {
       <View style={styles.sectionListStyle}>
         <SectionList
           bounces={false}
-          showsVerticalScrollIndicator={false}
           sections={NotificationData}
           keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <TouchableOpacity style={styles.listTouchStyle}>
@@ -56,16 +57,16 @@ const NotificationScreen = ({navigation}) => {
                   <View>
                     <Image
                       source={item.image}
-                      style={styles.listImageDiffStyle}
                       resizeMode="stretch"
+                      style={styles.listImageDiffStyle}
                     />
                   </View>
                 ) : (
                   <View style={styles.listImageViewStyle}>
                     <Image
                       source={item.image}
-                      style={styles.listImageStyle}
                       resizeMode="contain"
+                      style={styles.listImageStyle}
                     />
                   </View>
                 )}
@@ -77,9 +78,9 @@ const NotificationScreen = ({navigation}) => {
                 </View>
                 <View>
                   <Image
+                    resizeMode="contain"
                     source={Images.forward}
                     style={styles.forwardIconStyle}
-                    resizeMode="contain"
                   />
                 </View>
               </TouchableOpacity>
@@ -112,8 +113,8 @@ export default NotificationScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: color.white,
     flex: 1,
+    backgroundColor: color.white,
   },
   header: {
     fontWeight: '500',
@@ -124,27 +125,27 @@ const styles = StyleSheet.create({
     backgroundColor: color.commonBlue,
   },
   cancelButtonStyle: {
-    height: hp(3),
     width: hp(3),
+    height: hp(3),
     tintColor: color.white,
   },
   headerTextStyle: {
-    fontSize: fontSize(22),
     fontWeight: 'bold',
     color: color.white,
+    fontSize: fontSize(22),
   },
   safeHeaderViewStyle: {
     paddingHorizontal: wp(7),
     paddingVertical: Platform.OS == 'android' ? hp(1) : hp(3),
   },
   headerinnerViewStyle: {
-    backgroundColor: color.commonBlue,
     height: hp(7),
-    paddingHorizontal: wp(8),
-    justifyContent: 'center',
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: wp(8),
     justifyContent: 'space-between',
+    backgroundColor: color.commonBlue,
   },
   headerTextViewStyle: {
     alignItems: 'center',
@@ -155,56 +156,56 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   listTouchStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: hp(2.4),
     width: '95%',
     alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: hp(2.4),
   },
   listImageDiffStyle: {
-    height: hp(7),
     width: hp(7),
+    height: hp(7),
     borderRadius: 12,
   },
   listImageViewStyle: {
     borderWidth: 1,
+    padding: hp(1.7),
     borderRadius: 100,
     borderColor: color.grey,
-    padding: hp(1.7),
   },
   listImageStyle: {
-    height: hp(3),
     width: hp(3),
+    height: hp(3),
   },
   listTextViewStyle: {
     width: '75%',
     marginHorizontal: 15,
   },
   listTitleTextStyle: {
-    fontSize: fontSize(18),
     fontWeight: '600',
-    marginVertical: hp(1),
     color: color.black,
+    marginVertical: hp(1),
+    fontSize: fontSize(18),
   },
   listDiscriptionTextStyle: {
     color: color.black,
   },
   forwardIconStyle: {
-    height: wp(4.4),
-    width: hp(4.4),
     right: 20,
+    width: hp(4.4),
+    height: wp(4.4),
   },
   listHeaderViewStyle: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     marginHorizontal: wp(3),
   },
   listHeaderLineStyle: {
-    borderWidth: 0.5,
-    borderColor: color.grey,
-    marginHorizontal: wp(3),
-    height: 0,
-    position: 'absolute',
     right: 0,
+    height: 0,
+    borderWidth: 0.5,
+    position: 'absolute',
+    marginHorizontal: wp(3),
+    borderColor: color.grey,
   },
 });

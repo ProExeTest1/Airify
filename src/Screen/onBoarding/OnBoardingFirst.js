@@ -1,51 +1,49 @@
-import React, {Component, useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {hp, wp} from '../../helper/Constant';
 import Swiper from 'react-native-swiper';
-import OnBoardingImage from '../../components/OnBoardingImage';
-import OnBoardingText from '../../components/OnBoardingText';
+import {View, StyleSheet} from 'react-native';
+import React, {useRef, useState} from 'react';
+
+import {hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
+import OnBoardingText from '../../components/OnBoardingText';
+import OnBoardingImage from '../../components/OnBoardingImage';
 import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import {Images} from '../../helper/IconConstant';
-import axios from 'axios';
-import {useDispatch, useSelector} from 'react-redux';
-import {active} from '../../redux/action/HomeAction';
 
-const OnBoardingFirst = ({navigation, props}) => {
+const OnBoardingFirst = ({navigation}) => {
   const swiperRef = useRef();
   const [index, setIndex] = useState(0);
 
   return (
     <View style={styles.container}>
       <Swiper
+        loop={false}
+        index={index}
         ref={swiperRef}
+        showsButtons={false}
         onIndexChanged={index => {
           setIndex(index);
         }}
-        loop={false}
-        index={index}
-        showsButtons={false}
         activeDotStyle={{borderStyle: 'solid', width: wp(8)}}
         paginationStyle={{
+          bottom: 0,
           alignItems: 'center',
           justifyContent: 'center',
-          bottom: 0,
         }}>
         <View style={styles.slide}>
           <OnBoardingImage onBoardingImage={Images.onBoardingImageOne} />
           <OnBoardingText
-            OnBoardingMainText={strings.OnBoardingOneMainText}
-            OnBoardingSubText={strings.OnBoardingOneSubText}
             OnBoardingSubTextStyle={{marginTop: hp(1)}}
+            OnBoardingSubText={strings.OnBoardingOneSubText}
+            OnBoardingMainText={strings.OnBoardingOneMainText}
           />
         </View>
         <View style={styles.slide}>
           <OnBoardingImage onBoardingImage={Images.onBoardingImageSecond} />
           <OnBoardingText
-            OnBoardingMainText={strings.OnBoardingSecondMainText}
-            OnBoardingSubText={strings.OnBoardingSecondSubText}
             OnBoardingSubTextStyle={{marginTop: hp(1)}}
+            OnBoardingSubText={strings.OnBoardingSecondSubText}
+            OnBoardingMainText={strings.OnBoardingSecondMainText}
           />
         </View>
         <View style={styles.slide}>
@@ -54,18 +52,18 @@ const OnBoardingFirst = ({navigation, props}) => {
             onBoardingImage={Images.onBoardingImageThird}
           />
           <OnBoardingText
-            OnBoardingMainText={strings.OnBoardingThirdMainText}
-            OnBoardingSubText={strings.OnBoardingThirdSubText}
             OnBoardingSubTextStyle={{marginTop: hp(1)}}
+            OnBoardingSubText={strings.OnBoardingThirdSubText}
+            OnBoardingMainText={strings.OnBoardingThirdMainText}
           />
         </View>
       </Swiper>
       <View
         style={{
           height: 1,
-          backgroundColor: '#ECEFEF',
-          marginHorizontal: wp(5),
           marginTop: 5,
+          marginHorizontal: wp(5),
+          backgroundColor: '#ECEFEF',
         }}
       />
       <View style={{justifyContent: 'flex-end', marginBottom: hp(5)}}>

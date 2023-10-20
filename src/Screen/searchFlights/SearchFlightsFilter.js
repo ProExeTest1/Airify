@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   FlatList,
   ScrollView,
@@ -6,15 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import CheckBox from '../../components/Common/CheckBox';
+import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
+import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 import {
   GetTime,
   MultiSliderComponets,
   OnBoardingTwoButton,
   PickerHeaderBar,
 } from '../../components/index';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
 import {
   AmenitiesData,
   CabinClassData,
@@ -22,10 +27,6 @@ import {
   RefundAndRescheduleData,
   numberOfStops,
 } from '../../assets/DummyData/Data';
-import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
-import CheckBox from '../../components/Common/CheckBox';
-import {useDispatch, useSelector} from 'react-redux';
-import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 
 const SearchFlightsFilter = ({navigation}) => {
   const func = () => {
@@ -542,44 +543,44 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(8),
   },
   boxBody: {
-    backgroundColor: '#fff',
-    paddingTop: hp(2),
-    paddingHorizontal: wp(4),
     borderRadius: 10,
+    paddingTop: hp(2),
     marginBottom: hp(2),
+    backgroundColor: '#fff',
+    paddingHorizontal: wp(4),
   },
   boxTitleBody: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   boxTitle: {
-    fontSize: fontSize(17),
     fontWeight: 'bold',
+    fontSize: fontSize(17),
   },
   boxVelue: {
     fontSize: fontSize(18),
   },
   StopsButBody: {
-    paddingVertical: hp(1.5),
     flexDirection: 'row',
+    paddingVertical: hp(1.5),
     justifyContent: 'space-between',
   },
   StopsBut: {
-    backgroundColor: '#f2f2f2',
     borderWidth: 2,
-    borderRadius: 10,
-    paddingVertical: hp(1.3),
     width: wp(23.5),
-    alignItems: 'center',
+    borderRadius: 10,
     marginEnd: wp(2.7),
+    alignItems: 'center',
+    backgroundColor: '#f2f2f2',
+    paddingVertical: hp(1.3),
   },
   StopsText: {
-    fontSize: fontSize(16),
     fontWeight: '500',
+    fontSize: fontSize(16),
   },
   AirlinesText: {
-    fontSize: fontSize(17),
     fontWeight: '500',
+    fontSize: fontSize(17),
     color: color.commonBlue,
   },
   AirlinesFlatlistBody: {
@@ -593,14 +594,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardHeaderLogo: {
-    height: wp(6.5),
     width: wp(6.5),
-    borderRadius: 500,
+    height: wp(6.5),
     marginEnd: wp(3),
+    borderRadius: 500,
   },
   AirlinesFlatlistText: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
     flex: 1,
+    fontWeight: '500',
+    fontSize: fontSize(18),
   },
 });
