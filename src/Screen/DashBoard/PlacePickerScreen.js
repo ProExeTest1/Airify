@@ -112,7 +112,10 @@ const PlacePickerScreen = ({navigation, route}) => {
         headerName={headerData}
         navigation={() => navigation.goBack('')}
       />
-      <SearchBar onChangeText={txt => searchFilter(txt)} />
+      <SearchBar
+        placeholder={'Search...'}
+        onChangeText={txt => searchFilter(txt)}
+      />
       {search.length <= 0 && searchEnable ? (
         <View style={styles.notFoundViewStyle}>
           <Text style={styles.notFoundTextStyle}>None of this place exist</Text>
@@ -214,6 +217,7 @@ const styles = StyleSheet.create({
   },
   notFoundTextStyle: {
     fontSize: fontSize(20),
+    color: 'black',
   },
   notFoundViewStyle: {
     flex: 1,

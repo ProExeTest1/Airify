@@ -11,7 +11,6 @@ const FlightDetailsCard = ({
   searchFlightData,
   searchFlightDateData,
 }) => {
-  // console.log(searchFlightDateData, 'hfghjfb=======>>>>>');
   return (
     <View style={styles.cardBody}>
       <View style={styles.cardHeader}>

@@ -18,7 +18,8 @@ import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {SelectpaymentMethodAction} from '../../redux/action/SelectSeatAction';
 
-const PaymentMethod = ({navigation}) => {
+const PaymentMethod = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
   const dispatch = useDispatch();
   const [WalletData, setWalletData] = useState({});
   const [selectOpc, setSelectOpc] = useState({});
@@ -27,13 +28,12 @@ const PaymentMethod = ({navigation}) => {
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
 
-  console.log('>>>>>>>>>>>>>>', Number(WalletData?.wallet?.split(',')[0]));
   const setDataFunction = () => {
     if (totalSeat * ticketPrice <= Number(WalletData?.wallet?.split(',')[0])) {
       dispatch(SelectpaymentMethodAction(selectOpc));
-      navigation.goBack();
+      navigation.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
-      navigation.navigate('TopUp');
+      navigation.navigate('TopUp', {TripType: tripType});
       Alert.alert('please TopUp your Wallet');
     }
   };

@@ -14,6 +14,9 @@ const PriceDetails = ({
   item,
   ToggleSwitchBut1,
   TotalPoints,
+  returnItem,
+  returnTicketPrice,
+  isReturn,
 }) => {
   const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
   const insurancePrice = Math.round((totalSeat * ticketPrice * 2.8) / 100);
@@ -21,7 +24,6 @@ const PriceDetails = ({
   const discount = DiscountData?.discountPR
     ? Math.round((totalSeat * ticketPrice * DiscountData?.discountPR) / 100)
     : 0;
-  console.log(ToggleSwitchBut1);
   const TotalPoint = TotalPoints ? TotalPoints : 0;
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = TotalPoint % 100;
@@ -40,6 +42,17 @@ const PriceDetails = ({
             ${totalSeat * ticketPrice}.00
           </Text>
         </View>
+        {isReturn === 'Round-Trip' && (
+          <View style={styles.priceViewStyle}>
+            <Text numberOfLines={1} style={styles.priceTextStyle}>
+              {returnItem?.airlineName}{' '}
+              {`(${strings.Adult}) x ${totalPassenger} `}
+            </Text>
+            <Text numberOfLines={1} style={styles.priceTextStyle}>
+              ${totalSeat * returnTicketPrice}.00
+            </Text>
+          </View>
+        )}
         <View style={styles.priceViewStyle}>
           <Text numberOfLines={1} style={styles.priceTextStyle}>
             {strings.travel_inssurance}
@@ -73,15 +86,28 @@ const PriceDetails = ({
         <Text numberOfLines={1} style={styles.priceTextStyle}>
           {strings.total_price}
         </Text>
-        <Text numberOfLines={1} style={styles.priceTextStyle}>
-          $
-          {totalSeat * ticketPrice +
-            insurancePrice +
-            travelTax -
-            discount -
-            validPoint}
-          .00
-        </Text>
+        {isReturn === 'Round-Trip' ? (
+          <Text numberOfLines={1} style={styles.priceTextStyle}>
+            $
+            {totalSeat * ticketPrice +
+              totalSeat * returnTicketPrice +
+              insurancePrice +
+              travelTax -
+              discount -
+              validPoint}
+            .00
+          </Text>
+        ) : (
+          <Text numberOfLines={1} style={styles.priceTextStyle}>
+            $
+            {totalSeat * ticketPrice +
+              insurancePrice +
+              travelTax -
+              discount -
+              validPoint}
+            .00
+          </Text>
+        )}
       </View>
     </View>
   );

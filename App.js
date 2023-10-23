@@ -4,7 +4,6 @@ import {MenuProvider} from 'react-native-popup-menu';
 import {store} from './src/redux/store';
 import {
   LogBox,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -15,9 +14,8 @@ import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
 import {getDate} from './src/assets/DummyData/GetDate';
 import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {useIsFocused} from '@react-navigation/native';
+
 function App() {
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
@@ -25,7 +23,7 @@ function App() {
   TextInput.defaultProps.allowFontScaling = false;
   LogBox.ignoreAllLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
-  React.useEffect(() => {
+  useEffect(() => {
     SplashScreen.hide();
     seatingArrange();
   });

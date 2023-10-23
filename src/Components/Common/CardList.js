@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     fontWeight: 'bold',
     flex: 1,
+    color: 'black',
   },
   cardHeaderLogo: {
     height: wp(5.8),

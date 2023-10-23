@@ -121,6 +121,8 @@ const SearchFlightsHeader = ({
                     console.log(item, 'item');
                     dispatch(returnNormalDateAction(item));
                   } else {
+                    console.log(item, 'departure item');
+
                     dispatch(dateAction(item));
                   }
                 }}

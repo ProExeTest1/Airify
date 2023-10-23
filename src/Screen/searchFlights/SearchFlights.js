@@ -52,13 +52,14 @@ const SearchFlights = ({navigation, route}) => {
 
   const setSelectDate = ({date}) => {
     let dateChange = date.split('/');
-    dispatch(
-      depatureDateAction(
-        `${moment(
-          new Date(`${dateChange[1]}/${dateChange[0]}/${dateChange[2]}`),
-        ).format('dddd,MMM D YYYY')}`,
-      ),
-    );
+    console.log('date', date);
+    // dispatch(
+    //   depatureDateAction(
+    //     `${moment(
+    //       new Date(`${dateChange[1]}/${dateChange[0]}/${dateChange[2]}`),
+    //     ).format('dddd,MMM D YYYY')}`,
+    //   ),
+    // );
   };
   const onShare = async () => {
     try {

@@ -27,7 +27,10 @@ import {Images} from '../../helper/IconConstant';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useDispatch, useSelector} from 'react-redux';
-import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
+import {
+  ReturnSelectSeatActionData,
+  SelectSeatActionData,
+} from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 
 const FillPassengerDetails = ({navigation, route}) => {
@@ -42,8 +45,8 @@ const FillPassengerDetails = ({navigation, route}) => {
   const DropdownButton = useRef();
   const item = useSelector(state =>
     ticketType === 'Departure'
-      ? state.searchFlight.searchFlightCardData
-      : state.searchFlight.searchFlightReturnCardData,
+      ? state?.searchFlight?.searchFlightCardData
+      : state?.searchFlight?.searchFlightReturnCardData,
   );
   const searchFlightData = useSelector(e =>
     ticketType === 'Departure'
@@ -54,20 +57,36 @@ const FillPassengerDetails = ({navigation, route}) => {
   const searchFlightDateData = useSelector(e =>
     ticketType === 'Departure' ? e?.date?.depatureDate : e?.date?.returnDate,
   ).split(',');
-  const userData = useSelector(state => state.userData.userdata);
-  const SelectSeat = useSelector(e => e.SelectSeatData.SelectSeatData);
-  const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
-  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const userData = useSelector(state => state?.userData?.userdata);
+  const SelectSeat = useSelector(e =>
+    ticketType === 'Departure'
+      ? e?.SelectSeatData?.SelectSeatData
+      : e?.SelectSeatData?.ReturnSelectSeatData,
+  );
+  const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
+  const ticketPrice = parseInt(
+    item?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
 
-  let newArr = Array.from({length: totalSeat}, (_, index) => ({
+  let newArr = Array?.from({length: totalSeat}, (_, index) => ({
+    id: index + 1,
+    name: '',
+    seatNo: false,
+  }));
+  let returnNewArr = Array?.from({length: totalSeat}, (_, index) => ({
     id: index + 1,
     name: '',
     seatNo: false,
   }));
   const [flatlistData, setFlatlistData] = useState(newArr);
+  const [returnFlatlistData, setReturnFlatlistData] = useState(returnNewArr);
   const setFlatlistDataa = i => {
-    console.log('hiiii');
-    dispatch(SelectSeatActionData(i));
+    if (ticketType === 'Return') {
+      dispatch(ReturnSelectSeatActionData(i));
+    } else {
+      dispatch(SelectSeatActionData(i));
+    }
   };
   useEffect(() => {
     passengers();
@@ -82,20 +101,25 @@ const FillPassengerDetails = ({navigation, route}) => {
   };
   const onContinue = () => {
     if (tripType === 'Round-Trip' && ticketType === 'Departure') {
-      if (passengerLength < newArr.length && SelectSeat.every(i => i.seatNo)) {
+      if (
+        passengerLength < newArr?.length &&
+        SelectSeat?.every(i => i?.seatNo)
+      ) {
         AlertConstant('Please first add passengers to click on plus icon');
       } else {
         setTicketType('Return');
       }
     } else {
-      if (passengerLength < newArr.length && SelectSeat.every(i => i.seatNo)) {
+      if (
+        passengerLength < newArr?.length &&
+        SelectSeat?.every(i => i?.seatNo)
+      ) {
         AlertConstant('Please first add passengers to click on plus icon');
       } else {
-        navigation?.navigate('PaymentConfirmation');
+        navigation?.navigate('PaymentConfirmation', {TripType: tripType});
       }
     }
   };
-  // console.log(passengerList);
   const toggleDropDown = index => {
     visible ? setVisible(false) : openDropdown();
     setFlatlistIndex(index);
@@ -107,19 +131,35 @@ const FillPassengerDetails = ({navigation, route}) => {
     setVisible(true);
   };
   const onItemPress = item => {
-    const newData = flatlistData.map(x => {
-      if (x.id === flatlistIndex) {
-        return {...x, name: item};
-      }
-      return x;
-    });
-    setFlatlistData(newData);
-    setFlatlistDataa(
-      newData.map(i => {
-        return {name: i.name, seatNo: i.seatNo};
-      }),
-    );
-    setVisible(false);
+    if (ticketType === 'Departure') {
+      const newData = flatlistData.map(x => {
+        if (x.id === flatlistIndex) {
+          return {...x, name: item};
+        }
+        return x;
+      });
+      setFlatlistData(newData);
+      setFlatlistDataa(
+        newData?.map(i => {
+          return {name: i.name, seatNo: i.seatNo};
+        }),
+      );
+      setVisible(false);
+    } else {
+      const newData = returnFlatlistData.map(x => {
+        if (x.id === flatlistIndex) {
+          return {...x, name: item};
+        }
+        return x;
+      });
+      setReturnFlatlistData(newData);
+      setFlatlistDataa(
+        newData.map(i => {
+          return {name: i.name, seatNo: i.seatNo};
+        }),
+      );
+      setVisible(false);
+    }
   };
   const renderItem = ({item}) => {
     return (
@@ -130,7 +170,7 @@ const FillPassengerDetails = ({navigation, route}) => {
           toggleDropDown();
         }}>
         <Text style={styles.renderItemTextStyle}>
-          {item.FirstName} {item.LastName}
+          {item?.FirstName} {item?.LastName}
         </Text>
       </TouchableOpacity>
     );
@@ -141,18 +181,19 @@ const FillPassengerDetails = ({navigation, route}) => {
       .doc(auth().currentUser.uid)
       .get()
       .then(res => {
-        setPassengerList(res.data().PassengerList);
-        setPassengerLength(res.data().PassengerList.length);
+        setPassengerList(res?.data()?.PassengerList);
+        setPassengerLength(res?.data()?.PassengerList?.length);
       });
   };
 
-  console.log(flatlistData);
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
         headerName={strings.fillInDetails}
         navigation1={() => {
           navigation.goBack();
+          dispatch(ReturnSelectSeatActionData([]));
+          dispatch(SelectSeatActionData([]));
         }}
         navigation2={() => {}}
         Images1Color={'#fff'}
@@ -228,7 +269,9 @@ const FillPassengerDetails = ({navigation, route}) => {
           />
           <View style={styles.passengerInputViewStyle}>
             <FlatList
-              data={flatlistData}
+              data={
+                ticketType === 'Departure' ? flatlistData : returnFlatlistData
+              }
               renderItem={({item}) => {
                 return (
                   <>
@@ -247,12 +290,13 @@ const FillPassengerDetails = ({navigation, route}) => {
                     {visible && item.id === flatlistIndex && (
                       <DropDownMenu
                         data={passengerList?.filter(i =>
-                          flatlistData?.every(e => {
-                            console.log(
-                              e.name != `${i.FirstName}${i.LastName}`,
-                            );
-                            return e.name != `${i.FirstName}${i.LastName}`;
-                          }),
+                          ticketType === 'Departure'
+                            ? flatlistData?.every(e => {
+                                return e.name != `${i.FirstName}${i.LastName}`;
+                              })
+                            : returnFlatlistData?.every(e => {
+                                return e.name != `${i.FirstName}${i.LastName}`;
+                              }),
                         )}
                         dropdownTop={dropdown}
                         renderItem={renderItem}
@@ -268,11 +312,29 @@ const FillPassengerDetails = ({navigation, route}) => {
         <View style={styles.cardBody}>
           <TouchableOpacity
             onPress={() => {
-              flatlistData?.every(i => i.name.length > 0)
-                ? navigation.navigate('SelectSeat')
-                : Alert.alert(
-                    'please fill passenger details if no any passenger list so press + sine and add passenger details',
-                  );
+              {
+                if (tripType === 'Round-Trip') {
+                  if (ticketType === 'Departure') {
+                    flatlistData?.every(i => i.name.length > 0)
+                      ? navigation.navigate('SelectSeat', {TripType: tripType})
+                      : AlertConstant(
+                          'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
+                        );
+                  } else {
+                    returnFlatlistData?.every(i => i.name.length > 0)
+                      ? navigation.navigate('ReturnSelectSeat')
+                      : AlertConstant(
+                          'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
+                        );
+                  }
+                } else {
+                  flatlistData?.every(i => i.name.length > 0)
+                    ? navigation.navigate('SelectSeat')
+                    : AlertConstant(
+                        'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
+                      );
+                }
+              }
             }}>
             <CardHeader
               FirstImage={Images.seat}
@@ -353,7 +415,12 @@ const FillPassengerDetails = ({navigation, route}) => {
             onContinue();
           }}
           style={styles.okButton}>
-          <Text style={styles.okButtonText}>{strings.continue}</Text>
+          <Text style={styles.okButtonText}>
+            {' '}
+            {tripType === 'Round-Trip' && ticketType === 'Departure'
+              ? 'Confirm'
+              : strings.continue}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

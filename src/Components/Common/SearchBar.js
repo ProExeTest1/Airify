@@ -10,7 +10,7 @@ const SearchBar = ({value, onChangeText, placeholder, TextInputBody}) => {
         <Image style={styles.SearchImg} source={Images.search} />
         <TextInput
           placeholder={placeholder}
-          placeholderTextColor={'grey'}
+          placeholderTextColor="grey"
           autoCapitalize="none"
           fontSize={fontSize(18)}
           value={value}
@@ -40,5 +40,6 @@ const styles = StyleSheet.create({
   },
   TextInputStyle: {
     flex: 1,
+    color: 'black',
   },
 });

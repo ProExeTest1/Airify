@@ -263,4 +263,8 @@ export const strings = {
   shareCode: 'Share Referral Code',
 
   airifyPoint: 'Airify Point',
+
+  // Transaction Details
+  ticket_note:
+    'You are obligated to present your e-boarding pass when you will enter the airplane flight.',
 };

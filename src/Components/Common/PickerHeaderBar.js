@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     height: hp(2),
     width: hp(2),
     tintColor: color.white,
-    marginVertical: Platform.OS === 'android' ? hp(-1) : null,
   },
   headerTextStyle: {
     fontSize: fontSize(22),
@@ -59,15 +58,15 @@ const styles = StyleSheet.create({
   },
   headerinnerViewStyle: {
     backgroundColor: color.commonBlue,
-    height: Platform.OS == 'ios' ? hp(6) : hp(0),
+    flex: 1,
+    paddingVertical: Platform.OS === 'ios' ? hp(3) : hp(0.7),
     paddingHorizontal: wp(8),
     justifyContent: 'center',
     marginBottom: Platform.OS === 'android' ? hp(3) : null,
   },
   headerTextViewStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
     position: 'absolute',
-    width: wp(100),
+    flex: 1,
+    alignSelf: 'center',
   },
 });

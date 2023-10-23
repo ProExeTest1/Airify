@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -59,9 +59,9 @@ LocaleConfig.locales['fr'] = {
 LocaleConfig.defaultLocale = 'fr';
 
 const DatePickerScreen = ({navigation, route}) => {
-  const returndata = route?.params?.return;
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.normalDate);
+  const returndata = route?.params?.return;
   const [selected, setSelected] = useState('');
   const [day, setDay] = useState();
   const [returnday, seReturnDay] = useState();
@@ -110,6 +110,7 @@ const DatePickerScreen = ({navigation, route}) => {
     tomorrow = moment(tomorrow).add(1, 'day').format('YYYY-MM-DD');
     let selectedDate = moment(selected).format('MM/DD/YYYY');
     let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
+    console.log(selectedreturnDate, 'selectedreturnDate');
     let flag = 0;
     let flag2 = 0;
     //Condition for date vallidation
@@ -121,13 +122,11 @@ const DatePickerScreen = ({navigation, route}) => {
           flag = 1;
         }
       }
+      // For return choose return date
       if (returndata == 'returnDate') {
-        const aa = reduxDepatureDate?.date?.split('/');
-        const validateReturnDate = aa[1] + '/' + aa[0] + '/' + aa[2];
         for (let i = 1; i <= 10; i++) {
-          let roundDate = moment(validateReturnDate)
-            .add(i, 'day')
-            .format('MM/DD/YYYY');
+          var da = moment(reduxDepatureDate?.date, 'DD/MM/YYYY');
+          let roundDate = moment(da).add(i, 'day').format('MM/DD/YYYY');
           if (selectedreturnDate == roundDate) {
             flag2 = 1;
           }
@@ -186,13 +185,13 @@ const DatePickerScreen = ({navigation, route}) => {
                 : `${currentDate[0]},${currentMonth} ${newDate[2]} ${newDate[0]}`}
             </Text>
           </View>
-          <Text>------</Text>
+          <Text style={styles.returnDateTextStyle}>------</Text>
           <View
             style={[
               styles.ReturndateViewStyle,
-              {paddingHorizontal: returnPress && press ? wp(6) : wp(9)},
+              {paddingHorizontal: returnPress && press ? wp(6) : wp(7)},
             ]}>
-            <Text>
+            <Text style={styles.returnDateTextStyle}>
               {press && returnPress && returnday !== undefined
                 ? `${returndayname[0]}, ${returnmonth} ${returnday} ${returnyear}`
                 : '+ Return Date'}
@@ -232,10 +231,7 @@ const DatePickerScreen = ({navigation, route}) => {
           />
         </View>
       </View>
-      <View
-        style={{
-          height: hp(12.31),
-        }}>
+      <View style={styles.bottomViewStyle}>
         <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
           <Text style={styles.searchFontStyle}>OK</Text>
         </TouchableOpacity>
@@ -259,7 +255,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 1,
     justifyContent: 'center',
-
     paddingVertical: hp(1.8),
     marginVertical: hp(2.2),
   },
@@ -276,10 +271,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: wp(5),
-    height: hp(7),
+    paddingVertical: hp(2),
     borderRadius: 16,
     backgroundColor: 'blue',
-    marginVertical: hp(1.2),
+    marginVertical: hp(2.5),
   },
   searchFontStyle: {
     fontSize: fontSize(20, 812),
@@ -290,5 +285,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  returnDateTextStyle: {
+    color: 'black',
+    fontSize: fontSize(16, 812),
+    fontWeight: '500',
+  },
+  bottomViewStyle: {
+    height: hp(12.31),
   },
 });

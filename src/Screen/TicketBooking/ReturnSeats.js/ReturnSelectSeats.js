@@ -2,7 +2,6 @@ import {
   Alert,
   FlatList,
   Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,33 +9,37 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {CommonHeader} from '../../components';
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
-import {useDispatch, useSelector} from 'react-redux';
-import {airlineCity} from '../../assets/DummyData/AirlineCity';
+import {CommonHeader} from '../../../components';
+import {strings} from '../../../helper/Strings';
+import {Images} from '../../../helper/IconConstant';
+import {color} from '../../../helper/ColorConstant';
+import {airlineCity} from '../../../assets/DummyData/AirlineCity';
 import firestore from '@react-native-firebase/firestore';
-import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
-import {AlertConstant} from '../../helper/AlertConstant';
+import {
+  ReturnSelectSeatActionData,
+  SelectSeatActionData,
+} from '../../../redux/action/SelectSeatAction';
+import {fontSize, hp, wp} from '../../../helper/Constant';
+import {useDispatch, useSelector} from 'react-redux';
+import {AlertConstant} from '../../../helper/AlertConstant';
 
-const SelectSeat = ({navigation, route}) => {
-  const tripType = route?.params?.TripType;
-  console.log(tripType, 'trip type');
-  const temp = useSelector(e => e.SelectSeatData.SelectSeatData);
+const ReturnSelectSeats = ({navigation}) => {
+  const temp = useSelector(e => e.SelectSeatData.ReturnSelectSeatData);
   const searchFlightCardData = useSelector(
-    state => state.searchFlight.searchFlightCardData,
+    state => state.searchFlight.searchFlightReturnCardData,
   );
   const dispatch = useDispatch();
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const SelectDate = useSelector(e => e.date.depatureDate);
+  const searchFlightData = useSelector(
+    e => e?.searchFlight?.searchFlightReturnData,
+  );
+
+  const SelectDate = useSelector(e => e.date.returnDate);
 
   const [FirebaseData, setFirebaseData] = useState({});
   const [seatData, setseatData] = useState(temp);
   const [OccuiedData, setOccuiedData] = useState([]);
 
-  console.log(FirebaseData);
+  console.log(FirebaseData, 'hello');
 
   const [seatNameData, setseatNameData] = useState(temp[0]);
   const setSelectSeat = seat => {
@@ -57,17 +60,16 @@ const SelectSeat = ({navigation, route}) => {
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
         const users = [];
-
         querySnapshot.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot.data(),
           });
         });
-        console.log(users, 'users');
-        const setAllData = users[0]?.AirlineSeatBookData?.find(
+        console.log(users, 'querySnapshot');
+        const setAllData = users[0].AirlineSeatBookData.find(
           i => i?.date == new Date(SelectDate)?.toLocaleDateString('en-IN'),
         );
-        console.log(setAllData, 'setAllData1');
+        console.log(setAllData, 'setAllData');
         setFirebaseData(setAllData);
         setOccuiedData(
           setAllData?.flightData?.find(i => {
@@ -85,7 +87,7 @@ const SelectSeat = ({navigation, route}) => {
         setseatData(
           seatData?.map(item => {
             if (OccuiedData?.some(i => item.seatNo === i)) {
-              AlertConstant(
+              Alert?.alert(
                 `your selected seat ${item?.seatNo} is already book`,
               );
               return {
@@ -96,16 +98,14 @@ const SelectSeat = ({navigation, route}) => {
             return item;
           }),
         );
-        console.log(OccuiedData, '<<<>>>>', seatData);
       });
   };
   const setSeat = async () => {
-    const selectedSeat = seatData?.filter(i => i.seatNo).map(e => e.seatNo);
+    const selectedSeat = seatData?.filter(i => i.seatNo)?.map(e => e.seatNo);
     if (selectedSeat?.length === seatData?.length) {
-      dispatch(SelectSeatActionData(seatData));
+      dispatch(ReturnSelectSeatActionData(seatData));
       setseatData([]);
-      navigation?.navigate('FillPassengerDetails', {TripType: tripType});
-      console.log(temp, 'temp temp temp temp tmep tmep');
+      navigation?.navigate('FillPassengerDetails', {TripType: 'Round-Trip'});
     } else {
       AlertConstant('please select seat');
     }
@@ -117,11 +117,7 @@ const SelectSeat = ({navigation, route}) => {
   return (
     <View style={{flex: 1}}>
       <CommonHeader
-        headerName={
-          tripType === 'Round-Trip'
-            ? `${strings.selectSeat} (Departure)`
-            : strings.selectSeat
-        }
+        headerName={`${strings.selectSeat} (Return)`}
         navigation1={() => {
           navigation.goBack();
         }}
@@ -159,7 +155,7 @@ const SelectSeat = ({navigation, route}) => {
                   {item?.name}
                 </Text>
                 <Text style={styles.FlatListSubTitle}>
-                  {item?.seatNo ? item?.seatNo : 'No Selection'}
+                  {item?.seatNo ? item.seatNo : 'No Selection'}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -229,10 +225,10 @@ const SelectSeat = ({navigation, route}) => {
               return (
                 <View style={styles.seatRowNumber}>
                   <View style={styles.seatButHeader}>
-                    <Text style={styles.seatRowNumberText}>{i.title}</Text>
+                    <Text style={styles.seatRowNumberText}>{i?.title}</Text>
                   </View>
                   <FlatList
-                    data={i?.city}
+                    data={i.city}
                     scrollEnabled={false}
                     renderItem={({item, index}) => (
                       <View style={styles.seatButBody}>
@@ -254,7 +250,7 @@ const SelectSeat = ({navigation, route}) => {
                               styles.seatBut,
                               {
                                 backgroundColor: seatData?.some(
-                                  i => i.seatNo === item,
+                                  i => i?.seatNo === item,
                                 )
                                   ? color.commonBlue
                                   : OccuiedData?.some(i => i === item)
@@ -311,7 +307,7 @@ const SelectSeat = ({navigation, route}) => {
   );
 };
 
-export default SelectSeat;
+export default ReturnSelectSeats;
 
 const styles = StyleSheet.create({
   selectSeatHeaderBody: {

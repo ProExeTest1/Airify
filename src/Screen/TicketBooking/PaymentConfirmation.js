@@ -12,6 +12,7 @@ import {
   CommonHeader,
   FlightDetailsCard,
   PriceDetails,
+  ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
 import {Images} from '../../helper/IconConstant';
@@ -23,24 +24,42 @@ import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {DiscountDataAction} from '../../redux/action/SelectSeatAction';
-const PatmentConfirmation = ({navigation}) => {
+const PatmentConfirmation = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
   const dispatch = useDispatch();
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
   const [WalletData, setWalletData] = useState({});
-
+  const [ticketType, setTicketType] = useState('Departure');
   const [PointsData, setPointsData] = useState({});
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const returnItem = useSelector(
+    state => state?.searchFlight?.searchFlightReturnCardData,
+  );
+  const ticketPrice = parseInt(
+    item?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
+  const returbTicketPrice = parseInt(
+    returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
   const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
+  const returnSearchFlightData = useSelector(
+    e => e?.searchFlight?.searchFlightReturnData,
+  );
+  const totalSeat = Number(searchFlightData?.passenger.split(' ')[0]);
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
+  const returnSearchFlightDateData = useSelector(
+    e => e?.date?.returnDate,
+  ).split(',');
   const PaymentMethodData = useSelector(
-    e => e.SelectSeatData.SelectPaymentMethod,
+    e => e?.SelectSeatData?.SelectPaymentMethod,
   );
   console.log('>>>>>>>>>>>>>', PaymentMethodData);
+
   const getFirebaseData = async () => {
     await firestore()
       .collection('Points')
@@ -49,12 +68,12 @@ const PatmentConfirmation = ({navigation}) => {
 
         querySnapshot.forEach(documentSnapshot => {
           users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
+            ...documentSnapshot?.data(),
+            key: documentSnapshot?.id,
           });
         });
         users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
+          if (item?.key == auth()?.currentUser?.uid) {
             setPointsData(item);
             return true;
           } else {
@@ -69,15 +88,15 @@ const PatmentConfirmation = ({navigation}) => {
       .onSnapshot(querySnapshot => {
         const users = [];
 
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
+            ...documentSnapshot?.data(),
+            key: documentSnapshot?.id,
           });
         });
         console.log(users);
-        users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
+        users?.filter(item => {
+          if (item?.key == auth()?.currentUser?.uid) {
             setWalletData(item);
             return true;
           } else {
@@ -92,8 +111,8 @@ const PatmentConfirmation = ({navigation}) => {
   useEffect(() => {
     getFirebaseData();
   }, []);
-  const TotalPoint = PointsData.TotalPoints;
-  const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
+  const TotalPoint = PointsData?.TotalPoints;
+  const validPoint = ToggleSwitchBut1 ? Math?.floor(TotalPoint / 100) : 0;
   const havePonts = TotalPoint % 100;
   return (
     <View style={styles.headerViewStyle}>
@@ -111,6 +130,7 @@ const PatmentConfirmation = ({navigation}) => {
         Images2={null}
       />
       <TicktBookingProgressBar progress={2}></TicktBookingProgressBar>
+
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
           <FlightDetailsCard
@@ -118,13 +138,22 @@ const PatmentConfirmation = ({navigation}) => {
             searchFlightDateData={searchFlightDateData}
             item={item}
           />
+          {tripType === 'Round-Trip' ? (
+            <FlightDetailsCard
+              searchFlightData={returnSearchFlightData}
+              searchFlightDateData={returnSearchFlightDateData}
+              item={returnItem}
+            />
+          ) : null}
           <View style={styles.boxBody}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('PaymentMethod')}>
+              onPress={() =>
+                navigation.navigate('PaymentMethod', {TripType: tripType})
+              }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-                <Image style={styles.boxIcon} source={Images.payment}></Image>
+                <Image style={styles.boxIcon} source={Images?.payment}></Image>
                 <Text style={styles.boxTitle}>Payment Method</Text>
-                <Image style={styles.skipIcon} source={Images.forward}></Image>
+                <Image style={styles.skipIcon} source={Images?.forward}></Image>
               </View>
               <View style={styles.StopsButBody}></View>
             </TouchableOpacity>
@@ -138,7 +167,7 @@ const PatmentConfirmation = ({navigation}) => {
                     />
                     <Text style={styles.PaymentMethodName}>My Wallet</Text>
                     <Text style={styles.walletPraice}>
-                      ${WalletData.wallet}
+                      ${WalletData?.wallet}
                     </Text>
                   </View>
                 </View>
@@ -152,7 +181,7 @@ const PatmentConfirmation = ({navigation}) => {
                 <Text
                   style={
                     styles.boxTitle
-                  }>{`You Have ${PointsData.TotalPoints} Points`}</Text>
+                  }>{`You Have ${PointsData?.TotalPoints} Points`}</Text>
                 <Text style={{marginTop: hp(1)}}>
                   {`100 points equals $1. You will get ${
                     ticketPrice / 2
@@ -165,7 +194,7 @@ const PatmentConfirmation = ({navigation}) => {
                   size="medium"
                   onColor={color.commonBlue}
                   onToggle={isOn => {
-                    Number(PointsData.TotalPoints) > 100
+                    Number(PointsData?.TotalPoints) > 100
                       ? setToggleSwitchBut1(isOn)
                       : Alert.alert(
                           'your points is not valid please increase your point',
@@ -179,11 +208,13 @@ const PatmentConfirmation = ({navigation}) => {
 
           <View style={styles.boxBody}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('UseDiscountVoucher')}>
+              onPress={() =>
+                navigation?.navigate('UseDiscountVoucher', {TripType: tripType})
+              }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-                <Image style={styles.boxIcon} source={Images.discount}></Image>
+                <Image style={styles.boxIcon} source={Images?.discount}></Image>
                 <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
-                <Image style={styles.skipIcon} source={Images.forward}></Image>
+                <Image style={styles.skipIcon} source={Images?.forward}></Image>
               </View>
               <View style={styles.StopsButBody}></View>
             </TouchableOpacity>
@@ -202,17 +233,24 @@ const PatmentConfirmation = ({navigation}) => {
           </View>
           <PriceDetails
             item={item}
-            totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
+            totalPassenger={Number(searchFlightData?.passenger?.split(' ')[0])}
             ticketPrice={ticketPrice}
             totalSeat={totalSeat}
             ToggleSwitchBut1={ToggleSwitchBut1}
             TotalPoints={PointsData.TotalPoints}
+            isReturn={tripType}
+            returnTicketPrice={returbTicketPrice}
+            returnItem={returnItem}
           />
         </ScrollView>
       </View>
       <View style={styles.bottomButtonBody}>
-        <TouchableOpacity onPress={() => {}} style={styles.okButton}>
-          <Text style={styles.okButtonText}>{strings.payNow}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('TransactionDetails', {TripType: tripType})
+          }
+          style={styles.okButton}>
+          <Text style={styles.okButtonText}>{strings?.payNow}</Text>
         </TouchableOpacity>
       </View>
     </View>

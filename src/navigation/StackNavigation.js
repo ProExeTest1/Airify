@@ -39,6 +39,8 @@ import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
 import ReturnSearchFlights from '../screen/searchFlights/ReturnFlights/ReturnSearchFlights';
 import UseDiscountVoucher from '../screen/TicketBooking/UseDiscountVoucher';
 import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
+import ReturnSelectSeats from '../screen/TicketBooking/ReturnSeats.js/ReturnSelectSeats';
+
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
@@ -109,6 +111,7 @@ const StackNavigation = () => {
           component={UseDiscountVoucher}
         />
         <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+        <Stack.Screen name="ReturnSelectSeat" component={ReturnSelectSeats} />
       </Stack.Navigator>
     </NavigationContainer>
   );
