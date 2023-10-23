@@ -14,8 +14,9 @@ const PriceDetails = ({
   item,
   ToggleSwitchBut1,
   TotalPoints,
+  DiscountData,
 }) => {
-  const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
+  // const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
   const insurancePrice = Math.round((totalSeat * ticketPrice * 2.8) / 100);
   const travelTax = Math.round((totalSeat * ticketPrice * 1.5) / 100);
   const discount = DiscountData?.discountPR

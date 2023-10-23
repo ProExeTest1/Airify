@@ -53,6 +53,7 @@ const ConfirmPin = ({navigation}) => {
   const SelectDate = useSelector(e => e.date.depatureDate);
   const dispatch = useDispatch();
   const checkPin = async pin => {
+    console.log(totalPaymentList.points?.pointsUse);
     if (pin.length == 4) {
       if (pin == Number(pinData)) {
         setcondti2(true);
@@ -114,42 +115,24 @@ const ConfirmPin = ({navigation}) => {
             }),
           });
 
-        totalPaymentList.points.havePoint == 0
-          ? null
-          : await firestore()
-              .collection('Points')
-              .doc(auth().currentUser.uid)
-              .update({
-                TotalPoints:
-                  Number(UserPointData.TotalPoints) -
-                  totalPaymentList.points.getPoint.pointsUse,
-                PointsHistory: [
-                  {
-                    title: 'points',
-                    price: `-$${totalPaymentList.points.getPoint.pointsUse}`,
-                    date: moment(new Date()).format('MMM D,YYYY'),
-                    time: new Date().toLocaleTimeString('en-IN'),
-                  },
-                  ...UserPointData.PointsHistory,
-                ],
-              });
-        await firestore()
-          .collection('Points')
-          .doc(auth().currentUser.uid)
-          .update({
-            TotalPoints:
-              Number(UserPointData.TotalPoints) +
-              totalPaymentList.points.getPoint,
-            PointsHistory: [
-              {
-                title: 'points',
-                price: `+${totalPaymentList.points.getPoint}`,
-                date: moment(new Date()).format('MMM D,YYYY'),
-                time: new Date().toLocaleTimeString('en-IN'),
-              },
-              ...UserPointData.PointsHistory,
-            ],
-          });
+        totalPaymentList.points?.pointsUse != 0 &&
+          (await firestore()
+            .collection('Points')
+            .doc(auth().currentUser.uid)
+            .set({
+              TotalPoints:
+                Number(UserPointData.TotalPoints) -
+                totalPaymentList.points.pointsUse,
+              PointsHistory: [
+                {
+                  title: 'points',
+                  price: `-$${totalPaymentList.points.pointsUse}`,
+                  date: moment(new Date()).format('MMM D,YYYY'),
+                  time: new Date().toLocaleTimeString('en-IN'),
+                },
+                ...UserPointData.PointsHistory,
+              ],
+            }));
 
         const ticketId = Date.now();
         dispatch(showTicketActionData(ticketId));
@@ -181,7 +164,7 @@ const ConfirmPin = ({navigation}) => {
               },
             ],
           })
-          .then(() => {
+          .then(async () => {
             setTimeout(() => {
               // dispatch(ReturnSelectSeatActionData([]));
               dispatch(SelectSeatActionData([]));
@@ -330,12 +313,11 @@ const ConfirmPin = ({navigation}) => {
               <Text>Congratulation! your flight ticket is Confirmed</Text>
               <TouchableOpacity
                 onPress={() => {
+                  setModalVisible2(false);
                   navigation.navigate('Congratulation', {
                     header: 'TransactionDetails',
                   });
                   // navigation.navigate('TransactionDetails');
-
-                  setModalVisible2(false);
                 }}
                 style={{
                   backgroundColor: color.commonBlue,
@@ -355,11 +337,13 @@ const ConfirmPin = ({navigation}) => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() =>
+                onPress={() => {
+                  setModalVisible2(false);
+
                   navigation.navigate('Congratulation', {
                     header: 'TabNavigation',
-                  })
-                }
+                  });
+                }}
                 style={{
                   backgroundColor: '#0053F920',
                   width: wp(70),

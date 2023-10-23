@@ -5,19 +5,57 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {useRoute} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {StackActions, useRoute} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
 import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import moment from 'moment';
 
 const Congratulation = ({navigation}) => {
   const route = useRoute();
   console.log('route', route?.params?.header);
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
-  console.log(totalPaymentList);
+  const [UserPointData, setUserPointData] = useState({});
+
+  const getUserPointData = async () => {
+    await firestore()
+      .collection('Points')
+      .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          if (documentSnapshot.id == auth().currentUser.uid) {
+            setUserPointData(documentSnapshot.data());
+          }
+        });
+      });
+  };
+
+  const setPoint = async () => {
+    await firestore()
+      .collection('Points')
+      .doc(auth().currentUser.uid)
+      .update({
+        TotalPoints:
+          Number(UserPointData.TotalPoints) + totalPaymentList.points.getPoint,
+        PointsHistory: [
+          {
+            title: 'points',
+            price: `+${totalPaymentList.points.getPoint}`,
+            date: moment(new Date()).format('MMM D,YYYY'),
+            time: new Date().toLocaleTimeString('en-IN'),
+          },
+          ...UserPointData.PointsHistory,
+        ],
+      });
+    navigation.dispatch(StackActions.replace(route?.params?.header));
+  };
+  useEffect(() => {
+    getUserPointData();
+  }, []);
   return (
     <View
       style={{
@@ -64,7 +102,7 @@ const Congratulation = ({navigation}) => {
       <View style={styles.bottomButtonBody}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(route?.params?.header);
+            setPoint();
           }}
           style={styles.okButton}>
           <Text style={styles.okButtonText}>Ok</Text>

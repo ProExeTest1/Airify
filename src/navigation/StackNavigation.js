@@ -42,6 +42,7 @@ import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
 import ConfirmPin from '../screen/TicketBooking/ConfirmPin';
 import TransactionDetails from '../screen/generateTicket/TransactionDetails';
 import Congratulation from '../screen/TicketBooking/Congratulation';
+import ETicket from '../screen/generateTicket/ETicket';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -49,7 +50,7 @@ const StackNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{headerShown: false}}
+        screenOptions={{headerShown: false, gestureEnabled: false}}
         initialRouteName={user ? 'TabNavigation' : 'WelcomeScreen'}
         // initialRouteName={user ? 'TransactionDetails' : 'WelcomeScreen'}
       >
@@ -121,6 +122,7 @@ const StackNavigation = () => {
           component={TransactionDetails}
         />
         <Stack.Screen name="Congratulation" component={Congratulation} />
+        <Stack.Screen name="ETicket" component={ETicket} />
       </Stack.Navigator>
     </NavigationContainer>
   );

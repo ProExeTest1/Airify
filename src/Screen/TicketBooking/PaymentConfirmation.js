@@ -249,6 +249,7 @@ const PatmentConfirmation = ({navigation}) => {
             totalSeat={totalSeat}
             ToggleSwitchBut1={ToggleSwitchBut1}
             TotalPoints={PointsData.TotalPoints}
+            DiscountData={DiscountData}
           />
         </ScrollView>
       </View>
