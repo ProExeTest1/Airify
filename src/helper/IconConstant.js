@@ -103,4 +103,7 @@ export const Images = {
   delete: require('../assets/icons/delete.png'),
   scanner: require('../assets/icons/scanner.png'),
   removeSuccess: require('../assets/icons/removeSuccess.png'),
+  download: require('../assets/icons/download.png'),
+  qr: require('../assets/icons/qr.png'),
+  ticketWave: require('../assets/icons/ticketWave.png'),
 };

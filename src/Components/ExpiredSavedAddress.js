@@ -16,6 +16,7 @@ import {color} from '../helper/ColorConstant';
 import {Images} from '../helper/IconConstant';
 import {fontSize, hp, wp} from '../helper/Constant';
 import {expiredFlight} from '../redux/action/SavedFlights';
+import LottieView from 'lottie-react-native';
 
 const ExpiredSavedAddress = ({onPress}) => {
   const dispatch = useDispatch();
@@ -60,94 +61,115 @@ const ExpiredSavedAddress = ({onPress}) => {
   };
   return (
     <View style={styles.container}>
-      <FlatList
-        bounces={false}
-        data={expireAddressData}
-        showsVerticalScrollIndicator={false}
-        renderItem={({item, index}) => {
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                onPress(item);
-              }}
-              style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
-              <View style={styles.cardHeader}>
-                <View
-                  style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]}
-                />
-                <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
-                <Text style={styles.cardPrice}>{item?.price}</Text>
-                <Image
-                  source={Images.filled_save}
-                  style={{
-                    width: hp(2.5),
-                    height: hp(2.5),
-                    resizeMode: 'contain',
-                    tintColor: color.commonBlue,
-                  }}
-                />
-              </View>
-              <View style={styles.cardDataBody}>
-                <View style={styles.FlightsPlaseBody}>
-                  <Text style={styles.FlightsPlaseName}>
-                    {item?.departurePlace}
-                  </Text>
-                  <Text style={styles.FlightsPlaseNicName}>
-                    {item.departureTime}
-                  </Text>
-                </View>
-                <View style={styles.FlightsPlaseImgBody}>
-                  <Image
-                    style={styles.FlightsPlaseImg}
-                    source={Images.airplaneWhiteIcon}
+      {expireAddressData.length > 0 ? (
+        <FlatList
+          bounces={false}
+          data={expireAddressData}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item, index}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  onPress(item);
+                }}
+                style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
+                <View style={styles.cardHeader}>
+                  <View
+                    style={[
+                      styles.cardHeaderLogo,
+                      {backgroundColor: item?.logo},
+                    ]}
                   />
-                  <Text style={styles.FlightsPlaseImgText}>
-                    {item.totalHours}
-                  </Text>
+                  <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
+                  <Text style={styles.cardPrice}>{item?.price}</Text>
+                  <Image
+                    source={Images.filled_save}
+                    style={{
+                      width: hp(2.5),
+                      height: hp(2.5),
+                      resizeMode: 'contain',
+                      tintColor: color.commonBlue,
+                    }}
+                  />
                 </View>
-                <View
-                  style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
+                <View style={styles.cardDataBody}>
+                  <View style={styles.FlightsPlaseBody}>
+                    <Text style={styles.FlightsPlaseName}>
+                      {item?.departurePlace}
+                    </Text>
+                    <Text style={styles.FlightsPlaseNicName}>
+                      {item.departureTime}
+                    </Text>
+                  </View>
+                  <View style={styles.FlightsPlaseImgBody}>
+                    <Image
+                      style={styles.FlightsPlaseImg}
+                      source={Images.airplaneWhiteIcon}
+                    />
+                    <Text style={styles.FlightsPlaseImgText}>
+                      {item.totalHours}
+                    </Text>
+                  </View>
+                  <View
+                    style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
+                    <Text style={styles.FlightsPlaseName}>
+                      {item?.destinationPlace}
+                    </Text>
+                    <Text style={styles.FlightsPlaseNicName}>
+                      {item?.landingTime}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.cardBottemBody}>
                   <Text style={styles.FlightsPlaseName}>
-                    {item?.destinationPlace}
+                    {item?.departureShortForm}
                   </Text>
-                  <Text style={styles.FlightsPlaseNicName}>
-                    {item?.landingTime}
+                  <Text style={styles.FlightsPlaseImgText}>{item.stops}</Text>
+                  <Text style={styles.FlightsPlaseName}>
+                    {item?.destinationShortForm}
                   </Text>
                 </View>
-              </View>
-              <View style={styles.cardBottemBody}>
-                <Text style={styles.FlightsPlaseName}>
-                  {item?.departureShortForm}
-                </Text>
-                <Text style={styles.FlightsPlaseImgText}>{item.stops}</Text>
-                <Text style={styles.FlightsPlaseName}>
-                  {item?.destinationShortForm}
-                </Text>
-              </View>
-              <View
-                style={[
-                  styles.cardBottemBody,
-                  {
-                    paddingTop: hp(2),
-                    borderTopWidth: 1,
-                    borderColor: color.grayLight,
-                  },
-                ]}>
-                <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
                 <View
-                  style={{
-                    borderRadius: 4,
-                    paddingVertical: hp(1),
-                    paddingHorizontal: wp(2),
-                    backgroundColor: color.Grey,
-                  }}>
-                  <Text>Expired</Text>
+                  style={[
+                    styles.cardBottemBody,
+                    {
+                      paddingTop: hp(2),
+                      borderTopWidth: 1,
+                      borderColor: color.grayLight,
+                    },
+                  ]}>
+                  <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
+                  <View
+                    style={{
+                      borderRadius: 4,
+                      paddingVertical: hp(1),
+                      paddingHorizontal: wp(2),
+                      backgroundColor: color.Grey,
+                    }}>
+                    <Text>Expired</Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
+              </TouchableOpacity>
+            );
+          }}
+        />
+      ) : (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <LottieView
+            source={require('../helper/noDataFound.json')}
+            autoPlay
+            loop
+            style={{
+              height: hp(65),
+              width: wp(100),
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };

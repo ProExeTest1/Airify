@@ -1,23 +1,21 @@
-import React, {useEffect} from 'react';
-import StackNavigation from './src/navigation/StackNavigation';
-import {MenuProvider} from 'react-native-popup-menu';
-import {store} from './src/redux/store';
+import React from 'react';
 import {
   LogBox,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
-import {getDate} from './src/assets/DummyData/GetDate';
-import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
-import auth from '@react-native-firebase/auth';
+import {MenuProvider} from 'react-native-popup-menu';
+import SplashScreen from 'react-native-splash-screen';
 import firestore from '@react-native-firebase/firestore';
-import {useIsFocused} from '@react-navigation/native';
+
+import {store} from './src/redux/store';
+import {getDate} from './src/assets/DummyData/GetDate';
+import StackNavigation from './src/navigation/StackNavigation';
+import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
 
 function App() {
   Text.defaultProps = Text.defaultProps || {};

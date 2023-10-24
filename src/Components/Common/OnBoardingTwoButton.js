@@ -9,41 +9,35 @@ const OnBoardingTwoButton = ({
   buttonTextOne,
   buttonTextTwo,
   TwoButtonStyle,
+  twoButtonStyle,
 }) => {
   return (
-    twoButtonStyle,
-    (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={[styles.buttonStyle, twoButtonStyle]}
-          onPress={onPress1}>
-          <Text
-            style={{
-              color: 'blue',
-              fontWeight: '500',
-              textAlign: 'center',
-            }}>
-            {buttonTextOne}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.buttonStyle,
-            TwoButtonStyle,
-            {backgroundColor: 'blue'},
-          ]}
-          onPress={onPress2}>
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: '500',
-              textAlign: 'center',
-            }}>
-            {buttonTextTwo}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    )
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={[styles.buttonStyle, twoButtonStyle]}
+        onPress={onPress1}>
+        <Text
+          style={{
+            color: 'blue',
+            fontWeight: '500',
+            textAlign: 'center',
+          }}>
+          {buttonTextOne}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.buttonStyle, TwoButtonStyle, {backgroundColor: 'blue'}]}
+        onPress={onPress2}>
+        <Text
+          style={{
+            color: 'white',
+            fontWeight: '500',
+            textAlign: 'center',
+          }}>
+          {buttonTextTwo}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 const styles = StyleSheet.create({

@@ -12,7 +12,7 @@ import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import {RadioButton} from 'react-native-radio-buttons-group';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
@@ -44,6 +44,7 @@ const SavedScreen = ({navigation}) => {
   const expireFlightFilter = useSelector(
     e => e?.SaveFlight?.expireFlightFilter,
   );
+
   const openModal = item => {
     setSavedItem(item);
     setModal(true);
@@ -103,7 +104,7 @@ const SavedScreen = ({navigation}) => {
   };
 
   const closeModal2 = () => {
-    setSearchFlightCardData(activeFlight);
+    setSearchFlightCardData(savedFlight);
     setSelectedData({});
     setModalVisible2(false);
   };
@@ -239,12 +240,12 @@ const SavedScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
-        headerName={strings.savedFlight}
         onPress1={false}
         onPress2={false}
-        Images1={Images.planIcon}
         Images2={Images.search}
+        Images1={Images.planIcon}
         Images2Color={color.white}
+        headerName={strings.savedFlight}
       />
       <View style={styles.buttonViewStyle}>
         <TouchableOpacity
@@ -300,7 +301,6 @@ const SavedScreen = ({navigation}) => {
             data={SearchFlightCardData}
             onPress={item => {
               openModal(item);
-              // openFinalModal();
             }}
           />
         ) : (

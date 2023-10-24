@@ -262,4 +262,6 @@ export const strings = {
   removeAddress: 'Removed from Saved List?',
   yesRemove: 'Yes, Remove',
   removeSuccess: 'Successfully removed!',
+
+  eTicket: 'E-Ticket',
 };
