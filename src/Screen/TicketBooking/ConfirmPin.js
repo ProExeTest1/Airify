@@ -50,7 +50,7 @@ const ConfirmPin = ({navigation}) => {
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
-  const SelectDate = useSelector(e => e.date.depatureDate);
+  const SelectDate = useSelector(e => e.date.normalDate);
   const dispatch = useDispatch();
   const checkPin = async pin => {
     console.log(totalPaymentList.points?.pointsUse);
@@ -80,7 +80,7 @@ const ConfirmPin = ({navigation}) => {
           .doc('JaTwXgqSHSESiR6CDzdy')
           .update({
             AirlineSeatBookData: SeatData.map(i => {
-              if (i.date == new Date(SelectDate).toLocaleDateString('en-IN')) {
+              if (i.date == SelectDate?.date) {
                 return {
                   date: i.date,
                   day: i.day,

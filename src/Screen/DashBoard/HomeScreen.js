@@ -40,6 +40,7 @@ const HomeScreen = ({navigation}) => {
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
 
+  console.log('reduxDepatureDate', reduxDepatureDate);
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
   //Maintaining textInput value with redux data
   let depatureData = reduxDepaturePlace

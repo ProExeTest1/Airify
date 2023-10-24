@@ -52,10 +52,17 @@ const SearchFlights = ({navigation, route}) => {
 
   const setSelectDate = ({date}) => {
     let dateChange = date.split('/');
+    let newDate = new Date();
     dispatch(
       depatureDateAction(
         `${moment(
-          new Date(`${dateChange[1]}/${dateChange[0]}/${dateChange[2]}`),
+          new Date(
+            newDate.setFullYear(
+              dateChange[2],
+              dateChange[1] - 1,
+              dateChange[0],
+            ),
+          ),
         ).format('dddd,MMM D YYYY')}`,
       ),
     );

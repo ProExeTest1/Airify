@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {airlineCity} from '../../assets/DummyData/AirlineCity';
 import firestore from '@react-native-firebase/firestore';
 import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
+import moment from 'moment';
 
 const SelectSeat = ({navigation}) => {
   const temp = useSelector(e => e.SelectSeatData.SelectSeatData);
@@ -33,8 +34,7 @@ const SelectSeat = ({navigation}) => {
   const [seatData, setseatData] = useState(temp);
   const [OccuiedData, setOccuiedData] = useState([]);
 
-  console.log(FirebaseData);
-
+  const date = useSelector(e => e.date.normalDate);
   const [seatNameData, setseatNameData] = useState(temp[0]);
   const setSelectSeat = seat => {
     setseatData(
@@ -61,7 +61,7 @@ const SelectSeat = ({navigation}) => {
           });
         });
         const setAllData = users[0]?.AirlineSeatBookData?.find(
-          i => i?.date == new Date(SelectDate)?.toLocaleDateString('en-IN'),
+          i => i?.date == date?.date,
         );
         setFirebaseData(setAllData);
         setOccuiedData(
@@ -79,8 +79,9 @@ const SelectSeat = ({navigation}) => {
 
         setseatData(
           seatData.map(item => {
-            if (OccuiedData.some(i => item.seatNo === i)) {
-              Alert.alert(`your selected seat ${item.seatNo} is already book`);
+            if (OccuiedData) {
+              return item;
+            } else if (OccuiedData?.some(i => item.seatNo === i)) {
               return {
                 name: item.name,
                 seatNo: false,
@@ -89,7 +90,6 @@ const SelectSeat = ({navigation}) => {
             return item;
           }),
         );
-        console.log(OccuiedData, '<<<>>>>', seatData);
       });
   };
   const setSeat = async () => {
