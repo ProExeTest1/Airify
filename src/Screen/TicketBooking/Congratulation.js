@@ -27,7 +27,7 @@ const Congratulation = ({navigation}) => {
       .onSnapshot(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
-            setUserPointData(documentSnapshot.data());
+            setUserPointData(documentSnapshot?.data());
           }
         });
       });
@@ -39,7 +39,7 @@ const Congratulation = ({navigation}) => {
       .doc(auth().currentUser.uid)
       .update({
         TotalPoints:
-          Number(UserPointData.TotalPoints) + totalPaymentList.points.getPoint,
+          Number(UserPointData?.TotalPoints) + totalPaymentList.points.getPoint,
         PointsHistory: [
           {
             title: 'points',
@@ -47,7 +47,7 @@ const Congratulation = ({navigation}) => {
             date: moment(new Date()).format('MMM D,YYYY'),
             time: new Date().toLocaleTimeString('en-IN'),
           },
-          ...UserPointData.PointsHistory,
+          ...UserPointData?.PointsHistory,
         ],
       });
     navigation.dispatch(StackActions.replace(route?.params?.header));

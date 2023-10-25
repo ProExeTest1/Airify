@@ -6,9 +6,10 @@ import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {pointDummy} from '../../assets/DummyData/Data';
+import {useRoute} from '@react-navigation/native';
 
 const pointHistory = ({navigation: {goBack}}) => {
+  const pointDummy = useRoute();
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -31,15 +32,19 @@ const pointHistory = ({navigation: {goBack}}) => {
         </View>
         <FlatList
           bounces={false}
-          data={pointDummy}
+          data={pointDummy?.params?.header}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={() => <View style={{marginBottom: hp(15)}} />}
           renderItem={({item}) => {
             return (
               <View style={styles.flatListView}>
                 <View style={styles.flatListSubView}>
-                  <Text style={styles.mainTextStyle}>{item.title}</Text>
-                  <Text style={styles.mainTextStyle}>{item.point}</Text>
+                  <Text style={styles.mainTextStyle}>
+                    {item.price.slice(0, 1) == '+'
+                      ? 'You earn points'
+                      : 'You use points'}
+                  </Text>
+                  <Text style={styles.mainTextStyle}>{item.price}</Text>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text>{item.date} </Text>

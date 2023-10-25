@@ -120,16 +120,16 @@ const ConfirmPin = ({navigation}) => {
             .doc(auth().currentUser.uid)
             .set({
               TotalPoints:
-                Number(UserPointData.TotalPoints) -
+                Number(UserPointData?.TotalPoints) -
                 totalPaymentList.points.pointsUse,
               PointsHistory: [
                 {
                   title: 'points',
-                  price: `-$${totalPaymentList.points.pointsUse}`,
+                  price: `-${totalPaymentList.points.pointsUse}`,
                   date: moment(new Date()).format('MMM D,YYYY'),
                   time: new Date().toLocaleTimeString('en-IN'),
                 },
-                ...UserPointData.PointsHistory,
+                ...UserPointData?.PointsHistory,
               ],
             }));
 
@@ -218,7 +218,7 @@ const ConfirmPin = ({navigation}) => {
       .onSnapshot(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
-            setUserPointData(documentSnapshot.data());
+            setUserPointData(documentSnapshot?.data());
           }
         });
       });
