@@ -26,7 +26,7 @@ import moment from 'moment';
 const TopUp = ({navigation}) => {
   const [textInput1, setTextInput1] = useState('');
   const [userData, setUserData] = useState({});
-  const [myWallet, setMyWallet] = useState('00.00');
+  const [myWallet, setMyWallet] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
 
   // const Focused = useIsFocused();
@@ -127,9 +127,7 @@ const TopUp = ({navigation}) => {
         .collection('UserWallet')
         .doc(auth().currentUser.uid)
         .update({
-          wallet: `${
-            Number(textInput1.split('.')[0]) + Number(myWallet.split('.')[0])
-          }.00`,
+          wallet: Number(textInput1.split('.')[0]) + Number(myWallet),
         })
         .then(async () => {
           await firestore()

@@ -23,9 +23,16 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import {DiscountDataAction} from '../../redux/action/SelectSeatAction';
+import {
+  DiscountDataAction,
+  SelectpaymentMethodAction,
+  totalPaymentListAction,
+} from '../../redux/action/SelectSeatAction';
+import {AlertConstant} from '../../helper/AlertConstant';
+
 const PatmentConfirmation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
+
   const dispatch = useDispatch();
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
   const [WalletData, setWalletData] = useState({});
@@ -55,10 +62,17 @@ const PatmentConfirmation = ({navigation, route}) => {
   const returnSearchFlightDateData = useSelector(
     e => e?.date?.returnDate,
   ).split(',');
+
+  const TotalPoint = Number(PointsData.TotalPoints);
+  const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
+  const havePonts = ToggleSwitchBut1 ? TotalPoint % 100 : TotalPoint;
+  const Discount = Number(DiscountData.discountPR)
+    ? Number(DiscountData.discountPR)
+    : 0;
+
   const PaymentMethodData = useSelector(
     e => e?.SelectSeatData?.SelectPaymentMethod,
   );
-  console.log('>>>>>>>>>>>>>', PaymentMethodData);
 
   const getFirebaseData = async () => {
     await firestore()
@@ -94,7 +108,6 @@ const PatmentConfirmation = ({navigation, route}) => {
             key: documentSnapshot?.id,
           });
         });
-        console.log(users);
         users?.filter(item => {
           if (item?.key == auth()?.currentUser?.uid) {
             setWalletData(item);
@@ -105,21 +118,75 @@ const PatmentConfirmation = ({navigation, route}) => {
         });
       });
   };
+  const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
+  const payNow = () => {
+    if (PaymentMethodData?.type) {
+      dispatch(
+        totalPaymentListAction({
+          seat: {
+            totalSeat:
+              tripType === 'Round-Trip' ? totalSeat + totalSeat : totalSeat,
+            totalSeatPrice:
+              tripType === 'Round-Trip'
+                ? totalSeatPrice
+                : ticketPrice * totalSeat,
+          },
+          travalInsurance:
+            tripType === 'Round-Trip'
+              ? Math.round((totalSeatPrice * 2.8) / 100)
+              : Math.round((totalSeat * ticketPrice * 2.8) / 100),
+          tax:
+            tripType === 'Round-Trip'
+              ? Math.round((totalSeatPrice * 1.5) / 100)
+              : Math.round((totalSeat * ticketPrice * 1.5) / 100),
+          points: {
+            pointsUse: validPoint * 100,
+            havePoint: havePonts,
+            getPoint: ticketPrice / 2,
+            usePointPrice: -validPoint,
+          },
+          discount: {
+            ValidDiscount: DiscountData?.id ? true : false,
+            discountData: DiscountData,
+            useDiscountPrice:
+              tripType === 'Round-Trip'
+                ? (Number(totalSeatPrice) * Discount) / 100
+                : (Number(totalSeat) * Number(ticketPrice) * Discount) / 100,
+          },
+          totalPayment:
+            tripType === 'Round-Trip'
+              ? totalSeatPrice +
+                Math.round((totalSeatPrice * 2.8) / 100) +
+                Math.round((totalSeatPrice * 1.5) / 100) -
+                (Number(totalSeatPrice) * Discount) / 100 -
+                Number(validPoint)
+              : totalSeat * ticketPrice +
+                Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+                Math.round((totalSeat * ticketPrice * 1.5) / 100) -
+                (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) /
+                  100 -
+                Number(validPoint),
+        }),
+      );
+      navigation?.navigate('ConfirmPin', {TripType: tripType});
+    } else {
+      AlertConstant('please select Payment Method');
+    }
+  };
   useEffect(() => {
     getFirebaseWalletData();
   }, []);
   useEffect(() => {
     getFirebaseData();
   }, []);
-  const TotalPoint = PointsData?.TotalPoints;
-  const validPoint = ToggleSwitchBut1 ? Math?.floor(TotalPoint / 100) : 0;
-  const havePonts = TotalPoint % 100;
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
         headerName={'Payment Confirmaion'}
         navigation1={() => {
           navigation.goBack();
+          dispatch(DiscountDataAction({}));
+          dispatch(SelectpaymentMethodAction({}));
         }}
         navigation2={() => {}}
         Images1Color={'#fff'}
@@ -241,16 +308,17 @@ const PatmentConfirmation = ({navigation, route}) => {
             isReturn={tripType}
             returnTicketPrice={returbTicketPrice}
             returnItem={returnItem}
+            DiscountData={DiscountData}
           />
         </ScrollView>
       </View>
       <View style={styles.bottomButtonBody}>
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('TransactionDetails', {TripType: tripType})
-          }
+          onPress={() => {
+            payNow();
+          }}
           style={styles.okButton}>
-          <Text style={styles.okButtonText}>{strings?.payNow}</Text>
+          <Text style={styles.okButtonText}>{strings.payNow}</Text>
         </TouchableOpacity>
       </View>
     </View>

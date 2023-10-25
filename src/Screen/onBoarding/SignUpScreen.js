@@ -158,14 +158,23 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .collection('UserWallet')
         .doc(isUserCreate.user.uid)
         .set({
-          wallet: '00.00',
+          wallet: 0,
           transactionHistory: [],
+        });
+
+      //------------------------------------------------>  SaveTicket data
+
+      await firestore()
+        .collection('SavedFlights')
+        .doc(isUserCreate.user.uid)
+        .set({
+          SavedFlights: [],
         });
 
       //------------------------------------------------>  Points data
 
       await firestore().collection('Points').doc(isUserCreate.user.uid).set({
-        TotalPoints: '0',
+        TotalPoints: 0,
         PointsHistory: [],
       });
 
@@ -176,6 +185,15 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .doc(isUserCreate.user.uid)
         .set({
           PassengerList: [],
+        });
+
+      //------------------------------------------------>  SaveTicket data
+
+      await firestore()
+        .collection('SaveTicket')
+        .doc(isUserCreate.user.uid)
+        .set({
+          SaveTicket: [],
         });
 
       //------------------------------------------------>  SavedUserAddress data

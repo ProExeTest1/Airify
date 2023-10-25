@@ -30,6 +30,7 @@
     "@react-navigation/native-stack": "^6.9.13",
     "axios": "^1.5.1",
     "countries-list": "^3.0.5",
+    "lottie-react-native": "^6.3.1",
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-native": "0.72.4",

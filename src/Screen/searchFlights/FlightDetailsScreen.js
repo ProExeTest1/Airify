@@ -65,7 +65,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
   useEffect(() => {
     setTimeout(() => {
       setPress(false);
-    }, 2000);
+    }, 3000);
   }, [press]);
   const getData = async () => {
     const uid = auth().currentUser.uid;
@@ -79,6 +79,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
   };
   const saveFlightDetails = async () => {
     const uid = auth().currentUser.uid;
+    console.log('saved');
     await firestore()
       .collection('SavedFlights')
       .doc(uid)

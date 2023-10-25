@@ -267,4 +267,6 @@ export const strings = {
   // Transaction Details
   ticket_note:
     'You are obligated to present your e-boarding pass when you will enter the airplane flight.',
+
+  eTicket: 'E-Ticket',
 };

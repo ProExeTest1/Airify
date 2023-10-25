@@ -62,6 +62,7 @@ const DatePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.normalDate);
   const returndata = route?.params?.return;
+  console.log(returndata, 'hello');
   const [selected, setSelected] = useState('');
   const [day, setDay] = useState();
   const [returnday, seReturnDay] = useState();
@@ -116,9 +117,9 @@ const DatePickerScreen = ({navigation, route}) => {
     //Condition for date vallidation
 
     if (press) {
-      for (let i = -1; i <= 8; i++) {
+      for (let i = 0; i <= 8; i++) {
         let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
-        if (selectedDate == roundDate || selectedreturnDate == roundDate) {
+        if (selectedDate == roundDate) {
           flag = 1;
         }
       }

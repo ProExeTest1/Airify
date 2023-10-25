@@ -17,16 +17,31 @@ const PriceDetails = ({
   returnItem,
   returnTicketPrice,
   isReturn,
+  DiscountData,
 }) => {
-  const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
-  const insurancePrice = Math.round((totalSeat * ticketPrice * 2.8) / 100);
-  const travelTax = Math.round((totalSeat * ticketPrice * 1.5) / 100);
+  console.log(isReturn, 'isReurn');
+  const insurancePrice =
+    isReturn === 'Round-Trip'
+      ? Math.round((totalSeat * (ticketPrice + returnTicketPrice) * 2.8) / 100)
+      : Math.round((totalSeat * ticketPrice * 2.8) / 100);
+  const travelTax =
+    isReturn === 'Round-Trip'
+      ? Math.round((totalSeat * (ticketPrice + returnTicketPrice) * 1.5) / 100)
+      : Math.round((totalSeat * ticketPrice * 1.5) / 100);
   const discount = DiscountData?.discountPR
-    ? Math.round((totalSeat * ticketPrice * DiscountData?.discountPR) / 100)
+    ? isReturn === 'Round-Trip'
+      ? Math.round(
+          (totalSeat *
+            (ticketPrice + returnTicketPrice) *
+            DiscountData?.discountPR) /
+            100,
+        )
+      : Math.round((totalSeat * ticketPrice * DiscountData?.discountPR) / 100)
     : 0;
   const TotalPoint = TotalPoints ? TotalPoints : 0;
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = TotalPoint % 100;
+
   return (
     <View style={styles.cardBody}>
       <CardHeader

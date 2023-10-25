@@ -6,6 +6,7 @@ import homeReducer from './homeReducer';
 import SelectSeatData from './SelectSeatReducer';
 import userDataReducer from './userDataReducer';
 import AddressReducer from './AddressReducer';
+import showTicketReducer from './showTicketReducer';
 
 export const rootReducer = combineReducers({
   date: dateReducer,
@@ -15,4 +16,5 @@ export const rootReducer = combineReducers({
   userData: userDataReducer,
   SelectSeatData: SelectSeatData,
   AddressData: AddressReducer,
+  showTicketData: showTicketReducer,
 });

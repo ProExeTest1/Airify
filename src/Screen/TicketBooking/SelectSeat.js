@@ -105,7 +105,6 @@ const SelectSeat = ({navigation, route}) => {
       dispatch(SelectSeatActionData(seatData));
       setseatData([]);
       navigation?.navigate('FillPassengerDetails', {TripType: tripType});
-      console.log(temp, 'temp temp temp temp tmep tmep');
     } else {
       AlertConstant('please select seat');
     }

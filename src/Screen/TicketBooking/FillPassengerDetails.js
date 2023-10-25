@@ -84,6 +84,7 @@ const FillPassengerDetails = ({navigation, route}) => {
   const setFlatlistDataa = i => {
     if (ticketType === 'Return') {
       dispatch(ReturnSelectSeatActionData(i));
+      console.log(i, 'rturn seats');
     } else {
       dispatch(SelectSeatActionData(i));
     }
@@ -193,6 +194,7 @@ const FillPassengerDetails = ({navigation, route}) => {
         navigation1={() => {
           navigation.goBack();
           dispatch(ReturnSelectSeatActionData([]));
+
           dispatch(SelectSeatActionData([]));
         }}
         navigation2={() => {}}
@@ -322,14 +324,16 @@ const FillPassengerDetails = ({navigation, route}) => {
                         );
                   } else {
                     returnFlatlistData?.every(i => i.name.length > 0)
-                      ? navigation.navigate('ReturnSelectSeat')
+                      ? navigation.navigate('ReturnSelectSeat', {
+                          TripType: tripType,
+                        })
                       : AlertConstant(
                           'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
                         );
                   }
                 } else {
                   flatlistData?.every(i => i.name.length > 0)
-                    ? navigation.navigate('SelectSeat')
+                    ? navigation.navigate('SelectSeat', {TripType: tripType})
                     : AlertConstant(
                         'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
                       );

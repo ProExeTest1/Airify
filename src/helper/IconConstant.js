@@ -111,7 +111,7 @@ export const Images = {
   delete: require('../assets/icons/delete.png'),
   paypalIcon: require('../assets/icons/paypal.png'),
   visaIcon: require('../assets/icons/visa.png'),
-  // paypalIcon: require('../assets/icons/paypal.png'),
-  // paypalIcon: require('../assets/icons/paypal.png'),
-  // paypalIcon: require('../assets/icons/paypal.png'),
+  download: require('../assets/icons/download.png'),
+  qr: require('../assets/icons/qr.png'),
+  ticketWave: require('../assets/icons/ticketWave.png'),
 };

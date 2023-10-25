@@ -25,11 +25,29 @@ const PaymentMethod = ({navigation, route}) => {
   const [selectOpc, setSelectOpc] = useState({});
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const returnItem = useSelector(
+    state => state?.searchFlight?.searchFlightReturnCardData,
+  );
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const returbTicketPrice = parseInt(
+    returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
+  const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
+  const dataForTurnary =
+    tripType === 'Round-Trip'
+      ? totalSeatPrice +
+          Math.round((totalSeatPrice * 2.8) / 100) +
+          Math.round((totalSeatPrice * 1.5) / 100) <=
+        WalletData?.wallet
+      : totalSeat * ticketPrice +
+          Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+          Math.round((totalSeat * ticketPrice * 1.5) / 100) <=
+        WalletData?.wallet;
 
   const setDataFunction = () => {
-    if (totalSeat * ticketPrice <= Number(WalletData?.wallet?.split(',')[0])) {
+    if (dataForTurnary) {
       dispatch(SelectpaymentMethodAction(selectOpc));
       navigation.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
@@ -60,10 +78,15 @@ const PaymentMethod = ({navigation, route}) => {
         });
       });
   };
-  console.log(WalletData);
+  console.log(
+    totalSeat * ticketPrice +
+      Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+      Math.round((totalSeat * ticketPrice * 1.5) / 100),
+  );
   useEffect(() => {
     getFirebaseData();
   }, []);
+  console.log(WalletData?.wallet);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -100,11 +123,10 @@ const PaymentMethod = ({navigation, route}) => {
               style={[
                 styles.walletPraice,
                 {
-                  color:
-                    totalSeat * ticketPrice <=
-                    Number(WalletData?.wallet?.split(',')[0])
-                      ? color.commonBlue
-                      : 'red',
+                  color: dataForTurnary
+                    ? // Number(WalletData?.wallet?.split(',')[0])
+                      color.commonBlue
+                    : 'red',
                 },
               ]}>
               ${WalletData.wallet}
