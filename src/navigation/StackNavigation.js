@@ -42,6 +42,7 @@ import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
 import ReturnSearchFlights from '../screen/searchFlights/ReturnFlights/ReturnSearchFlights';
 import UseDiscountVoucher from '../screen/TicketBooking/UseDiscountVoucher';
 import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
+import ReturnSelectSeats from '../screen/TicketBooking/ReturnSeats.js/ReturnSelectSeats';
 import ConfirmPin from '../screen/TicketBooking/ConfirmPin';
 import TransactionDetails from '../screen/generateTicket/TransactionDetails';
 import Congratulation from '../screen/TicketBooking/Congratulation';
@@ -119,6 +120,8 @@ const StackNavigation = () => {
           component={UseDiscountVoucher}
         />
         <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+
+        <Stack.Screen name="ReturnSelectSeat" component={ReturnSelectSeats} />
         <Stack.Screen name="ConfirmPin" component={ConfirmPin} />
         <Stack.Screen
           name="TransactionDetails"

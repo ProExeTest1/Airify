@@ -27,7 +27,8 @@ import {
 } from '../../redux/action/SelectSeatAction';
 import moment from 'moment';
 import {showTicketActionData} from '../../redux/action/showTicketAction';
-const ConfirmPin = ({navigation}) => {
+const ConfirmPin = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
   const [pinData, setPinData] = useState('');
   const [condti, setcondti] = useState(true);
   const [condti2, setcondti2] = useState(true);
@@ -40,19 +41,37 @@ const ConfirmPin = ({navigation}) => {
   const searchFlightCardData = useSelector(
     state => state.searchFlight.searchFlightCardData,
   );
+  const searchReturnFlightCardData = useSelector(
+    state => state.searchFlight.searchFlightReturnCardData,
+  );
   const userData = useSelector(state => state.userData.userdata);
   const SelectSeatData = useSelector(e => e.SelectSeatData.SelectSeatData);
+  const SelectReturnSeatData = useSelector(
+    e => e?.SelectSeatData?.ReturnSelectSeatData,
+  );
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
   const SelectPaymentMethod = useSelector(
     e => e.SelectSeatData.SelectPaymentMethod,
   );
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const searchReturnFlightData = useSelector(
+    e => e?.searchFlight?.searchFlightReturnData,
+  );
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
-  const SelectDate = useSelector(e => e.date.normalDate);
+  const searchReturnFlightDateData = useSelector(
+    e => e?.date?.returnDate,
+  ).split(',');
+  const SelectDate = useSelector(e => e?.date?.normalDate);
+  const ReturnSelectedDate = useSelector(e => e?.date?.returnNormalDate);
   const dispatch = useDispatch();
+  console.log(SelectReturnSeatData, 'SelectReturnSeatData');
+  console.log(searchReturnFlightData, 'searchReturnFlightData');
+  console.log(searchReturnFlightDateData, 'searchReturnFlightDateData');
+  console.log(searchReturnFlightCardData, 'searchReturnFlightCardData');
   const checkPin = async pin => {
+    console.log('totalPaymentList', totalPaymentList);
     if (pin.length == 4) {
       if (pin == Number(pinData)) {
         setcondti2(true);
@@ -73,105 +92,251 @@ const ConfirmPin = ({navigation}) => {
               ...UserWalletData.transactionHistory,
             ],
           });
+        if (tripType === 'Round-Trip') {
+          await firestore()
+            .collection('AirlineSeatBookData')
+            .doc('JaTwXgqSHSESiR6CDzdy')
+            .update({
+              AirlineSeatBookData: SeatData.map(i => {
+                if (i.date == SelectDate?.date) {
+                  return {
+                    date: i.date,
+                    day: i.day,
+                    flightData: i.flightData.map(e => {
+                      if (
+                        e.flightData.airlineName ==
+                          searchFlightCardData?.airlineName &&
+                        e.flightData.lendTime ==
+                          searchFlightCardData?.lendTime &&
+                        e.flightData.logo == searchFlightCardData?.logo &&
+                        e.flightData.pickTime ==
+                          searchFlightCardData?.pickTime &&
+                        e.flightData.price == searchFlightCardData?.price &&
+                        e.flightData.stop == searchFlightCardData?.stop &&
+                        e.flightData.stopDuration ==
+                          searchFlightCardData?.stopDuration &&
+                        e.flightData.totalHours ==
+                          searchFlightCardData?.totalHours &&
+                        e.flightData.day == searchFlightCardData?.day
+                      ) {
+                        return {
+                          flightData: e.flightData,
+                          selectSeat: [
+                            ...e?.selectSeat,
+                            SelectReturnSeatData.map(a => a.seatNo),
+                          ].flat(),
+                        };
+                      }
+                      return e;
+                    }),
+                  };
+                }
+                if (i.date == ReturnSelectedDate?.date) {
+                  return {
+                    date: i.date,
+                    day: i.day,
+                    flightData: i.flightData.map(e => {
+                      if (
+                        e.flightData.airlineName ==
+                          searchReturnFlightCardData?.airlineName &&
+                        e.flightData.lendTime ==
+                          searchReturnFlightCardData?.lendTime &&
+                        e.flightData.logo == searchReturnFlightCardData?.logo &&
+                        e.flightData.pickTime ==
+                          searchReturnFlightCardData?.pickTime &&
+                        e.flightData.price ==
+                          searchReturnFlightCardData?.price &&
+                        e.flightData.stop == searchReturnFlightCardData?.stop &&
+                        e.flightData.stopDuration ==
+                          searchReturnFlightCardData?.stopDuration &&
+                        e.flightData.totalHours ==
+                          searchReturnFlightCardData?.totalHours &&
+                        e.flightData.day == searchReturnFlightCardData?.day
+                      ) {
+                        return {
+                          flightData: e.flightData,
+                          selectSeat: [
+                            ...e?.selectSeat,
+                            SelectReturnSeatData.map(a => a.seatNo),
+                          ].flat(),
+                        };
+                      }
+                      return e;
+                    }),
+                  };
+                }
+                return i;
+              }),
+            });
 
-        await firestore()
-          .collection('AirlineSeatBookData')
-          .doc('JaTwXgqSHSESiR6CDzdy')
-          .update({
-            AirlineSeatBookData: SeatData.map(i => {
-              if (i.date == SelectDate?.date) {
-                return {
-                  date: i.date,
-                  day: i.day,
-                  flightData: i.flightData.map(e => {
-                    if (
-                      e.flightData.airlineName ==
-                        searchFlightCardData?.airlineName &&
-                      e.flightData.lendTime == searchFlightCardData?.lendTime &&
-                      e.flightData.logo == searchFlightCardData?.logo &&
-                      e.flightData.pickTime == searchFlightCardData?.pickTime &&
-                      e.flightData.price == searchFlightCardData?.price &&
-                      e.flightData.stop == searchFlightCardData?.stop &&
-                      e.flightData.stopDuration ==
-                        searchFlightCardData?.stopDuration &&
-                      e.flightData.totalHours ==
-                        searchFlightCardData?.totalHours &&
-                      e.flightData.day == searchFlightCardData?.day
-                    ) {
-                      return {
-                        flightData: e.flightData,
-                        selectSeat: [
-                          ...e?.selectSeat,
-                          SelectSeatData.map(a => a.seatNo),
-                        ].flat(),
-                      };
-                    }
-                    return e;
-                  }),
-                };
-              }
-              return i;
-            }),
-          });
-
-        totalPaymentList.points?.pointsUse != 0 &&
-          (await firestore()
-            .collection('Points')
-            .doc(auth().currentUser.uid)
-            .set({
-              TotalPoints:
-                Number(UserPointData.TotalPoints) -
-                totalPaymentList.points.pointsUse,
-              PointsHistory: [
-                {
-                  title: 'points',
-                  price: `-$${totalPaymentList.points.pointsUse}`,
-                  date: moment(new Date()).format('MMM D,YYYY'),
-                  time: new Date().toLocaleTimeString('en-IN'),
-                },
-                ...UserPointData.PointsHistory,
-              ],
-            }));
-
-        const ticketId = Date.now();
-        dispatch(showTicketActionData(ticketId));
-        await firestore()
-          .collection('SaveTicket')
-          .doc(auth().currentUser.uid)
-          .update({
-            SaveTicket: [
-              ...SaveTicketData,
-              {
-                id: ticketId,
-                Departure: {
-                  bookingID: randomBookingIDGenerator(9, 'BKG'),
-                  searchFlightCardData,
-                  contactDetails: {
-                    Email: userData.Email,
-                    Name: userData.Name,
-                    PhoneNumber: userData.PhoneNumber,
+          totalPaymentList.points?.pointsUse != 0 &&
+            (await firestore()
+              .collection('Points')
+              .doc(auth().currentUser.uid)
+              .set({
+                TotalPoints:
+                  Number(UserPointData.TotalPoints) -
+                  totalPaymentList.points.pointsUse,
+                PointsHistory: [
+                  {
+                    title: 'points',
+                    price: `-$${totalPaymentList.points.pointsUse}`,
+                    date: moment(new Date()).format('MMM D,YYYY'),
+                    time: new Date().toLocaleTimeString('en-IN'),
                   },
-                  totalPaymentList,
-                  SelectSeatData,
-                  paymentMethod: SelectPaymentMethod.type,
-                  transactionID: randomBookingIDGenerator(9, 'TRN'),
-                  referenceID: randomBookingIDGenerator(9, 'REF'),
-                  searchFlightData,
-                  searchFlightDateData,
+                  ...UserPointData.PointsHistory,
+                ],
+              }));
+
+          const ticketId = Date.now();
+          dispatch(showTicketActionData(ticketId));
+          await firestore()
+            .collection('SaveTicket')
+            .doc(auth().currentUser.uid)
+            .update({
+              SaveTicket: [
+                ...SaveTicketData,
+                {
+                  id: ticketId,
+                  Departure: {
+                    bookingID: randomBookingIDGenerator(9, 'BKG'),
+                    searchFlightCardData,
+                    contactDetails: {
+                      Email: userData.Email,
+                      Name: userData.Name,
+                      PhoneNumber: userData.PhoneNumber,
+                    },
+                    totalPaymentList,
+                    SelectSeatData,
+                    paymentMethod: SelectPaymentMethod.type,
+                    transactionID: randomBookingIDGenerator(9, 'TRN'),
+                    referenceID: randomBookingIDGenerator(9, 'REF'),
+                    searchFlightData,
+                    searchFlightDateData,
+                  },
+                  Return: {
+                    bookingID: randomBookingIDGenerator(9, 'BKG'),
+                    searchReturnFlightCardData,
+                    transactionID: randomBookingIDGenerator(9, 'TRN'),
+                    referenceID: randomBookingIDGenerator(9, 'REF'),
+                    SelectReturnSeatData,
+                    searchReturnFlightData,
+                    searchReturnFlightDateData,
+                  },
                 },
-                Return: false,
-              },
-            ],
-          })
-          .then(async () => {
-            setTimeout(() => {
-              // dispatch(ReturnSelectSeatActionData([]));
-              dispatch(SelectSeatActionData([]));
-              dispatch(DiscountDataAction({}));
-              dispatch(SelectpaymentMethodAction({}));
-              setcondti2(false);
-            }, 2000);
-          });
+              ],
+            })
+            .then(async () => {
+              setTimeout(() => {
+                // dispatch(ReturnSelectSeatActionData([]));
+                dispatch(SelectSeatActionData([]));
+                dispatch(DiscountDataAction({}));
+                dispatch(SelectpaymentMethodAction({}));
+                setcondti2(false);
+              }, 2000);
+            });
+        } else {
+          await firestore()
+            .collection('AirlineSeatBookData')
+            .doc('JaTwXgqSHSESiR6CDzdy')
+            .update({
+              AirlineSeatBookData: SeatData.map(i => {
+                if (i.date == SelectDate?.date) {
+                  return {
+                    date: i.date,
+                    day: i.day,
+                    flightData: i.flightData.map(e => {
+                      if (
+                        e.flightData.airlineName ==
+                          searchFlightCardData?.airlineName &&
+                        e.flightData.lendTime ==
+                          searchFlightCardData?.lendTime &&
+                        e.flightData.logo == searchFlightCardData?.logo &&
+                        e.flightData.pickTime ==
+                          searchFlightCardData?.pickTime &&
+                        e.flightData.price == searchFlightCardData?.price &&
+                        e.flightData.stop == searchFlightCardData?.stop &&
+                        e.flightData.stopDuration ==
+                          searchFlightCardData?.stopDuration &&
+                        e.flightData.totalHours ==
+                          searchFlightCardData?.totalHours &&
+                        e.flightData.day == searchFlightCardData?.day
+                      ) {
+                        return {
+                          flightData: e.flightData,
+                          selectSeat: [
+                            ...e?.selectSeat,
+                            SelectSeatData.map(a => a.seatNo),
+                          ].flat(),
+                        };
+                      }
+                      return e;
+                    }),
+                  };
+                }
+                return i;
+              }),
+            });
+
+          totalPaymentList.points?.pointsUse != 0 &&
+            (await firestore()
+              .collection('Points')
+              .doc(auth().currentUser.uid)
+              .set({
+                TotalPoints:
+                  Number(UserPointData.TotalPoints) -
+                  totalPaymentList.points.pointsUse,
+                PointsHistory: [
+                  {
+                    title: 'points',
+                    price: `-$${totalPaymentList.points.pointsUse}`,
+                    date: moment(new Date()).format('MMM D,YYYY'),
+                    time: new Date().toLocaleTimeString('en-IN'),
+                  },
+                  ...UserPointData.PointsHistory,
+                ],
+              }));
+
+          const ticketId = Date.now();
+          dispatch(showTicketActionData(ticketId));
+          await firestore()
+            .collection('SaveTicket')
+            .doc(auth().currentUser.uid)
+            .update({
+              SaveTicket: [
+                ...SaveTicketData,
+                {
+                  id: ticketId,
+                  Departure: {
+                    bookingID: randomBookingIDGenerator(9, 'BKG'),
+                    searchFlightCardData,
+                    contactDetails: {
+                      Email: userData.Email,
+                      Name: userData.Name,
+                      PhoneNumber: userData.PhoneNumber,
+                    },
+                    totalPaymentList,
+                    SelectSeatData,
+                    paymentMethod: SelectPaymentMethod.type,
+                    transactionID: randomBookingIDGenerator(9, 'TRN'),
+                    referenceID: randomBookingIDGenerator(9, 'REF'),
+                    searchFlightData,
+                    searchFlightDateData,
+                  },
+                  Return: {},
+                },
+              ],
+            })
+            .then(async () => {
+              setTimeout(() => {
+                // dispatch(ReturnSelectSeatActionData([]));
+                dispatch(SelectSeatActionData([]));
+                dispatch(DiscountDataAction({}));
+                dispatch(SelectpaymentMethodAction({}));
+                setcondti2(false);
+              }, 2000);
+            });
+        }
       } else {
         setcondti(false);
         Alert.alert('PIN is not match');
@@ -275,7 +440,10 @@ const ConfirmPin = ({navigation}) => {
           />
         </View>
       </View>
-      <Modal isVisible={modalVisible2} backdropColor="#000000">
+      <Modal
+        isVisible={modalVisible2}
+        backdropColor="#000000"
+        onBackdropPress={() => setModalVisible2(false)}>
         <View style={styles.createAlertBody}>
           {condti2 ? (
             <>
@@ -314,6 +482,7 @@ const ConfirmPin = ({navigation}) => {
                 onPress={() => {
                   setModalVisible2(false);
                   navigation.navigate('Congratulation', {
+                    TripType: tripType,
                     header: 'TransactionDetails',
                   });
                   // navigation.navigate('TransactionDetails');
@@ -340,6 +509,7 @@ const ConfirmPin = ({navigation}) => {
                   setModalVisible2(false);
 
                   navigation.navigate('Congratulation', {
+                    TripType: tripType,
                     header: 'TabNavigation',
                   });
                 }}

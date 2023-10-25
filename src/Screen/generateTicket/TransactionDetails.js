@@ -33,10 +33,10 @@ import {SearchFlightAction} from '../../redux/action/PlaceAction';
 const TransactionDetails = ({navigation, route}) => {
   //BKG951233154
   const tripType = route?.params?.TripType;
+  console.log(tripType, 'hello');
   const dispatch = useDispatch();
   const [ticketType, setTicketType] = useState('Departure');
   const [firebaseTicketData, setFirebaseTicketData] = useState({});
-
   const ticketId = useSelector(state => state?.showTicketData?.ticketId);
   // const ticketId = '1698034006588';
 
@@ -111,7 +111,9 @@ const TransactionDetails = ({navigation, route}) => {
             onPress={copyToClipboard}
             style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.seatNumberListTitleText1}>
-              {firebaseTicketData?.Departure?.bookingID}
+              {ticketType === 'Departure'
+                ? firebaseTicketData?.Departure?.bookingID
+                : firebaseTicketData?.Return?.bookingID}
             </Text>
             <Image
               source={Images.copy}
@@ -121,7 +123,11 @@ const TransactionDetails = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
         <Barcode
-          value={firebaseTicketData?.Departure?.bookingID}
+          value={
+            ticketType === 'Departure'
+              ? firebaseTicketData?.Departure?.bookingID
+              : firebaseTicketData?.Return?.bookingID
+          }
           format="CODE128"
           style={{
             flex: 1,
@@ -132,15 +138,29 @@ const TransactionDetails = ({navigation, route}) => {
         />
         <Text style={styles.noteStyle}>{strings.ticket_note}</Text>
         <View style={{paddingHorizontal: wp(4), marginTop: hp(2)}}>
-          {firebaseTicketData?.Departure?.searchFlightDateData && (
-            <FlightDetailsCard
-              item={firebaseTicketData?.Departure?.searchFlightCardData}
-              searchFlightData={firebaseTicketData?.Departure?.searchFlightData}
-              searchFlightDateData={
-                firebaseTicketData?.Departure?.searchFlightDateData
-              }
-            />
-          )}
+          {ticketType === 'Departure'
+            ? firebaseTicketData?.Departure?.searchFlightDateData && (
+                <FlightDetailsCard
+                  item={firebaseTicketData?.Departure?.searchFlightCardData}
+                  searchFlightData={
+                    firebaseTicketData?.Departure?.searchFlightData
+                  }
+                  searchFlightDateData={
+                    firebaseTicketData?.Departure?.searchFlightDateData
+                  }
+                />
+              )
+            : firebaseTicketData?.Return?.searchReturnFlightDateData && (
+                <FlightDetailsCard
+                  item={firebaseTicketData?.Return?.searchReturnFlightCardData}
+                  searchFlightData={
+                    firebaseTicketData?.Return?.searchReturnFlightData
+                  }
+                  searchFlightDateData={
+                    firebaseTicketData?.Return?.searchReturnFlightDateData
+                  }
+                />
+              )}
         </View>
         <View style={styles.cardBody}>
           <View style={styles.flatlistViewStyle}>
@@ -179,24 +199,55 @@ const TransactionDetails = ({navigation, route}) => {
         <View style={{marginHorizontal: wp(4)}}>
           <PriceDetails
             item={firebaseTicketData?.Departure?.searchFlightCardData}
-            totalPassenger={Number(
-              firebaseTicketData?.Departure?.totalPaymentList?.seat?.totalSeat,
-            )}
-            ticketPrice={
-              firebaseTicketData?.Departure?.totalPaymentList?.seat
-                ?.totalSeatPrice
+            totalPassenger={
+              tripType === 'Round-Trip'
+                ? Number(
+                    firebaseTicketData?.Departure?.totalPaymentList?.seat
+                      ?.totalSeat,
+                  ) / 2
+                : Number(
+                    firebaseTicketData?.Departure?.totalPaymentList?.seat
+                      ?.totalSeat,
+                  )
             }
-            totalSeat={Number(
-              firebaseTicketData?.Departure?.totalPaymentList?.seat?.totalSeat,
+            ticketPrice={Number(
+              firebaseTicketData?.Departure?.searchFlightCardData?.price
+                .slice(1)
+                .split(',')
+                .join(''),
             )}
+            totalSeat={
+              tripType === 'Round-Trip'
+                ? Number(
+                    firebaseTicketData?.Departure?.totalPaymentList?.seat
+                      ?.totalSeat,
+                  ) / 2
+                : Number(
+                    firebaseTicketData?.Departure?.totalPaymentList?.seat
+                      ?.totalSeat,
+                  )
+            }
             TotalPoints={
               firebaseTicketData?.Departure?.totalPaymentList?.points
                 ?.havePoint +
               firebaseTicketData?.Departure?.totalPaymentList?.points?.pointsUse
             }
             isReturn={tripType}
-            returnTicketPrice={0}
-            returnItem={false}
+            returnTicketPrice={
+              tripType === 'Round-Trip'
+                ? Number(
+                    firebaseTicketData?.Return?.searchReturnFlightCardData?.price
+                      ?.slice(1)
+                      ?.split(',')
+                      ?.join(''),
+                  )
+                : 0
+            }
+            returnItem={
+              tripType === 'Round-Trip'
+                ? firebaseTicketData?.Return?.searchReturnFlightCardData
+                : false
+            }
             ToggleSwitchBut1={
               firebaseTicketData?.Departure?.totalPaymentList?.points
                 ?.pointsUse == 0
@@ -234,7 +285,9 @@ const TransactionDetails = ({navigation, route}) => {
             <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.dataTextStyle}>
-                {firebaseTicketData?.Departure?.bookingID}
+                {ticketType === 'Departure'
+                  ? firebaseTicketData?.Departure?.bookingID
+                  : firebaseTicketData?.Return?.bookingID}
               </Text>
               <Image
                 source={Images.copy}
@@ -248,7 +301,9 @@ const TransactionDetails = ({navigation, route}) => {
             <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.dataTextStyle}>
-                {firebaseTicketData?.Departure?.transactionID}
+                {ticketType === 'Departure'
+                  ? firebaseTicketData?.Departure?.transactionID
+                  : firebaseTicketData?.Return?.transactionID}
               </Text>
               <Image
                 source={Images.copy}
@@ -262,7 +317,9 @@ const TransactionDetails = ({navigation, route}) => {
             <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.dataTextStyle}>
-                {firebaseTicketData?.Departure?.referenceID}
+                {ticketType === 'Departure'
+                  ? firebaseTicketData?.Departure?.referenceID
+                  : firebaseTicketData?.Return?.referenceID}
               </Text>
               <Image
                 source={Images.copy}
@@ -272,59 +329,124 @@ const TransactionDetails = ({navigation, route}) => {
             </TouchableOpacity>
           </View>
         </View>
-        {firebaseTicketData?.Departure?.SelectSeatData?.every(i =>
-          i.seatNo === false ? false : true,
-        ) && (
-          <FlatList
-            data={firebaseTicketData?.Departure?.SelectSeatData}
-            renderItem={({item, index}) => {
-              return (
-                <View style={styles.cardBody}>
-                  <CardHeader
-                    FirstImage={Images.account}
-                    header={
-                      firebaseTicketData?.Departure?.SelectSeatData?.length > 1
-                        ? `Passenger(${index + 1})`
-                        : 'Passenger(s)'
-                    }
-                  />
-                  <View style={styles.passengerViewStyle}>
-                    <Text style={styles.seatNumberListTitleText}>
-                      {item?.name}
-                    </Text>
-                    <Text style={styles.seatNumberListTitleText}>
-                      {item?.seatNo}
-                    </Text>
-                  </View>
-                  <TouchableOpacity
-                    style={styles.buttonStyle}
-                    onPress={() => {
-                      navigation.navigate('ETicket', {
-                        header: {
-                          bookingID: firebaseTicketData?.Departure?.bookingID,
-                          contactDetails:
-                            firebaseTicketData?.Departure?.contactDetails,
-                          searchFlightCardData: {
-                            ...firebaseTicketData?.Departure
-                              ?.searchFlightCardData,
-                            searchFlightDateData:
-                              firebaseTicketData?.Departure
-                                ?.searchFlightDateData,
-                          },
-                          searchFlightData:
-                            firebaseTicketData?.Departure?.searchFlightData,
-                          SelectSeatData:
-                            firebaseTicketData?.Departure?.SelectSeatData,
-                        },
-                      });
-                    }}>
-                    <Text style={styles.buttonTextStyle}>Show E-Ticket</Text>
-                  </TouchableOpacity>
-                </View>
-              );
-            }}
-          />
-        )}
+        {ticketType === 'Departure'
+          ? firebaseTicketData?.Departure?.SelectSeatData?.every(i =>
+              i.seatNo === false ? false : true,
+            ) && (
+              <FlatList
+                data={firebaseTicketData?.Departure?.SelectSeatData}
+                renderItem={({item, index}) => {
+                  return (
+                    <View style={styles.cardBody}>
+                      <CardHeader
+                        FirstImage={Images.account}
+                        header={
+                          firebaseTicketData?.Departure?.SelectSeatData
+                            ?.length > 1
+                            ? `Passenger(${index + 1})`
+                            : 'Passenger(s)'
+                        }
+                      />
+                      <View style={styles.passengerViewStyle}>
+                        <Text style={styles.seatNumberListTitleText}>
+                          {item?.name}
+                        </Text>
+                        <Text style={styles.seatNumberListTitleText}>
+                          {item?.seatNo}
+                        </Text>
+                      </View>
+                      <TouchableOpacity
+                        style={styles.buttonStyle}
+                        onPress={() => {
+                          navigation.navigate('ETicket', {
+                            header: {
+                              bookingID:
+                                firebaseTicketData?.Departure?.bookingID,
+                              contactDetails:
+                                firebaseTicketData?.Departure?.contactDetails,
+                              searchFlightCardData: {
+                                ...firebaseTicketData?.Departure
+                                  ?.searchFlightCardData,
+                                searchFlightDateData:
+                                  firebaseTicketData?.Departure
+                                    ?.searchFlightDateData,
+                              },
+                              searchFlightData:
+                                firebaseTicketData?.Departure?.searchFlightData,
+                              SelectSeatData:
+                                firebaseTicketData?.Departure?.SelectSeatData,
+                            },
+                          });
+                        }}>
+                        <Text style={styles.buttonTextStyle}>
+                          Show E-Ticket
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }}
+              />
+            )
+          : firebaseTicketData?.Return?.SelectReturnSeatData?.every(i =>
+              i.seatNo === false ? false : true,
+            ) && (
+              <FlatList
+                data={firebaseTicketData?.Return?.SelectReturnSeatData}
+                renderItem={({item, index}) => {
+                  return (
+                    <View style={styles.cardBody}>
+                      <CardHeader
+                        FirstImage={Images.account}
+                        header={
+                          firebaseTicketData?.Return?.SelectReturnSeatData
+                            ?.length > 1
+                            ? `Passenger(${index + 1})`
+                            : 'Passenger(s)'
+                        }
+                      />
+                      <View style={styles.passengerViewStyle}>
+                        <Text style={styles.seatNumberListTitleText}>
+                          {item?.name}
+                        </Text>
+                        <Text style={styles.seatNumberListTitleText}>
+                          {item?.seatNo}
+                        </Text>
+                      </View>
+                      <TouchableOpacity
+                        style={styles.buttonStyle}
+                        onPress={() => {
+                          navigation.navigate('ETicket', {
+                            header: {
+                              bookingID: firebaseTicketData?.Return?.bookingID,
+                              contactDetails:
+                                firebaseTicketData?.Departure?.contactDetails,
+                              searchFlightCardData: {
+                                ...firebaseTicketData?.Return
+                                  ?.searchReturnFlightCardData,
+                                searchFlightDateData:
+                                  firebaseTicketData?.Return
+                                    ?.searchReturnFlightDateData,
+                              },
+                              searchFlightData:
+                                firebaseTicketData?.Return
+                                  ?.searchReturnFlightData,
+                              SelectSeatData:
+                                firebaseTicketData?.Return
+                                  ?.SelectReturnSeatData,
+                            },
+                            tripType: tripType,
+                          });
+                        }}>
+                        <Text style={styles.buttonTextStyle}>
+                          Show E-Ticket
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }}
+              />
+            )}
+
         <TouchableOpacity
           style={[
             styles.rescheduleButtonStyle,

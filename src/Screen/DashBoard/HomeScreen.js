@@ -15,6 +15,7 @@ import {Images} from '../../helper/IconConstant';
 import {
   ClassPickerModal,
   CustomPaperTextInput,
+  Loader,
   PassengerPickerModal,
   SwiperFlatlistComponent,
 } from '../../components/index';
@@ -36,6 +37,7 @@ const HomeScreen = ({navigation}) => {
   }, []);
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
+
   const reduxReturnDate = useSelector(state => state.date.returnDate);
 
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
@@ -55,6 +57,7 @@ const HomeScreen = ({navigation}) => {
   const [seat, setSeat] = useState();
   const [passengerClass, setPassengerClass] = useState('');
   const [press, setPress] = useState('One-way');
+  const [loader, setLoader] = useState(true);
   const [change, setChnage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [isClassModalVisible, setClassModalVisible] = useState(false);
@@ -68,9 +71,7 @@ const HomeScreen = ({navigation}) => {
     setChild(null);
     setTwoYearBelowChild(null);
   };
-  const dynamicStyle = {
-    marginTop: hp(3),
-  };
+
   const toggleChange = () => {
     setChnage(!change);
   };
@@ -152,6 +153,7 @@ const HomeScreen = ({navigation}) => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             dispatch(UserDataAction(documentSnapshot.data()));
             setUserData(documentSnapshot.data());
+            setLoader(false);
           }
         });
       });
@@ -179,7 +181,7 @@ const HomeScreen = ({navigation}) => {
     );
   };
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <View style={styles.headerViewStyle}></View>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -187,11 +189,16 @@ const HomeScreen = ({navigation}) => {
         style={styles.ScrollViewStyle}>
         <SafeAreaView style={styles.headerStyle}>
           <View style={styles.profilepicViewStyle}>
-            <Image
-              source={{uri: userData?.profileImageURL}}
-              style={styles.profilePicStyle}
-              resizeMode="stretch"
-            />
+            {loader ? (
+              <Loader color={'blue'} />
+            ) : (
+              <Image
+                source={{uri: userData?.profileImageURL}}
+                style={styles.profilePicStyle}
+                resizeMode="stretch"
+                loadingIndicatorSource={Images.Email}
+              />
+            )}
             <View style={styles.headertextStyle}>
               <Text style={styles.GMStyle}>
                 {hours < 12
@@ -316,7 +323,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={styles.searchFontStyle}>Search Flights</Text>
           </TouchableOpacity>
         </View>
-        <View style={StyleSheet.flatten([styles.offerStyle, dynamicStyle])}>
+        <View style={styles.offerStyle}>
           <View style={styles.specialOfferViewStyle}>
             <Text style={styles.specialOfferTextStyle}>
               {strings.specialoffer}
@@ -326,7 +333,8 @@ const HomeScreen = ({navigation}) => {
               onPress={() =>
                 navigation.navigate('SpecialOffer', {header: 'Special Offer'})
               }>
-              <Text style={{color: color.commonBlue, marginHorizontal: 10}}>
+              <Text
+                style={{color: color.commonBlue, marginHorizontal: wp(2.6)}}>
                 {strings.ViewAll}
               </Text>
               <Image
@@ -370,6 +378,9 @@ export default HomeScreen;
 
 const {width} = Dimensions.get('window');
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   text: {
     fontSize: width * 0.6,
     textAlign: 'center',
@@ -390,19 +401,24 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(6.66),
     justifyContent: 'space-between',
     marginTop: Platform.OS === 'android' ? hp(3) : null,
+    marginBottom: hp(3),
   },
   profilepicViewStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: hp(2),
   },
   profilePicStyle: {
     height: hp(7.38),
     width: hp(7.38),
     borderRadius: 100,
   },
-  headertextStyle: {marginHorizontal: wp(2.6)},
-  GMStyle: {color: color.white, marginVertical: hp(0.6)},
+  headertextStyle: {
+    marginHorizontal: wp(2.6),
+  },
+  GMStyle: {
+    color: color.white,
+    marginVertical: hp(0.6),
+  },
   userNameStyle: {
     fontWeight: 'bold',
     color: color.white,
@@ -414,9 +430,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: color.white,
     padding: hp(1.2),
-    marginBottom: hp(2),
   },
-  bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.white},
+  bellStyle: {
+    height: hp(3.07),
+    width: hp(3.07),
+    tintColor: color.white,
+  },
   seatBookingMainViewStyle: {
     paddingVertical: hp(2.4),
     backgroundColor: color.white,
@@ -462,14 +481,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   offerStyle: {
-    width: wp(88),
-    alignSelf: 'center',
-    position: 'relative',
+    flex: 1,
+    marginTop: hp(2),
+    marginHorizontal: wp(6),
   },
   specialOfferViewStyle: {
-    width: wp(88),
-    alignItems: 'center',
+    flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: hp(1.2),
   },
@@ -478,7 +497,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: color.black,
   },
-  forwardStyle: {height: hp(1.8), width: hp(1.8), tintColor: color.commonBlue},
+  forwardStyle: {
+    height: hp(1.8),
+    width: hp(1.8),
+    tintColor: color.commonBlue,
+  },
   updownStyle: {
     height: hp(3.6),
     width: hp(3.6),

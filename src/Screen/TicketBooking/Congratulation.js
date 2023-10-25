@@ -16,8 +16,11 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 
-const Congratulation = ({navigation}) => {
-  const route = useRoute();
+const Congratulation = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
+  const header = route?.params?.header;
+  console.log('=>>>>>>>>> tripTyope', tripType);
+  console.log('=>>>>>>>>> headerType', header);
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 
@@ -27,7 +30,7 @@ const Congratulation = ({navigation}) => {
       .onSnapshot(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
-            setUserPointData(documentSnapshot.data());
+            setUserPointData(documentSnapshot?.data());
           }
         });
       });
@@ -39,7 +42,7 @@ const Congratulation = ({navigation}) => {
       .doc(auth().currentUser.uid)
       .update({
         TotalPoints:
-          Number(UserPointData.TotalPoints) + totalPaymentList.points.getPoint,
+          Number(UserPointData?.TotalPoints) + totalPaymentList.points.getPoint,
         PointsHistory: [
           {
             title: 'points',
@@ -47,10 +50,10 @@ const Congratulation = ({navigation}) => {
             date: moment(new Date()).format('MMM D,YYYY'),
             time: new Date().toLocaleTimeString('en-IN'),
           },
-          ...UserPointData.PointsHistory,
+          ...UserPointData?.PointsHistory,
         ],
       });
-    navigation.dispatch(StackActions.replace(route?.params?.header));
+    navigation.navigate(header, {TripType: tripType});
   };
   useEffect(() => {
     getUserPointData();

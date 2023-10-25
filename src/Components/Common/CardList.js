@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   },
   cardHeaderText: {
     flex: 1,
+    color: 'black',
     fontWeight: 'bold',
     fontSize: fontSize(18),
   },

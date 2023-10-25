@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   LogBox,
   StatusBar,
@@ -24,7 +24,7 @@ function App() {
   TextInput.defaultProps.allowFontScaling = false;
   LogBox.ignoreAllLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
-  React.useEffect(() => {
+  useEffect(() => {
     SplashScreen.hide();
     seatingArrange();
   });
