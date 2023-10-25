@@ -182,7 +182,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
                 }}>
                 <Image
                   source={
-                    savedFlight.some(
+                    savedFlight?.some(
                       a =>
                         a.airlineName == item.airlineName &&
                         a.landingTime == item.lendTime &&

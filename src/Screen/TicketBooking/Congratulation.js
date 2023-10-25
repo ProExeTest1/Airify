@@ -16,8 +16,11 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 
-const Congratulation = ({navigation}) => {
-  const route = useRoute();
+const Congratulation = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
+  const header = route?.params?.header;
+  console.log('=>>>>>>>>> tripTyope', tripType);
+  console.log('=>>>>>>>>> headerType', header);
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 
@@ -50,7 +53,7 @@ const Congratulation = ({navigation}) => {
           ...UserPointData?.PointsHistory,
         ],
       });
-    navigation.dispatch(StackActions.replace(route?.params?.header));
+    navigation.navigate(header, {TripType: tripType});
   };
   useEffect(() => {
     getUserPointData();

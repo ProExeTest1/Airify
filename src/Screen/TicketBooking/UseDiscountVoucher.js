@@ -16,8 +16,10 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {DiscountVoucherDummy} from '../../assets/DummyData/Discount';
 import {useDispatch, useSelector} from 'react-redux';
 import {DiscountDataAction} from '../../redux/action/SelectSeatAction';
+import {AlertConstant} from '../../helper/AlertConstant';
 
-const UseDiscountVoucher = ({navigation: {goBack}, navigation}) => {
+const UseDiscountVoucher = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
   const dispatch = useDispatch();
   const [DiscountData, setDiscountData] = useState(
     useSelector(e => e.SelectSeatData.DiscountData),
@@ -35,13 +37,13 @@ const UseDiscountVoucher = ({navigation: {goBack}, navigation}) => {
         ticketPrice * totalSeat
       ) {
         dispatch(DiscountDataAction(DiscountData));
-        navigation.navigate('PaymentConfirmation');
+        navigation.navigate('PaymentConfirmation', {TripType: tripType});
       } else {
-        Alert.alert('this voucher not valid for you');
+        AlertConstant('this voucher not valid for you');
       }
     } else {
       setDiscountData({});
-      Alert.alert('please select one voucher');
+      AlertConstant('please select one voucher');
     }
   };
   return (
@@ -49,7 +51,7 @@ const UseDiscountVoucher = ({navigation: {goBack}, navigation}) => {
       <CommonHeader
         headerName={strings.discountVoucher}
         navigation1={() => {
-          goBack();
+          navigation?.goBack();
         }}
         onPress1={true}
         onPress2={false}

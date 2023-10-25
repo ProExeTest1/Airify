@@ -65,6 +65,7 @@ const TextInputPassenger = ({
           editable={editable}
           placeholder={placeholder}
           value={value}
+          maxLength={placeholder == strings.Phone ? 10 : 100}
           onChangeText={onChangeText}
           style={[styles.passengerTextInputStyle, passengerTextInputStyle]}
         />

@@ -1,15 +1,14 @@
 import React from 'react';
 import {
-  Alert,
   Image,
   Platform,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
@@ -24,11 +23,7 @@ const SpecialOfferScreen = ({route, navigation}) => {
 
   const copyToClipboard = () => {
     Clipboard.setString(promocode);
-    if (Platform.OS === 'android') {
-      ToastAndroid.show('Text copied to clipboard!', ToastAndroid.SHORT);
-    } else if (Platform.OS === 'ios') {
-      Alert.alert('Text copied to clipboard!');
-    }
+    AlertConstant('Text copied to clipboard!');
   };
   return (
     <View style={styles.container}>

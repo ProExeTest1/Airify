@@ -110,24 +110,23 @@ const DatePickerScreen = ({navigation, route}) => {
     tomorrow = moment(tomorrow).add(1, 'day').format('YYYY-MM-DD');
     let selectedDate = moment(selected).format('MM/DD/YYYY');
     let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
+    console.log(selectedreturnDate, 'selectedreturnDate');
     let flag = 0;
     let flag2 = 0;
     //Condition for date vallidation
 
     if (press) {
-      for (let i = -1; i <= 8; i++) {
+      for (let i = 0; i <= 8; i++) {
         let roundDate = moment(tomorrow).add(i, 'day').format('MM/DD/YYYY');
-        if (selectedDate == roundDate || selectedreturnDate == roundDate) {
+        if (selectedDate == roundDate) {
           flag = 1;
         }
       }
+      // For return choose return date
       if (returndata == 'returnDate') {
-        const aa = reduxDepatureDate?.date?.split('/');
-        const validateReturnDate = aa[1] + '/' + aa[0] + '/' + aa[2];
         for (let i = 1; i <= 10; i++) {
-          let roundDate = moment(validateReturnDate)
-            .add(i, 'day')
-            .format('MM/DD/YYYY');
+          var da = moment(reduxDepatureDate?.date, 'DD/MM/YYYY');
+          let roundDate = moment(da).add(i, 'day').format('MM/DD/YYYY');
           if (selectedreturnDate == roundDate) {
             flag2 = 1;
           }
@@ -186,13 +185,13 @@ const DatePickerScreen = ({navigation, route}) => {
                 : `${currentDate[0]},${currentMonth} ${newDate[2]} ${newDate[0]}`}
             </Text>
           </View>
-          <Text>------</Text>
+          <Text style={styles.returnDateTextStyle}>------</Text>
           <View
             style={[
               styles.ReturndateViewStyle,
-              {paddingHorizontal: returnPress && press ? wp(6) : wp(9)},
+              {paddingHorizontal: returnPress && press ? wp(6) : wp(7)},
             ]}>
-            <Text>
+            <Text style={styles.returnDateTextStyle}>
               {press && returnPress && returnday !== undefined
                 ? `${returndayname[0]}, ${returnmonth} ${returnday} ${returnyear}`
                 : '+ Return Date'}
@@ -232,10 +231,7 @@ const DatePickerScreen = ({navigation, route}) => {
           />
         </View>
       </View>
-      <View
-        style={{
-          height: hp(12.31),
-        }}>
+      <View style={styles.bottomViewStyle}>
         <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
           <Text style={styles.searchFontStyle}>OK</Text>
         </TouchableOpacity>
@@ -281,12 +277,13 @@ const styles = StyleSheet.create({
   searchButtonStyle: {
     alignItems: 'center',
     marginHorizontal: wp(5),
+    paddingVertical: hp(2),
     height: hp(7),
     width: wp(84),
     borderRadius: 16,
     alignSelf: 'center',
     backgroundColor: 'blue',
-    marginVertical: hp(1.2),
+    marginVertical: hp(2.5),
     justifyContent: 'center',
   },
   searchFontStyle: {
@@ -298,5 +295,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  returnDateTextStyle: {
+    color: 'black',
+    fontSize: fontSize(16, 812),
+    fontWeight: '500',
+  },
+  bottomViewStyle: {
+    height: hp(12.31),
   },
 });

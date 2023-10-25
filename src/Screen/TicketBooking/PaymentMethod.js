@@ -18,26 +18,40 @@ import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {SelectpaymentMethodAction} from '../../redux/action/SelectSeatAction';
 
-const PaymentMethod = ({navigation}) => {
+const PaymentMethod = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
   const dispatch = useDispatch();
   const [WalletData, setWalletData] = useState({});
   const [selectOpc, setSelectOpc] = useState({});
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const returnItem = useSelector(
+    state => state?.searchFlight?.searchFlightReturnCardData,
+  );
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const returbTicketPrice = parseInt(
+    returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
+  const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
+  const dataForTurnary =
+    tripType === 'Round-Trip'
+      ? totalSeatPrice +
+          Math.round((totalSeatPrice * 2.8) / 100) +
+          Math.round((totalSeatPrice * 1.5) / 100) <=
+        WalletData?.wallet
+      : totalSeat * ticketPrice +
+          Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+          Math.round((totalSeat * ticketPrice * 1.5) / 100) <=
+        WalletData?.wallet;
 
   const setDataFunction = () => {
-    if (
-      totalSeat * ticketPrice +
-        Math.round((totalSeat * ticketPrice * 2.8) / 100) +
-        Math.round((totalSeat * ticketPrice * 1.5) / 100) <=
-      WalletData?.wallet
-    ) {
+    if (dataForTurnary) {
       dispatch(SelectpaymentMethodAction(selectOpc));
-      navigation.goBack();
+      navigation.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
-      navigation.navigate('TopUp');
+      navigation.navigate('TopUp', {TripType: tripType});
       Alert.alert('please TopUp your Wallet');
     }
   };
@@ -102,14 +116,10 @@ const PaymentMethod = ({navigation}) => {
               style={[
                 styles.walletPraice,
                 {
-                  color:
-                    totalSeat * ticketPrice +
-                      Math.round((totalSeat * ticketPrice * 2.8) / 100) +
-                      Math.round((totalSeat * ticketPrice * 1.5) / 100) <=
-                    WalletData?.wallet
-                      ? // Number(WalletData?.wallet?.split(',')[0])
-                        color.commonBlue
-                      : 'red',
+                  color: dataForTurnary
+                    ? // Number(WalletData?.wallet?.split(',')[0])
+                      color.commonBlue
+                    : 'red',
                 },
               ]}>
               ${WalletData.wallet}

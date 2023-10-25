@@ -12,6 +12,7 @@ import {
   CommonHeader,
   FlightDetailsCard,
   PriceDetails,
+  ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
 import {Images} from '../../helper/IconConstant';
@@ -27,29 +28,52 @@ import {
   SelectpaymentMethodAction,
   totalPaymentListAction,
 } from '../../redux/action/SelectSeatAction';
-const PatmentConfirmation = ({navigation}) => {
+import {AlertConstant} from '../../helper/AlertConstant';
+
+const PatmentConfirmation = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
+
   const dispatch = useDispatch();
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
   const [WalletData, setWalletData] = useState({});
-
+  const [ticketType, setTicketType] = useState('Departure');
   const [PointsData, setPointsData] = useState({});
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const returnItem = useSelector(
+    state => state?.searchFlight?.searchFlightReturnCardData,
+  );
+  const ticketPrice = parseInt(
+    item?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
+  const returbTicketPrice = parseInt(
+    returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
   const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
+  const returnSearchFlightData = useSelector(
+    e => e?.searchFlight?.searchFlightReturnData,
+  );
+  const totalSeat = Number(searchFlightData?.passenger.split(' ')[0]);
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
+  const returnSearchFlightDateData = useSelector(
+    e => e?.date?.returnDate,
+  ).split(',');
+
   const TotalPoint = Number(PointsData.TotalPoints);
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = ToggleSwitchBut1 ? TotalPoint % 100 : TotalPoint;
   const Discount = Number(DiscountData.discountPR)
     ? Number(DiscountData.discountPR)
     : 0;
+
   const PaymentMethodData = useSelector(
-    e => e.SelectSeatData.SelectPaymentMethod,
+    e => e?.SelectSeatData?.SelectPaymentMethod,
   );
+
   const getFirebaseData = async () => {
     await firestore()
       .collection('Points')
@@ -58,12 +82,12 @@ const PatmentConfirmation = ({navigation}) => {
 
         querySnapshot.forEach(documentSnapshot => {
           users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
+            ...documentSnapshot?.data(),
+            key: documentSnapshot?.id,
           });
         });
         users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
+          if (item?.key == auth()?.currentUser?.uid) {
             setPointsData(item);
             return true;
           } else {
@@ -78,14 +102,14 @@ const PatmentConfirmation = ({navigation}) => {
       .onSnapshot(querySnapshot => {
         const users = [];
 
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
+            ...documentSnapshot?.data(),
+            key: documentSnapshot?.id,
           });
         });
-        users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
+        users?.filter(item => {
+          if (item?.key == auth()?.currentUser?.uid) {
             setWalletData(item);
             return true;
           } else {
@@ -94,39 +118,62 @@ const PatmentConfirmation = ({navigation}) => {
         });
       });
   };
+  const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
   const payNow = () => {
     if (PaymentMethodData?.type) {
       dispatch(
         totalPaymentListAction({
           seat: {
-            totalSeat: totalSeat,
-            totalSeatPrice: ticketPrice * totalSeat,
+            totalSeat:
+              tripType === 'Round-Trip' ? totalSeat + totalSeat : totalSeat,
+            totalSeatPrice:
+              tripType === 'Round-Trip'
+                ? totalSeatPrice
+                : ticketPrice * totalSeat,
           },
-          travalInsurance: Math.round((totalSeat * ticketPrice * 2.8) / 100),
-          tax: Math.round((totalSeat * ticketPrice * 1.5) / 100),
+          travalInsurance:
+            tripType === 'Round-Trip'
+              ? Math.round((totalSeatPrice * 2.8) / 100)
+              : Math.round((totalSeat * ticketPrice * 2.8) / 100),
+          tax:
+            tripType === 'Round-Trip'
+              ? Math.round((totalSeatPrice * 1.5) / 100)
+              : Math.round((totalSeat * ticketPrice * 1.5) / 100),
           points: {
             pointsUse: validPoint * 100,
             havePoint: havePonts,
-            getPoint: ticketPrice / 2,
+            getPoint:
+              tripType === 'Round-Trip'
+                ? totalSeatPrice / 2
+                : (totalSeat * ticketPrice) / 2,
             usePointPrice: -validPoint,
           },
           discount: {
             ValidDiscount: DiscountData?.id ? true : false,
             discountData: DiscountData,
             useDiscountPrice:
-              (Number(totalSeat) * Number(ticketPrice) * Discount) / 100,
+              tripType === 'Round-Trip'
+                ? (Number(totalSeatPrice) * Discount) / 100
+                : (Number(totalSeat) * Number(ticketPrice) * Discount) / 100,
           },
           totalPayment:
-            totalSeat * ticketPrice +
-            Math.round((totalSeat * ticketPrice * 2.8) / 100) +
-            Math.round((totalSeat * ticketPrice * 1.5) / 100) -
-            (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) / 100 -
-            Number(validPoint),
+            tripType === 'Round-Trip'
+              ? totalSeatPrice +
+                Math.round((totalSeatPrice * 2.8) / 100) +
+                Math.round((totalSeatPrice * 1.5) / 100) -
+                (Number(totalSeatPrice) * Discount) / 100 -
+                Number(validPoint)
+              : totalSeat * ticketPrice +
+                Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+                Math.round((totalSeat * ticketPrice * 1.5) / 100) -
+                (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) /
+                  100 -
+                Number(validPoint),
         }),
       );
-      navigation?.navigate('ConfirmPin');
+      navigation?.navigate('ConfirmPin', {TripType: tripType});
     } else {
-      Alert.alert('please select Payment Method');
+      AlertConstant('please select Payment Method');
     }
   };
   useEffect(() => {
@@ -153,6 +200,7 @@ const PatmentConfirmation = ({navigation}) => {
         Images2={null}
       />
       <TicktBookingProgressBar progress={2}></TicktBookingProgressBar>
+
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
           <FlightDetailsCard
@@ -160,13 +208,22 @@ const PatmentConfirmation = ({navigation}) => {
             searchFlightDateData={searchFlightDateData}
             item={item}
           />
+          {tripType === 'Round-Trip' ? (
+            <FlightDetailsCard
+              searchFlightData={returnSearchFlightData}
+              searchFlightDateData={returnSearchFlightDateData}
+              item={returnItem}
+            />
+          ) : null}
           <View style={styles.boxBody}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('PaymentMethod')}>
+              onPress={() =>
+                navigation.navigate('PaymentMethod', {TripType: tripType})
+              }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-                <Image style={styles.boxIcon} source={Images.payment}></Image>
+                <Image style={styles.boxIcon} source={Images?.payment}></Image>
                 <Text style={styles.boxTitle}>Payment Method</Text>
-                <Image style={styles.skipIcon} source={Images.forward}></Image>
+                <Image style={styles.skipIcon} source={Images?.forward}></Image>
               </View>
               <View style={styles.StopsButBody}></View>
             </TouchableOpacity>
@@ -180,7 +237,7 @@ const PatmentConfirmation = ({navigation}) => {
                     />
                     <Text style={styles.PaymentMethodName}>My Wallet</Text>
                     <Text style={styles.walletPraice}>
-                      ${WalletData.wallet}
+                      ${WalletData?.wallet}
                     </Text>
                   </View>
                 </View>
@@ -194,7 +251,7 @@ const PatmentConfirmation = ({navigation}) => {
                 <Text
                   style={
                     styles.boxTitle
-                  }>{`You Have ${PointsData.TotalPoints} Points`}</Text>
+                  }>{`You Have ${PointsData?.TotalPoints} Points`}</Text>
                 <Text style={{marginTop: hp(1)}}>
                   {`100 points equals $1. You will get ${
                     ticketPrice / 2
@@ -207,7 +264,7 @@ const PatmentConfirmation = ({navigation}) => {
                   size="medium"
                   onColor={color.commonBlue}
                   onToggle={isOn => {
-                    Number(PointsData.TotalPoints) > 100
+                    Number(PointsData?.TotalPoints) > 100
                       ? setToggleSwitchBut1(isOn)
                       : Alert.alert(
                           'your points is not valid please increase your point',
@@ -221,11 +278,13 @@ const PatmentConfirmation = ({navigation}) => {
 
           <View style={styles.boxBody}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('UseDiscountVoucher')}>
+              onPress={() =>
+                navigation?.navigate('UseDiscountVoucher', {TripType: tripType})
+              }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-                <Image style={styles.boxIcon} source={Images.discount}></Image>
+                <Image style={styles.boxIcon} source={Images?.discount}></Image>
                 <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
-                <Image style={styles.skipIcon} source={Images.forward}></Image>
+                <Image style={styles.skipIcon} source={Images?.forward}></Image>
               </View>
               <View style={styles.StopsButBody}></View>
             </TouchableOpacity>
@@ -244,11 +303,14 @@ const PatmentConfirmation = ({navigation}) => {
           </View>
           <PriceDetails
             item={item}
-            totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
+            totalPassenger={Number(searchFlightData?.passenger?.split(' ')[0])}
             ticketPrice={ticketPrice}
             totalSeat={totalSeat}
             ToggleSwitchBut1={ToggleSwitchBut1}
             TotalPoints={PointsData.TotalPoints}
+            isReturn={tripType}
+            returnTicketPrice={returbTicketPrice}
+            returnItem={returnItem}
             DiscountData={DiscountData}
           />
         </ScrollView>
