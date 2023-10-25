@@ -12,12 +12,6 @@ const FlightDetailsCard = ({
   searchFlightData,
   searchFlightDateData,
 }) => {
-<<<<<<< HEAD
-  // console.log(searchFlightDateData, 'hfghjfb=======>>>>>');
-  console.log(searchFlightDateData);
-
-=======
->>>>>>> origin/KenilBranch
   return (
     <View style={styles.cardBody}>
       <View style={styles.cardHeader}>

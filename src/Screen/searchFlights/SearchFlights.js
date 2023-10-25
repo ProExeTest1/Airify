@@ -51,16 +51,6 @@ const SearchFlights = ({navigation, route}) => {
 
   const setSelectDate = ({date}) => {
     let dateChange = date.split('/');
-<<<<<<< HEAD
-    console.log('date', date);
-    // dispatch(
-    //   depatureDateAction(
-    //     `${moment(
-    //       new Date(`${dateChange[1]}/${dateChange[0]}/${dateChange[2]}`),
-    //     ).format('dddd,MMM D YYYY')}`,
-    //   ),
-    // );
-=======
     let newDate = new Date();
     dispatch(
       depatureDateAction(
@@ -75,7 +65,6 @@ const SearchFlights = ({navigation, route}) => {
         ).format('dddd,MMM D YYYY')}`,
       ),
     );
->>>>>>> origin/KenilBranch
   };
   const onShare = async () => {
     try {

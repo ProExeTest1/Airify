@@ -10,12 +10,7 @@ const SearchBar = ({value, onChangeText, placeholder, TextInputBody}) => {
       <View style={[styles.TextInputBody, TextInputBody]}>
         <Image style={styles.SearchImg} source={Images.search} />
         <TextInput
-<<<<<<< HEAD
-          placeholder={placeholder}
-          placeholderTextColor="grey"
-=======
           value={value}
->>>>>>> origin/KenilBranch
           autoCapitalize="none"
           fontSize={fontSize(18)}
           placeholder={placeholder}

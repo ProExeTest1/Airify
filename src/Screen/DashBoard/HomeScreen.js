@@ -149,24 +149,15 @@ const HomeScreen = ({navigation}) => {
 
     const subscriber = firestore()
       .collection('Users')
-<<<<<<< HEAD
-      .doc(auth().currentUser.uid)
-      .get()
-      .then(data => {
-        setUserData(data.data());
-        dispatch(UserDataAction(data.data()));
-      })
-      .then(() => setLoader(false));
-=======
       .onSnapshot(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             dispatch(UserDataAction(documentSnapshot.data()));
             setUserData(documentSnapshot.data());
+            setLoader(false);
           }
         });
       });
->>>>>>> origin/KenilBranch
   };
   const TripOption = ({tripType}) => {
     return (
@@ -388,8 +379,8 @@ export default HomeScreen;
 
 const {width} = Dimensions.get('window');
 const styles = StyleSheet.create({
-  container:{
-    flex: 1
+  container: {
+    flex: 1,
   },
   text: {
     fontSize: width * 0.6,

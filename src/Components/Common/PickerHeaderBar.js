@@ -61,26 +61,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: wp(8),
     backgroundColor: color.commonBlue,
-<<<<<<< HEAD
     flex: 1,
     paddingVertical: Platform.OS === 'ios' ? hp(3) : hp(0.7),
-    paddingHorizontal: wp(8),
-    justifyContent: 'center',
     marginBottom: Platform.OS === 'android' ? hp(3) : null,
   },
   headerTextViewStyle: {
     position: 'absolute',
     flex: 1,
     alignSelf: 'center',
-=======
     height: Platform.OS == 'ios' ? hp(6) : hp(0),
     marginBottom: Platform.OS === 'android' ? hp(3) : null,
-  },
-  headerTextViewStyle: {
-    width: wp(100),
-    alignItems: 'center',
-    position: 'absolute',
-    justifyContent: 'center',
->>>>>>> origin/KenilBranch
   },
 });

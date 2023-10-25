@@ -72,12 +72,9 @@ const styles = StyleSheet.create({
   },
   cardHeaderText: {
     flex: 1,
-<<<<<<< HEAD
     color: 'black',
-=======
     fontWeight: 'bold',
     fontSize: fontSize(18),
->>>>>>> origin/KenilBranch
   },
   cardHeaderLogo: {
     width: wp(5.8),

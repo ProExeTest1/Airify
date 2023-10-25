@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-=======
 import moment from 'moment';
->>>>>>> origin/KenilBranch
 import React, {useEffect, useState} from 'react';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -65,12 +61,6 @@ LocaleConfig.defaultLocale = 'fr';
 const DatePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.normalDate);
-<<<<<<< HEAD
-  const returndata = route?.params?.return;
-  console.log(returndata, 'hello');
-  const [selected, setSelected] = useState('');
-=======
->>>>>>> origin/KenilBranch
   const [day, setDay] = useState();
   const [year, setYear] = useState();
   const returndata = route?.params?.return;
@@ -271,11 +261,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 30,
     borderWidth: 1,
-<<<<<<< HEAD
-    justifyContent: 'center',
-    paddingVertical: hp(1.8),
-=======
->>>>>>> origin/KenilBranch
     marginVertical: hp(2.2),
     justifyContent: 'center',
     paddingVertical: hp(1.8),
@@ -292,21 +277,14 @@ const styles = StyleSheet.create({
   searchButtonStyle: {
     alignItems: 'center',
     marginHorizontal: wp(5),
-<<<<<<< HEAD
     paddingVertical: hp(2),
-=======
     height: hp(7),
     width: wp(84),
->>>>>>> origin/KenilBranch
     borderRadius: 16,
     alignSelf: 'center',
     backgroundColor: 'blue',
-<<<<<<< HEAD
     marginVertical: hp(2.5),
-=======
-    marginVertical: hp(1.2),
     justifyContent: 'center',
->>>>>>> origin/KenilBranch
   },
   searchFontStyle: {
     fontWeight: 'bold',
