@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {Images} from '../../helper/IconConstant';
+import React from 'react';
+import {View, StyleSheet, Image} from 'react-native';
+
 import {hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
 import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
+import OnBoardingText from '../../components/OnBoardingText';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 
 const SignUpSuccess = ({navigation}) => {
@@ -36,8 +37,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   iconStyle: {
-    height: hp(14),
     width: hp(14),
+    height: hp(14),
     resizeMode: 'contain',
   },
   subTextStyle: {
@@ -46,9 +47,9 @@ const styles = StyleSheet.create({
   },
   FirstViewStyle: {
     flex: 1,
+    marginTop: hp(15),
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginTop: hp(15),
   },
 });
 

@@ -1,13 +1,14 @@
-import {FlatList, Image, Platform, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {fontSize, hp, wp} from '../../helper/Constant';
+import {useSelector} from 'react-redux';
+import {FlatList, Image, Platform, StyleSheet, Text, View} from 'react-native';
+
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
 import {
   FlightDetailsData,
   FlightDetailsData1,
 } from '../../assets/DummyData/FlightDetailsData';
-import {Images} from '../../helper/IconConstant';
-import {useSelector} from 'react-redux';
-import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const FlightDetails = () => {
   const cardData = useSelector(
@@ -44,9 +45,9 @@ const FlightDetails = () => {
       </View>
       <View>
         <Image
-          source={Images.planPrograce}
           style={{flex: 1}}
           resizeMode="contain"
+          source={Images.planPrograce}
         />
       </View>
       <View style={{flex: 1}}>
@@ -74,17 +75,17 @@ const FlightDetails = () => {
 
           <View style={[styles.flatlistViewStyle, {borderBottomWidth: 1}]}>
             <FlatList
-              data={FlightDetailsData}
-              scrollEnabled={false}
-              showsVerticalScrollIndicator={false}
               bounces={false}
+              scrollEnabled={false}
+              data={FlightDetailsData}
+              showsVerticalScrollIndicator={false}
               renderItem={({item}) => {
                 return (
                   <View style={styles.flatlist1InnerViewStyle}>
                     <Image
                       source={item.image}
-                      style={styles.flatlistIconStyle}
                       resizeMode="contain"
+                      style={styles.flatlistIconStyle}
                     />
                     <Text style={styles.flatlistTextStyle}>{item.text}</Text>
                   </View>
@@ -95,17 +96,17 @@ const FlightDetails = () => {
           </View>
           <View style={styles.flatlistViewStyle}>
             <FlatList
+              bounces={false}
               scrollEnabled={false}
               data={FlightDetailsData1}
               showsVerticalScrollIndicator={false}
-              bounces={false}
               renderItem={({item}) => {
                 return (
                   <View style={styles.flatlist1InnerViewStyle}>
                     <Image
                       source={item.image}
-                      style={styles.flatlistIconStyle}
                       resizeMode="contain"
+                      style={styles.flatlistIconStyle}
                     />
                     {item.text == 'Airline' ? (
                       <Text style={styles.flatlistTextStyle}>
@@ -136,19 +137,19 @@ export default FlightDetails;
 
 const styles = StyleSheet.create({
   cardHeaderText: {
-    fontSize: fontSize(17),
     fontWeight: '700',
     color: color.black,
+    fontSize: fontSize(17),
   },
   cardHeaderLogo: {
-    height: wp(5.8),
     width: wp(5.8),
-    borderRadius: 500,
+    height: wp(5.8),
     marginEnd: wp(3),
+    borderRadius: 500,
   },
   flatlistIconStyle: {
-    height: hp(2.3),
     width: hp(2.3),
+    height: hp(2.3),
     tintColor: '#383838',
   },
   flatlistViewStyle: {
@@ -157,8 +158,8 @@ const styles = StyleSheet.create({
     marginVertical: Platform.OS === 'ios' ? hp(0.9) : hp(0.5),
   },
   flatlistTextStyle: {
-    fontSize: fontSize(15),
     color: '#383838',
+    fontSize: fontSize(15),
     marginHorizontal: wp(3),
   },
   flatlist1InnerViewStyle: {
@@ -166,43 +167,46 @@ const styles = StyleSheet.create({
     marginVertical: Platform.OS == 'ios' ? hp(1) : hp(0.7),
   },
   mainViewStyle: {
+    width: '92%',
     height: '77%',
     marginHorizontal: wp(4),
     borderRadius: 10,
+    alignSelf: 'center',
     flexDirection: 'row',
     paddingVertical: hp(2.4),
     paddingHorizontal: wp(5.3),
     backgroundColor: color.white,
   },
   firstViewStyle: {
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     marginRight: wp(4),
   },
   timeTextStyle: {
-    color: color.black,
     fontWeight: '500',
+    color: color.black,
     fontSize: fontSize(18),
   },
   dateStyle: {
-    fontSize: fontSize(15),
     color: '#383838',
+    fontSize: fontSize(15),
     marginVertical: hp(1),
   },
   secondInnerViewStyle: {
+    borderRadius: 7,
     borderWidth: 0.5,
     padding: hp(1.2),
-    borderRadius: 7,
     marginVertical: Platform.OS === 'ios' ? hp(1) : hp(0.5),
   },
   airlineNameStyle: {
-    borderBottomWidth: 0.5,
     borderColor: '#e2e2e2',
+    borderBottomWidth: 0.5,
     paddingVertical: Platform.OS === 'ios' ? hp(0.4) : hp(0),
   },
   classtextStyle: {
-    marginVertical: hp(0.6),
-    fontSize: fontSize(16),
     color: color.black,
+    fontSize: fontSize(16),
+    marginVertical: hp(0.6),
   },
 });

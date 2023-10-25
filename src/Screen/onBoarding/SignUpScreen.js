@@ -9,51 +9,52 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import {Images} from '../../helper/IconConstant';
-import {strings} from '../../helper/Strings';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import CheckButton from '../../components/CheckButton';
-import Swiper from 'react-native-swiper';
-import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
-import ImagePickerData from '../../components/ImagePickerData';
-import CountryPickTextInput from '../../components/CountryPickTextInput';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
-import {useDispatch, useSelector} from 'react-redux';
-import {DineWay} from '../../redux/action/HomeAction';
-import OtpInputs from 'react-native-otp-inputs';
-import {dummyAirlineData} from '../../helper/dummyData';
-import firestore from '@react-native-firebase/firestore';
+import Swiper from 'react-native-swiper';
 import auth from '@react-native-firebase/auth';
+import OtpInputs from 'react-native-otp-inputs';
 import storage from '@react-native-firebase/storage';
-import {NotificationData, SecurityData} from '../../assets/DummyData/Data';
+import {useDispatch, useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import {CountryPicker} from 'react-native-country-codes-picker';
+
+import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
+import {DineWay} from '../../redux/action/HomeAction';
+import CheckButton from '../../components/CheckButton';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {dummyAirlineData} from '../../helper/dummyData';
+import ImagePickerData from '../../components/ImagePickerData';
+import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
+import OnBoardingTextInput from '../../components/OnBoardingTextInput';
+import CountryPickTextInput from '../../components/CountryPickTextInput';
+import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
+import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {NotificationData, SecurityData} from '../../assets/DummyData/Data';
 import {AlertConstant} from '../../helper/AlertConstant';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
-  const [checked, setChecked] = useState(false);
   const swiperRef = useRef();
-  const [index, setIndex] = useState(0);
-  const [pickerResponse, setPickerResponse] = useState('');
-  const [datePicker, setDatePicker] = useState(false);
-  const [date, setDate] = useState('');
-  const [journeyData, setJourneyData] = useState([]);
-  const [selectedJourneyData, setSelectedJourneyData] = useState([]);
-  const [selectedDineWay, setSelectedDineWay] = useState([]);
-  const [selectedFlyWay, setSelectedFlyWay] = useState([]);
   const dispatch = useDispatch();
-  const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
-  const [referralCode, setReferralCode] = useState('');
-  const [name, setName] = useState('');
-  const [phoneNo, setPhoneNo] = useState('');
   const [pin, setPin] = useState('');
+  const [name, setName] = useState('');
+  const [date, setDate] = useState('');
+  const [index, setIndex] = useState(0);
+  const [Email, setEmail] = useState('');
   const [show, setShow] = useState(false);
+  const [phoneNo, setPhoneNo] = useState('');
+  const [Password, setPassword] = useState('');
+  const [checked, setChecked] = useState(false);
+  const [journeyData, setJourneyData] = useState([]);
   const [countryCode, setCountryCode] = useState('');
+  const [datePicker, setDatePicker] = useState(false);
+  const [referralCode, setReferralCode] = useState('');
+  const [pickerResponse, setPickerResponse] = useState('');
+  const [selectedFlyWay, setSelectedFlyWay] = useState([]);
+  const [selectedDineWay, setSelectedDineWay] = useState([]);
+  const [selectedJourneyData, setSelectedJourneyData] = useState([]);
 
   useEffect(() => {
     JourneyData();
@@ -263,8 +264,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         }}
         loop={false}
         index={index}
-        showsPagination={false}
         showsButtons={false}
+        showsPagination={false}
         activeDotStyle={{borderStyle: 'solid', width: wp(8)}}
         paginationStyle={{
           alignItems: 'center',
@@ -642,8 +643,8 @@ const styles = StyleSheet.create({
     color: color.black,
   },
   rememberLineStyle: {
-    flexDirection: 'row',
     marginTop: hp(1),
+    flexDirection: 'row',
     alignItems: 'center',
   },
   forgotPasswordStyle: {
@@ -651,30 +652,28 @@ const styles = StyleSheet.create({
   },
   signUpStyle: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingTop: hp(4),
     marginTop: hp(2),
+    paddingTop: hp(4),
     borderTopWidth: 1,
     borderBottomWidth: 1,
+    flexDirection: 'row',
     borderColor: '#ECEFEF',
     marginHorizontal: wp(6),
+    justifyContent: 'center',
   },
   buttonStyle: {
-    // flex: 1,
-    // bottom: hp(4),
-    marginVertical: hp(3),
     height: hp(6),
+    marginVertical: hp(3),
   },
   lineStyle: {
     height: 1,
-    backgroundColor: '#ECEFEF',
-    marginHorizontal: wp(5),
     marginTop: hp(2),
+    marginHorizontal: wp(5),
+    backgroundColor: '#ECEFEF',
   },
   modalImageStyle: {
-    height: hp(30),
     width: wp(70),
+    height: hp(30),
     marginTop: hp(2),
   },
   checkbox: {
@@ -685,57 +684,57 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatListIconStyle: {
-    height: hp(3),
     width: hp(3),
+    height: hp(3),
+    borderRadius: 15,
     resizeMode: 'contain',
     marginHorizontal: wp(2),
-    borderRadius: 15,
   },
   flatListViewStyle: {
     borderWidth: 1,
-    borderRadius: wp(15),
     alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: wp(15),
     flexDirection: 'row',
     paddingVertical: hp(2),
     marginVertical: hp(0.5),
     marginHorizontal: wp(1),
+    justifyContent: 'center',
     paddingHorizontal: wp(4),
   },
   HederStyle: {
-    fontSize: fontSize(18),
     fontWeight: '600',
     marginVertical: hp(2),
+    fontSize: fontSize(18),
   },
   textInputView1: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 10,
     marginTop: hp(4),
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: wp(14),
   },
   otpInputStyle: {
-    backgroundColor: '#DFE1E5',
-    textAlign: 'center',
-    height: hp(6),
     width: wp(14),
+    height: hp(6),
     borderRadius: 10,
     letterSpacing: 5,
+    textAlign: 'center',
+    backgroundColor: '#DFE1E5',
   },
   flyWayStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
     flex: 1,
-    marginHorizontal: wp(4),
+    borderWidth: 1,
+    borderRadius: 15,
+    alignItems: 'center',
+    flexDirection: 'row',
     marginVertical: hp(1),
     paddingVertical: hp(2),
-    borderRadius: 15,
+    marginHorizontal: wp(4),
     paddingHorizontal: wp(4),
-    borderWidth: 1,
   },
   textInputCountryPicker: {
-    color: color.black,
     height: hp(10),
+    color: color.black,
   },
 });
 

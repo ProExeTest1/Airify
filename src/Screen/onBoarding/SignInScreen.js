@@ -7,26 +7,27 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import {Images} from '../../helper/IconConstant';
-import {strings} from '../../helper/Strings';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import Modal from 'react-native-modal';
-import CheckButton from '../../components/CheckButton';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AlertConstant} from '../../helper/AlertConstant';
+
+import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import CheckButton from '../../components/CheckButton';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import OnBoardingText from '../../components/OnBoardingText';
+import OnBoardingTextInput from '../../components/OnBoardingTextInput';
+import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
+import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
-  const [modal, setModal] = useState(false);
-  const [checked, setChecked] = useState(false);
   const [Email, setEmail] = useState('');
+  const [modal, setModal] = useState(false);
   const [Password, setPassword] = useState('');
+  const [checked, setChecked] = useState(false);
 
   const openModal = () => {
     setModal(true);
@@ -91,36 +92,36 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <OnBoardingModuleHeader
-        backImage={Images.backIcon}
         onPress={() => {
           goBack();
         }}
-        MainText={strings.welcome}
         SubText={strings.subText}
+        MainText={strings.welcome}
+        backImage={Images.backIcon}
       />
       <View style={{paddingTop: hp(4), flex: 1}}>
         <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
         <OnBoardingTextInput
-          textInputIcon={Images.Email}
-          textInputPlaceholder={strings.EmailText}
           value={Email}
-          onChangeText={email => setEmail(email)}
+          textInputIcon={Images.Email}
           keyboardType={'email-address'}
+          onChangeText={email => setEmail(email)}
+          textInputPlaceholder={strings.EmailText}
         />
         <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
         <OnBoardingTextInput
+          value={Password}
+          keyboardType={'default'}
           textInputIcon={Images.password}
           textInputPlaceholder={strings.Password}
-          value={Password}
           onChangeText={password => setPassword(password)}
-          keyboardType={'default'}
         />
         <View style={styles.rememberLineStyle}>
           <View
             style={{
-              marginHorizontal: wp(6),
               flexDirection: 'row',
               alignItems: 'center',
+              marginHorizontal: wp(6),
             }}>
             <CheckButton
               check={checked}
@@ -153,8 +154,8 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
             <Text
               style={{
                 color: 'blue',
-                fontSize: fontSize(14),
                 fontWeight: '400',
+                fontSize: fontSize(14),
               }}>
               {strings.signUp}
             </Text>
@@ -171,32 +172,32 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
 
       {/* ------------------------------------------------->>> Modal  */}
       <Modal
-        onBackdropPress={closeModal}
-        onDismiss={closeModal}
-        backdropOpacity={0.8}
         isVisible={modal}
+        backdropOpacity={0.8}
+        onDismiss={closeModal}
+        onBackdropPress={closeModal}
         style={{
-          justifyContent: 'center',
-          margin: wp(0),
-          paddingHorizontal: wp(10),
-          alignItems: 'center',
           flex: 1,
+          margin: wp(0),
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingHorizontal: wp(10),
         }}>
         <View
           style={{
-            backgroundColor: 'white',
             borderRadius: 16,
             alignItems: 'center',
+            backgroundColor: 'white',
           }}>
           <Image
-            source={Images.WelcomeScreenModalImage}
             style={styles.modalImageStyle}
+            source={Images.WelcomeScreenModalImage}
           />
           <OnBoardingText
-            OnBoardingMainText={strings.WelcomeModalMainText}
             OnBoardingMainTextStyle={{color: 'blue'}}
             OnBoardingSubText={strings.WelcomeModalSubText}
             OnBoardingSubTextStyle={{marginVertical: hp(4)}}
+            OnBoardingMainText={strings.WelcomeModalMainText}
           />
           <ActivityIndicator
             size="large"
@@ -219,22 +220,22 @@ const styles = StyleSheet.create({
     color: color.black,
   },
   rememberLineStyle: {
-    flexDirection: 'row',
     marginTop: hp(2),
+    flexDirection: 'row',
   },
   forgotPasswordStyle: {
     color: 'blue',
   },
   signUpStyle: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingTop: hp(4),
-    marginVertical: hp(5),
     borderTopWidth: 1,
+    paddingTop: hp(4),
+    flexDirection: 'row',
+    marginVertical: hp(5),
     borderBottomWidth: 1,
     borderColor: '#ECEFEF',
     marginHorizontal: wp(6),
+    justifyContent: 'center',
   },
   buttonStyle: {
     height: hp(6),
@@ -242,13 +243,13 @@ const styles = StyleSheet.create({
   },
   lineStyle: {
     height: 1,
-    backgroundColor: '#ECEFEF',
-    marginHorizontal: wp(5),
     marginTop: hp(4),
+    marginHorizontal: wp(5),
+    backgroundColor: '#ECEFEF',
   },
   modalImageStyle: {
-    height: hp(30),
     width: wp(70),
+    height: hp(30),
     marginTop: hp(2),
   },
   checkbox: {

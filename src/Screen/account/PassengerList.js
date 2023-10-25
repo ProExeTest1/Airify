@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,20 +7,20 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 const PassengerList = ({navigation: {goBack}, navigation}) => {
   const [passengerList, setPassengerList] = useState([]);
+
   useEffect(() => {
     getPassengerListData();
   }, []);
 
-  console.log(passengerList);
   const getPassengerListData = async () => {
     await firestore()
       .collection('PassengerList')
@@ -47,19 +47,19 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        onPress1={true}
+        onPress2={true}
+        Images2={Images.plus}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.passengerList}
+        cancelButtonStyle={styles.plusIconStyle}
         navigation1={() => {
           goBack();
         }}
         navigation2={() => {
           navigation.navigate('NewPassenger');
         }}
-        onPress1={true}
-        onPress2={true}
-        Images1={Images.backIcon}
-        Images2={Images.plus}
-        cancelButtonStyle={styles.plusIconStyle}
-        Images1Color={color.white}
       />
       <View style={[styles.headerStyle, {backgroundColor: color.commonBlue}]}>
         <Text style={[styles.mainHeaderText, {color: color.white}]}>
@@ -72,8 +72,8 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
       <View style={styles.flatListView}>
         <FlatList
           bounces={false}
-          showsVerticalScrollIndicator={false}
           data={passengerList}
+          showsVerticalScrollIndicator={false}
           renderItem={({item, index}) => {
             return (
               <View
@@ -117,26 +117,26 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   plusIconStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     resizeMode: 'contain',
     tintColor: color.white,
   },
   mainHeaderText: {
     color: color.black,
-    fontSize: fontSize(16),
     fontWeight: 'bold',
+    fontSize: fontSize(16),
     paddingHorizontal: wp(4),
   },
   headerStyle: {
     flexDirection: 'row',
     borderTopWidth: 0.2,
-    borderColor: color.white,
     paddingVertical: hp(2),
+    borderColor: color.white,
   },
   EditIconStyle: {
-    height: hp(2),
     width: hp(2),
+    height: hp(2),
     resizeMode: 'contain',
     tintColor: color.commonBlue,
   },

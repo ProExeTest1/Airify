@@ -1,21 +1,21 @@
-import React, {Component, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   Image,
   PermissionsAndroid,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {hp, wp} from '../helper/Constant';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
-import TextData from './TextData';
+
 import ButtonData from './ButtonData';
+import {hp, wp} from '../helper/Constant';
 import {Images} from '../helper/IconConstant';
 
-const ImagePickerData = ({pickerResponse, setPickerResponse, boxStyle}) => {
+const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
   const [modal, setModal] = useState(false);
+
   const openModal = () => {
     setModal(true);
   };
@@ -24,6 +24,7 @@ const ImagePickerData = ({pickerResponse, setPickerResponse, boxStyle}) => {
     setModal(false);
     const result = await launchImageLibrary(options);
   };
+
   const onImageLibraryPress = useCallback(() => {
     const options = {
       selectionLimit: 1,
@@ -74,37 +75,13 @@ const ImagePickerData = ({pickerResponse, setPickerResponse, boxStyle}) => {
               pickerResponse ? {uri: pickerResponse} : Images.imagePickIcon
             }
           />
-          {/* <Image
-            source={Images.editIcon}
-            style={{
-              width: hp(3),
-              height: hp(3),
-              position: 'absolute',
-              alignSelf: 'flex-end',
-              right: wp(38),
-              top: hp(9),
-              tintColor: 'white',
-              backgroundColor: 'blue',
-            }}
-          /> */}
         </View>
       </TouchableOpacity>
-
       <Modal
         isVisible={modal}
         onBackdropPress={closeModal}
-        style={{
-          justifyContent: 'flex-end',
-          margin: wp(0),
-        }}>
-        <View
-          style={{
-            backgroundColor: '#3C93D7',
-            height: hp(23.35),
-            borderRadius: 16,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        style={styles.modalStyle}>
+        <View style={styles.modalViewStyle}>
           <ButtonData
             button="Choose From Gallery"
             buttonStyle={styles.buttonStyle}
@@ -131,18 +108,29 @@ const styles = StyleSheet.create({
     height: hp(4.27),
   },
   boxStyle: {
+    borderWidth: 2,
     width: hp(12.27),
     height: hp(12.27),
-    borderRadius: hp(12.27 / 2),
-    borderColor: '#DFDFDF',
-    borderWidth: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
     alignSelf: 'center',
+    alignItems: 'center',
+    borderColor: '#DFDFDF',
+    justifyContent: 'center',
+    borderRadius: hp(12.27 / 2),
   },
   buttonStyle: {
-    marginVertical: hp(1),
     width: '80%',
+    marginVertical: hp(1),
+  },
+  modalStyle: {
+    margin: wp(0),
+    justifyContent: 'flex-end',
+  },
+  modalViewStyle: {
+    borderRadius: 16,
+    height: hp(23.35),
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#3C93D7',
   },
 });
 

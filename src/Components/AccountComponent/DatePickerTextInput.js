@@ -1,25 +1,25 @@
 import React, {useState} from 'react';
 import {
-  StyleSheet,
-  TextInput,
-  Image,
-  TouchableOpacity,
   View,
+  Image,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 
 const DatePickerTextInput = ({
-  textInputPlaceholder,
-  textInputIcon,
-  textInputIconStyle,
   value,
-  onChangeText,
-  textInputStyle,
-  container,
-  onPressCalender,
   onPress,
+  container,
+  onChangeText,
   keyboardType,
+  textInputIcon,
+  textInputStyle,
+  onPressCalender,
+  textInputIconStyle,
+  textInputPlaceholder,
 }) => {
   const [focus, setFocus] = useState(false);
 
@@ -32,15 +32,14 @@ const DatePickerTextInput = ({
         />
       </TouchableOpacity>
       <TextInput
-        placeholder={textInputPlaceholder}
         value={value}
-        autoCorrect={false}
         editable={true}
-        // onPressIn={onPress}
-        onChangeText={onChangeText}
-        style={[styles.textInputStyle, textInputStyle]}
+        autoCorrect={false}
         secureTextEntry={focus}
+        onChangeText={onChangeText}
         keyboardType={keyboardType}
+        placeholder={textInputPlaceholder}
+        style={[styles.textInputStyle, textInputStyle]}
       />
       {textInputPlaceholder == 'Password' ||
       textInputPlaceholder == 'Confirm New Password' ? (
@@ -87,24 +86,24 @@ const DatePickerTextInput = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     width: wp(90),
-    alignItems: 'center',
-    marginVertical: hp(2),
-    alignSelf: 'center',
     height: hp(6),
     paddingStart: wp(2),
     borderRadius: wp(2),
+    alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginVertical: hp(2),
     backgroundColor: '#E6E6E6',
   },
   textInputIconStyle: {
-    height: hp(2),
     width: hp(2),
+    height: hp(2),
     tintColor: '#A0A0A0',
   },
   textInputStyle: {
-    marginLeft: wp(2),
     flex: 1,
+    marginLeft: wp(2),
   },
 });
 

@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+=======
+import moment from 'moment';
+>>>>>>> origin/KenilBranch
 import React, {useEffect, useState} from 'react';
+import {CalendarList, LocaleConfig} from 'react-native-calendars';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {PickerHeaderBar} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {CalendarList, LocaleConfig} from 'react-native-calendars';
-import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   dateAction,
@@ -11,7 +16,6 @@ import {
   returnDateAction,
   returnNormalDateAction,
 } from '../../redux/action/DateAction';
-import {PickerHeaderBar} from '../../components';
 import {AlertConstant} from '../../helper/AlertConstant';
 
 LocaleConfig.locales['fr'] = {
@@ -61,16 +65,21 @@ LocaleConfig.defaultLocale = 'fr';
 const DatePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.normalDate);
+<<<<<<< HEAD
   const returndata = route?.params?.return;
   console.log(returndata, 'hello');
   const [selected, setSelected] = useState('');
+=======
+>>>>>>> origin/KenilBranch
   const [day, setDay] = useState();
-  const [returnday, seReturnDay] = useState();
   const [year, setYear] = useState();
-  const [returnyear, setReturnYear] = useState();
+  const returndata = route?.params?.return;
   const [press, setPress] = useState(false);
+  const [returnday, seReturnDay] = useState();
+  const [selected, setSelected] = useState('');
+  const [returnyear, setReturnYear] = useState();
+  const [returnDate, setReturnDate] = useState(false);
   const [returnPress, setReturnPress] = useState(false);
-  const [returnDate, setReturnDate] = useState();
   useEffect(() => {
     if (returndata == 'returnDate') {
       setReturnPress(true);
@@ -218,15 +227,15 @@ const DatePickerScreen = ({navigation, route}) => {
             markedDates={{
               [selected]: {
                 selected: true,
-                selectedColor: color.commonBlue,
                 disableTouchEvent: true,
                 selectedDotColor: 'orange',
+                selectedColor: color.commonBlue,
               },
               [returnDate]: {
                 selected: true,
-                selectedColor: color.commonBlue,
                 disableTouchEvent: true,
                 selectedDotColor: 'orange',
+                selectedColor: color.commonBlue,
               },
             }}
           />
@@ -245,6 +254,9 @@ export default DatePickerScreen;
 
 const styles = StyleSheet.create({
   dateViewStyle: {
+    width: wp(40),
+    borderRadius: 30,
+    alignItems: 'center',
     borderRadius: 30,
     backgroundColor: color.commonBlue,
     justifyContent: 'center',
@@ -253,16 +265,25 @@ const styles = StyleSheet.create({
     marginVertical: hp(2.2),
   },
   ReturndateViewStyle: {
+    width: wp(40),
+    borderWidth: 1,
+    borderRadius: 30,
+    alignItems: 'center',
     borderRadius: 30,
     borderWidth: 1,
+<<<<<<< HEAD
     justifyContent: 'center',
     paddingVertical: hp(1.8),
+=======
+>>>>>>> origin/KenilBranch
     marginVertical: hp(2.2),
+    justifyContent: 'center',
+    paddingVertical: hp(1.8),
   },
   dateTextStyle: {
-    fontSize: fontSize(16, 812),
     fontWeight: '500',
     color: color.white,
+    fontSize: fontSize(16, 812),
   },
   currentDateStyle: {
     marginHorizontal: wp(2.5),
@@ -270,22 +291,32 @@ const styles = StyleSheet.create({
   },
   searchButtonStyle: {
     alignItems: 'center',
-    justifyContent: 'center',
     marginHorizontal: wp(5),
+<<<<<<< HEAD
     paddingVertical: hp(2),
+=======
+    height: hp(7),
+    width: wp(84),
+>>>>>>> origin/KenilBranch
     borderRadius: 16,
+    alignSelf: 'center',
     backgroundColor: 'blue',
+<<<<<<< HEAD
     marginVertical: hp(2.5),
+=======
+    marginVertical: hp(1.2),
+    justifyContent: 'center',
+>>>>>>> origin/KenilBranch
   },
   searchFontStyle: {
-    fontSize: fontSize(20, 812),
-    color: color.white,
     fontWeight: 'bold',
+    color: color.white,
+    fontSize: fontSize(20, 812),
   },
   dateMainViewStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   returnDateTextStyle: {
     color: 'black',

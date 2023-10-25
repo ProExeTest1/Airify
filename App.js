@@ -1,7 +1,4 @@
-import React, {useEffect} from 'react';
-import StackNavigation from './src/navigation/StackNavigation';
-import {MenuProvider} from 'react-native-popup-menu';
-import {store} from './src/redux/store';
+import React from 'react';
 import {
   LogBox,
   StatusBar,
@@ -10,11 +7,21 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import {Provider} from 'react-redux';
+<<<<<<< HEAD
 import {getDate} from './src/assets/DummyData/GetDate';
 import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
 import firestore from '@react-native-firebase/firestore';
+=======
+import {MenuProvider} from 'react-native-popup-menu';
+import SplashScreen from 'react-native-splash-screen';
+import firestore from '@react-native-firebase/firestore';
+import {store} from './src/redux/store';
+import {getDate} from './src/assets/DummyData/GetDate';
+import StackNavigation from './src/navigation/StackNavigation';
+import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
+import {useIsFocused} from '@react-navigation/native';
+>>>>>>> origin/KenilBranch
 
 function App() {
   Text.defaultProps = Text.defaultProps || {};

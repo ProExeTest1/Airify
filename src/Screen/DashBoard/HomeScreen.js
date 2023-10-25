@@ -142,8 +142,14 @@ const HomeScreen = ({navigation}) => {
   };
 
   const UserData = async () => {
-    const journeyData = await firestore()
+    // const journeyData = await firestore()
+    //   .collection('Users')
+    //   .doc(auth().currentUser.uid)
+    //   .get();
+
+    const subscriber = firestore()
       .collection('Users')
+<<<<<<< HEAD
       .doc(auth().currentUser.uid)
       .get()
       .then(data => {
@@ -151,6 +157,16 @@ const HomeScreen = ({navigation}) => {
         dispatch(UserDataAction(data.data()));
       })
       .then(() => setLoader(false));
+=======
+      .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          if (documentSnapshot.id == auth().currentUser.uid) {
+            dispatch(UserDataAction(documentSnapshot.data()));
+            setUserData(documentSnapshot.data());
+          }
+        });
+      });
+>>>>>>> origin/KenilBranch
   };
   const TripOption = ({tripType}) => {
     return (

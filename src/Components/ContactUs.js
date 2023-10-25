@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,18 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+
 import {color} from '../helper/ColorConstant';
-import {ContactUSData} from '../assets/DummyData/Data';
 import {fontSize, hp, wp} from '../helper/Constant';
+import {ContactUSData} from '../assets/DummyData/Data';
 
 const ContactUS = () => {
   return (
     <View style={styles.container}>
       <FlatList
         bounces={false}
-        showsVerticalScrollIndicator={false}
         data={ContactUSData}
+        showsVerticalScrollIndicator={false}
         renderItem={({item}) => {
           return (
             <TouchableOpacity style={styles.viewStyle}>
@@ -46,24 +47,24 @@ const styles = StyleSheet.create({
     backgroundColor: color.Grey,
   },
   viewStyle: {
-    flexDirection: 'row',
+    borderRadius: wp(2),
     alignItems: 'center',
-    paddingVertical: hp(2),
+    flexDirection: 'row',
     marginVertical: hp(1),
-    backgroundColor: color.white,
+    paddingVertical: hp(2),
     marginHorizontal: wp(4),
     paddingHorizontal: wp(4),
-    borderRadius: wp(2),
+    backgroundColor: color.white,
   },
   iconStyle: {
-    height: hp(2.5),
     width: hp(2.5),
+    height: hp(2.5),
     resizeMode: 'contain',
   },
   textStyle: {
     fontWeight: '500',
-    fontSize: fontSize(16),
     paddingStart: wp(4),
+    fontSize: fontSize(16),
   },
 });
 

@@ -1,8 +1,8 @@
 import {DINE_WAY, OTP} from '../type';
 
 const initialState = {
-  DineWayData: [],
   OTP: '',
+  DineWayData: [],
 };
 export default (state = initialState, action) => {
   switch (action.type) {

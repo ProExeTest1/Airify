@@ -1,68 +1,61 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+
+import {strings} from '../../helper/Strings';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingText from '../../components/OnBoardingText';
-import {strings} from '../../helper/Strings';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import {color} from '../../helper/ColorConstant';
 
 const WelcomeScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
-      {/* <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'space-around',
-          paddingTop: hp(4),
-        }}> */}
       <Image
         source={Images.welcomeScreenIcon}
         style={styles.welcomeScreenIconStyle}
       />
       <OnBoardingText
         OnBoardingMainText={strings.AppName}
+        OnBoardingSubText={strings.subContent}
         OnBoardingMainTextStyle={styles.appStyle}
         OnBoardingSubTextStyle={styles.subContentStyle}
-        OnBoardingSubText={strings.subContent}
       />
-      {/* </View> */}
       <View style={{flex: 1}}>
         <OnBoardingSingleButton
-          buttonTextStyle={styles.buttonTextStyle}
-          buttonStyle={[styles.buttonStyle, {marginTop: hp(6)}]}
-          welcomeScreenFiledImage={Images.google}
           buttonText={strings.signUpGoogle}
+          welcomeScreenFiledImage={Images.google}
+          buttonTextStyle={styles.buttonTextStyle}
           welcomeScreenFiledImageStyle={styles.filedImageStyle}
+          buttonStyle={[styles.buttonStyle, {marginTop: hp(6)}]}
         />
         <OnBoardingSingleButton
           buttonStyle={styles.buttonStyle}
-          welcomeScreenFiledImage={Images.apple}
           buttonText={strings.signUpApple}
-          welcomeScreenFiledImageStyle={styles.filedImageStyle}
+          welcomeScreenFiledImage={Images.apple}
           buttonTextStyle={styles.buttonTextStyle}
+          welcomeScreenFiledImageStyle={styles.filedImageStyle}
         />
         <OnBoardingSingleButton
           buttonStyle={styles.buttonStyle}
-          welcomeScreenFiledImage={Images.facebook}
           buttonText={strings.signUpFacebook}
-          welcomeScreenFiledImageStyle={styles.filedImageStyle}
           buttonTextStyle={styles.buttonTextStyle}
+          welcomeScreenFiledImage={Images.facebook}
+          welcomeScreenFiledImageStyle={styles.filedImageStyle}
         />
         <OnBoardingSingleButton
           buttonStyle={styles.buttonStyle}
-          welcomeScreenFiledImage={Images.twitter}
           buttonText={strings.signUpTwitter}
-          welcomeScreenFiledImageStyle={styles.filedImageStyle}
+          welcomeScreenFiledImage={Images.twitter}
           buttonTextStyle={styles.buttonTextStyle}
+          welcomeScreenFiledImageStyle={styles.filedImageStyle}
         />
       </View>
       <View
         style={{
           borderBottomWidth: 1,
-          borderColor: '#ECEFEF',
           paddingBottom: hp(4),
+          borderColor: '#ECEFEF',
         }}>
         <OnBoardingSingleButton
           buttonStyle={{marginTop: hp(6), height: hp(5)}}
@@ -82,8 +75,8 @@ const WelcomeScreen = ({navigation}) => {
           <Text
             style={{
               color: 'blue',
-              fontSize: fontSize(14),
               fontWeight: '400',
+              fontSize: fontSize(14),
             }}>
             {strings.signUp}
           </Text>
@@ -100,30 +93,30 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   welcomeScreenIconStyle: {
-    height: hp(10),
     width: hp(10),
+    height: hp(10),
     marginTop: hp(10),
   },
   subContentStyle: {
-    fontSize: fontSize(14),
     marginTop: hp(3),
+    fontSize: fontSize(14),
   },
   buttonStyle: {
+    borderWidth: 1,
     marginVertical: hp(1),
     backgroundColor: 'white',
-    borderWidth: 1,
   },
   signUpStyle: {
+    marginBottom: hp(5),
     flexDirection: 'row',
     marginVertical: hp(3),
-    marginBottom: hp(5),
   },
   filedImageStyle: {
     marginStart: wp(3),
   },
   buttonTextStyle: {
-    color: color.black,
     flex: 1,
+    color: color.black,
   },
   appStyle: {
     marginTop: hp(6),

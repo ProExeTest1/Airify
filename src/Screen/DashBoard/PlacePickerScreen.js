@@ -1,3 +1,5 @@
+import {useDispatch} from 'react-redux';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -7,23 +9,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {PickerHeaderBar, SearchBar} from '../../components';
-import {fontSize, hp, wp} from '../../helper/Constant';
+
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
-import {useDispatch} from 'react-redux';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {PickerHeaderBar, SearchBar} from '../../components';
 import {
   depaturePlaceAction,
   destinationPlaceAction,
 } from '../../redux/action/PlaceAction';
-import {color} from '../../helper/ColorConstant';
 
 const PlacePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
-  const [apiData, setApidata] = useState([]);
-  const [search, setSearch] = useState([]);
-  const [searchEnable, setSearchEnable] = useState(false);
   const headerData = route?.params?.data;
+  const [search, setSearch] = useState([]);
+  const [apiData, setApidata] = useState([]);
+  const [searchEnable, setSearchEnable] = useState(false);
+
   useEffect(() => {
     fetch('https://restcountries.com/v3.1/all?fields=name,capital')
       .then(response => response.json())
@@ -191,25 +193,25 @@ const styles = StyleSheet.create({
   lineStyle: {
     width: wp(90),
     height: hp(0),
-    alignSelf: 'center',
     borderWidth: 0.5,
+    alignSelf: 'center',
   },
   forwardIconStyle: {
-    height: wp(4.4),
     width: hp(4.4),
+    height: wp(4.4),
   },
   textStyle: {
-    fontSize: fontSize(18),
     fontWeight: '500',
     color: color.black,
+    fontSize: fontSize(18),
   },
   textViewStyle: {
     width: '70%',
     flexDirection: 'row',
   },
   smallTextViewStyle: {
-    flexDirection: 'row',
     paddingTop: hp(0.5),
+    flexDirection: 'row',
   },
   smallTextStyle: {
     color: color.grey,

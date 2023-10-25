@@ -16,11 +16,16 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 
+<<<<<<< HEAD
 const Congratulation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const header = route?.params?.header;
   console.log('=>>>>>>>>> tripTyope', tripType);
   console.log('=>>>>>>>>> headerType', header);
+=======
+const Congratulation = ({navigation}) => {
+  const route = useRoute();
+>>>>>>> origin/KenilBranch
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 

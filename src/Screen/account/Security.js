@@ -7,17 +7,19 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import ToggleSwitch from 'toggle-switch-react-native';
+import firestore from '@react-native-firebase/firestore';
+
+import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import ToggleSwitch from 'toggle-switch-react-native';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 
-const Security = ({navigation: {goBack}, navigation}) => {
+const Security = ({navigation: {goBack}}) => {
   const [securityData, setSecurityData] = useState([]);
+
   useEffect(() => {
     SecurityData();
   }, [securityData]);
@@ -36,22 +38,22 @@ const Security = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.security}
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {}}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
-        Images1Color={color.white}
       />
       <View style={styles.flatListBodyViewStyle}>
         <FlatList
-          showsVerticalScrollIndicator={false}
           bounces={false}
           data={securityData}
+          showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <View style={styles.FlatListView}>
@@ -59,15 +61,15 @@ const Security = ({navigation: {goBack}, navigation}) => {
                 {item.title == 'Device MAnagement' ? (
                   <TouchableOpacity>
                     <Image
+                      resizeMode="contain"
                       source={Images.forward}
                       style={styles.forwardIconStyle}
-                      resizeMode="contain"
                     />
                   </TouchableOpacity>
                 ) : (
                   <ToggleSwitch
-                    isOn={item?.isOn}
                     size="medium"
+                    isOn={item?.isOn}
                     onColor={color.commonBlue}
                     onToggle={async () => {
                       await firestore()
@@ -105,35 +107,35 @@ const styles = StyleSheet.create({
   },
   FlatListView: {
     flexDirection: 'row',
-    paddingVertical: hp(2),
     alignItems: 'center',
+    paddingVertical: hp(2),
   },
   titleStyle: {
     flex: 1,
-    fontSize: fontSize(18),
     fontWeight: '500',
+    fontSize: fontSize(18),
   },
   flatListBodyViewStyle: {
     paddingHorizontal: wp(4),
   },
   forwardIconStyle: {
-    height: wp(3),
     width: hp(3),
+    height: wp(3),
     resizeMode: 'contain',
   },
   buttonStyle: {
     backgroundColor: color.white,
     borderWidth: 2,
-    borderColor: color.commonBlue,
+    borderRadius: wp(2),
     paddingVertical: hp(2),
     marginHorizontal: wp(2),
-    borderRadius: wp(2),
+    borderColor: color.commonBlue,
   },
   buttonTextStyle: {
-    textAlign: 'center',
-    color: color.commonBlue,
-    fontSize: fontSize(16),
     fontWeight: '500',
+    textAlign: 'center',
+    fontSize: fontSize(16),
+    color: color.commonBlue,
   },
 });
 

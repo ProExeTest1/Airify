@@ -1,20 +1,21 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
+import Modal from 'react-native-modal';
 import ScrollPicker from 'react-native-wheel-scrollview-picker';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
+import {strings} from '../../helper/Strings';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
-import Modal from 'react-native-modal';
-import {strings} from '../../helper/Strings';
 import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';
 
 const PassengerPickerModal = ({
+  onCancel,
+  setChild,
+  setAdult,
   toggleModal,
   isModalVisible,
-  setAdult,
-  setChild,
   setTwoYearBelowChild,
-  onCancel,
 }) => {
   const [item1, setItem1] = useState(0);
   const [item2, setItem2] = useState(0);
@@ -35,9 +36,9 @@ const PassengerPickerModal = ({
           <View style={styles.pickerMainViewStyle}>
             <View style={styles.pickerViewStyle}>
               <Image
+                resizeMode="contain"
                 source={Images.adult}
                 style={styles.pickerImageStyle}
-                resizeMode="contain"
               />
               <Text style={styles.categoryTextStyle}>{strings.Adult}</Text>
               <Text style={styles.ageTextStyle}>{strings.adultAge}</Text>
@@ -64,19 +65,19 @@ const PassengerPickerModal = ({
                     setItem1(selectedIndex);
                     setAdult(data);
                   }}
-                  wrapperBackground={color.white}
                   itemHeight={60}
                   wrapperHeight={180}
-                  highlightColor={color.white}
                   highlightBorderWidth={2}
+                  highlightColor={color.white}
+                  wrapperBackground={color.white}
                 />
               </View>
             </View>
             <View style={styles.pickerViewStyle}>
               <Image
+                resizeMode="contain"
                 source={Images.children}
                 style={styles.pickerImageStyle}
-                resizeMode="contain"
               />
               <Text style={styles.categoryTextStyle}>{strings.Child}</Text>
               <Text style={styles.ageTextStyle}>{strings.ChildAge}</Text>
@@ -103,19 +104,19 @@ const PassengerPickerModal = ({
                     setItem2(selectedIndex);
                     setChild(data);
                   }}
-                  wrapperBackground={color.white}
                   itemHeight={60}
                   wrapperHeight={180}
-                  highlightColor={color.white}
                   highlightBorderWidth={2}
+                  highlightColor={color.white}
+                  wrapperBackground={color.white}
                 />
               </View>
             </View>
             <View style={[styles.pickerViewStyle, {borderRightWidth: 0}]}>
               <Image
-                source={Images.twoYearBelowChild}
-                style={styles.pickerImageStyle}
                 resizeMode="contain"
+                style={styles.pickerImageStyle}
+                source={Images.twoYearBelowChild}
               />
               <Text style={styles.categoryTextStyle}>{strings.Infrant}</Text>
               <Text style={styles.ageTextStyle}>{strings.InfrantAge}</Text>
@@ -142,21 +143,21 @@ const PassengerPickerModal = ({
                     setItem3(selectedIndex);
                     setTwoYearBelowChild(data);
                   }}
-                  wrapperBackground={color.white}
                   itemHeight={60}
                   wrapperHeight={180}
-                  highlightColor={color.white}
                   highlightBorderWidth={2}
+                  highlightColor={color.white}
+                  wrapperBackground={color.white}
                 />
               </View>
             </View>
           </View>
           <View style={styles.buttonViewStyle}>
             <OnBoardingTwoButton
-              buttonTextOne={'Cancel'}
-              buttonTextTwo={'OK'}
               onPress1={onCancel}
+              buttonTextTwo={'OK'}
               onPress2={toggleModal}
+              buttonTextOne={'Cancel'}
             />
           </View>
         </View>
@@ -169,75 +170,75 @@ export default PassengerPickerModal;
 
 const styles = StyleSheet.create({
   pickerViewStyle: {
-    height: hp(33.5),
     width: wp(26.6),
+    height: hp(33.5),
     borderRightWidth: 0.5,
   },
   pickerImageStyle: {
-    height: hp(4.9),
     width: hp(4.9),
+    height: hp(4.9),
     alignSelf: 'center',
   },
   categoryTextStyle: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
     color: 'black',
-    textAlign: 'center',
+    fontWeight: '500',
     marginVertical: 5,
+    textAlign: 'center',
+    fontSize: fontSize(18),
   },
   ageTextStyle: {
     color: 'grey',
     textAlign: 'center',
   },
   numberTextStyle: {
-    fontSize: fontSize(25),
     fontWeight: 'bold',
     marginVertical: hp(0),
+    fontSize: fontSize(25),
   },
   modalStyle: {
-    justifyContent: 'flex-end',
     width: '100%',
-    alignSelf: 'center',
     marginBottom: 0,
+    alignSelf: 'center',
+    justifyContent: 'flex-end',
   },
   modalViewStyle: {
-    backgroundColor: 'white',
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
     height: hp(60),
+    borderTopEndRadius: 20,
+    backgroundColor: 'white',
+    borderTopStartRadius: 20,
   },
   toggleLineStyle: {
-    borderWidth: 1.5,
     width: wp(15),
+    borderWidth: 1.5,
+    borderColor: 'grey',
     alignSelf: 'center',
     marginVertical: hp(1.2),
-    borderColor: 'grey',
   },
   headerStyle: {
-    borderBottomWidth: 0.5,
-    marginVertical: hp(1.2),
     width: '80%',
     alignSelf: 'center',
+    borderBottomWidth: 0.5,
+    marginVertical: hp(1.2),
   },
   headerTextStyle: {
+    color: 'black',
+    fontWeight: 'bold',
     textAlign: 'center',
     fontSize: fontSize(22),
-    fontWeight: 'bold',
-    color: 'black',
     marginVertical: hp(2.4),
   },
   buttonViewStyle: {
-    paddingVertical: hp(2),
-    borderTopWidth: 1,
     width: '90%',
+    borderTopWidth: 1,
     alignSelf: 'center',
+    paddingVertical: hp(2),
     borderColor: '#e2e2e2',
   },
   pickerMainViewStyle: {
+    height: hp(35),
+    alignSelf: 'center',
     flexDirection: 'row',
     backgroundColor: '#fff',
-    alignSelf: 'center',
-    height: hp(35),
   },
   scrollPickerHeightStyle: {height: hp(20.31)},
 });

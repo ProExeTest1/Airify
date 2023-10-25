@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button, Image} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Image} from 'react-native';
+
 import {hp, wp} from '../helper/Constant';
 
-const ImagesData = ({round, imageSource, ImageStyle, IconImage}) => {
+const ImagesData = ({round, imageSource, ImageStyle}) => {
   return (
     <View style={styles.container}>
       <View style={[styles.round, round]}>

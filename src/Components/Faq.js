@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,26 +7,28 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+
+import {strings} from '../helper/Strings';
+import SearchBar from './Common/SearchBar';
+import {Images} from '../helper/IconConstant';
 import {color} from '../helper/ColorConstant';
 import {FaqData} from '../assets/DummyData/Data';
 import {fontSize, hp, wp} from '../helper/Constant';
-import SearchBar from './Common/SearchBar';
-import {strings} from '../helper/Strings';
 import {FaqDummy} from '../assets/DummyData/FaqDummy';
-import {Images} from '../helper/IconConstant';
 
 const Faq = () => {
   const [categorySelect, setCategory] = useState({
     id: 1,
     title: 'General',
   });
-  const [faqDummyData, setFaqDummyData] = useState(FaqDummy);
-  const [searchData, setSearchData] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [searchData, setSearchData] = useState([]);
+  const [faqDummyData, setFaqDummyData] = useState(FaqDummy);
 
   useEffect(() => {
     searchFaqQuestion(searchText);
   }, [searchText]);
+
   const searchFaqQuestion = text => {
     if (text) {
       const abc = faqDummyData.filter(item => {
@@ -42,10 +44,10 @@ const Faq = () => {
     <View style={styles.container}>
       <View style={{marginHorizontal: wp(2), paddingVertical: hp(1)}}>
         <FlatList
-          bounces={false}
-          showsHorizontalScrollIndicator={false}
           horizontal
           data={FaqData}
+          bounces={false}
+          showsHorizontalScrollIndicator={false}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
@@ -79,15 +81,15 @@ const Faq = () => {
         />
       </View>
       <SearchBar
+        value={searchText}
         placeholder={strings.search}
         TextInputBody={styles.TextInputBody}
         onChangeText={text => setSearchText(text)}
-        value={searchText}
       />
       <View style={styles.flatListView}>
         <FlatList
-          data={searchText.length ? searchData : faqDummyData}
           bounces={false}
+          data={searchText.length ? searchData : faqDummyData}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
@@ -145,43 +147,43 @@ const styles = StyleSheet.create({
     backgroundColor: color.Grey,
   },
   textStyle: {
-    fontSize: fontSize(16),
     fontWeight: '500',
+    fontSize: fontSize(16),
   },
   FlatListViewStyle: {
-    paddingHorizontal: wp(6),
-    paddingVertical: wp(3),
-    borderRadius: wp(5),
-    marginLeft: wp(2),
-    marginTop: hp(1),
     borderWidth: 1,
+    marginTop: hp(1),
+    marginLeft: wp(2),
+    borderRadius: wp(5),
     borderColor: '#E6E7E8',
+    paddingVertical: wp(3),
+    paddingHorizontal: wp(6),
   },
   TextInputBody: {
     backgroundColor: color.lightWhite,
   },
   iconStyle: {
-    height: hp(3),
     width: hp(3),
+    height: hp(3),
     resizeMode: 'contain',
   },
   viewStyle: {
     flexDirection: 'row',
   },
   questionStyle: {
-    fontSize: fontSize(16),
-    fontWeight: 'bold',
     flex: 1,
+    fontWeight: 'bold',
+    fontSize: fontSize(16),
   },
   answerStyle: {
-    borderTopWidth: 1,
-    paddingTop: hp(2),
     marginTop: hp(2),
+    paddingTop: hp(2),
+    borderTopWidth: 1,
     borderColor: color.grayLight,
   },
   flatListView: {
-    marginBottom: hp(8),
     marginTop: hp(2),
+    marginBottom: hp(8),
   },
 });
 

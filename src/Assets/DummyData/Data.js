@@ -251,7 +251,9 @@ export const AmenitiesData = [
   'Wi-Fi',
   'Power & USB Port',
 ];
+
 export const RefundAndRescheduleData = ['Refundable', 'Reschedule Available'];
+
 export const FlightPreferencesData = [
   'Exclude overnight stop(s)',
   'Exclude late night flights',
@@ -285,5 +287,85 @@ export const addressData = [
     Note: '',
     contactName: 'Andrew Ainsley',
     Phone: '9998942131',
+  },
+];
+
+export const pointDummy = [
+  {
+    id: 1,
+    title: 'You earn points',
+    point: '+ 1,000',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 2,
+    title: 'You use points',
+    point: '- 6,450',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 3,
+    title: 'You earn points',
+    point: '+ 3,000',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 4,
+    title: 'You earn points',
+    point: '+ 2,450',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 5,
+    title: 'You earn points',
+    point: '+ 1,000',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 6,
+    title: 'You use points',
+    point: '- 4,500',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 7,
+    title: 'You earn points',
+    point: '+ 2,200',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 8,
+    title: 'You earn points',
+    point: '+ 1,000',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 9,
+    title: 'You use points',
+    point: '- 1,000',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 10,
+    title: 'You use points',
+    point: '- 1,000',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
+  },
+  {
+    id: 11,
+    title: 'You earn points',
+    point: '+ 2,000',
+    date: 'Dec 22, 2023',
+    time: '09:10:45 AM',
   },
 ];

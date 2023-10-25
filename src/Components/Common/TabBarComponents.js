@@ -1,5 +1,6 @@
-import {Image, StyleSheet} from 'react-native';
 import React from 'react';
+import {Image, StyleSheet} from 'react-native';
+
 import {wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 
@@ -16,8 +17,8 @@ const TabBarComponents = props => {
 };
 const styles = StyleSheet.create({
   icons: {
-    height: wp(5),
     width: wp(5),
+    height: wp(5),
   },
 });
 export default TabBarComponents;

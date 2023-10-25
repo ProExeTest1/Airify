@@ -72,7 +72,7 @@ const ConfirmPin = ({navigation, route}) => {
   console.log(searchReturnFlightCardData, 'searchReturnFlightCardData');
   const checkPin = async pin => {
     console.log('totalPaymentList', totalPaymentList);
-    if (pin.length == 41) {
+    if (pin.length == 4) {
       if (pin == Number(pinData)) {
         setcondti2(true);
         setModalVisible2(true);

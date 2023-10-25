@@ -19,7 +19,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {airlineCity} from '../../assets/DummyData/AirlineCity';
 import firestore from '@react-native-firebase/firestore';
 import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
+<<<<<<< HEAD
 import {AlertConstant} from '../../helper/AlertConstant';
+=======
+import moment from 'moment';
+>>>>>>> origin/KenilBranch
 
 const SelectSeat = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -36,8 +40,7 @@ const SelectSeat = ({navigation, route}) => {
   const [seatData, setseatData] = useState(temp);
   const [OccuiedData, setOccuiedData] = useState([]);
 
-  console.log(FirebaseData);
-
+  const date = useSelector(e => e.date.normalDate);
   const [seatNameData, setseatNameData] = useState(temp[0]);
   const setSelectSeat = seat => {
     setseatData(
@@ -65,7 +68,7 @@ const SelectSeat = ({navigation, route}) => {
         });
         console.log(users, 'users');
         const setAllData = users[0]?.AirlineSeatBookData?.find(
-          i => i?.date == new Date(SelectDate)?.toLocaleDateString('en-IN'),
+          i => i?.date == date?.date,
         );
         console.log(setAllData, 'setAllData1');
         setFirebaseData(setAllData);
@@ -83,11 +86,18 @@ const SelectSeat = ({navigation, route}) => {
         );
 
         setseatData(
+<<<<<<< HEAD
           seatData?.map(item => {
             if (OccuiedData?.some(i => item.seatNo === i)) {
               AlertConstant(
                 `your selected seat ${item?.seatNo} is already book`,
               );
+=======
+          seatData.map(item => {
+            if (OccuiedData) {
+              return item;
+            } else if (OccuiedData?.some(i => item.seatNo === i)) {
+>>>>>>> origin/KenilBranch
               return {
                 name: item?.name,
                 seatNo: false,
@@ -96,7 +106,6 @@ const SelectSeat = ({navigation, route}) => {
             return item;
           }),
         );
-        console.log(OccuiedData, '<<<>>>>', seatData);
       });
   };
   const setSeat = async () => {

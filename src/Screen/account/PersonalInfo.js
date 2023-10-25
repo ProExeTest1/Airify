@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -77,11 +77,11 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
 
       await firestore().collection('Users').doc(auth().currentUser.uid).update({
         Name: name,
-        Email: Email,
-        profileImageURL: url,
         id: filename,
-        PhoneNumber: phoneNo,
+        Email: Email,
         BirthDate: date,
+        profileImageURL: url,
+        PhoneNumber: phoneNo,
       });
 
       await firestore()
@@ -90,15 +90,15 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
         .set({
           Name: name,
           Email: Email,
-          profileImageURL: url,
           id: filename,
-          uid: auth().currentUser.uid,
-          PhoneNumber: phoneNo,
           BirthDate: date,
-          Gender: selectedData,
-          passport: passport,
-          country: countryName,
           address: address,
+          passport: passport,
+          Gender: selectedData,
+          PhoneNumber: phoneNo,
+          country: countryName,
+          profileImageURL: url,
+          uid: auth().currentUser.uid,
         });
     } catch (error) {
       console.log(error);
@@ -109,16 +109,16 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        navigation2={() => {}}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.personalInfo}
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {}}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.backIcon}
-        Images2={null}
-        Images1Color={color.white}
       />
 
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -134,37 +134,37 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
           />
           <Text style={styles.textInputTitleStyle}>{strings.Name}</Text>
           <OnBoardingTextInput
-            textInputPlaceholder={strings.Name}
-            container={styles.textInputContainer}
             value={name}
-            onChangeText={name => setName(name)}
             keyboardType={'default'}
+            textInputPlaceholder={strings.Name}
+            onChangeText={name => setName(name)}
+            container={styles.textInputContainer}
           />
           <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
           <OnBoardingTextInput
-            textInputIcon={Images.Email}
-            textInputPlaceholder={strings.EmailText}
-            container={styles.textInputContainer}
             value={Email}
-            onChangeText={email => setEmail(email)}
+            textInputIcon={Images.Email}
             keyboardType={'email-address'}
+            container={styles.textInputContainer}
+            textInputPlaceholder={strings.EmailText}
+            onChangeText={email => setEmail(email)}
           />
           <Text style={styles.textInputTitleStyle}>{strings.Phone}</Text>
           <CountryPickTextInput
             value={phoneNo}
-            onChangeText={phoneNo => setPhoneNo(phoneNo)}
-            placeholder={strings.Phone}
             disabled={true}
+            countryCode={countryCode}
+            placeholder={strings.Phone}
+            onChangeText={phoneNo => setPhoneNo(phoneNo)}
             onPress2={() => {
               setShow(true);
             }}
-            countryCode={countryCode}
           />
           <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
           <OnBoardingTextInput
-            textInputPlaceholder={strings.DateBirth}
-            container={styles.textInputContainer}
             value={date}
+            container={styles.textInputContainer}
+            textInputPlaceholder={strings.DateBirth}
             onPress={() => {
               setDatePicker(true);
             }}
@@ -196,12 +196,12 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
           <Text style={styles.textInputTitleStyle}>{strings.country}</Text>
           <CountryPickTextInput
             value={countryName}
+            countryCode={countryCode}
             onChangeText={country => setCountryName(country)}
             placeholder={strings.country}
             onPress1={() => {
               setShowCountryName(true);
             }}
-            countryCode={countryCode}
           />
           <Text style={styles.textInputTitleStyle}>{strings.address}</Text>
           <OnBoardingTextInput
@@ -273,6 +273,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
   },
 });
-// jenislukhi2131@gmail.com
 
 export default PersonalInfo;

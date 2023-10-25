@@ -1,55 +1,57 @@
-import React, {Component, useEffect, useState} from 'react';
+import moment from 'moment';
+import uuid from 'react-native-uuid';
+import auth from '@react-native-firebase/auth';
+import React, {useEffect, useState} from 'react';
+import {useRoute} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import {CountryPicker} from 'react-native-country-codes-picker';
+
 import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import TextInputPassenger from '../../components/AccountComponent/TextInputPassenger';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import moment from 'moment';
-import {CountryPicker} from 'react-native-country-codes-picker';
 import CommonDropDown from '../../components/AccountComponent/CommonDropDown';
-import firestore, {firebase} from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
-import {useRoute} from '@react-navigation/native';
-import uuid from 'react-native-uuid';
+import TextInputPassenger from '../../components/AccountComponent/TextInputPassenger';
 
 const NewPassenger = ({navigation: {goBack}, navigation}) => {
   const route = useRoute();
-  const [mode, setMode] = useState(route?.params?.mode);
-  const [datePicker, setDatePicker] = useState(false);
-  const [birthDate, setBirthDate] = useState('');
-  const [show, setShow] = useState(false);
-  const [countryCode, setCountryCode] = useState('');
   const title = ['Mr.', 'Mrs.'];
-  const [selectedTitle, setSelectedTitle] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNo, setPhoneNo] = useState('');
   const [email, setEmail] = useState('');
+  const [show, setShow] = useState(false);
+  const [phoneNo, setPhoneNo] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [dateType, setDateType] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [passportNo, setPassportNo] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [countryCode, setCountryCode] = useState('');
+  const [countryType, setCountryType] = useState('');
+  const [datePicker, setDatePicker] = useState(false);
+  const [mode, setMode] = useState(route?.params?.mode);
+  const [selectedTitle, setSelectedTitle] = useState('');
   const [identityCardNo, setIdentityCardNo] = useState('');
-  const [identityCardIssueCountry, setIdentityCardIssueCountry] = useState('');
+  const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
+  const [passportExpiryDate, setPassportExpiryDate] = useState('');
+  const [passportIssueCountry, setPassportIssueCountry] = useState('');
   const [identityCardIssueDate, setIdentityCardIssueDate] = useState('');
   const [identityCardExpiryDate, setIdentityCardExpiryDate] = useState('');
-  const [passportNo, setPassportNo] = useState('');
-  const [passportIssueCountry, setPassportIssueCountry] = useState('');
-  const [passportExpiryDate, setPassportExpiryDate] = useState('');
-  const [nationality, setNationality] = useState('');
-  const [drivingLicenseNo, setDrivingLicenseNo] = useState('');
+  const [drivingLicenseIssueDate, setDrivingLicenseIssueDate] = useState('');
+  const [identityCardIssueCountry, setIdentityCardIssueCountry] = useState('');
+  const [drivingLicenseExpiryDate, setDrivingLicenseExpiryDate] = useState('');
   const [drivingLicenseIssueCountry, setDrivingLicenseIssueCountry] =
     useState('');
-  const [drivingLicenseIssueDate, setDrivingLicenseIssueDate] = useState('');
-  const [drivingLicenseExpiryDate, setDrivingLicenseExpiryDate] = useState('');
-  const [countryType, setCountryType] = useState('');
-  const [dateType, setDateType] = useState('');
 
   useEffect(() => {
     if (mode == 'Edit') {
       EditData();
     }
   }, []);
+
   const addNewPassengerList = async () => {
     if (!firstName.trim().match('[a-zA-Z ]{3,30}')) {
       alert('Please Enter First Name');
@@ -130,26 +132,26 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
               PassengerList: [
                 ...d.data().PassengerList,
                 {
-                  FirstName: firstName,
+                  Email: email,
+                  uniqID: uuid.v4(),
                   LastName: lastName,
+                  FirstName: firstName,
                   Title: selectedTitle,
                   BirthDate: birthDate,
-                  CountryCode: countryCode,
                   PhoneNumber: phoneNo,
-                  Email: email,
+                  CountryCode: countryCode,
+                  Nationality: nationality,
+                  PassportNumber: passportNo,
                   IdentityCardNumber: identityCardNo,
-                  IdentityCardIssueCountry: identityCardIssueCountry,
+                  PassportExpiryDate: passportExpiryDate,
+                  DrivingLicenseNumber: drivingLicenseNo,
+                  PassportIssueCountry: passportIssueCountry,
                   IdentityCardIssueDate: identityCardIssueDate,
                   IdentityCardExpiryDate: identityCardExpiryDate,
-                  PassportNumber: passportNo,
-                  PassportIssueCountry: passportIssueCountry,
-                  PassportExpiryDate: passportExpiryDate,
-                  Nationality: nationality,
-                  DrivingLicenseNumber: drivingLicenseNo,
-                  DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
                   DrivingLicenseIssueDate: drivingLicenseIssueDate,
+                  IdentityCardIssueCountry: identityCardIssueCountry,
                   DrivingLicenseExpiryDate: drivingLicenseExpiryDate,
-                  uniqID: uuid.v4(),
+                  DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
                 },
               ],
             });
@@ -160,26 +162,26 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
       });
   };
   const EditData = () => {
-    setFirstName(route.params.passengerData.FirstName);
+    setEmail(route.params.passengerData.Email);
     setLastName(route.params.passengerData.LastName);
+    setFirstName(route.params.passengerData.FirstName);
     setSelectedTitle(route.params.passengerData.Title);
     setBirthDate(route.params.passengerData.BirthDate);
-    setCountryCode(route.params.passengerData.CountryCode);
     setPhoneNo(route.params.passengerData.PhoneNumber);
-    setEmail(route.params.passengerData.Email);
+    setNationality(route.params.passengerData.Nationality);
+    setCountryCode(route.params.passengerData.CountryCode);
+    setPassportNo(route.params.passengerData.PassportNumber);
     setIdentityCardNo(route.params.passengerData.IdentityCardNumber);
+    setDrivingLicenseNo(route.params.passengerData.DrivingLicenseNumber);
+    setPassportExpiryDate(route.params.passengerData.PassportExpiryDate);
+    setPassportIssueCountry(route.params.passengerData.PassportIssueCountry);
+    setIdentityCardIssueDate(route.params.passengerData.IdentityCardIssueDate);
     setIdentityCardIssueCountry(
       route.params.passengerData.IdentityCardIssueCountry,
     );
-    setIdentityCardIssueDate(route.params.passengerData.IdentityCardIssueDate);
     setIdentityCardExpiryDate(
       route.params.passengerData.IdentityCardExpiryDate,
     );
-    setPassportNo(route.params.passengerData.PassportNumber);
-    setPassportIssueCountry(route.params.passengerData.PassportIssueCountry);
-    setPassportExpiryDate(route.params.passengerData.PassportExpiryDate);
-    setNationality(route.params.passengerData.Nationality);
-    setDrivingLicenseNo(route.params.passengerData.DrivingLicenseNumber);
     setDrivingLicenseIssueCountry(
       route.params.passengerData.DrivingLicenseIssueCountry,
     );
@@ -204,26 +206,26 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             PassengerList: item?.data()?.PassengerList?.map(i => {
               if (i.uniqID == route?.params?.passengerData?.uniqID) {
                 return {
-                  FirstName: firstName,
+                  Email: email,
+                  uniqID: i.uniqID,
                   LastName: lastName,
+                  FirstName: firstName,
                   Title: selectedTitle,
                   BirthDate: birthDate,
-                  CountryCode: countryCode,
                   PhoneNumber: phoneNo,
-                  Email: email,
+                  Nationality: nationality,
+                  CountryCode: countryCode,
+                  PassportNumber: passportNo,
                   IdentityCardNumber: identityCardNo,
-                  IdentityCardIssueCountry: identityCardIssueCountry,
+                  DrivingLicenseNumber: drivingLicenseNo,
+                  PassportExpiryDate: passportExpiryDate,
+                  PassportIssueCountry: passportIssueCountry,
                   IdentityCardIssueDate: identityCardIssueDate,
                   IdentityCardExpiryDate: identityCardExpiryDate,
-                  PassportNumber: passportNo,
-                  PassportIssueCountry: passportIssueCountry,
-                  PassportExpiryDate: passportExpiryDate,
-                  Nationality: nationality,
-                  DrivingLicenseNumber: drivingLicenseNo,
-                  DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
                   DrivingLicenseIssueDate: drivingLicenseIssueDate,
+                  IdentityCardIssueCountry: identityCardIssueCountry,
                   DrivingLicenseExpiryDate: drivingLicenseExpiryDate,
-                  uniqID: i.uniqID,
+                  DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
                 };
               }
               return i;
@@ -235,50 +237,53 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        Images2={null}
+        onPress1={true}
+        onPress2={false}
+        navigation2={() => {}}
+        Images1={Images.cancel}
+        Images1Color={color.white}
+        cancelButtonStyle1={styles.cancelStyle}
         headerName={
           mode == 'Edit' ? strings.editPassenger : strings.newPassenger
         }
         navigation1={() => {
           goBack();
         }}
-        navigation2={() => {}}
-        onPress1={true}
-        onPress2={false}
-        Images1={Images.cancel}
-        Images2={null}
-        Images1Color={color.white}
-        cancelButtonStyle1={styles.cancelStyle}
       />
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={{paddingHorizontal: wp(4), marginBottom: hp(4)}}>
           <View style={styles.subContainerView}>
             <TextInputPassenger
+              value={firstName}
               placeholder={strings.firstName}
               TextInputLabel={strings.firstName}
-              value={firstName}
               onChangeText={firstName => setFirstName(firstName)}
             />
             <TextInputPassenger
+              value={lastName}
               placeholder={strings.lastName}
               TextInputLabel={strings.lastName}
-              value={lastName}
               onChangeText={lastName => setLastName(lastName)}
             />
           </View>
           <View style={styles.subContainerView}>
             <CommonDropDown
-              TextInputLabel={strings.title}
               data={title}
+              defaultValueˀ={selectedTitle}
+              TextInputLabel={strings.title}
               onSelect={title => {
                 setSelectedTitle(title);
               }}
               buttonText={{color: selectedTitle ? color.black : color.darkGray}}
-              defaultValue={selectedTitle}
             />
             <TextInputPassenger
+              disabled={true}
+              editable={false}
+              value={birthDate}
+              calenderIcon={Images.calender}
               placeholder={strings.DateBirth}
               TextInputLabel={strings.DateBirth}
-              value={birthDate}
               onPress={() => {
                 setDateType('birthDate');
                 setDatePicker(true);
@@ -287,10 +292,7 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 setDateType('birthDate');
                 setDatePicker(true);
               }}
-              editable={false}
               onChangeText={birthDate => setBirthDate(birthDate)}
-              calenderIcon={Images.calender}
-              disabled={true}
             />
           </View>
 
@@ -300,9 +302,12 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
           </View>
           <View style={{flexDirection: 'row', flex: 1}}>
             <TextInputPassenger
+              disabled={true}
+              editable={false}
+              value={countryCode}
+              textInputIcon={Images.downArrow}
               placeholder={strings.countryCode}
               TextInputLabel={strings.countryCode}
-              value={countryCode}
               onPressCountryPicker={() => {
                 setCountryType('countryCode');
                 setShow(true);
@@ -311,24 +316,21 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 setCountryType('countryCode');
                 setShow(true);
               }}
-              editable={false}
-              textInputIcon={Images.downArrow}
-              disabled={true}
             />
             <TextInputPassenger
-              placeholder={strings.Phone}
-              TextInputLabel={strings.Phone}
-              passengerTextInputStyle={1.4}
-              textInputLabelStyle={styles.passengerTextInputStylePhoneNo}
               value={phoneNo}
+              placeholder={strings.Phone}
+              passengerTextInputStyle={1.4}
+              TextInputLabel={strings.Phone}
               onChangeText={phoneNo => setPhoneNo(phoneNo)}
+              textInputLabelStyle={styles.passengerTextInputStylePhoneNo}
             />
           </View>
           <TextInputPassenger
+            value={email}
+            textInputIcon={Images.Email}
             placeholder={strings.EmailText}
             TextInputLabel={strings.EmailText}
-            textInputIcon={Images.Email}
-            value={email}
             onChangeText={email => setEmail(email)}
           />
           <View style={styles.subContainerView}>
@@ -336,32 +338,35 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             <View style={styles.line} />
           </View>
           <TextInputPassenger
+            value={identityCardNo}
             placeholder={strings.identityCardNo}
             TextInputLabel={strings.identityCardNo}
-            value={identityCardNo}
             onChangeText={identityCardNo => setIdentityCardNo(identityCardNo)}
           />
           <TextInputPassenger
+            disabled={true}
+            editable={false}
+            value={identityCardIssueCountry}
+            textInputIcon={Images.downArrow}
             placeholder={strings.issueCountry}
             TextInputLabel={strings.issueCountry}
             onPressCountryPicker={() => {
               setCountryType('identityCardIssueCountry');
               setShow(true);
             }}
-            editable={false}
-            textInputIcon={Images.downArrow}
-            disabled={true}
             onPress={() => {
               setCountryType('identityCardIssueCountry');
               setShow(true);
             }}
-            value={identityCardIssueCountry}
             onChangeText={identityCardIssueCountry =>
               setIdentityCardIssueCountry(identityCardIssueCountry)
             }
           />
           <View style={styles.subContainerView}>
             <TextInputPassenger
+              editable={false}
+              value={identityCardIssueDate}
+              calenderIcon={Images.calender}
               placeholder={strings.issueDate}
               TextInputLabel={strings.issueDate}
               onPress={() => {
@@ -372,14 +377,15 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 setDateType('identityCardIssueDate');
                 setDatePicker(true);
               }}
-              editable={false}
-              value={identityCardIssueDate}
               onChangeText={identityCardIssueDate =>
                 setIdentityCardIssueDate(identityCardIssueDate)
               }
-              calenderIcon={Images.calender}
             />
             <TextInputPassenger
+              disabled={true}
+              editable={false}
+              calenderIcon={Images.calender}
+              value={identityCardExpiryDate}
               placeholder={strings.expiryDate}
               TextInputLabel={strings.expiryDate}
               onPress={() => {
@@ -390,13 +396,9 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 setDateType('identityCardExpiryDate');
                 setDatePicker(true);
               }}
-              editable={false}
-              value={identityCardExpiryDate}
               onChangeText={identityCardExpiryDate =>
                 setIdentityCardExpiryDate(identityCardExpiryDate)
               }
-              calenderIcon={Images.calender}
-              disabled={true}
             />
           </View>
           <View style={styles.subContainerView}>
@@ -404,32 +406,36 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             <View style={styles.line} />
           </View>
           <TextInputPassenger
+            value={passportNo}
             placeholder={strings.passport}
             TextInputLabel={strings.passport}
-            value={passportNo}
             onChangeText={passportNo => setPassportNo(passportNo)}
           />
           <TextInputPassenger
+            disabled={true}
+            editable={false}
+            value={passportIssueCountry}
+            textInputIcon={Images.downArrow}
             placeholder={strings.issueCountry}
             TextInputLabel={strings.issueCountry}
             onPressCountryPicker={() => {
               setCountryType('passportIssueCountry');
               setShow(true);
             }}
-            editable={false}
-            textInputIcon={Images.downArrow}
-            disabled={true}
             onPress={() => {
               setCountryType('passportIssueCountry');
               setShow(true);
             }}
-            value={passportIssueCountry}
             onChangeText={passportIssueCountry =>
               setPassportIssueCountry(passportIssueCountry)
             }
           />
           <View style={styles.subContainerView}>
             <TextInputPassenger
+              disabled={true}
+              editable={false}
+              value={passportExpiryDate}
+              calenderIcon={Images.calender}
               placeholder={strings.expiryDate}
               TextInputLabel={strings.expiryDate}
               onPress={() => {
@@ -440,31 +446,27 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 setDateType('passportExpiryDate');
                 setDatePicker(true);
               }}
-              editable={false}
-              value={passportExpiryDate}
               onChangeText={passportExpiryDate =>
                 setPassportExpiryDate(passportExpiryDate)
               }
-              calenderIcon={Images.calender}
-              disabled={true}
             />
             <TextInputPassenger
+              disabled={true}
+              editable={false}
+              value={nationality}
+              calenderIcon={Images.downArrow}
+              textInputIcon={Images.downArrow}
               placeholder={strings.nationality}
               TextInputLabel={strings.nationality}
+              onChangeText={nationality => setNationality(nationality)}
               onPressCountryPicker={() => {
                 setCountryType('nationality');
                 setShow(true);
               }}
-              editable={false}
-              textInputIcon={Images.downArrow}
-              disabled={true}
               onPress={() => {
                 setCountryType('nationality');
                 setShow(true);
               }}
-              value={nationality}
-              onChangeText={nationality => setNationality(nationality)}
-              calenderIcon={Images.downArrow}
             />
           </View>
           <View style={styles.subContainerView}>
@@ -472,34 +474,38 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             <View style={styles.line} />
           </View>
           <TextInputPassenger
+            value={drivingLicenseNo}
             placeholder={strings.driLicenseNo}
             TextInputLabel={strings.driLicenseNo}
-            value={drivingLicenseNo}
             onChangeText={drivingLicenseNo =>
               setDrivingLicenseNo(drivingLicenseNo)
             }
           />
           <TextInputPassenger
+            disabled={true}
+            editable={false}
+            textInputIcon={Images.downArrow}
             placeholder={strings.issueCountry}
+            value={drivingLicenseIssueCountry}
             TextInputLabel={strings.issueCountry}
             onPressCountryPicker={() => {
               setCountryType('drivingLicenseIssueCountry');
               setShow(true);
             }}
-            editable={false}
-            textInputIcon={Images.downArrow}
-            disabled={true}
             onPress={() => {
               setCountryType('drivingLicenseIssueCountry');
               setShow(true);
             }}
-            value={drivingLicenseIssueCountry}
             onChangeText={drivingLicenseIssueCountry =>
               setDrivingLicenseIssueCountry(drivingLicenseIssueCountry)
             }
           />
           <View style={styles.subContainerView}>
             <TextInputPassenger
+              disabled={true}
+              editable={false}
+              calenderIcon={Images.calender}
+              value={drivingLicenseIssueDate}
               placeholder={strings.issueDate}
               TextInputLabel={strings.issueDate}
               onPress={() => {
@@ -510,15 +516,15 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 setDateType('drivingLicenseIssueDate');
                 setDatePicker(true);
               }}
-              editable={false}
-              value={drivingLicenseIssueDate}
               onChangeText={drivingLicenseIssueDate =>
                 setDrivingLicenseIssueDate(drivingLicenseIssueDate)
               }
-              calenderIcon={Images.calender}
-              disabled={true}
             />
             <TextInputPassenger
+              disabled={true}
+              editable={false}
+              calenderIcon={Images.calender}
+              value={drivingLicenseExpiryDate}
               placeholder={strings.expiryDate}
               TextInputLabel={strings.expiryDate}
               onPress={() => {
@@ -529,21 +535,17 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 setDateType('drivingLicenseExpiryDate');
                 setDatePicker(true);
               }}
-              editable={false}
-              value={drivingLicenseExpiryDate}
               onChangeText={drivingLicenseExpiryDate =>
                 setDrivingLicenseExpiryDate(drivingLicenseExpiryDate)
               }
-              calenderIcon={Images.calender}
-              disabled={true}
             />
           </View>
         </View>
       </ScrollView>
       <View style={styles.buttonViewStyle}>
         <OnBoardingSingleButton
-          buttonText={mode == 'Edit' ? strings.edit : strings.save}
           buttonStyle={styles.buttonStyle}
+          buttonText={mode == 'Edit' ? strings.edit : strings.save}
           onPress={() => {
             addNewPassengerList();
           }}
@@ -595,19 +597,19 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   cancelStyle: {
-    height: hp(2),
     width: hp(2),
+    height: hp(2),
+    marginTop: hp(0.5),
     resizeMode: 'contain',
     tintColor: color.white,
-    marginTop: hp(0.5),
   },
   line: {
     flex: 1,
     borderWidth: 1,
-    borderColor: color.Grey,
-    marginHorizontal: wp(2),
     marginTop: hp(2),
     alignSelf: 'center',
+    borderColor: color.Grey,
+    marginHorizontal: wp(2),
   },
 
   buttonStyle: {
@@ -615,14 +617,14 @@ const styles = StyleSheet.create({
   },
   buttonViewStyle: {
     borderTopWidth: 1,
-    borderColor: color.Grey,
     paddingBottom: hp(3),
+    borderColor: color.Grey,
   },
   lineText: {
     marginTop: hp(2),
+    fontWeight: '500',
     color: color.darkGray,
     fontSize: fontSize(16),
-    fontWeight: '500',
   },
   subContainerView: {flexDirection: 'row'},
 });

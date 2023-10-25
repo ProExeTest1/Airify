@@ -1,14 +1,14 @@
 import {
-  DEPATURE_DATE,
-  NORMAL_DATE,
   RETURN_DATE,
+  NORMAL_DATE,
+  DEPATURE_DATE,
   RETURN_NORMAL_DATE,
 } from '../type';
 
 const INITIAL_STATE = {
-  depatureDate: '',
-  normalDate: {},
   returnDate: '',
+  normalDate: {},
+  depatureDate: '',
   returnNormalDate: {},
 };
 export default (state = INITIAL_STATE, action) => {

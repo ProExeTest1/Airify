@@ -27,7 +27,6 @@ import moment from 'moment';
 
 const SearchFlights = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  console.log(tripType);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -52,6 +51,7 @@ const SearchFlights = ({navigation, route}) => {
 
   const setSelectDate = ({date}) => {
     let dateChange = date.split('/');
+<<<<<<< HEAD
     console.log('date', date);
     // dispatch(
     //   depatureDateAction(
@@ -60,6 +60,22 @@ const SearchFlights = ({navigation, route}) => {
     //     ).format('dddd,MMM D YYYY')}`,
     //   ),
     // );
+=======
+    let newDate = new Date();
+    dispatch(
+      depatureDateAction(
+        `${moment(
+          new Date(
+            newDate.setFullYear(
+              dateChange[2],
+              dateChange[1] - 1,
+              dateChange[0],
+            ),
+          ),
+        ).format('dddd,MMM D YYYY')}`,
+      ),
+    );
+>>>>>>> origin/KenilBranch
   };
   const onShare = async () => {
     try {
@@ -220,7 +236,6 @@ const SearchFlights = ({navigation, route}) => {
           departureTime
         );
       });
-      console.log(filterData);
       filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);

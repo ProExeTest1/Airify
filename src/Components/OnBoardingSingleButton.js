@@ -1,14 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+
 import {hp, wp} from '../helper/Constant';
 
 const OnBoardingSingleButton = ({
   onPress,
-  buttonStyle,
   buttonText,
+  buttonStyle,
+  buttonTextStyle,
   welcomeScreenFiledImage,
   welcomeScreenFiledImageStyle,
-  buttonTextStyle,
 }) => {
   return (
     <View style={styles.container}>
@@ -34,27 +35,27 @@ const OnBoardingSingleButton = ({
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonStyle: {
-    height: hp(5),
     width: wp(80),
+    height: hp(5),
     marginRight: wp(2),
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius: wp(2),
-    backgroundColor: 'blue',
+    alignItems: 'center',
     flexDirection: 'row',
+    backgroundColor: 'blue',
+    justifyContent: 'center',
   },
   welcomeScreenFiledImageStyle: {
-    height: wp(6),
     width: wp(6),
+    height: wp(6),
   },
   buttonTextStyle: {
-    textAlign: 'center',
     color: 'white',
     fontWeight: '500',
+    textAlign: 'center',
   },
 });
 

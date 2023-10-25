@@ -1,36 +1,30 @@
+import React, {useEffect, useState} from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
-  SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {color} from '../../helper/ColorConstant';
-import {CommonHeader} from '../../components';
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {RAZORPAY_KEY_ID} from '@env';
-import RazorpayCheckout from 'react-native-razorpay';
+import moment from 'moment';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import Modal from 'react-native-modal';
-import {useIsFocused} from '@react-navigation/native';
-import moment from 'moment';
+
+import {RAZORPAY_KEY_ID} from '@env';
+import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const TopUp = ({navigation}) => {
-  const [textInput1, setTextInput1] = useState('');
   const [userData, setUserData] = useState({});
+  const [textInput1, setTextInput1] = useState('');
   const [myWallet, setMyWallet] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
 
-  // const Focused = useIsFocused();
-  // console.log(transactionHistory);
   const UserData = async () => {
     const journeyData = await firestore()
       .collection('Users')
@@ -157,28 +151,28 @@ const TopUp = ({navigation}) => {
       style={{flex: 1}}>
       <View style={styles.TopUpBody}>
         <CommonHeader
+          Images2={null}
+          onPress1={true}
+          onPress2={false}
+          Images2Color={null}
+          Images1Color={'#fff'}
+          Images1={Images.backIcon}
           headerName={strings.walletTopUp}
+          navigation2={() => {}}
           navigation1={() => {
             navigation.goBack();
           }}
-          Images1Color={'#fff'}
-          Images2Color={null}
-          navigation2={() => {}}
-          onPress1={true}
-          onPress2={false}
-          Images1={Images.backIcon}
-          Images2={null}
         />
         <View style={styles.borderBottom}></View>
         <View style={styles.inputBody}>
           <View style={styles.TextInputBody}>
             <TextInput
-              value={textInput1}
+              maxLength={4}
               placeholder="00"
+              value={textInput1}
+              inputMode="numeric"
               placeholderTextColor={'#fff'}
               style={styles.TextInputStyle}
-              maxLength={4}
-              inputMode="numeric"
               onChangeText={e => setTextInput1(e)}
             />
             <Text style={styles.dollorSign}>$</Text>
@@ -216,38 +210,38 @@ const styles = StyleSheet.create({
     borderColor: '#e2e2e250',
   },
   buttonBody: {
-    backgroundColor: '#fff',
     paddingTop: hp(3),
     paddingBottom: hp(5),
+    backgroundColor: '#fff',
     paddingHorizontal: wp(6),
   },
   ContinueButton: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(4),
-    alignItems: 'center',
     borderRadius: 10,
+    alignItems: 'center',
+    paddingVertical: hp(2),
+    backgroundColor: color.commonBlue,
+    paddingHorizontal: wp(4),
   },
   ContinueText: {
-    fontSize: fontSize(16),
-    fontWeight: '500',
     color: '#fff',
+    fontWeight: '500',
+    fontSize: fontSize(16),
   },
   inputBody: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   dollorSign: {
     color: '#fff',
-    fontSize: fontSize(18),
     fontWeight: '500',
     marginTop: hp(0.5),
+    fontSize: fontSize(18),
   },
   TextInputStyle: {
-    fontSize: fontSize(40),
-    fontWeight: 'bold',
     color: '#fff',
+    fontWeight: 'bold',
+    fontSize: fontSize(40),
   },
   TextInputBody: {
     flexDirection: 'row',

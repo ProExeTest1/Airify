@@ -263,6 +263,17 @@ export const strings = {
   shareCode: 'Share Referral Code',
 
   airifyPoint: 'Airify Point',
+  totalPoint: 'Total Airify Points',
+  line: '100 points = $1.00. You can use these points as payment',
+  pointHistory: 'Point History',
+
+  savedFlight: 'Saved Flight',
+  active: 'Active',
+  expiry: 'Expired',
+
+  removeAddress: 'Removed from Saved List?',
+  yesRemove: 'Yes, Remove',
+  removeSuccess: 'Successfully removed!',
 
   // Transaction Details
   ticket_note:

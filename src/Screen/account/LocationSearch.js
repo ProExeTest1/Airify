@@ -1,15 +1,16 @@
-import React, {Component, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Platform, Image} from 'react-native';
-import {color} from '../../helper/ColorConstant';
-import CommonHeader from '../../components/Common/CommonHeader';
+import React, {useEffect, useState} from 'react';
+import {useRoute} from '@react-navigation/native';
+import MapView, {Marker} from 'react-native-maps';
+import {View, Text, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import MapView, {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {useDispatch, useSelector} from 'react-redux';
 import {addressData} from '../../redux/action/AddressAction';
+import CommonHeader from '../../components/Common/CommonHeader';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import {useRoute} from '@react-navigation/native';
 
 const LocationSearch = ({navigation: {goBack}, navigation}) => {
   const [lat, setLat] = useState(lat ? lat : 37.78825);
@@ -48,28 +49,28 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
   return (
     <View style={styles.container}>
       <CommonHeader
+        onPress1={true}
+        onPress2={true}
+        Images2={Images.loupe}
+        Images1={Images.backIcon}
+        Images1Color={color.white}
         headerName={strings.addNewAddress}
         navigation1={() => {
           goBack();
         }}
-        onPress1={true}
-        onPress2={true}
-        Images1={Images.backIcon}
-        Images2={Images.loupe}
         cancelButtonStyle={styles.plusIconStyle}
-        Images1Color={color.white}
       />
       <MapView
         style={{
-          justifyContent: 'flex-end',
-          alignItems: 'center',
           flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-end',
         }}
         region={{
           latitude: 37.78825,
-          longitude: -122.4324,
           latitudeDelta: 0.05,
           longitudeDelta: 0.05,
+          longitude: -122.4324,
         }}>
         <Marker
           coordinate={{
@@ -119,20 +120,20 @@ const styles = StyleSheet.create({
     tintColor: color.white,
   },
   addressDisplayView: {
-    backgroundColor: color.white,
-    borderTopRightRadius: wp(4),
-    borderTopLeftRadius: wp(4),
-    position: 'absolute',
-    width: wp(100),
-    paddingBottom: hp(4),
     bottom: 0,
-    paddingHorizontal: wp(8),
+    width: wp(100),
+    position: 'absolute',
+    paddingBottom: hp(4),
     paddingVertical: hp(4),
+    paddingHorizontal: wp(8),
+    borderTopLeftRadius: wp(4),
+    borderTopRightRadius: wp(4),
+    backgroundColor: color.white,
   },
   CityStyle: {
     fontWeight: 'bold',
-    fontSize: fontSize(18),
     marginBottom: hp(2),
+    fontSize: fontSize(18),
   },
 });
 

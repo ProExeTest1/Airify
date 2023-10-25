@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Image,
   Platform,
@@ -6,15 +7,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {PickerHeaderBar, SwiperFlatlistComponent} from '../../components';
-import {strings} from '../../helper/Strings';
-import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
-import {Images} from '../../helper/IconConstant';
-import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
+
+import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {PickerHeaderBar, SwiperFlatlistComponent} from '../../components';
+import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
 
 const SpecialOfferScreen = ({route, navigation}) => {
   const headerData = route?.params?.header;
@@ -62,9 +63,9 @@ const SpecialOfferScreen = ({route, navigation}) => {
           <View>
             <View style={styles.commonViewStyle}>
               <Image
+                resizeMode="contain"
                 source={Images.payments}
                 style={styles.clockimageStyle}
-                resizeMode="contain"
               />
               <Text style={styles.textStyle1}>Min transaction</Text>
             </View>
@@ -100,10 +101,10 @@ const styles = StyleSheet.create({
     marginVertical: hp(2),
   },
   titleStyle: {
-    fontSize: fontSize(20),
     fontWeight: '700',
     marginTop: hp(0.5),
     color: color.black,
+    fontSize: fontSize(20),
   },
   dottextStyle: {
     fontSize: fontSize(16),
@@ -111,56 +112,58 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(2),
   },
   textStyle: {
-    fontSize: fontSize(16),
     color: '#565656',
+    fontSize: fontSize(16),
   },
   termsTextViewStyle: {
+    width: '95%',
     flexDirection: 'row',
     marginVertical: hp(0.8),
   },
   claimDiscountButtonStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: wp(90),
     height: hp(7),
     borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'blue',
     marginVertical: Platform.OS === 'ios' ? hp(4) : null,
   },
   claimDiscountFontStyle: {
-    fontSize: fontSize(18),
-    color: color.white,
     fontWeight: 'bold',
+    color: color.white,
+    fontSize: fontSize(18),
   },
   promocodeViewStyle: {
+    borderRadius: 5,
+    height: hp(7.5),
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 5,
-    backgroundColor: '#F3F3F3',
-    height: hp(7.5),
     justifyContent: 'center',
+    backgroundColor: '#F3F3F3',
   },
   promocodeTextStyle: {
+    color: color.black,
     fontSize: fontSize(18),
     marginHorizontal: wp(3),
-    color: color.black,
   },
   copyImageStyle: {
-    height: hp(3),
     width: hp(3),
+    height: hp(3),
   },
   validateViewStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderWidth: 0.5,
-    borderColor: color.grey,
     padding: hp(2),
     borderRadius: 5,
+    borderWidth: 0.5,
+    alignItems: 'center',
+    flexDirection: 'row',
     marginVertical: hp(1.2),
+    borderColor: color.grey,
+    justifyContent: 'space-around',
   },
   clockimageStyle: {
-    height: hp(2),
     width: hp(2),
+    height: hp(2),
     tintColor: color.commonBlue,
   },
   commonViewStyle: {
@@ -168,8 +171,8 @@ const styles = StyleSheet.create({
     marginVertical: hp(0.8),
   },
   lineStyle: {
-    borderWidth: 0.5,
     height: hp(5),
+    borderWidth: 0.5,
   },
   validateTextStyle: {
     fontWeight: '700',
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
     color: color.black,
   },
   textStyle1: {
-    marginHorizontal: wp(2.5),
     color: color.black,
+    marginHorizontal: wp(2.5),
   },
 });

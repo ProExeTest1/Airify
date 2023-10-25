@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+
 import {hp, wp} from '../helper/Constant';
 
 const ButtonData = ({button, textStyle, buttonStyle, onPress}) => {
@@ -14,12 +15,12 @@ const ButtonData = ({button, textStyle, buttonStyle, onPress}) => {
 
 const styles = StyleSheet.create({
   buttonStyle: {
-    height: hp(5),
     width: hp(18),
+    height: hp(5),
     borderWidth: wp(0.2),
     borderRadius: wp(15),
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'white',
   },
   textStyle: {

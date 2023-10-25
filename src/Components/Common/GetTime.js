@@ -1,8 +1,9 @@
-import {FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {TimeData} from '../../assets/DummyData/timeData';
-import {fontSize, hp, wp} from '../../helper/Constant';
+import {FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
+
 import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {TimeData} from '../../assets/DummyData/timeData';
 
 const GetTime = ({departureTime, setDepartureTime}) => {
   return (
@@ -32,8 +33,8 @@ const GetTime = ({departureTime, setDepartureTime}) => {
           <Text
             style={{
               color: '#000',
-              fontSize: fontSize(16),
               fontWeight: '500',
+              fontSize: fontSize(16),
             }}>
             {item.time}
           </Text>
@@ -48,12 +49,12 @@ export default GetTime;
 const styles = StyleSheet.create({
   departureTimeBody: {
     flex: 1,
-    backgroundColor: '#fafafa',
     borderWidth: 1,
     borderRadius: 10,
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
-    marginBottom: hp(1.5),
     alignItems: 'center',
+    marginBottom: hp(1.5),
+    paddingVertical: hp(2),
+    paddingHorizontal: wp(4),
+    backgroundColor: '#fafafa',
   },
 });

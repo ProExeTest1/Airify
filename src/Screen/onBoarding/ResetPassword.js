@@ -1,18 +1,17 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, T} from 'react-native';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import {Images} from '../../helper/IconConstant';
-import {strings} from '../../helper/Strings';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-
-import {hp, wp} from '../../helper/Constant';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import auth from '@react-native-firebase/auth';
-
+import {View, Text, StyleSheet} from 'react-native';
+import {strings} from '../../helper/Strings';
+import {hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
+import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
+import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import {AlertConstant} from '../../helper/AlertConstant';
 
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');
+
   const validation = () => {
     if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
       AlertConstant('Please Enter Email which are use in login');
@@ -43,22 +42,22 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
     <View style={styles.container}>
       <View style={{flex: 0.27, backgroundColor: 'blue'}}>
         <OnBoardingModuleHeader
-          backImage={Images.backIcon}
           onPress={() => {
             goBack();
           }}
-          MainText={strings.HeaderMain}
           SubText={strings.HeaderSub}
+          backImage={Images.backIcon}
+          MainText={strings.HeaderMain}
         />
       </View>
       <View style={{flex: 0.73, marginTop: hp(3)}}>
         <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
         <OnBoardingTextInput
-          textInputIcon={Images.Email}
-          textInputPlaceholder={strings.EmailText}
           value={email}
-          onChangeText={email => setEmail(email)}
+          textInputIcon={Images.Email}
           keyboardType={'email-address'}
+          onChangeText={email => setEmail(email)}
+          textInputPlaceholder={strings.EmailText}
         />
         <View style={styles.buttonViewStyle}>
           <View style={[styles.lineStyle]} />
@@ -81,24 +80,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   textInputTitleStyle: {
-    marginLeft: wp(6),
     color: 'black',
+    marginLeft: wp(6),
   },
   signUpStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingHorizontal: wp(22),
     alignSelf: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: wp(22),
+    justifyContent: 'space-around',
   },
   buttonStyle: {
-    marginTop: hp(3),
     height: hp(6),
+    marginTop: hp(3),
   },
   lineStyle: {
     height: 1,
-    backgroundColor: '#ECEFEF',
     marginHorizontal: wp(5),
+    backgroundColor: '#ECEFEF',
   },
   buttonViewStyle: {flex: 1, justifyContent: 'flex-end', marginBottom: hp(4)},
 });
