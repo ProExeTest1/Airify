@@ -5,18 +5,20 @@ import TopUp from '../screen/wallet/TopUp';
 import TabNavigation from './TabNavigation';
 import Security from '../screen/account/Security';
 import Language from '../screen/account/Language';
-import AddAddress from '../screen/account/AddAddress';
-import HelpCenter from '../screen/account/HelpCenter';
-import AirifyPoint from '../screen/account/AirifyPoint';
 import AboutAirify from '../screen/account/AboutAirify';
+import HelpCenter from '../screen/account/HelpCenter';
+import PassengerList from '../screen/account/PassengerList';
+import NewPassenger from '../screen/account/NewPassenger';
+import TransactionHistory from '../screen/wallet/TransactionHistory';
+import SelectSeat from '../screen/TicketBooking/SelectSeat';
+import PaymentConfirmation from '../screen/TicketBooking/PaymentConfirmation';
+import SavedAddress from '../screen/account/SavedAddress';
+import AddAddress from '../screen/account/AddAddress';
+import AirifyPoint from '../screen/account/AirifyPoint';
 import PersonalInfo from '../screen/account/PersonalInfo';
 import Notification from '../screen/account/Notification';
-import NewPassenger from '../screen/account/NewPassenger';
 import pointHistory from '../screen/account/PointHistory';
-import SavedAddress from '../screen/account/SavedAddress';
 import AirifyReward from '../screen/account/AirifyReward';
-import SelectSeat from '../screen/TicketBooking/SelectSeat';
-import PassengerList from '../screen/account/PassengerList';
 import {NavigationContainer} from '@react-navigation/native';
 import SignInScreen from '../screen/onBoarding/SignInScreen';
 import SignUpScreen from '../screen/onBoarding/SignUpScreen';
@@ -28,7 +30,6 @@ import DiscountVoucher from '../screen/account/DiscountVoucher';
 import SearchFlights from '../screen/searchFlights/SearchFlights';
 import OnBoardingFirst from '../screen/onBoarding/OnBoardingFirst';
 import DatePickerScreen from '../screen/dashBoard/DatePickerScreen';
-import TransactionHistory from '../screen/wallet/TransactionHistory';
 import PlacePickerScreen from '../screen/dashBoard/PlacePickerScreen';
 import SavedFlightFilter from '../screen/dashBoard/SavedFlightFilter';
 import NotificationScreen from '../screen/dashBoard/NotificationScreen';
@@ -36,8 +37,15 @@ import SpecialOfferScreen from '../screen/dashBoard/SpecialOfferScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SearchFlightsFilter from '../screen/searchFlights/SearchFlightsFilter';
 import FlightDetailsScreen from '../screen/searchFlights/FlightDetailsScreen';
-import FillPassngerDetails from '../screen/TicketBooking/FillPassngerDetails';
 import FlightPackageDetailsScreen from '../screen/searchFlights/FlightPackageDetailsScreen';
+import FillPassengerDetails from '../screen/TicketBooking/FillPassengerDetails';
+import ReturnSearchFlights from '../screen/searchFlights/ReturnFlights/ReturnSearchFlights';
+import UseDiscountVoucher from '../screen/TicketBooking/UseDiscountVoucher';
+import PaymentMethod from '../screen/TicketBooking/PaymentMethod';
+import ConfirmPin from '../screen/TicketBooking/ConfirmPin';
+import TransactionDetails from '../screen/generateTicket/TransactionDetails';
+import Congratulation from '../screen/TicketBooking/Congratulation';
+import ETicket from '../screen/generateTicket/ETicket';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -45,7 +53,7 @@ const StackNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{headerShown: false}}
+        screenOptions={{headerShown: false, gestureEnabled: false}}
         initialRouteName={user ? 'TabNavigation' : 'WelcomeScreen'}>
         <Stack.Screen name="SelectSeat" component={SelectSeat} />
         <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
@@ -84,11 +92,19 @@ const StackNavigation = () => {
         <Stack.Screen name="TopUp" component={TopUp} />
         <Stack.Screen
           name="FillPassengerDetails"
-          component={FillPassngerDetails}
+          component={FillPassengerDetails}
+        />
+        <Stack.Screen
+          name="ReturnSearchFlight"
+          component={ReturnSearchFlights}
         />
         <Stack.Screen
           name="TransactionHistory"
           component={TransactionHistory}
+        />
+        <Stack.Screen
+          name="PaymentConfirmation"
+          component={PaymentConfirmation}
         />
         <Stack.Screen name="SavedAddress" component={SavedAddress} />
         <Stack.Screen name="LocationSearch" component={LocationSearch} />
@@ -98,6 +114,18 @@ const StackNavigation = () => {
         <Stack.Screen name="AirifyPoint" component={AirifyPoint} />
         <Stack.Screen name="pointHistory" component={pointHistory} />
         <Stack.Screen name="SavedFlightFilter" component={SavedFlightFilter} />
+        <Stack.Screen
+          name="UseDiscountVoucher"
+          component={UseDiscountVoucher}
+        />
+        <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+        <Stack.Screen name="ConfirmPin" component={ConfirmPin} />
+        <Stack.Screen
+          name="TransactionDetails"
+          component={TransactionDetails}
+        />
+        <Stack.Screen name="Congratulation" component={Congratulation} />
+        <Stack.Screen name="ETicket" component={ETicket} />
       </Stack.Navigator>
     </NavigationContainer>
   );

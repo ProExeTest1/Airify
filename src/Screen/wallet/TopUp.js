@@ -22,7 +22,7 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 const TopUp = ({navigation}) => {
   const [userData, setUserData] = useState({});
   const [textInput1, setTextInput1] = useState('');
-  const [myWallet, setMyWallet] = useState('00.00');
+  const [myWallet, setMyWallet] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
 
   const UserData = async () => {
@@ -121,9 +121,7 @@ const TopUp = ({navigation}) => {
         .collection('UserWallet')
         .doc(auth().currentUser.uid)
         .update({
-          wallet: `${
-            Number(textInput1.split('.')[0]) + Number(myWallet.split('.')[0])
-          }.00`,
+          wallet: Number(textInput1.split('.')[0]) + Number(myWallet),
         })
         .then(async () => {
           await firestore()
@@ -140,7 +138,7 @@ const TopUp = ({navigation}) => {
                 ...transactionHistory,
               ],
             });
-          navigation.navigate('WalletScreen');
+          navigation.goBack();
         });
     } else {
       Alert.alert('plsss enter valid ');
@@ -162,7 +160,7 @@ const TopUp = ({navigation}) => {
           headerName={strings.walletTopUp}
           navigation2={() => {}}
           navigation1={() => {
-            navigation.navigate('WalletScreen');
+            navigation.goBack();
           }}
         />
         <View style={styles.borderBottom}></View>

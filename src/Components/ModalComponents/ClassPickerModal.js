@@ -48,8 +48,9 @@ const ClassPickerModal = ({
                       },
                     ]}
                     onPress={() => {
-                      setIndex(item.id);
-                      setClass(item.header);
+                      setIndex(item?.id);
+                      console.log('Item', item);
+                      setClass(item?.header);
                     }}>
                     <View style={styles.textViewStyle}>
                       <Text style={styles.titleTextStyle}>{item.header}</Text>
@@ -78,7 +79,12 @@ const ClassPickerModal = ({
                 onCancel();
                 setIndex(1);
               }}
-              onPress2={toggleModal}
+              onPress2={() => {
+                toggleModal();
+                if (index === 1) {
+                  setClass('Economy');
+                }
+              }}
             />
           </View>
         </View>

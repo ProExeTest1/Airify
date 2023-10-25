@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-
-import {color} from '../../helper/ColorConstant';
-import {fontSize, hp} from '../../helper/Constant';
+import React, {useState} from 'react';
 import {
   FlightDetails,
   PickerHeaderBar,
   RefundandRescheduleInfo,
 } from '../../components';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
 import {
   RefundableTermsAndConditions,
   RescheduleTermsAndConditons,
@@ -64,8 +63,10 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
             style={[
               styles.optionTextStyle,
               {color: press === 'Reschedule' ? color.white : color.black},
-            ]}>
-            Reschedule I...
+            ]}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
+            Reschedule info
           </Text>
         </TouchableOpacity>
       </View>
@@ -90,23 +91,24 @@ export default FlightPackageDetailsScreen;
 
 const styles = StyleSheet.create({
   optionViewStyle: {
-    width: '92%',
-    height: hp(5.5),
-    borderRadius: 7,
-    alignSelf: 'center',
     flexDirection: 'row',
-    marginVertical: hp(2),
     backgroundColor: '#EBEBEC',
     justifyContent: 'space-around',
+    width: '92%',
+    alignSelf: 'center',
+    borderRadius: 7,
+    marginVertical: hp(2),
+    height: hp(5.5),
   },
   optionTextStyle: {
-    fontWeight: '600',
     fontSize: fontSize(16),
+    fontWeight: '600',
+    marginHorizontal: wp(1),
   },
   optionTouchStyle: {
-    width: '33%',
-    height: hp(5.5),
     borderRadius: 7,
+    height: hp(5.5),
+    width: '33%',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -6,8 +6,14 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 
-const CardList = ({setCartFlightData, item, index}) => {
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+const CardList = ({setCartFlightData, item, index, tripType}) => {
+  const searchFlightData = useSelector(e =>
+    tripType === 'Round-Trip'
+      ? e?.searchFlight?.searchFlightReturnData
+      : e?.place?.searchFlightData,
+  );
+
+  // console.log(tripType);
   return (
     <TouchableOpacity
       onPress={() => {

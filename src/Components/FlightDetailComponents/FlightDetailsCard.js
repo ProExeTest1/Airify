@@ -6,18 +6,21 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 
-const FlightDetailsCard = ({item}) => {
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
-    ',',
-  );
+const FlightDetailsCard = ({
+  item,
+  ticketType,
+  searchFlightData,
+  searchFlightDateData,
+}) => {
+  // console.log(searchFlightDateData, 'hfghjfb=======>>>>>');
+  console.log(searchFlightDateData);
   return (
-    <View style={[styles.cardBody, {marginVertical: hp(2)}]}>
+    <View style={styles.cardBody}>
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
 
-        <Text style={styles.cardPriceTitle}>{`${searchFlightDateData[0].slice(
+        <Text style={styles.cardPriceTitle}>{`${searchFlightDateData[0]?.slice(
           0,
           3,
         )},${searchFlightDateData[1]}`}</Text>
@@ -25,25 +28,25 @@ const FlightDetailsCard = ({item}) => {
       <View style={styles.cardDataBody}>
         <View style={styles.FlightsPlaseBody}>
           <Text style={styles.FlightsPlaseName}>{searchFlightData?.from}</Text>
-          <Text style={styles.FlightsPlaseNicName}>{item.pickTime}</Text>
+          <Text style={styles.FlightsPlaseNicName}>{item?.pickTime}</Text>
         </View>
         <View style={styles.FlightsPlaseImgBody}>
           <Image
             style={styles.FlightsPlaseImg}
             source={Images.airplaneWhiteIcon}
           />
-          <Text style={styles.FlightsPlaseImgText}>{item.totalHours}</Text>
+          <Text style={styles.FlightsPlaseImgText}>{item?.totalHours}</Text>
         </View>
         <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
           <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
-          <Text style={styles.FlightsPlaseNicName}>{item.lendTime}</Text>
+          <Text style={styles.FlightsPlaseNicName}>{item?.lendTime}</Text>
         </View>
       </View>
       <View style={styles.cardBottemBody}>
         <Text style={styles.FlightsPlaseName}>
           {searchFlightData?.fromShortform}
         </Text>
-        <Text style={styles.FlightsPlaseImgText}>{item.stop}</Text>
+        <Text style={styles.FlightsPlaseImgText}>{item?.stop}</Text>
         <Text style={styles.FlightsPlaseName}>
           {searchFlightData?.toShortform}
         </Text>
@@ -56,9 +59,10 @@ export default FlightDetailsCard;
 
 const styles = StyleSheet.create({
   cardBody: {
-    width: '92%',
     borderRadius: 10,
     borderColor: '#000',
+    flex: 1,
+    width: '100%',
     alignSelf: 'center',
     marginBottom: hp(2),
     paddingHorizontal: wp(4),

@@ -11,27 +11,23 @@ import {Provider} from 'react-redux';
 import {MenuProvider} from 'react-native-popup-menu';
 import SplashScreen from 'react-native-splash-screen';
 import firestore from '@react-native-firebase/firestore';
-
 import {store} from './src/redux/store';
 import {getDate} from './src/assets/DummyData/GetDate';
 import StackNavigation from './src/navigation/StackNavigation';
 import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
+import {useIsFocused} from '@react-navigation/native';
 
 function App() {
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
-
   TextInput.defaultProps = TextInput.defaultProps || {};
   TextInput.defaultProps.allowFontScaling = false;
-
   LogBox.ignoreAllLogs(['Warning: ...']);
   LogBox.ignoreAllLogs();
-
   React.useEffect(() => {
     SplashScreen.hide();
     seatingArrange();
   });
-
   const functi = async () => {
     await firestore()
       .collection('AirlineSeatBookData')
@@ -61,9 +57,7 @@ function App() {
               }),
           });
       });
-
     // const date = getDate();
-
     // const addAllFlight = date.map((item, index) => {
     //   return {
     //     date: item.date,
@@ -95,7 +89,6 @@ function App() {
       functi();
     }
   };
-
   return (
     <Provider store={store}>
       <MenuProvider>
@@ -107,11 +100,9 @@ function App() {
     </Provider>
   );
 }
-
 const styles = StyleSheet.create({
   Header: {
     flex: 1,
   },
 });
-
 export default App;

@@ -7,15 +7,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 const PassengerList = ({navigation: {goBack}, navigation}) => {
   const [passengerList, setPassengerList] = useState([]);
 
@@ -23,6 +21,7 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
     getPassengerListData();
   }, []);
 
+  console.log(passengerList);
   const getPassengerListData = async () => {
     await firestore()
       .collection('PassengerList')

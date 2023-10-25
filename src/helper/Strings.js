@@ -153,6 +153,8 @@ export const strings = {
   DepartureTime: 'Departure Time',
   DirectFlight: 'Only Direct Flights',
   searchFlight: 'Search Flights',
+  select_departure_flight: 'Select Departure Flight',
+  select_return_flight: 'Select Return Flight',
   shareResult: 'Share Results',
   priceAlerts: 'Price Alerts',
   filter: 'Filter',
@@ -217,6 +219,16 @@ export const strings = {
   // Ticket Booking
 
   selectSeat: 'Select Seat',
+  payNow: 'Pay Now',
+  FlightAmenities: 'Flight Amenities',
+  contact_details: 'Contact Details',
+  passenger_details: 'Passenger(s) Details',
+  seat_numberString: 'Seat Number',
+  Pice_Detail_string: 'Price Details',
+  travel_inssurance: 'Travel Insurance',
+  tax: 'Tax',
+  total_price: 'Total Price',
+  fillInDetails: 'Fill In Details',
 
   // Saved Address
   savedAddress: 'Saved Address',
@@ -263,5 +275,8 @@ export const strings = {
   yesRemove: 'Yes, Remove',
   removeSuccess: 'Successfully removed!',
 
+  // Transaction Details
+  ticket_note:
+    'You are obligated to present your e-boarding pass when you will enter the airplane flight.',
   eTicket: 'E-Ticket',
 };

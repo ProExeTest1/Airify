@@ -14,14 +14,16 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import {
+  dateAction,
+  returnNormalDateAction,
+} from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
-
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {getDate} from '../../assets/DummyData/GetDate';
-import {dateAction} from '../../redux/action/DateAction';
 
 const SearchFlightsHeader = ({
   onShare,
@@ -30,20 +32,31 @@ const SearchFlightsHeader = ({
   navigation,
   setSelectDate,
   setModalVisible1,
+  headerName,
+  tripType,
 }) => {
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const searchFlightData = useSelector(e =>
+    tripType === 'Round-trip'
+      ? e?.searchFlight?.searchFlightReturnData
+      : e?.place?.searchFlightData,
+  );
+  // console.log(tripType, 'tripType');
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
         <View style={styles.headerTitleBody}>
-          <Text style={styles.headerTitle}>{strings.searchFlight}</Text>
+          <Text style={styles.headerTitle}>{headerName}</Text>
         </View>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image style={styles.BackImg} source={Images.backIcon} />
         </TouchableOpacity>
         <Menu>
           <MenuTrigger>
-            <Image style={styles.BackImg} source={Images.menuIcon} />
+            <Image
+              style={styles.BackImg}
+              source={Images.menuIcon}
+              resizeMode="contain"
+            />
           </MenuTrigger>
           <MenuOptions style={styles.dropdownBody}>
             <MenuOption onSelect={() => onShare()}>
@@ -104,7 +117,12 @@ const SearchFlightsHeader = ({
               <TouchableOpacity
                 onPress={() => {
                   setSelectDate(item);
-                  dispatch(dateAction(item));
+                  if (tripType === 'Round-trip') {
+                    console.log(item, 'item');
+                    dispatch(returnNormalDateAction(item));
+                  } else {
+                    dispatch(dateAction(item));
+                  }
                 }}
                 style={[
                   styles.dateIconBody,

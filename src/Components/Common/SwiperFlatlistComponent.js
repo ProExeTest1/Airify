@@ -14,6 +14,11 @@ const SwiperFlatlistComponent = ({showPagination}) => {
         data={dummyData}
         autoplayDelay={3}
         disableGesture={true}
+        paginationStyleItem={{
+          width: hp(0.9),
+          height: hp(0.9),
+          borderRadius: 5,
+        }}
         showPagination={showPagination}
         renderItem={({item}) => {
           return (

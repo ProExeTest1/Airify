@@ -50,7 +50,7 @@ const FlightDetails = () => {
           source={Images.planPrograce}
         />
       </View>
-      <View style={{flex: 3}}>
+      <View style={{flex: 1}}>
         <Text style={styles.cardHeaderText}>
           {depatureData}, {reduxDepaturePlace.country}
         </Text>
@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
   mainViewStyle: {
     width: '92%',
     height: '77%',
+    marginHorizontal: wp(4),
     borderRadius: 10,
     alignSelf: 'center',
     flexDirection: 'row',
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
+    marginRight: wp(4),
   },
   timeTextStyle: {
     fontWeight: '500',

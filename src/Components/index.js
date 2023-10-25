@@ -18,6 +18,14 @@ import SwiperFlatlistComponent from './Common/SwiperFlatlistComponent';
 import PassengerPickerModal from './ModalComponents/PassengerPickerModal';
 import FlightDetailsCard from './FlightDetailComponents/FlightDetailsCard';
 import RefundandRescheduleInfo from './FlightDetailComponents/RefundandRescheduleInfo';
+import TicktBookingProgressBar from './Common/TicktBookingProgressBar';
+import FlightServices from './FlightDetailComponents/FlightServices';
+import DropDownPaperTextInput from './TicketBookingComponents/DropDownPaperTextInput';
+import DropDownMenu from './TicketBookingComponents/DropDownMenu';
+import CardHeader from './TicketBookingComponents/CardHeader';
+import PriceDetails from './TicketBookingComponents/PriceDetails';
+import ReturnDepartureSwitch from './Common/ReturnDepartureSwitch';
+
 export {
   GetTime,
   CardList,
@@ -39,4 +47,11 @@ export {
   MultiSliderComponets,
   SwiperFlatlistComponent,
   RefundandRescheduleInfo,
+  TicktBookingProgressBar,
+  FlightServices,
+  DropDownPaperTextInput,
+  DropDownMenu,
+  CardHeader,
+  PriceDetails,
+  ReturnDepartureSwitch,
 };

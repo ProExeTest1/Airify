@@ -1,44 +1,71 @@
-import React, {useEffect, useState} from 'react';
 import {
-  FlatList,
   Image,
   Platform,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Modal from 'react-native-modal';
-import {useSelector} from 'react-redux';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-
+import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
-import {FlightDetailsCard} from '../../components';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
+import {useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import Modal from 'react-native-modal';
 import {
-  FlightDetailsData,
-  FlightDetailsData1,
-} from '../../assets/DummyData/FlightDetailsData';
+  FlightDetailsCard,
+  FlightServices,
+  ReturnDepartureSwitch,
+} from '../../components';
+import {strings} from '../../helper/Strings';
+import {ShareConstant} from '../../helper/ShareConstant';
+import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 
-const FlightDetailsScreen = ({navigation}) => {
-  const [value, setValue] = useState();
-  const [press, setPress] = useState(false);
+const FlightDetailsScreen = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
+  console.log(tripType, 'tripType');
   const [savedFlight, setSavedFlight] = useState([]);
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
-    ',',
+  const [press, setPress] = useState(false);
+  const [value, setValue] = useState();
+  const [ticketType, setTicketType] = useState('Departure');
+  const item = useSelector(state =>
+    ticketType === 'Departure'
+      ? state.searchFlight.searchFlightCardData
+      : state.searchFlight.searchFlightReturnCardData,
   );
+
+  const searchFlightData = useSelector(e =>
+    ticketType === 'Departure'
+      ? e?.place?.searchFlightData
+      : e?.searchFlight?.searchFlightReturnData,
+  );
+  const ontoggleSwitch = () => {
+    if (ticketType === 'Departure') {
+      setTicketType('Return');
+    } else {
+      setTicketType('Departure');
+    }
+  };
+  const searchFlightDateData = useSelector(e =>
+    ticketType === 'Departure' ? e?.date?.depatureDate : e?.date?.returnDate,
+  ).split(',');
+  const SelectDate = useSelector(e =>
+    ticketType === 'Departure'
+      ? e?.date?.normalDate
+      : e?.date?.returnNormalDate,
+  );
+
   useEffect(() => {
     getData();
   }, []);
   useEffect(() => {
     setTimeout(() => {
       setPress(false);
-    }, 2000);
+    }, 3000);
   }, [press]);
   const getData = async () => {
     const uid = auth().currentUser.uid;
@@ -47,15 +74,16 @@ const FlightDetailsScreen = ({navigation}) => {
       .doc(uid)
       .get()
       .then(res => {
-        setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+        setSavedFlight(res._data.savedFlights);
       });
   };
   const saveFlightDetails = async () => {
     const uid = auth().currentUser.uid;
+    console.log('saved');
     await firestore()
       .collection('SavedFlights')
       .doc(uid)
-      .set({
+      .update({
         savedFlights: firestore.FieldValue.arrayUnion({
           airlineName: item?.airlineName,
           logo: item?.logo,
@@ -71,6 +99,7 @@ const FlightDetailsScreen = ({navigation}) => {
           destinationShortForm: searchFlightData?.toShortform,
           stops: item.stop,
           flightPrice: item?.price,
+          ticketType: ticketType,
         }),
       })
       .then(async () => {
@@ -81,7 +110,7 @@ const FlightDetailsScreen = ({navigation}) => {
           .doc(uid)
           .get()
           .then(res => {
-            setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+            setSavedFlight(res._data.savedFlights);
           });
       });
   };
@@ -90,7 +119,7 @@ const FlightDetailsScreen = ({navigation}) => {
     await firestore()
       .collection('SavedFlights')
       .doc(uid)
-      .set({
+      .update({
         savedFlights: firestore.FieldValue.arrayRemove({
           airlineName: item?.airlineName,
           logo: item?.logo,
@@ -106,6 +135,7 @@ const FlightDetailsScreen = ({navigation}) => {
           destinationShortForm: searchFlightData?.toShortform,
           stops: item.stop,
           flightPrice: item?.price,
+          ticketType: ticketType,
         }),
       })
       .then(async () => {
@@ -116,12 +146,12 @@ const FlightDetailsScreen = ({navigation}) => {
           .doc(uid)
           .get()
           .then(res => {
-            setSavedFlight(res._data.savedFlights.map(x => x.airlineName));
+            setSavedFlight(res._data.savedFlights);
           });
       });
   };
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.headerViewStyle}>
         <SafeAreaView>
           <View style={styles.safeHeaderViewStyle}>
@@ -130,144 +160,144 @@ const FlightDetailsScreen = ({navigation}) => {
             </View>
             <TouchableOpacity onPress={() => navigation.goBack('')}>
               <Image
-                resizeMode="contain"
                 source={Images.backIcon}
                 style={styles.backIconStyle}
+                resizeMode="contain"
               />
             </TouchableOpacity>
             <View style={styles.saveShareViewStyle}>
               <TouchableOpacity
                 onPress={() => {
-                  savedFlight.some(a => a === item?.airlineName) === true
+                  savedFlight.some(
+                    a =>
+                      a.airlineName == item.airlineName &&
+                      a.landingTime == item.lendTime &&
+                      a.departurePlace == searchFlightData?.from &&
+                      a.destinationPlace == searchFlightData?.to &&
+                      a.departureTime == item.pickTime &&
+                      a.flightPrice == item.price &&
+                      a.stops == item.stop &&
+                      a.totalHours == item.totalHours,
+                  ) === true
                     ? unsaveFlightDetails()
                     : saveFlightDetails();
                 }}>
                 <Image
                   source={
-                    savedFlight.some(a => a === item?.airlineName) === true
+                    savedFlight.some(
+                      a =>
+                        a.airlineName == item.airlineName &&
+                        a.landingTime == item.lendTime &&
+                        a.departurePlace == searchFlightData?.from &&
+                        a.destinationPlace == searchFlightData?.to &&
+                        a.departureTime == item.pickTime &&
+                        a.flightPrice == item.price &&
+                        a.stops == item.stop &&
+                        a.totalHours == item.totalHours,
+                    ) === true
                       ? Images.filled_save
                       : Images.saved
                   }
-                  resizeMode="contain"
                   style={styles.saveShareIconStyle}
+                  resizeMode="contain"
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  ShareConstant(SearchFlightData.airlineName);
+                }}>
                 <Image
-                  resizeMode="contain"
                   source={Images.shareIcon}
                   style={styles.saveShareIconStyle}
+                  resizeMode="contain"
                 />
               </TouchableOpacity>
             </View>
           </View>
         </SafeAreaView>
       </View>
-      <FlightDetailsCard item={item} />
-      <View style={styles.cardBody}>
-        <View
-          style={[
-            styles.flatlistViewStyle,
-            {
-              marginTop: hp(1),
-            },
-          ]}>
-          <Image
-            resizeMode="contain"
-            source={Images.aeroPlane}
-            style={styles.aeroPlaneImageStyle}
-          />
-          <View style={styles.secondCardHeaderStyle}>
-            <Text style={styles.secondCardheaderTextStyle}>Original</Text>
-            <Text style={styles.cardPrice}>
-              {item?.price}
-              <Text style={styles.cardPriceTitle}>/pax</Text>
-            </Text>
-          </View>
-        </View>
-        <View style={styles.flatlistViewStyle}>
-          <FlatList
-            bounces={false}
-            data={FlightDetailsData}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.flatlist1InnerViewStyle}>
-                  <Image
-                    source={item.image}
-                    resizeMode="contain"
-                    style={styles.flatlistIconStyle}
-                  />
-                  <Text style={styles.flatlistTextStyle}>{item.text}</Text>
-                </View>
-              );
-            }}
-            keyExtractor={item => item.id}
+      {tripType === 'Round-Trip' ? (
+        <ReturnDepartureSwitch
+          onPress={ontoggleSwitch}
+          ticketType={ticketType}
+        />
+      ) : null}
+      <ScrollView bounces={false} style={styles.ScrollViewStyle}>
+        <View style={{paddingHorizontal: wp(4), marginTop: hp(2), flex: 1}}>
+          <FlightDetailsCard
+            searchFlightData={searchFlightData}
+            searchFlightDateData={searchFlightDateData}
+            item={item}
           />
         </View>
-        <View style={styles.flatlistViewStyle}>
-          <FlatList
-            bounces={false}
-            horizontal={true}
-            data={FlightDetailsData1}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => {
-              return (
-                <View style={styles.flatlist2InnerViewStyle}>
-                  <Image
-                    source={item.image}
-                    resizeMode="contain"
-                    style={styles.flatlistIconStyle}
-                  />
-                </View>
-              );
-            }}
-            keyExtractor={item => item.id}
-          />
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('FlightPackageDetails', {header: 'Details'})
-            }
-            style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={styles.detailsTextStyle}>Details</Text>
+        <View style={styles.cardBody}>
+          <View
+            style={[
+              styles.flatlistViewStyle,
+              {
+                marginTop: hp(1),
+              },
+            ]}>
             <Image
+              source={Images.aeroPlane}
+              style={styles.aeroPlaneImageStyle}
               resizeMode="contain"
-              source={Images.forward}
-              style={styles.forwardStyle}
             />
-          </TouchableOpacity>
+            <View style={styles.secondCardHeaderStyle}>
+              <Text style={styles.secondCardheaderTextStyle}>Original</Text>
+              <Text style={styles.cardPrice}>
+                {item?.price}
+                <Text style={styles.cardPriceTitle}>/pax</Text>
+              </Text>
+            </View>
+          </View>
+          <FlightServices
+            DetailsNavigation={() =>
+              navigation?.navigate('FlightPackageDetails', {header: 'Details'})
+            }
+          />
         </View>
-      </View>
+      </ScrollView>
       <View style={styles.thirdCardStyle}>
         <View>
           <Text style={styles.priceTextStyle}>
-            Total Price : {searchFlightData.passenger.split(' ')[0]} person(s)
+            Total Price : {searchFlightData?.passenger?.split(' ')[0]} person(s)
           </Text>
           <Text style={styles.cardPrice}>
             $
-            {parseInt(item?.price.slice(1, 8).split(',').join(''), 10) *
-              Number(searchFlightData.passenger.split(' ')[0])}
+            {parseInt(item?.price?.slice(1, 8).split(',').join(''), 10) *
+              Number(searchFlightData?.passenger?.split(' ')[0])}
             .00
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('FillPassengerDetails')}
+          onPress={() => {
+            if (tripType === 'Round-Trip' && ticketType === 'Departure') {
+              setTicketType('Return');
+            } else {
+              navigation.navigate('FillPassengerDetails', {TripType: tripType});
+            }
+          }}
           style={styles.continueButtonStyle}>
-          <Text style={styles.continueTextStyle}>Continue</Text>
+          <Text style={styles.continueTextStyle}>
+            {tripType === 'Round-Trip' && ticketType === 'Departure'
+              ? 'Confirm'
+              : strings.continue}
+          </Text>
         </TouchableOpacity>
       </View>
       <Modal
         backdropOpacity={0}
-        isVisible={press}
-        animationIn={'bounceIn'}
         animationOut={'bounceOutUp'}
+        animationIn={'bounceIn'}
+        isVisible={press}
         style={styles.modalStyle}>
         <View style={styles.modalViewViewStyle}>
           <View style={styles.imageViewStyle}>
             <Image
-              resizeMode="contain"
               source={Images.tickMark}
               style={styles.imageStyle}
+              resizeMode="contain"
             />
           </View>
           <Text style={styles.modalTextStyle}>{value}!</Text>
@@ -283,65 +313,67 @@ const styles = StyleSheet.create({
   headerViewStyle: {
     backgroundColor: color.commonBlue,
   },
+  ScrollViewStyle: {marginTop: hp(1)},
   backIconStyle: {
-    width: hp(3),
     height: hp(3),
+    width: hp(3),
     tintColor: color.white,
   },
   headerTextStyle: {
+    fontSize: fontSize(22),
     fontWeight: 'bold',
     color: color.white,
-    fontSize: fontSize(22),
   },
   saveShareIconStyle: {
-    width: hp(2.5),
     height: hp(2.5),
+    width: hp(2.5),
     tintColor: color.white,
   },
   safeHeaderViewStyle: {
-    flexDirection: 'row',
     paddingHorizontal: wp(7),
     justifyContent: 'space-between',
     paddingVertical: Platform.OS == 'ios' ? hp(2) : hp(3),
+    flexDirection: 'row',
   },
   headerTextViewStyle: {
-    width: wp(100),
-    alignSelf: 'center',
-    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
+    width: wp(100),
   },
   saveShareViewStyle: {
-    width: wp(17),
-    alignItems: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
+    width: wp(17),
   },
+
   cardBody: {
-    width: '92%',
+    backgroundColor: color.white,
+    paddingHorizontal: wp(4),
+    marginBottom: hp(2),
     borderRadius: 10,
     borderColor: '#000',
-    alignSelf: 'center',
-    marginBottom: hp(2),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
+    marginHorizontal: wp(4),
   },
   cardPrice: {
-    fontWeight: '600',
-    fontSize: fontSize(20),
     color: color.commonBlue,
+    fontSize: fontSize(20),
+    fontWeight: '600',
     marginVertical: hp(1.2),
   },
   cardPriceTitle: {
     color: '#7e7e7f',
     fontSize: fontSize(16),
   },
+
   FlightsPlaseBody: {
     width: wp(20),
   },
   FlightsPlaseImgBody: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
   },
   FlightsPlaseImg: {
     height: hp(5),
@@ -352,61 +384,61 @@ const styles = StyleSheet.create({
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
+    fontSize: fontSize(21),
     color: '#000',
     fontWeight: 'bold',
     marginTop: hp(1.5),
-    fontSize: fontSize(21),
   },
   FlightsPlaseName: {
     color: '#7e7e7f',
     fontWeight: '500',
   },
   cardBottemBody: {
-    paddingTop: hp(1),
-    alignItems: 'center',
     flexDirection: 'row',
-    paddingBottom: hp(2.5),
     justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: hp(2.5),
+    paddingTop: hp(1),
   },
   flatlistIconStyle: {
-    width: hp(2.5),
     height: hp(2.5),
+    width: hp(2.5),
     tintColor: '#383838',
   },
   forwardStyle: {
-    width: hp(1.8),
     height: hp(1.8),
+    width: hp(1.8),
     tintColor: color.commonBlue,
   },
   flatlistViewStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 1,
     borderColor: '#e2e2e2',
+    borderBottomWidth: 1,
     paddingVertical: hp(1.6),
   },
   aeroPlaneImageStyle: {
-    width: hp(6),
     height: hp(6),
+    width: hp(6),
   },
   secondCardHeaderStyle: {
     marginHorizontal: wp(5),
   },
   secondCardheaderTextStyle: {
-    fontWeight: 'bold',
     fontSize: fontSize(18),
+    fontWeight: 'bold',
   },
   thirdCardStyle: {
+    backgroundColor: color.white,
+    paddingHorizontal: wp(4),
     borderColor: '#000',
     flexDirection: 'row',
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
     justifyContent: 'space-between',
-    paddingVertical: Platform.OS == 'ios' ? hp(4) : hp(2),
+    paddingVertical: hp(2),
   },
   flatlistTextStyle: {
-    color: '#383838',
     fontSize: fontSize(18),
+    color: '#383838',
     marginHorizontal: wp(3),
   },
   flatlist1InnerViewStyle: {
@@ -423,55 +455,55 @@ const styles = StyleSheet.create({
   },
   priceTextStyle: {color: '#383838'},
   continueButtonStyle: {
-    width: '50%',
     height: hp(6.5),
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '50%',
     backgroundColor: color.commonBlue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
   },
   continueTextStyle: {
-    fontWeight: '600',
-    color: color.white,
     fontSize: fontSize(18),
+    color: color.white,
+    fontWeight: '600',
   },
   modalStyle: {
-    alignSelf: 'center',
     justifyContent: 'flex-start',
+    alignSelf: 'center',
     top: Platform.OS == 'ios' ? hp(4) : hp(0),
   },
   modalViewViewStyle: {
-    width: '40%',
-    elevation: 30,
-    shadowRadius: 6,
-    borderRadius: 100,
-    shadowOpacity: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingRight: wp(2.6),
+    width: '40%',
+    backgroundColor: color.white,
+    borderRadius: 100,
     paddingVertical: hp(1.2),
     paddingHorizontal: wp(1.3),
-    backgroundColor: color.white,
+    paddingRight: wp(2.6),
     shadowOffset: {
       width: 0,
       height: 2,
     },
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    elevation: 30,
   },
   imageViewStyle: {
+    backgroundColor: color.commonBlue,
     padding: hp(0.9),
     borderRadius: 100,
     marginHorizontal: wp(2.3),
-    backgroundColor: color.commonBlue,
   },
   imageStyle: {
-    width: hp(2.5),
     height: hp(2.5),
+    width: hp(2.5),
     tintColor: color.white,
   },
   modalTextStyle: {
-    fontWeight: '600',
-    color: color.black,
     fontSize: fontSize(22),
+    fontWeight: 'bold',
+    color: color.black,
     marginHorizontal: wp(1),
   },
 });

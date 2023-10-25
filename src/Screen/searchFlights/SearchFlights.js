@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,45 +8,64 @@ import {
   Share,
   Alert,
 } from 'react-native';
-import moment from 'moment';
+import React, {useEffect, useMemo, useState} from 'react';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
+import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
+import {TicketList} from '../../components/index';
+import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
-import {RadioButton} from 'react-native-radio-buttons-group';
-
-import {strings} from '../../helper/Strings';
-import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
-import {TicketList} from '../../components/index';
-import {fontSize, hp, wp} from '../../helper/Constant';
 import {CreatePriceAlert} from '../../components/index';
+import {RadioButton} from 'react-native-radio-buttons-group';
+import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
-import {depatureDateAction} from '../../redux/action/DateAction';
-import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
-import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
+import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
+import {strings} from '../../helper/Strings';
+import moment from 'moment';
 
-const SearchFlights = ({navigation}) => {
-  const dispatch = useDispatch();
-  const [selectedData, setSelectedData] = useState({});
-  const [departureTime, setDepartureTime] = useState({});
+const SearchFlights = ({navigation, route}) => {
+  const tripType = route?.params?.TripType;
+  console.log(tripType);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
-  const [CreatePriceData, setCreatePriceData] = useState({});
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
+  const [departureTime, setDepartureTime] = useState({});
+  const [CreatePriceData, setCreatePriceData] = useState({});
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
   const [ToggleSwitchBut2, setToggleSwitchBut2] = useState(false);
-  const SelectDate = useSelector(e => e.date.normalDate);
   const [SearchFlightCardData, setSearchFlightCardData] =
     useState(SearchFlightData);
+
+  const [selectedData, setSelectedData] = useState({});
+
+  const dispatch = useDispatch();
+
   const searchFlightFilterData = useSelector(
     e => e?.searchFlight?.searchFlightFilterData,
   );
 
+  const SelectDate = useSelector(e => e.date.normalDate);
+
   /* ----------------------------------------------------> date function */
 
-  const setSelectDate = data => {
-    let tem = moment(data.date).format('D/M/YYYY');
-    dispatch(depatureDateAction(`${moment(tem).format('dddd,MMM D YYYY')}`));
+  const setSelectDate = ({date}) => {
+    let dateChange = date.split('/');
+    let newDate = new Date();
+    dispatch(
+      depatureDateAction(
+        `${moment(
+          new Date(
+            newDate.setFullYear(
+              dateChange[2],
+              dateChange[1] - 1,
+              dateChange[0],
+            ),
+          ),
+        ).format('dddd,MMM D YYYY')}`,
+      ),
+    );
   };
   const onShare = async () => {
     try {
@@ -208,6 +226,7 @@ const SearchFlights = ({navigation}) => {
           departureTime
         );
       });
+      console.log(filterData);
       filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);
@@ -219,6 +238,7 @@ const SearchFlights = ({navigation}) => {
     dispatch(SearchFlightFilterData({}));
     Alert.alert('Filter data not match');
   };
+
   return (
     <View style={styles.body}>
       {/* ----------------------------------------------------> Header components */}
@@ -228,6 +248,11 @@ const SearchFlights = ({navigation}) => {
         setSelectDate={setSelectDate}
         onShare={onShare}
         dispatch={dispatch}
+        headerName={
+          tripType === 'Round-Trip'
+            ? strings.select_departure_flight
+            : strings.searchFlight
+        }
         setModalVisible1={setModalVisible1}
         navigation={navigation}
       />
@@ -237,6 +262,7 @@ const SearchFlights = ({navigation}) => {
       <TicketList
         SelectDate={SelectDate}
         SearchFlightCard={SearchFlightCardData}
+        tripType1={tripType}
       />
 
       <View style={styles.sortBody}>
@@ -330,45 +356,45 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(7),
   },
   sortBody: {
-    elevation: 8,
-    width: wp(55),
-    bottom: hp(5),
-    shadowRadius: 10,
-    borderRadius: 500,
-    shadowOpacity: 0.2,
-    alignSelf: 'center',
     position: 'absolute',
-    flexDirection: 'row',
-    shadowColor: '#000000',
-    backgroundColor: '#fff',
     paddingVertical: hp(1.8),
     paddingHorizontal: wp(4),
+    width: wp(55),
+    bottom: hp(5),
+    alignSelf: 'center',
+    borderRadius: 500,
+    backgroundColor: '#fff',
+    shadowColor: '#000000',
     shadowOffset: {width: 0, height: 7},
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 8,
+    flexDirection: 'row',
   },
   sortImgBody: {
     flex: 1,
-    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
   sortLine: {
-    height: '100%',
-    borderEndWidth: 2,
     borderColor: '#e2e2e2',
+    borderEndWidth: 2,
+    height: '100%',
   },
   sortText: {
-    fontWeight: '500',
     fontSize: fontSize(20),
+    fontWeight: '500',
   },
   sortImg: {
-    width: wp(6),
     height: wp(6),
+    width: wp(6),
   },
   createAlertBody: {
-    paddingVertical: wp(6),
     backgroundColor: '#fff',
-    borderTopEndRadius: 20,
+    paddingVertical: wp(6),
     paddingHorizontal: wp(6),
+    borderTopEndRadius: 20,
     borderTopStartRadius: 20,
   },
   createAlertTitleBody: {
@@ -378,11 +404,11 @@ const styles = StyleSheet.create({
     borderColor: '#e2e2e2',
   },
   createAlertTitle: {
-    fontWeight: '600',
     fontSize: fontSize(20),
+    fontWeight: '600',
   },
-  paddingVertical: hp(1),
   sortModalBody: {
+    paddingVertical: hp(1),
     borderBottomWidth: 1,
     borderColor: '#e2e2e2',
   },

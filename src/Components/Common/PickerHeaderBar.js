@@ -21,7 +21,7 @@ const PickerHeaderBar = ({headerName, navigation}) => {
         <View style={styles.headerTextViewStyle}>
           <Text style={styles.headerTextStyle}>{headerName}</Text>
         </View>
-        <TouchableOpacity onPress={navigation}>
+        <TouchableOpacity style={styles.cancelTouchStyle} onPress={navigation}>
           <Image
             resizeMode="contain"
             source={Images.cancel}
@@ -38,6 +38,10 @@ export default PickerHeaderBar;
 const styles = StyleSheet.create({
   headerViewStyle: {
     backgroundColor: color.commonBlue,
+  },
+  cancelTouchStyle: {
+    height: hp(2),
+    width: hp(2),
   },
   cancelButtonStyle: {
     width: hp(2),

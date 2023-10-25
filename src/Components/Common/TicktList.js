@@ -5,15 +5,29 @@ import {View, StyleSheet, FlatList} from 'react-native';
 
 import CardList from './CardList';
 import {wp} from '../../helper/Constant';
-import {SearchFlightCardData} from '../../redux/action/SearchFlightAction';
+import {
+  SearchFlightCardData,
+  SearchFlightReturnCardAction,
+} from '../../redux/action/SearchFlightAction';
 
-const TicktList = ({SelectDate, SearchFlightCard}) => {
+const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const setCartFlightData = item => {
-    dispatch(SearchFlightCardData(item));
-    navigation.navigate('FlightDetails');
+    if (tripType1 === 'Round-Trip') {
+      dispatch(SearchFlightCardData(item));
+      navigation.navigate('ReturnSearchFlight', {TripType: 'Round-trip'});
+    } else {
+      if (tripType == 'Round-Trip') {
+        dispatch(SearchFlightReturnCardAction(item));
+        navigation.navigate('FlightDetails', {TripType: 'Round-Trip'});
+      } else {
+        dispatch(SearchFlightCardData(item));
+        navigation.navigate('FlightDetails', {TripType: 'One-Way'});
+      }
+    }
   };
+
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
@@ -39,6 +53,7 @@ const TicktList = ({SelectDate, SearchFlightCard}) => {
               item={item}
               index={index}
               setCartFlightData={setCartFlightData}
+              tripType={tripType}
             />
           );
         }}

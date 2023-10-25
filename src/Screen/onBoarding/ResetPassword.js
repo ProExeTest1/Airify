@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {View, Text, StyleSheet} from 'react-native';
-
 import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import OnBoardingTextInput from '../../components/OnBoardingTextInput';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');
 
   const validation = () => {
     if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      alert('Please Enter Email which are use in login');
+      AlertConstant('Please Enter Email which are use in login');
       return;
     } else {
       sendOTP();
@@ -26,7 +26,7 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
       await auth()
         .sendPasswordResetEmail(email)
         .then(() => {
-          alert('Password reset email has been sent successfully.');
+          AlertConstant('Password reset email has been sent successfully.');
         })
         .catch(err => {
           console.log('err :>> ', err);

@@ -33,6 +33,7 @@ import CountryPickTextInput from '../../components/CountryPickTextInput';
 import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import {NotificationData, SecurityData} from '../../assets/DummyData/Data';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const swiperRef = useRef();
@@ -78,14 +79,14 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation = index => {
     if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      alert('Please Enter Valid Email');
+      AlertConstant('Please Enter Valid Email');
       return;
     } else if (
       !Password.trim().match(
         /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
       )
     ) {
-      alert('Please Enter Valid Password');
+      AlertConstant('Please Enter Valid Password');
       return;
     } else {
       swiperRef.current.scrollBy(1);
@@ -94,16 +95,16 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation2 = index => {
     if (!pickerResponse.trim()) {
-      alert('Please Select Profile Image');
+      AlertConstant('Please Select Profile Image');
       return;
     } else if (!phoneNo.trim()) {
-      alert('Please Enter Phone Number');
+      AlertConstant('Please Enter Phone Number');
       return;
     } else if (!name.trim().match('[a-zA-Z ]{3,30}')) {
-      alert('Please Enter Valid name');
+      AlertConstant('Please Enter Valid name');
       return;
     } else if (!date.trim()) {
-      alert('Please Enter Date of Birth');
+      AlertConstant('Please Enter Date of Birth');
       return;
     } else {
       swiperRef.current.scrollBy(1);
@@ -158,9 +159,25 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .collection('UserWallet')
         .doc(isUserCreate.user.uid)
         .set({
-          wallet: '00.00',
+          wallet: 0,
           transactionHistory: [],
         });
+
+      //------------------------------------------------>  SaveTicket data
+
+      await firestore()
+        .collection('SavedFlights')
+        .doc(isUserCreate.user.uid)
+        .set({
+          SavedFlights: [],
+        });
+
+      //------------------------------------------------>  Points data
+
+      await firestore().collection('Points').doc(isUserCreate.user.uid).set({
+        TotalPoints: 0,
+        PointsHistory: [],
+      });
 
       //------------------------------------------------>  Passenger List data
 
@@ -169,6 +186,15 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .doc(isUserCreate.user.uid)
         .set({
           PassengerList: [],
+        });
+
+      //------------------------------------------------>  SaveTicket data
+
+      await firestore()
+        .collection('SaveTicket')
+        .doc(isUserCreate.user.uid)
+        .set({
+          SaveTicket: [],
         });
 
       //------------------------------------------------>  SavedUserAddress data

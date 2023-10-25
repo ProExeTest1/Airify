@@ -20,6 +20,7 @@ const RefundandRescheduleInfo = ({sectionData, header}) => {
       </View>
       <SectionList
         sections={sectionData}
+        bounces={false}
         keyExtractor={item => item.id}
         stickySectionHeadersEnabled={false}
         renderItem={({item}) => {

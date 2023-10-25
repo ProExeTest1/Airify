@@ -1,38 +1,43 @@
+import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import {TextInput} from 'react-native-paper';
-import {Pressable, StyleSheet} from 'react-native';
-
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-
+import {color} from '../../helper/ColorConstant';
 const CustomPaperTextInput = ({
+  width,
+  placeholder,
   label,
   icon,
-  value,
-  width,
-  onPress,
-  placeholder,
   onChangeText,
+  value,
   marginVertical,
+  marginRight,
+  marginLeft,
+  onPress,
+  marginHorizontal,
 }) => {
   return (
     <Pressable
       onPress={onPress}
       style={{
-        width: width,
         marginVertical: marginVertical,
-        marginHorizontal: label === 'Class' && 'Passenger' ? null : wp(4),
+        width: width,
+        marginHorizontal: marginHorizontal,
+        marginLeft: marginLeft,
+        marginRight: marginRight,
       }}>
       <TextInput
-        label={label}
-        value={value}
-        mode="outlined"
         editable={false}
+        label={label}
         pointerEvents="none"
         placeholder={placeholder}
-        onChangeText={onChangeText}
-        style={styles.textInputStyle}
         placeholderTextColor={'white'}
+        value={value}
+        // theme={{ colors: { onSurfaceVariant: 'white'} }}
+        // activeOutlineColor="white"
+        // outlineColor="white"
+        // textColor="white"
+        mode="outlined"
         outlineStyle={styles.outlineStyle}
         left={
           <TextInput.Icon
@@ -41,6 +46,8 @@ const CustomPaperTextInput = ({
             onPress={onPress}
           />
         }
+        style={styles.textInputStyle}
+        onChangeText={onChangeText}
       />
     </Pressable>
   );
@@ -51,8 +58,8 @@ export default CustomPaperTextInput;
 const styles = StyleSheet.create({
   textInputStyle: {
     height: hp(7.3),
-    fontSize: fontSize(18),
     justifyContent: 'center',
+    fontSize: fontSize(18),
     backgroundColor: color.white,
   },
   iconStyle: {
@@ -62,5 +69,6 @@ const styles = StyleSheet.create({
   outlineStyle: {
     borderRadius: 16,
     borderWidth: 0.5,
+    // borderColor:'white'
   },
 });

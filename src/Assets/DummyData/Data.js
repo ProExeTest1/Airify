@@ -13,6 +13,10 @@ export const dummyData = [
     id: 3,
     image: require('../images/DummyImage.png'),
   },
+  {
+    id: 4,
+    image: require('../images/DummyImage.png'),
+  },
 ];
 
 export const ClassData = [
