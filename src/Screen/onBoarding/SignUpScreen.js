@@ -55,7 +55,6 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [selectedFlyWay, setSelectedFlyWay] = useState([]);
   const [selectedDineWay, setSelectedDineWay] = useState([]);
   const [selectedJourneyData, setSelectedJourneyData] = useState([]);
-
   useEffect(() => {
     JourneyData();
     onPressAdd();
@@ -87,6 +86,9 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       )
     ) {
       AlertConstant('Please Enter Valid Password');
+      return;
+    } else if (!checked == true) {
+      AlertConstant('Can You agree with terms & condition.');
       return;
     } else {
       swiperRef.current.scrollBy(1);
@@ -124,7 +126,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .putFile(uploadStorage);
       try {
         await task;
-        Alert.alert('Image uploaded', 'Image uploaded successfully');
+        Alert.alert('Congrats!', "You're successfully register");
       } catch (error) {
         console.log(error);
       }
@@ -163,7 +165,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           transactionHistory: [],
         });
 
-      //------------------------------------------------>  SaveTicket data
+      //------------------------------------------------>  SaveFlight data
 
       await firestore()
         .collection('SavedFlights')

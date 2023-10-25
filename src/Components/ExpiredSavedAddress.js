@@ -61,7 +61,7 @@ const ExpiredSavedAddress = ({onPress}) => {
   };
   return (
     <View style={styles.container}>
-      {expireAddressData.length > 0 ? (
+      {expireAddressData?.length > 0 ? (
         <FlatList
           bounces={false}
           data={expireAddressData}
