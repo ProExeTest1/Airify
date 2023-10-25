@@ -40,7 +40,6 @@ const HomeScreen = ({navigation}) => {
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
   const reduxReturnDate = useSelector(state => state.date.returnDate);
 
-  console.log('reduxDepatureDate', reduxDepatureDate);
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
   //Maintaining textInput value with redux data
   let depatureData = reduxDepaturePlace
@@ -64,7 +63,6 @@ const HomeScreen = ({navigation}) => {
   const [child, setChild] = useState(0);
   const [twoYearBelowChild, setTwoYearBelowChild] = useState(0);
   const [userData, setUserData] = useState({});
-  console.log('userData', userData);
   const seatcount = () => {
     setSeat(adult + child + twoYearBelowChild + ' ' + 'seat');
     setAdult(1);

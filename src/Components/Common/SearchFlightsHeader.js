@@ -40,7 +40,6 @@ const SearchFlightsHeader = ({
       ? e?.searchFlight?.searchFlightReturnData
       : e?.place?.searchFlightData,
   );
-  // console.log(tripType, 'tripType');
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
@@ -118,7 +117,6 @@ const SearchFlightsHeader = ({
                 onPress={() => {
                   setSelectDate(item);
                   if (tripType === 'Round-trip') {
-                    console.log(item, 'item');
                     dispatch(returnNormalDateAction(item));
                   } else {
                     dispatch(dateAction(item));

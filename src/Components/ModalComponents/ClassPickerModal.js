@@ -49,7 +49,6 @@ const ClassPickerModal = ({
                     ]}
                     onPress={() => {
                       setIndex(item?.id);
-                      console.log('Item', item);
                       setClass(item?.header);
                     }}>
                     <View style={styles.textViewStyle}>

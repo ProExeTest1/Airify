@@ -18,7 +18,6 @@ import moment from 'moment';
 
 const Congratulation = ({navigation}) => {
   const route = useRoute();
-  console.log('route', route?.params?.header);
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 

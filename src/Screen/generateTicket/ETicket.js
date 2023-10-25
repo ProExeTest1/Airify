@@ -15,7 +15,6 @@ import storage from '@react-native-firebase/storage';
 const ETicket = ({navigation: {goBack}, navigation}) => {
   const [getImage, setGetImage] = useState({});
   const FlightData = useRoute()?.params?.header;
-  console.log('getImage', getImage);
   useEffect(() => {
     handleSignUp();
   }, []);
@@ -258,7 +257,6 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    console.log(file.filePath);
     alert(file.filePath);
   };
 

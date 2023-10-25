@@ -53,7 +53,6 @@ const PaymentMethod = ({navigation}) => {
             key: documentSnapshot.id,
           });
         });
-        console.log(users);
         users.filter(item => {
           if (item.key == auth().currentUser.uid) {
             setWalletData(item);
@@ -64,15 +63,9 @@ const PaymentMethod = ({navigation}) => {
         });
       });
   };
-  console.log(
-    totalSeat * ticketPrice +
-      Math.round((totalSeat * ticketPrice * 2.8) / 100) +
-      Math.round((totalSeat * ticketPrice * 1.5) / 100),
-  );
   useEffect(() => {
     getFirebaseData();
   }, []);
-  console.log(WalletData?.wallet);
   return (
     <View style={styles.container}>
       <CommonHeader

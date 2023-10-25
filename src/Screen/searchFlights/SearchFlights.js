@@ -27,7 +27,6 @@ import moment from 'moment';
 
 const SearchFlights = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  console.log(tripType);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -226,7 +225,6 @@ const SearchFlights = ({navigation, route}) => {
           departureTime
         );
       });
-      console.log(filterData);
       filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);

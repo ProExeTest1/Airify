@@ -27,7 +27,6 @@ import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 
 const FlightDetailsScreen = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  console.log(tripType, 'tripType');
   const [savedFlight, setSavedFlight] = useState([]);
   const [press, setPress] = useState(false);
   const [value, setValue] = useState();
@@ -79,7 +78,6 @@ const FlightDetailsScreen = ({navigation, route}) => {
   };
   const saveFlightDetails = async () => {
     const uid = auth().currentUser.uid;
-    console.log('saved');
     await firestore()
       .collection('SavedFlights')
       .doc(uid)

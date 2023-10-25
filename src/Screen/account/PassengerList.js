@@ -21,7 +21,6 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
     getPassengerListData();
   }, []);
 
-  console.log(passengerList);
   const getPassengerListData = async () => {
     await firestore()
       .collection('PassengerList')

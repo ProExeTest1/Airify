@@ -36,7 +36,6 @@ const TransactionDetails = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [ticketType, setTicketType] = useState('Departure');
   const [firebaseTicketData, setFirebaseTicketData] = useState({});
-  console.log(firebaseTicketData?.Departure, 'firebaseTicket dats');
 
   const ticketId = useSelector(state => state?.showTicketData?.ticketId);
   // const ticketId = '1698034006588';

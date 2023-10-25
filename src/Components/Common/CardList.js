@@ -12,8 +12,6 @@ const CardList = ({setCartFlightData, item, index, tripType}) => {
       ? e?.searchFlight?.searchFlightReturnData
       : e?.place?.searchFlightData,
   );
-
-  // console.log(tripType);
   return (
     <TouchableOpacity
       onPress={() => {

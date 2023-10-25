@@ -53,7 +53,6 @@ const ConfirmPin = ({navigation}) => {
   const SelectDate = useSelector(e => e.date.normalDate);
   const dispatch = useDispatch();
   const checkPin = async pin => {
-    console.log(totalPaymentList.points?.pointsUse);
     if (pin.length == 4) {
       if (pin == Number(pinData)) {
         setcondti2(true);

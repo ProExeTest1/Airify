@@ -34,7 +34,6 @@ import {radioButtons} from '../../../assets/DummyData/radioButtons';
 
 const ReturnSearchFlights = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  console.log(tripType, 'hekldsfjksfj');
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [priceTargets, setPriceTargets] = useState([1000, 1500]);
@@ -66,7 +65,6 @@ const ReturnSearchFlights = ({navigation, route}) => {
     );
   };
   const SelectDate = useSelector(e => e.date.returnNormalDate);
-  console.log(SelectDate, 'selected-j----->>>');
   const onShare = async () => {
     try {
       await Share.share({
@@ -226,7 +224,6 @@ const ReturnSearchFlights = ({navigation, route}) => {
           departureTime
         );
       });
-      // console.log(filterData);
       filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);
