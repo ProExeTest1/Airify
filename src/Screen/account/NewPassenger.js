@@ -156,7 +156,7 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                 },
               ],
             });
-          navigation.navigate('PassengerList');
+          navigation.goBack();
         } else {
           alert('Passenger is already exits');
         }
@@ -235,7 +235,7 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             }),
           });
       });
-    navigation.navigate('PassengerList');
+    navigation.goBack();
   };
   return (
     <View style={styles.container}>

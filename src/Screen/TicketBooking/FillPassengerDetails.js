@@ -104,20 +104,25 @@ const FillPassengerDetails = ({navigation, route}) => {
     if (tripType === 'Round-Trip' && ticketType === 'Departure') {
       if (
         passengerLength < newArr?.length &&
-        SelectSeat?.every(i => i?.seatNo)
+        !SelectSeat?.every(i => i?.seatNo)
       ) {
         AlertConstant('Please first add passengers to click on plus icon');
       } else {
         setTicketType('Return');
       }
     } else {
-      if (
-        passengerLength < newArr?.length &&
-        SelectSeat?.every(i => i?.seatNo)
-      ) {
-        AlertConstant('Please first add passengers to click on plus icon');
-      } else {
+      console.log(
+        passengerLength,
+        newArr?.length,
+        '><><><><><><><><><><><><><',
+        newArr?.length,
+        SelectSeat.length > 0,
+        SelectSeat?.every(i => i?.seatNo != false),
+      );
+      if (SelectSeat.length > 0 && SelectSeat?.every(i => i?.seatNo != false)) {
         navigation?.navigate('PaymentConfirmation', {TripType: tripType});
+      } else {
+        AlertConstant('Please first add passengers to click on plus icon');
       }
     }
   };
@@ -179,12 +184,22 @@ const FillPassengerDetails = ({navigation, route}) => {
   const passengers = async () => {
     await firestore()
       .collection('PassengerList')
-      .doc(auth().currentUser.uid)
-      .get()
-      .then(res => {
-        setPassengerList(res?.data()?.PassengerList);
-        setPassengerLength(res?.data()?.PassengerList?.length);
+      .onSnapshot(querySnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
+          if (documentSnapshot.id == auth().currentUser.uid) {
+            setPassengerList(documentSnapshot.data()?.PassengerList);
+            setPassengerLength(documentSnapshot.data()?.PassengerList?.length);
+          }
+        });
       });
+    // await firestore()
+    //   .collection('PassengerList')
+    //   .doc(auth().currentUser.uid)
+    //   .get()
+    //   .then(res => {
+    //     setPassengerList(res?.data()?.PassengerList);
+    //     setPassengerLength(res?.data()?.PassengerList?.length);
+    //   });
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -13,9 +13,26 @@ import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {pointDummy} from '../../assets/DummyData/Data';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const AirifyPoint = ({navigation: {goBack}, navigation}) => {
+  const [pointData, setPointData] = useState({});
+
+  const getUserPointData = async () => {
+    await firestore()
+      .collection('Points')
+      .onSnapshot(querySnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
+          if (documentSnapshot.id == auth().currentUser.uid) {
+            setPointData(documentSnapshot?.data());
+          }
+        });
+      });
+  };
+  useEffect(() => {
+    getUserPointData();
+  }, []);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -36,7 +53,7 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
             <Text style={styles.mainCartTextHeader}>{strings.totalPoint}</Text>
             <Image source={Images.scanner} style={styles.scannerStyle} />
           </View>
-          <Text style={styles.pointTextStyle}>- 300</Text>
+          <Text style={styles.pointTextStyle}>{pointData?.TotalPoints}</Text>
           <Text style={styles.infoLine}>{strings.line}</Text>
         </View>
       </View>
@@ -53,7 +70,9 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
           <TouchableOpacity
             style={styles.flatListHeader}
             onPress={() => {
-              navigation.navigate('pointHistory');
+              navigation.navigate('pointHistory', {
+                header: pointData?.PointsHistory,
+              });
             }}>
             <Text
               style={{
@@ -68,15 +87,20 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
         </View>
         <FlatList
           bounces={false}
-          data={pointDummy}
+          data={pointData?.PointsHistory}
+          scrollEnabled={false}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={() => <View style={{marginBottom: hp(35)}} />}
           renderItem={({item}) => {
             return (
               <View style={styles.flatListView}>
                 <View style={styles.flatListSubView}>
-                  <Text style={styles.mainTextStyle}>{item.title}</Text>
-                  <Text style={styles.mainTextStyle}>{item.point}</Text>
+                  <Text style={styles.mainTextStyle}>
+                    {item.price.slice(0, 1) == '+'
+                      ? 'You earn points'
+                      : 'You use points'}
+                  </Text>
+                  <Text style={styles.mainTextStyle}>{item.price}</Text>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.textStyle}>{item.date} </Text>

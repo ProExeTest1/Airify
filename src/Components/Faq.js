@@ -129,7 +129,7 @@ const Faq = () => {
                 </View>
                 {item.isOpen && (
                   <View style={styles.answerStyle}>
-                    <Text styles={{color: color.black}}>{item.answer}</Text>
+                    <Text style={{color: color.black}}>{item.answer}</Text>
                   </View>
                 )}
               </View>

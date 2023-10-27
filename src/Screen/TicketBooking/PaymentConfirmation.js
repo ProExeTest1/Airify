@@ -80,7 +80,7 @@ const PatmentConfirmation = ({navigation, route}) => {
       .onSnapshot(querySnapshot => {
         const users = [];
 
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot?.data(),
             key: documentSnapshot?.id,
@@ -118,54 +118,83 @@ const PatmentConfirmation = ({navigation, route}) => {
         });
       });
   };
-  const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
+  const totalSeatPrice = returbTicketPrice * totalSeat;
+  console.log(
+    Math.round(
+      totalSeatPrice +
+        Math.round((totalSeatPrice * 2.8) / 100) +
+        Math.round((totalSeatPrice * 1.5) / 100) -
+        (Number(totalSeatPrice) * Discount) / 100 -
+        Math.floor(validPoint / 2),
+    ),
+    totalSeat * ticketPrice +
+      Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+      Math.round((totalSeat * ticketPrice * 1.5) / 100) -
+      (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) / 100 -
+      Number(Math.round(validPoint / 2)),
+  );
   const payNow = () => {
     if (PaymentMethodData?.type) {
       dispatch(
         totalPaymentListAction({
-          seat: {
-            totalSeat:
-              tripType === 'Round-Trip' ? totalSeat + totalSeat : totalSeat,
-            totalSeatPrice:
-              tripType === 'Round-Trip'
-                ? totalSeatPrice
-                : ticketPrice * totalSeat,
+          departure: {
+            seat: {
+              totalSeat: totalSeat,
+              totalSeatPrice: ticketPrice * totalSeat,
+            },
+            travalInsurance: Math.round((totalSeat * ticketPrice * 2.8) / 100),
+            tax: Math.round((totalSeat * ticketPrice * 1.5) / 100),
+            points: {
+              pointsUse: Math.round((validPoint * 100) / 2),
+              havePoint: havePonts / 2,
+              getPoint: (totalSeat * ticketPrice) / 2,
+              usePointPrice: -Math.round(validPoint / 2),
+            },
+            discount: {
+              ValidDiscount: DiscountData?.id ? true : false,
+              discountData: DiscountData,
+              useDiscountPrice:
+                (Number(totalSeat) * Number(ticketPrice) * Discount) / 100,
+            },
+            totalPayment:
+              totalSeat * ticketPrice +
+              Math.round((totalSeat * ticketPrice * 2.8) / 100) +
+              Math.round((totalSeat * ticketPrice * 1.5) / 100) -
+              (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) /
+                100 -
+              Number(Math.round(validPoint / 2)),
           },
-          travalInsurance:
-            tripType === 'Round-Trip'
-              ? Math.round((totalSeatPrice * 2.8) / 100)
-              : Math.round((totalSeat * ticketPrice * 2.8) / 100),
-          tax:
-            tripType === 'Round-Trip'
-              ? Math.round((totalSeatPrice * 1.5) / 100)
-              : Math.round((totalSeat * ticketPrice * 1.5) / 100),
-          points: {
-            pointsUse: validPoint * 100,
-            havePoint: havePonts,
-            getPoint: ticketPrice / 2,
-            usePointPrice: -validPoint,
-          },
-          discount: {
-            ValidDiscount: DiscountData?.id ? true : false,
-            discountData: DiscountData,
-            useDiscountPrice:
-              tripType === 'Round-Trip'
-                ? (Number(totalSeatPrice) * Discount) / 100
-                : (Number(totalSeat) * Number(ticketPrice) * Discount) / 100,
-          },
-          totalPayment:
-            tripType === 'Round-Trip'
-              ? totalSeatPrice +
-                Math.round((totalSeatPrice * 2.8) / 100) +
-                Math.round((totalSeatPrice * 1.5) / 100) -
-                (Number(totalSeatPrice) * Discount) / 100 -
-                Number(validPoint)
-              : totalSeat * ticketPrice +
-                Math.round((totalSeat * ticketPrice * 2.8) / 100) +
-                Math.round((totalSeat * ticketPrice * 1.5) / 100) -
-                (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) /
-                  100 -
-                Number(validPoint),
+          return:
+            tripType !== 'Round-Trip'
+              ? false
+              : {
+                  seat: {
+                    totalSeat: totalSeat,
+                    totalSeatPrice: totalSeatPrice,
+                  },
+                  travalInsurance: Math.round((totalSeatPrice * 2.8) / 100),
+
+                  tax: Math.round((totalSeatPrice * 1.5) / 100),
+
+                  points: {
+                    pointsUse: Math.round((validPoint * 100) / 2),
+                    havePoint: havePonts / 2,
+                    getPoint: totalSeatPrice / 2,
+                    usePointPrice: -Math.round(validPoint / 2),
+                  },
+                  discount: {
+                    ValidDiscount: DiscountData?.id ? true : false,
+                    discountData: DiscountData,
+                    useDiscountPrice: (Number(totalSeatPrice) * Discount) / 100,
+                  },
+                  totalPayment: Math.round(
+                    totalSeatPrice +
+                      Math.round((totalSeatPrice * 2.8) / 100) +
+                      Math.round((totalSeatPrice * 1.5) / 100) -
+                      (Number(totalSeatPrice) * Discount) / 100 -
+                      Math.round(validPoint / 2),
+                  ),
+                },
         }),
       );
       navigation?.navigate('ConfirmPin', {TripType: tripType});

@@ -30,33 +30,31 @@ const ExpiredSavedAddress = ({onPress}) => {
     await firestore()
       .collection('SavedFlights')
       .onSnapshot(querySnapshot => {
-        const users = [];
+        let users;
         querySnapshot?.forEach(documentSnapshot => {
-          users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            users = documentSnapshot?.data()?.savedFlights;
+          }
         });
-        users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
-            const tmp = item?.savedFlights?.filter(i => {
-              (addressDate = moment(i?.date, 'ddd,MMM DD YYYY').format(
-                'MM/DD/YYYY',
-              )),
-                (todayDate = new Date().toLocaleDateString());
-              if (moment(todayDate).isSameOrBefore(addressDate)) {
-                return false;
-              } else {
-                return [expireAddressData, ...expireAddressData, i];
-              }
-            });
-            setExpireAddressData(tmp);
-            dispatch(expiredFlight(tmp));
-            return false;
+        let activeData = users?.filter(item => {
+          if (
+            Date.now() >=
+            new Date(
+              moment(
+                `${item?.date?.split(',')[1]} ${Number(
+                  item?.departureTime.split(':')[0],
+                )}:${Number(item?.departureTime?.split(':')[1])}:00`,
+                'MMM DD YYYY HH:mm:ss',
+              )?.format('YYYY-MM-DD HH:mm:ss'),
+            )?.valueOf()
+          ) {
+            return true;
           } else {
             return false;
           }
         });
+        setExpireAddressData(activeData);
+        dispatch(expiredFlight(activeData));
       });
   };
   return (

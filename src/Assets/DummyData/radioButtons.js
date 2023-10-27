@@ -43,3 +43,38 @@ export const genderRatioButton = [
     label: 'Other',
   },
 ];
+
+export const cancelBookingRadio = [
+  {
+    id: '1',
+    label: 'Medical Emergency',
+  },
+  {
+    id: '2',
+    label: 'Change in Travel Plans',
+  },
+  {
+    id: '3',
+    label: 'Family Emergency',
+  },
+  {
+    id: '4',
+    label: 'Flight Cancellation by Airline',
+  },
+  {
+    id: '5',
+    label: 'Goverment Travel Restrictions',
+  },
+  {
+    id: '6',
+    label: 'Duplicate Booking',
+  },
+  {
+    id: '7',
+    label: "Passenger's Death",
+  },
+  {
+    id: '8',
+    label: 'Others',
+  },
+];

@@ -66,6 +66,7 @@ const TextInputPassenger = ({
           editable={editable}
           placeholder={placeholder}
           value={value}
+          maxLength={placeholder == strings.Phone ? 10 : 100}
           onChangeText={onChangeText}
           placeholderTextColor={'#6e6e6e'}
           cursorColor={color.commonBlue}
