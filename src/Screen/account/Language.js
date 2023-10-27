@@ -92,7 +92,11 @@ const Language = ({navigation: {goBack}}) => {
                 }}>
                 <View style={styles.textViewStyle}>
                   <Text style={styles.textStyle}>{item?.emoji}</Text>
-                  <Text style={[styles.textStyle, {textAlign: 'center'}]}>
+                  <Text
+                    style={[
+                      styles.textStyle,
+                      {textAlign: 'center', color: color.black},
+                    ]}>
                     {item?.language}
                   </Text>
                 </View>

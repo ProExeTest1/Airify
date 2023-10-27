@@ -42,7 +42,12 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
       </View>
       <View style={styles.bodyView}>
         <View style={styles.flatListHeader}>
-          <Text style={{fontSize: fontSize(20), fontWeight: 'bold'}}>
+          <Text
+            style={{
+              fontSize: fontSize(20),
+              fontWeight: 'bold',
+              color: color.black,
+            }}>
             {strings.pointHistory}
           </Text>
           <TouchableOpacity
@@ -50,7 +55,12 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
             onPress={() => {
               navigation.navigate('pointHistory');
             }}>
-            <Text style={{color: color.commonBlue, fontWeight: 'bold'}}>
+            <Text
+              style={{
+                color: color.commonBlue,
+                fontWeight: 'bold',
+                color: color.black,
+              }}>
               {strings.ViewAll}
             </Text>
             <Image source={Images.upArrow} style={styles.arrowStyle} />
@@ -69,9 +79,9 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
                   <Text style={styles.mainTextStyle}>{item.point}</Text>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text>{item.date} </Text>
+                  <Text style={styles.textStyle}>{item.date} </Text>
                   <View style={styles.dotStyle} />
-                  <Text> {item.time}</Text>
+                  <Text style={styles.textStyle}> {item.time}</Text>
                 </View>
               </View>
             );
@@ -152,6 +162,10 @@ const styles = StyleSheet.create({
   },
   mainTextStyle: {
     fontWeight: 'bold',
+    color: color.black,
+  },
+  textStyle: {
+    color: color.black,
   },
 });
 

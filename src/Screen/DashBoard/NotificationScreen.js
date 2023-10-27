@@ -89,7 +89,9 @@ const NotificationScreen = ({navigation}) => {
           renderSectionHeader={({section: {time}}) => (
             <View style={styles.listHeaderViewStyle}>
               <Text style={styles.header}>{time}</Text>
-              <View style={styles.listHeaderLineStyle} />
+              <View style={styles.listHeaderLineStyle}>
+                {/* <Text>hello</Text> */}
+              </View>
             </View>
           )}
         />
@@ -185,11 +187,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   forwardIconStyle: {
-    right: 20,
     width: hp(4.4),
     height: wp(4.4),
-    height: wp(4.4),
-    width: hp(4.4),
   },
   listHeaderViewStyle: {
     alignItems: 'center',
@@ -197,10 +196,8 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(3),
   },
   listHeaderLineStyle: {
-    right: 0,
+    borderWidth: 0.7,
     height: 0,
-    borderWidth: 0.5,
-    position: 'absolute',
     marginHorizontal: wp(3),
     borderColor: color.grey,
     flex: 1,

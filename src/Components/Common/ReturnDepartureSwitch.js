@@ -3,11 +3,11 @@ import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 
-const ReturnDepartureSwitch = ({onPress, ticketType}) => {
+const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
   return (
     <View style={styles.optionViewStyle}>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onPress1}
         style={[
           styles.optionTouchStyle,
           {
@@ -24,7 +24,7 @@ const ReturnDepartureSwitch = ({onPress, ticketType}) => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onPress2}
         style={[
           styles.optionTouchStyle,
           {

@@ -58,7 +58,7 @@ const Security = ({navigation: {goBack}}) => {
             return (
               <View style={styles.FlatListView}>
                 <Text style={styles.titleStyle}>{item.title}</Text>
-                {item.title == 'Device MAnagement' ? (
+                {item.title == 'Device Management' ? (
                   <TouchableOpacity>
                     <Image
                       resizeMode="contain"
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
   flatListBodyViewStyle: {
     paddingHorizontal: wp(4),

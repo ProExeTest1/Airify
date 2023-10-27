@@ -191,7 +191,7 @@ const HomeScreen = ({navigation}) => {
         <SafeAreaView style={styles.headerStyle}>
           <View style={styles.profilepicViewStyle}>
             {loader ? (
-              <Loader color={'blue'} />
+              <Loader color={color.white} />
             ) : (
               <Image
                 source={{uri: userData?.profileImageURL}}

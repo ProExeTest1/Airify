@@ -16,6 +16,7 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import CommonDropDown from '../../components/AccountComponent/CommonDropDown';
 import TextInputPassenger from '../../components/AccountComponent/TextInputPassenger';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const NewPassenger = ({navigation: {goBack}, navigation}) => {
   const route = useRoute();
@@ -54,61 +55,61 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
 
   const addNewPassengerList = async () => {
     if (!firstName.trim().match('[a-zA-Z ]{3,30}')) {
-      alert('Please Enter First Name');
+      AlertConstant('Please Enter First Name');
       return;
     } else if (!lastName.trim().match('[a-zA-Z ]{3,30}')) {
-      alert('Please Enter last name');
+      AlertConstant('Please Enter last name');
       return;
     } else if (!selectedTitle.trim()) {
-      alert('Please select title');
+      AlertConstant('Please select title');
       return;
     } else if (!birthDate.trim()) {
-      alert('Please Enter Date of Birth');
+      AlertConstant('Please Enter Date of Birth');
       return;
     } else if (!countryCode.trim()) {
-      alert('Please select country code');
+      AlertConstant('Please select country code');
       return;
     } else if (!phoneNo.trim().match('[0-9]{10}')) {
-      alert('Please Enter Phone Number');
+      AlertConstant('Please Enter Phone Number');
       return;
     } else if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      alert('Please Enter Email Address');
+      AlertConstant('Please Enter Email Address');
       return;
     } else if (!identityCardNo.trim().match('[0-9]')) {
-      alert('Please Enter Identity Card Number');
+      AlertConstant('Please Enter Identity Card Number');
       return;
     } else if (!identityCardIssueCountry.trim()) {
-      alert('Please Select Identity Card Issue Country');
+      AlertConstant('Please Select Identity Card Issue Country');
       return;
     } else if (!identityCardIssueDate.trim()) {
-      alert('Please Select Identity Card Issue Date');
+      AlertConstant('Please Select Identity Card Issue Date');
       return;
     } else if (!identityCardExpiryDate.trim()) {
-      alert('Please Select Identity Card Expiry Date');
+      AlertConstant('Please Select Identity Card Expiry Date');
       return;
     } else if (!passportNo.trim().match('[A-PR-WY-Z][1-9]\\d\\s?\\d{4}[1-9]')) {
-      alert('Please Enter Passport Number');
+      AlertConstant('Please Enter Passport Number');
       return;
     } else if (!passportIssueCountry.trim()) {
-      alert('Please Select Passport Issue Country');
+      AlertConstant('Please Select Passport Issue Country');
       return;
     } else if (!passportExpiryDate.trim()) {
-      alert('Please Select Passport Expiry Date');
+      AlertConstant('Please Select Passport Expiry Date');
       return;
     } else if (!nationality.trim()) {
-      alert('Please Select Nationality');
+      AlertConstant('Please Select Nationality');
       return;
     } else if (!drivingLicenseNo.trim().match('[A-Za-z][0-9/W/]{2,20}')) {
-      alert('Please Enter Driving License Number');
+      AlertConstant('Please Enter Driving License Number');
       return;
     } else if (!drivingLicenseIssueCountry.trim()) {
-      alert('Please Select driving license issue country');
+      AlertConstant('Please Select driving license issue country');
       return;
     } else if (!drivingLicenseIssueDate.trim()) {
-      alert('Please Select driving license issue Date');
+      AlertConstant('Please Select driving license issue Date');
       return;
     } else if (!drivingLicenseExpiryDate.trim()) {
-      alert('Please Select driving license Expiry Date');
+      AlertConstant('Please Select driving license Expiry Date');
       return;
     } else {
       mode == 'Edit' ? UpdatePassengerData() : addPassengerData();
@@ -162,34 +163,36 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
       });
   };
   const EditData = () => {
-    setEmail(route.params.passengerData.Email);
-    setLastName(route.params.passengerData.LastName);
-    setFirstName(route.params.passengerData.FirstName);
-    setSelectedTitle(route.params.passengerData.Title);
-    setBirthDate(route.params.passengerData.BirthDate);
-    setPhoneNo(route.params.passengerData.PhoneNumber);
-    setNationality(route.params.passengerData.Nationality);
-    setCountryCode(route.params.passengerData.CountryCode);
-    setPassportNo(route.params.passengerData.PassportNumber);
-    setIdentityCardNo(route.params.passengerData.IdentityCardNumber);
-    setDrivingLicenseNo(route.params.passengerData.DrivingLicenseNumber);
-    setPassportExpiryDate(route.params.passengerData.PassportExpiryDate);
-    setPassportIssueCountry(route.params.passengerData.PassportIssueCountry);
-    setIdentityCardIssueDate(route.params.passengerData.IdentityCardIssueDate);
+    setEmail(route?.params?.passengerData?.Email);
+    setLastName(route?.params?.passengerData?.LastName);
+    setFirstName(route?.params?.passengerData?.FirstName);
+    setSelectedTitle(route?.params?.passengerData?.Title);
+    setBirthDate(route?.params?.passengerData?.BirthDate);
+    setPhoneNo(route?.params?.passengerData?.PhoneNumber);
+    setNationality(route?.params?.passengerData?.Nationality);
+    setCountryCode(route?.params?.passengerData?.CountryCode);
+    setPassportNo(route?.params?.passengerData?.PassportNumber);
+    setIdentityCardNo(route?.params?.passengerData?.IdentityCardNumber);
+    setDrivingLicenseNo(route?.params?.passengerData?.DrivingLicenseNumber);
+    setPassportExpiryDate(route?.params?.passengerData?.PassportExpiryDate);
+    setPassportIssueCountry(route?.params?.passengerData?.PassportIssueCountry);
+    setIdentityCardIssueDate(
+      route?.params?.passengerData?.IdentityCardIssueDate,
+    );
     setIdentityCardIssueCountry(
-      route.params.passengerData.IdentityCardIssueCountry,
+      route?.params?.passengerData?.IdentityCardIssueCountry,
     );
     setIdentityCardExpiryDate(
-      route.params.passengerData.IdentityCardExpiryDate,
+      route?.params?.passengerData?.IdentityCardExpiryDate,
     );
     setDrivingLicenseIssueCountry(
-      route.params.passengerData.DrivingLicenseIssueCountry,
+      route?.params?.passengerData?.DrivingLicenseIssueCountry,
     );
     setDrivingLicenseIssueDate(
-      route.params.passengerData.DrivingLicenseIssueDate,
+      route?.params?.passengerData?.DrivingLicenseIssueDate,
     );
     setDrivingLicenseExpiryDate(
-      route.params.passengerData.DrivingLicenseExpiryDate,
+      route?.params?.passengerData?.DrivingLicenseExpiryDate,
     );
   };
 
@@ -248,7 +251,11 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
           mode == 'Edit' ? strings.editPassenger : strings.newPassenger
         }
         navigation1={() => {
-          goBack();
+          if (route?.params?.From === 'Fill_Details') {
+            navigation.navigate('FillPassengerDetails');
+          } else {
+            goBack();
+          }
         }}
       />
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -297,7 +304,7 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
           </View>
 
           <View style={styles.subContainerView}>
-            <Text style={styles.lineText}>{strings.contactDetail}</Text>
+            <Text style={styles.lineText}>{strings?.contactDetail}</Text>
             <View style={styles.line} />
           </View>
           <View style={{flexDirection: 'row', flex: 1}}>

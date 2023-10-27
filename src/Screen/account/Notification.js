@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
   flatListBodyViewStyle: {
     flex: 1,

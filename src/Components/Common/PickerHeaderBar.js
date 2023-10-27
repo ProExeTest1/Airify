@@ -69,7 +69,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flex: 1,
     alignSelf: 'center',
-    height: Platform.OS == 'ios' ? hp(6) : hp(0),
-    marginBottom: Platform.OS === 'android' ? hp(3) : null,
   },
 });

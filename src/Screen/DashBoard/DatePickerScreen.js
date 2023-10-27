@@ -189,7 +189,7 @@ const DatePickerScreen = ({navigation, route}) => {
           <View
             style={[
               styles.ReturndateViewStyle,
-              {paddingHorizontal: returnPress && press ? wp(6) : wp(7)},
+              {paddingHorizontal: returnPress && press ? wp(3) : wp(7)},
             ]}>
             <Text style={styles.returnDateTextStyle}>
               {press && returnPress && returnday !== undefined
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: color.commonBlue,
     justifyContent: 'center',
-    paddingHorizontal: wp(6),
+    paddingHorizontal: wp(3),
     paddingVertical: hp(1.8),
     marginVertical: hp(2.2),
   },

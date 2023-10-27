@@ -209,7 +209,8 @@ const FillPassengerDetails = ({navigation, route}) => {
       <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
       {tripType === 'Round-Trip' ? (
         <ReturnDepartureSwitch
-          onPress={ontoggleSwitch}
+          onPress1={() => setTicketType('Departure')}
+          onPress2={() => setTicketType('Return')}
           ticketType={ticketType}
         />
       ) : null}
@@ -266,7 +267,7 @@ const FillPassengerDetails = ({navigation, route}) => {
             header={strings.passenger_details}
             imageStyle={styles.plusIconStyle}
             onPress={() => {
-              navigation.navigate('NewPassenger');
+              navigation.navigate('NewPassenger', {From: 'Fill_Details'});
             }}
           />
           <View style={styles.passengerInputViewStyle}>

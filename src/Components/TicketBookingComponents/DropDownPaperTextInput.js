@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -69,9 +70,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 1,
     borderRadius: 10,
+    alignItems: 'center',
     borderColor: '#e6e6e6',
     paddingHorizontal: wp(2),
-    paddingVertical: hp(1.8),
+    paddingVertical: Platform.OS === 'android' ? hp(0) : hp(1.8),
     marginVertical: hp(1),
   },
   dropDownIconStyle: {

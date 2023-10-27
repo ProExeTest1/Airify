@@ -311,6 +311,7 @@ const styles = StyleSheet.create({
   listTitleTextStyle: {
     fontWeight: '600',
     fontSize: fontSize(16),
+    color: color.black,
   },
   listDiscriptionTextStyle: {
     color: color.black,
@@ -332,6 +333,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: fontSize(14),
+    color: color.black,
   },
   listConditionStyle: {
     flexDirection: 'row',

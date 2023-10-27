@@ -176,6 +176,7 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
           <View style={styles.genderRadioButtonViewStyle}>
             <FlatList
               horizontal
+              bounces={false}
               data={genderRatioButton}
               renderItem={({item, index}) => (
                 <View style={{paddingVertical: hp(1)}}>
@@ -186,7 +187,11 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
                     color={color.black}
                     onPress={() => setSelectedData(item)}
                     selected={item.id === selectedData?.id}
-                    labelStyle={{fontSize: fontSize(14), fontWeight: '400'}}
+                    labelStyle={{
+                      fontSize: fontSize(14),
+                      fontWeight: '400',
+                      color: color.black,
+                    }}
                   />
                 </View>
               )}

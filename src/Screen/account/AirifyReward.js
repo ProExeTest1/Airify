@@ -83,7 +83,9 @@ const AirifyReward = ({navigation: {goBack}}) => {
         </View>
       </View>
       <View style={styles.referralCodeView}>
-        <Text style={{fontSize: fontSize(16)}}>{strings.copyCode}</Text>
+        <Text style={{fontSize: fontSize(16), color: color.black}}>
+          {strings.copyCode}
+        </Text>
         <View style={styles.textView}>
           <Text style={styles.promocodeTextStyle}>{promocode}</Text>
           <TouchableOpacity onPress={() => copyToClipboard()}>

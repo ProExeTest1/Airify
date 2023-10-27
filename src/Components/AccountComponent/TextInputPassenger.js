@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 
 import {strings} from '../../helper/Strings';
@@ -66,6 +67,8 @@ const TextInputPassenger = ({
           placeholder={placeholder}
           value={value}
           onChangeText={onChangeText}
+          placeholderTextColor={'#6e6e6e'}
+          cursorColor={color.commonBlue}
           style={[styles.passengerTextInputStyle, passengerTextInputStyle]}
         />
         {placeholder == strings.DateBirth ||
@@ -100,18 +103,21 @@ const styles = StyleSheet.create({
   passengerTextInputStyle: {
     flex: 1,
     fontSize: fontSize(16),
+    color: color.black,
   },
   textInputLabelStyle: {
     fontWeight: '500',
     fontSize: fontSize(14),
     marginVertical: hp(1.5),
     marginHorizontal: wp(1),
+    color: color.black,
   },
   inputView: {
     borderRadius: wp(4),
     flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: wp(6),
-    paddingVertical: hp(2.5),
+    paddingVertical: Platform.OS === 'ios' ? hp(2.5) : hp(0.5),
     backgroundColor: color.lightWhite,
   },
 });

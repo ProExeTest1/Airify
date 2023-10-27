@@ -129,7 +129,7 @@ const Faq = () => {
                 </View>
                 {item.isOpen && (
                   <View style={styles.answerStyle}>
-                    <Text>{item.answer}</Text>
+                    <Text styles={{color: color.black}}>{item.answer}</Text>
                   </View>
                 )}
               </View>
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold',
     fontSize: fontSize(16),
+    color: color.black,
   },
   answerStyle: {
     marginTop: hp(2),
@@ -184,6 +185,9 @@ const styles = StyleSheet.create({
   flatListView: {
     marginTop: hp(2),
     marginBottom: hp(8),
+  },
+  textStyle1: {
+    color: color.black,
   },
 });
 

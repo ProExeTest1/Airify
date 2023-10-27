@@ -134,11 +134,11 @@ const SearchFlightsFilter = ({navigation}) => {
     setAirlinesList([]);
   };
   const SelectAll = () => {
-    setAirlinesList(func().map(i => i.airlineName));
+    setAirlinesList(func().map(i => i?.airlineName));
   };
   const close = () => {
     dispatch(SearchFlightFilterData({}));
-    navigation.navigate('SearchFlights');
+    navigation?.navigate('SearchFlights');
   };
   const applySortdata = () => {
     dispatch(
@@ -153,20 +153,20 @@ const SearchFlightsFilter = ({navigation}) => {
           FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
         numberOfStopsData:
           numberOfStopsData.length > 0 ? numberOfStopsData : null,
-        priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+        priceRange: priceTargets1?.length > 0 ? priceTargets1 : null,
         stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
         refundAndRescheduleList:
-          RefundAndRescheduleList.length > 0 ? RefundAndRescheduleList : null,
+          RefundAndRescheduleList?.length > 0 ? RefundAndRescheduleList : null,
       }),
     );
-    navigation.navigate('SearchFlights');
+    navigation?.navigate('SearchFlights');
   };
   return (
     <View style={styles.body}>
       <PickerHeaderBar
         headerName={'Filter'}
         navigation={() =>
-          navigation.navigate('SearchFlights')
+          navigation?.navigate('SearchFlights')
         }></PickerHeaderBar>
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -556,9 +556,11 @@ const styles = StyleSheet.create({
   boxTitle: {
     fontWeight: 'bold',
     fontSize: fontSize(17),
+    color: color.black,
   },
   boxVelue: {
     fontSize: fontSize(18),
+    color: color.black,
   },
   StopsButBody: {
     flexDirection: 'row',
@@ -577,6 +579,7 @@ const styles = StyleSheet.create({
   StopsText: {
     fontWeight: '500',
     fontSize: fontSize(16),
+    color: color.black,
   },
   AirlinesText: {
     fontWeight: '500',
@@ -603,5 +606,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
 });

@@ -31,7 +31,7 @@ const ExpiredSavedAddress = ({onPress}) => {
       .collection('SavedFlights')
       .onSnapshot(querySnapshot => {
         const users = [];
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
@@ -61,7 +61,7 @@ const ExpiredSavedAddress = ({onPress}) => {
   };
   return (
     <View style={styles.container}>
-      {expireAddressData.length > 0 ? (
+      {expireAddressData?.length > 0 ? (
         <FlatList
           bounces={false}
           data={expireAddressData}
@@ -124,7 +124,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                   <Text style={styles.FlightsPlaseName}>
                     {item?.departureShortForm}
                   </Text>
-                  <Text style={styles.FlightsPlaseImgText}>{item.stops}</Text>
+                  <Text style={styles.FlightsPlaseImgText}>{item?.stops}</Text>
                   <Text style={styles.FlightsPlaseName}>
                     {item?.destinationShortForm}
                   </Text>

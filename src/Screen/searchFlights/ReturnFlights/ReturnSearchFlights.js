@@ -31,6 +31,7 @@ import {RadioButton} from 'react-native-radio-buttons-group';
 import {fontSize, hp, wp} from '../../../helper/Constant';
 import {color} from '../../../helper/ColorConstant';
 import {radioButtons} from '../../../assets/DummyData/radioButtons';
+import {AlertConstant} from '../../../helper/AlertConstant';
 
 const ReturnSearchFlights = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -64,27 +65,27 @@ const ReturnSearchFlights = ({navigation, route}) => {
       ),
     );
   };
-  const SelectDate = useSelector(e => e.date.returnNormalDate);
+  const SelectDate = useSelector(e => e?.date?.returnNormalDate);
   const onShare = async () => {
     try {
       await Share.share({
         message: 'hiiii',
-        url: SearchFlightData.filter(i => {
+        url: SearchFlightData?.filter(i => {
           if (
-            `${new Date().toLocaleString().split(',')[0]}` == SelectDate?.date
+            `${new Date()?.toLocaleString()?.split(',')[0]}` == SelectDate?.date
           ) {
             return (
-              i.pickTime >
-              `${new Date(Date.now() + 1800000).getHours()}:${new Date(
-                Date.now() + 1800000,
-              ).getMinutes()}`
+              i?.pickTime >
+              `${new Date(Date?.now() + 1800000)?.getHours()}:${new Date(
+                Date?.now() + 1800000,
+              )?.getMinutes()}`
             );
           }
           return i;
         }),
       });
     } catch (error) {
-      Alert.alert(error.message);
+      AlertConstant(error?.message);
     }
   };
 
@@ -94,7 +95,7 @@ const ReturnSearchFlights = ({navigation, route}) => {
       departureTime:
         ToggleSwitchBut1 !== true
           ? false
-          : departureTime.time === undefined
+          : departureTime?.time === undefined
           ? false
           : departureTime,
       onlyDirectFlights: ToggleSwitchBut2,
@@ -117,24 +118,24 @@ const ReturnSearchFlights = ({navigation, route}) => {
   }
 
   const applySortdaata = () => {
-    const sortData = SearchFlightData.sort((a, b) => {
+    const sortData = SearchFlightData?.sort((a, b) => {
       let aData =
-        a.day === 1
-          ? Number(a.lendTime.replaceAll(':', '.'))
-          : Number(a.lendTime.replaceAll(':', '.')) + 24;
+        a?.day === 1
+          ? Number(a?.lendTime?.replaceAll(':', '.'))
+          : Number(a?.lendTime?.replaceAll(':', '.')) + 24;
       let bData =
-        b.day === 1
-          ? Number(b.lendTime.replaceAll(':', '.'))
-          : Number(b.lendTime.replaceAll(':', '.')) + 24;
+        b?.day === 1
+          ? Number(b?.lendTime?.replaceAll(':', '.'))
+          : Number(b?.lendTime?.replaceAll(':', '.')) + 24;
       if (selectedData?.label === 'Lowest Price') {
         return (
-          Number(a.price.slice(1).replaceAll(',', '')) -
-          Number(b.price.slice(1).replaceAll(',', ''))
+          Number(a?.price?.slice(1)?.replaceAll(',', '')) -
+          Number(b?.price?.slice(1)?.replaceAll(',', ''))
         );
       } else if (selectedData?.label === 'Direct Flights First') {
         return (
-          Number(a.stop === 'Direct' ? 0 : a.stop.slice(0, 1)) -
-          Number(b.stop === 'Direct' ? 0 : b.stop.slice(0, 1))
+          Number(a?.stop === 'Direct' ? 0 : a?.stop.slice(0, 1)) -
+          Number(b?.stop === 'Direct' ? 0 : b?.stop.slice(0, 1))
         );
       } else if (selectedData?.label === 'Earliest Departure') {
         return aData - bData;
@@ -142,18 +143,18 @@ const ReturnSearchFlights = ({navigation, route}) => {
         return bData - aData;
       } else if (selectedData?.label === 'Earliest Arrival') {
         return (
-          Number(a.pickTime.replaceAll(':', '.')) -
-          Number(b.pickTime.replaceAll(':', '.'))
+          Number(a?.pickTime?.replaceAll(':', '.')) -
+          Number(b?.pickTime?.replaceAll(':', '.'))
         );
       } else if (selectedData?.label === 'Latest Arrival') {
         return (
-          Number(b.pickTime.replaceAll(':', '.')) -
-          Number(a.pickTime.replaceAll(':', '.'))
+          Number(b?.pickTime?.replaceAll(':', '.')) -
+          Number(a?.pickTime?.replaceAll(':', '.'))
         );
       } else if (selectedData?.label === 'Shortest Duration') {
         return (
-          Number(a.totalHours.replaceAll('h ', '').slice(0, -1)) -
-          Number(b.totalHours.replaceAll('h ', '').slice(0, -1))
+          Number(a?.totalHours?.replaceAll('h ', '')?.slice(0, -1)) -
+          Number(b?.totalHours?.replaceAll('h ', '')?.slice(0, -1))
         );
       }
     });
@@ -167,51 +168,51 @@ const ReturnSearchFlights = ({navigation, route}) => {
 
   useEffect(() => {
     if (searchFlightFilterData?.priceRange) {
-      const filterData = SearchFlightData.filter(item => {
+      const filterData = SearchFlightData?.filter(item => {
         let priceRange =
           searchFlightFilterData?.priceRange[0] <
-            Number(item.price.slice(1).replaceAll(',', '')) &&
+            Number(item?.price?.slice(1).replaceAll(',', '')) &&
           searchFlightFilterData?.priceRange[1] >
-            Number(item.price.slice(1).replaceAll(',', ''));
+            Number(item?.price?.slice(1)?.replaceAll(',', ''));
 
         let numberOfStops =
           searchFlightFilterData?.numberOfStopsData === '2+ Stop'
-            ? Number(item.stop.slice(0, 1)) >= 2
-            : searchFlightFilterData?.numberOfStopsData === item.stop;
+            ? Number(item?.stop?.slice(0, 1)) >= 2
+            : searchFlightFilterData?.numberOfStopsData === item?.stop;
 
         let airlinesList =
-          searchFlightFilterData.airlinesList !== null
-            ? searchFlightFilterData.airlinesList.some(
-                i => i === item.airlineName,
+          searchFlightFilterData?.airlinesList !== null
+            ? searchFlightFilterData?.airlinesList?.some(
+                i => i === item?.airlineName,
               )
             : true;
 
-        let flightDurationTime = item.totalHours.slice(0, -1).split('h ');
+        let flightDurationTime = item?.totalHours?.slice(0, -1)?.split('h ');
         let flightDuration =
           searchFlightFilterData?.flightDuration[0] <=
             Number(flightDurationTime[0]) &&
           searchFlightFilterData?.flightDuration[1] >
             Number(flightDurationTime[0]);
 
-        let arrivalTimeList = item.lendTime.slice(0, 2);
+        let arrivalTimeList = item?.lendTime.slice(0, 2);
         let searchFlightFilterArrival =
           searchFlightFilterData?.arrivalTime?.time.split(' - ');
         let arrivalTime =
-          searchFlightFilterData.arrivalTime !== null
-            ? Number(searchFlightFilterArrival[0].slice(0, 2)) <=
+          searchFlightFilterData?.arrivalTime !== null
+            ? Number(searchFlightFilterArrival[0]?.slice(0, 2)) <=
                 Number(arrivalTimeList) &&
-              Number(searchFlightFilterArrival[1].slice(0, 2)) >
+              Number(searchFlightFilterArrival[1]?.slice(0, 2)) >
                 Number(arrivalTimeList)
             : true;
 
-        let departureTimeList = item.pickTime.slice(0, 2);
+        let departureTimeList = item?.pickTime.slice(0, 2);
         let searchFlightFilterdeparture =
           searchFlightFilterData?.departureTime?.time.split(' - ');
         let departureTime =
-          searchFlightFilterData.departureTime !== null
-            ? Number(searchFlightFilterdeparture[0].slice(0, 2)) <=
+          searchFlightFilterData?.departureTime !== null
+            ? Number(searchFlightFilterdeparture[0]?.slice(0, 2)) <=
                 Number(departureTimeList) &&
-              Number(searchFlightFilterdeparture[1].slice(0, 2)) >
+              Number(searchFlightFilterdeparture[1]?.slice(0, 2)) >
                 Number(departureTimeList)
             : true;
 
@@ -224,7 +225,9 @@ const ReturnSearchFlights = ({navigation, route}) => {
           departureTime
         );
       });
-      filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
+      filterData?.length > 0
+        ? setSearchFlightCardData(filterData)
+        : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);
     }
@@ -261,16 +264,16 @@ const ReturnSearchFlights = ({navigation, route}) => {
       <View style={styles.sortBody}>
         <TouchableOpacity
           onPress={() => setModalVisible2(true)}
-          style={styles.sortImgBody}>
-          <Image style={styles.sortImg} source={Images.sortIcon} />
-          <Text style={styles.sortText}>Sort</Text>
+          style={styles?.sortImgBody}>
+          <Image style={styles?.sortImg} source={Images.sortIcon} />
+          <Text style={styles?.sortText}>Sort</Text>
         </TouchableOpacity>
-        <View style={styles.sortLine}></View>
+        <View style={styles?.sortLine}></View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SearchFlightsFilter')}
-          style={styles.sortImgBody}>
-          <Image style={styles.sortImg} source={Images.filterIcon} />
-          <Text style={styles.sortText}>{strings.filter}</Text>
+          onPress={() => navigation?.navigate('SearchFlightsFilter')}
+          style={styles?.sortImgBody}>
+          <Image style={styles?.sortImg} source={Images?.filterIcon} />
+          <Text style={styles?.sortText}>{strings?.filter}</Text>
         </TouchableOpacity>
       </View>
 
@@ -311,12 +314,12 @@ const ReturnSearchFlights = ({navigation, route}) => {
               renderItem={({item, index}) => (
                 <View style={{paddingVertical: hp(1)}}>
                   <RadioButton
-                    key={item.id}
-                    selected={item.id === selectedData?.id}
+                    key={item?.id}
+                    selected={item?.id === selectedData?.id}
                     onPress={() => setSelectedData(item)}
-                    label={item.label}
+                    label={item?.label}
                     labelStyle={{fontSize: fontSize(18), fontWeight: '500'}}
-                    color={color.commonBlue}
+                    color={color?.commonBlue}
                   />
                 </View>
               )}

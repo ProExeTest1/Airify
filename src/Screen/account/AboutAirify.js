@@ -37,6 +37,7 @@ const AboutAirify = ({navigation: {goBack}}) => {
       </View>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <FlatList
+          bounces={false}
           data={aboutAirifyData}
           renderItem={({item}) => {
             return (

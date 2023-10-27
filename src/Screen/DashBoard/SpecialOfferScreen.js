@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'blue',
-    marginVertical: Platform.OS === 'ios' ? hp(4) : null,
+    marginVertical: Platform.OS === 'ios' ? hp(4) : hp(2),
   },
   claimDiscountFontStyle: {
     fontWeight: 'bold',

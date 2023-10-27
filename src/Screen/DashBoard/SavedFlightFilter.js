@@ -582,9 +582,11 @@ const styles = StyleSheet.create({
   boxTitle: {
     fontWeight: 'bold',
     fontSize: fontSize(17),
+    color: color.black,
   },
   boxVelue: {
     fontSize: fontSize(18),
+    color: color.black,
   },
   StopsButBody: {
     flexDirection: 'row',
@@ -603,6 +605,7 @@ const styles = StyleSheet.create({
   StopsText: {
     fontWeight: '500',
     fontSize: fontSize(16),
+    color: color.black,
   },
   AirlinesText: {
     fontWeight: '500',
@@ -629,6 +632,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
 });
 
