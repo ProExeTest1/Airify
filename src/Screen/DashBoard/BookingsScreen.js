@@ -25,14 +25,12 @@ const BookingsScreen = ({navigation}) => {
   const [completedData, setCompletedData] = useState([]);
   const [canceledData, setCanceledData] = useState([]);
   const dispatch = useDispatch();
-  console.log(activeData.length, completedData.length, canceledData.length);
   const getBookingsData = async () => {
     await firestore()
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
-            console.log(documentSnapshot.data()?.SaveTicket);
             let DepartureData = documentSnapshot.data()?.SaveTicket.map(i => {
               if (i.Departure) {
                 return {...i.Departure, type: 'Departure', id: i.id};
@@ -45,7 +43,6 @@ const BookingsScreen = ({navigation}) => {
               return undefined;
             });
             const allData = [DepartureData, ReturnData.filter(i => i)].flat();
-            console.log(allData);
 
             setActiveData(
               allData.filter(i => {
@@ -108,7 +105,6 @@ const BookingsScreen = ({navigation}) => {
     getBookingsData();
     getBookingCancelData();
   }, []);
-  console.log(selectedData);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -222,6 +218,7 @@ const BookingsScreen = ({navigation}) => {
               renderItem={({item, index}) => {
                 return (
                   <TouchableOpacity
+                    disabled={selectedData == 'Canceled' ? true : false}
                     onPress={() => {
                       setCartFlightData(item);
                     }}

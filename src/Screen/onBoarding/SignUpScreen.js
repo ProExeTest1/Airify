@@ -23,17 +23,20 @@ import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {DineWay} from '../../redux/action/HomeAction';
-import CheckButton from '../../components/CheckButton';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {dummyAirlineData} from '../../helper/dummyData';
-import ImagePickerData from '../../components/ImagePickerData';
-import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import CountryPickTextInput from '../../components/CountryPickTextInput';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import {NotificationData, SecurityData} from '../../assets/DummyData/Data';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {
+  CheckButton,
+  ImagePickerData,
+  OnBoardingTwoButton,
+  OnBoardingTextInput,
+  CountryPickTextInput,
+  OnBoardingModuleHeader,
+  OnBoardingSingleButton,
+} from '../../components';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const swiperRef = useRef();
@@ -554,16 +557,22 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           <View style={{marginTop: hp(0), marginLeft: wp(6)}}>
             <ScrollView style={{width: wp(85)}} indicatorStyle="black">
               <Text style={styles.HederStyle}>{strings.TermsHeader}</Text>
-              <Text>{strings.TermsData}</Text>
+              <Text style={{color: color.black}}>{strings.TermsData}</Text>
               <Text style={styles.HederStyle}>{strings.SectionOne}</Text>
-              <Text>{strings.SectionOneText}</Text>
+              <Text style={{color: color.black}}>{strings.SectionOneText}</Text>
               <Text style={styles.HederStyle}>{strings.SectionTwo}</Text>
-              <Text>{strings.SectionTwoText}</Text>
+              <Text style={{color: color.black}}>{strings.SectionTwoText}</Text>
               <Text style={styles.HederStyle}>{strings.SectionThree}</Text>
-              <Text>{strings.SectionThreeText}</Text>
-              <Text>{strings.SectionThreeText2}</Text>
+              <Text style={{color: color.black}}>
+                {strings.SectionThreeText}
+              </Text>
+              <Text style={{color: color.black}}>
+                {strings.SectionThreeText2}
+              </Text>
               <Text style={styles.HederStyle}>{strings.SectionFour}</Text>
-              <Text>{strings.SectionFourText}</Text>
+              <Text style={{color: color.black}}>
+                {strings.SectionFourText}
+              </Text>
             </ScrollView>
           </View>
         </View>
@@ -714,6 +723,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginVertical: hp(2),
     fontSize: fontSize(18),
+    color: color.black,
   },
   textInputView1: {
     marginBottom: 10,

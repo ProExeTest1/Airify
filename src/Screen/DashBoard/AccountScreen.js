@@ -17,10 +17,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import TextData from '../../components/TextData';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {SettingData} from '../../assets/DummyData/SettingData';
-import {CommonHeader, OnBoardingTwoButton} from '../../components';
+import {CommonHeader, OnBoardingTwoButton, TextData} from '../../components';
 
 const AccountScreen = ({navigation}) => {
   const [modal, setModal] = useState(false);

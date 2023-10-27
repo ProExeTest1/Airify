@@ -67,7 +67,6 @@ const ConfirmPin = ({navigation, route}) => {
   const ReturnSelectedDate = useSelector(e => e?.date?.returnNormalDate);
   const dispatch = useDispatch();
 
-  console.log(searchReturnFlightCardData);
   const checkPin = async pin => {
     if (pin.length == 4) {
       if (pin == Number(pinData)) {
@@ -125,7 +124,6 @@ const ConfirmPin = ({navigation, route}) => {
                           searchFlightCardData?.totalHours &&
                         e.flightData.day == searchFlightCardData?.day
                       ) {
-                        console.log('SeatData');
                         return {
                           flightData: e.flightData,
                           selectSeat: [
@@ -160,7 +158,6 @@ const ConfirmPin = ({navigation, route}) => {
                           searchReturnFlightCardData?.totalHours &&
                         e.flightData.day == searchReturnFlightCardData?.day
                       ) {
-                        console.log('SelectReturnSeatData');
                         return {
                           flightData: e.flightData,
                           selectSeat: [

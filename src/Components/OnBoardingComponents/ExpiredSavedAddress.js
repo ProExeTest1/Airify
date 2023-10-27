@@ -12,10 +12,10 @@ import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-import {color} from '../helper/ColorConstant';
-import {Images} from '../helper/IconConstant';
-import {fontSize, hp, wp} from '../helper/Constant';
-import {expiredFlight} from '../redux/action/SavedFlights';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {expiredFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
 
 const ExpiredSavedAddress = ({onPress}) => {
@@ -158,7 +158,7 @@ const ExpiredSavedAddress = ({onPress}) => {
             justifyContent: 'center',
           }}>
           <LottieView
-            source={require('../helper/noDataFound.json')}
+            source={require('../../helper/noDataFound.json')}
             autoPlay
             loop
             style={{

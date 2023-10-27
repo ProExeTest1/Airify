@@ -12,7 +12,6 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import CheckBox from '../../components/Common/CheckBox';
 import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 import {
@@ -20,6 +19,7 @@ import {
   MultiSliderComponets,
   OnBoardingTwoButton,
   PickerHeaderBar,
+  CheckBox,
 } from '../../components/index';
 import {
   AmenitiesData,
@@ -39,7 +39,7 @@ const SavedFlightFilter = ({navigation}) => {
   const expireFlight = useSelector(e => e?.SaveFlight?.expireFlight);
 
   const func = () => {
-    temp = [];
+    let temp = [];
     SearchFlightData?.map((item, index) => {
       if (index === 0) {
         temp.push({airlineName: item.airlineName, logo: item.logo});

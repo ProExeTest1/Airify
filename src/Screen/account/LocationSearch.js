@@ -9,8 +9,7 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {addressData} from '../../redux/action/AddressAction';
-import CommonHeader from '../../components/Common/CommonHeader';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {CommonHeader, OnBoardingSingleButton} from '../../components';
 
 const LocationSearch = ({navigation: {goBack}, navigation}) => {
   const [lat, setLat] = useState(lat ? lat : 37.78825);

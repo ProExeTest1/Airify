@@ -11,12 +11,15 @@ import {
 import React, {useEffect, useMemo, useState} from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
-import {OnBoardingTwoButton, SearchFlightsHeader} from '../../components';
-import {TicketList} from '../../components/index';
+import {
+  OnBoardingTwoButton,
+  SearchFlightsHeader,
+  TicketList,
+  CreatePriceAlert,
+} from '../../components';
 import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
-import {CreatePriceAlert} from '../../components/index';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';

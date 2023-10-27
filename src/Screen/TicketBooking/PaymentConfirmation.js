@@ -119,20 +119,6 @@ const PatmentConfirmation = ({navigation, route}) => {
       });
   };
   const totalSeatPrice = returbTicketPrice * totalSeat;
-  console.log(
-    Math.round(
-      totalSeatPrice +
-        Math.round((totalSeatPrice * 2.8) / 100) +
-        Math.round((totalSeatPrice * 1.5) / 100) -
-        (Number(totalSeatPrice) * Discount) / 100 -
-        Math.floor(validPoint / 2),
-    ),
-    totalSeat * ticketPrice +
-      Math.round((totalSeat * ticketPrice * 2.8) / 100) +
-      Math.round((totalSeat * ticketPrice * 1.5) / 100) -
-      (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) / 100 -
-      Number(Math.round(validPoint / 2)),
-  );
   const payNow = () => {
     if (PaymentMethodData?.type) {
       dispatch(

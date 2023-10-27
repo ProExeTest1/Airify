@@ -39,8 +39,6 @@ const ReturnSelectSeats = ({navigation}) => {
   const [seatData, setseatData] = useState(temp);
   const [OccuiedData, setOccuiedData] = useState([]);
 
-  console.log(FirebaseData, 'hello');
-
   const [seatNameData, setseatNameData] = useState(temp[0]);
   const setSelectSeat = seat => {
     setseatData(
@@ -65,11 +63,9 @@ const ReturnSelectSeats = ({navigation}) => {
             ...documentSnapshot.data(),
           });
         });
-        console.log(users, 'querySnapshot');
         const setAllData = users[0].AirlineSeatBookData.find(
           i => i?.date == new Date(SelectDate)?.toLocaleDateString('en-IN'),
         );
-        console.log(setAllData, 'setAllData');
         setFirebaseData(setAllData);
         setOccuiedData(
           setAllData?.flightData?.find(i => {

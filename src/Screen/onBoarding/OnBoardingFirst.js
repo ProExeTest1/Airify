@@ -5,10 +5,12 @@ import React, {useRef, useState} from 'react';
 import {hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingImage from '../../components/OnBoardingImage';
-import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {
+  OnBoardingText,
+  OnBoardingImage,
+  OnBoardingTwoButton,
+  OnBoardingSingleButton,
+} from '../../components';
 
 const OnBoardingFirst = ({navigation}) => {
   const swiperRef = useRef();

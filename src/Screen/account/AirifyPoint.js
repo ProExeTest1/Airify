@@ -51,7 +51,6 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
         <View style={styles.mainCartViewStyle}>
           <View style={styles.mainCartSubView}>
             <Text style={styles.mainCartTextHeader}>{strings.totalPoint}</Text>
-            <Image source={Images.scanner} style={styles.scannerStyle} />
           </View>
           <Text style={styles.pointTextStyle}>{pointData?.TotalPoints}</Text>
           <Text style={styles.infoLine}>{strings.line}</Text>
@@ -121,6 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingVertical: hp(1.5),
   },
   mainCartTextHeader: {
     color: color.white,

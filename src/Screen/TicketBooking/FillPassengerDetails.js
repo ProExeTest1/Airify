@@ -84,7 +84,6 @@ const FillPassengerDetails = ({navigation, route}) => {
   const setFlatlistDataa = i => {
     if (ticketType === 'Return') {
       dispatch(ReturnSelectSeatActionData(i));
-      console.log(i, 'rturn seats');
     } else {
       dispatch(SelectSeatActionData(i));
     }
@@ -111,14 +110,6 @@ const FillPassengerDetails = ({navigation, route}) => {
         setTicketType('Return');
       }
     } else {
-      console.log(
-        passengerLength,
-        newArr?.length,
-        '><><><><><><><><><><><><><',
-        newArr?.length,
-        SelectSeat.length > 0,
-        SelectSeat?.every(i => i?.seatNo != false),
-      );
       if (SelectSeat.length > 0 && SelectSeat?.every(i => i?.seatNo != false)) {
         navigation?.navigate('PaymentConfirmation', {TripType: tripType});
       } else {

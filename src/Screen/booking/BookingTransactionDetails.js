@@ -16,6 +16,7 @@ import {
   FlightServices,
   OnBoardingTwoButton,
   PriceDetails,
+  TextData,
 } from '../../components';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
@@ -28,7 +29,6 @@ import Barcode from '@kichiyaki/react-native-barcode-generator';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
 import Modal from 'react-native-modal';
-import TextData from '../../components/TextData';
 import {useRoute} from '@react-navigation/native';
 
 const BookingTransactionDetails = ({navigation}) => {
@@ -45,7 +45,6 @@ const BookingTransactionDetails = ({navigation}) => {
     state => state?.bookingTransactiondata?.bookingTransactiondata,
   );
 
-  console.log(firebaseTicketData);
   const copyToClipboard = () => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');

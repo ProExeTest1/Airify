@@ -19,7 +19,6 @@ const PriceDetails = ({
   isReturn,
   DiscountData,
 }) => {
-  console.log(isReturn, 'isReurn');
   const insurancePrice =
     isReturn === 'Round-Trip'
       ? Math.round((totalSeat * (ticketPrice + returnTicketPrice) * 2.8) / 100)

@@ -4,10 +4,12 @@ import {View, Text, StyleSheet} from 'react-native';
 import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {
+  OnBoardingModuleHeader,
+  OnBoardingSingleButton,
+  OnBoardingTextInput,
+} from '../../components';
 
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');

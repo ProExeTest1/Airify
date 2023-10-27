@@ -15,14 +15,16 @@ import {RadioButton} from 'react-native-radio-buttons-group';
 import firestore from '@react-native-firebase/firestore';
 
 import {strings} from '../../helper/Strings';
-import {CommonHeader} from '../../components';
+import {
+  CommonHeader,
+  ActiveSavedAddress,
+  ExpiredSavedAddress,
+  OnBoardingTwoButton,
+} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
-import ActiveSavedAddress from '../../components/ActiveSavedAddress';
-import ExpiredSavedAddress from '../../components/ExpiredSavedAddress';
-import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
 import {
   activeFlightFilter,
   expiredFlightFilter,

@@ -8,14 +8,16 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {CountryPicker} from 'react-native-country-codes-picker';
 
-import {strings} from '../../helper/Strings';
+import {
+  strings,
+  OnBoardingSingleButton,
+  CommonDropDown,
+  TextInputPassenger,
+} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import CommonDropDown from '../../components/AccountComponent/CommonDropDown';
-import TextInputPassenger from '../../components/AccountComponent/TextInputPassenger';
 
 const NewPassenger = ({navigation: {goBack}, navigation}) => {
   const route = useRoute();

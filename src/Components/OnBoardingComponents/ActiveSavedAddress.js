@@ -12,10 +12,10 @@ import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-import {color} from '../helper/ColorConstant';
-import {Images} from '../helper/IconConstant';
-import {fontSize, hp, wp} from '../helper/Constant';
-import {activeFlight} from '../redux/action/SavedFlights';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {activeFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
 
 const ActiveSavedAddress = ({onPress, data}) => {
@@ -149,7 +149,7 @@ const ActiveSavedAddress = ({onPress, data}) => {
             justifyContent: 'center',
           }}>
           <LottieView
-            source={require('../helper/noDataFound.json')}
+            source={require('../../helper/noDataFound.json')}
             autoPlay
             loop
             style={{

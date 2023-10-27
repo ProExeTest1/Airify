@@ -5,10 +5,12 @@ import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {
+  OnBoardingText,
+  OnBoardingTextInput,
+  OnBoardingModuleHeader,
+  OnBoardingSingleButton,
+} from '../../components';
 
 const CreateNewPassword = ({navigation: {goBack}}) => {
   const [modal, setModal] = useState(false);

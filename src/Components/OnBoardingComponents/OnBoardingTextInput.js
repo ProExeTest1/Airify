@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {StyleSheet, TextInput, Image, TouchableOpacity} from 'react-native';
 
-import {hp, wp} from '../helper/Constant';
-import {color} from '../helper/ColorConstant';
-import {Images} from '../helper/IconConstant';
+import {hp, wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
 
 const OnBoardingTextInput = ({
   value,

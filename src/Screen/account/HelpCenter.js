@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-
-import Faq from '../../components/Faq';
 import {strings} from '../../helper/Strings';
-import {CommonHeader} from '../../components';
+import {CommonHeader, ContactUs, Faq} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import ContactUS from '../../components/ContactUs';
 import {fontSize, hp, wp} from '../../helper/Constant';
 
 const HelpCenter = ({navigation: {goBack}}) => {
@@ -70,7 +67,7 @@ const HelpCenter = ({navigation: {goBack}}) => {
         </TouchableOpacity>
       </View>
       <View style={{backgroundColor: 'red', flex: 1}}>
-        {selectedOption ? <Faq /> : <ContactUS />}
+        {selectedOption ? <Faq /> : <ContactUs />}
       </View>
     </View>
   );

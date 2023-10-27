@@ -5,8 +5,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {OnBoardingModuleHeader, OnBoardingSingleButton} from '../../components';
 
 const OtpVerificationScreen = ({navigation: {goBack}, navigation}) => {
   return (

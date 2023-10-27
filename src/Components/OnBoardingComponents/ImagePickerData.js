@@ -10,8 +10,8 @@ import Modal from 'react-native-modal';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 
 import ButtonData from './ButtonData';
-import {hp, wp} from '../helper/Constant';
-import {Images} from '../helper/IconConstant';
+import {hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
 
 const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
   const [modal, setModal] = useState(false);

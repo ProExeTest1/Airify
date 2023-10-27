@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {color} from '../helper/ColorConstant';
-import {fontSize, hp, wp} from '../helper/Constant';
+import {color} from '../../helper/ColorConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const OnBoardingText = ({
   OnBoardingSubText,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 
-import {hp, wp} from '../helper/Constant';
+import {hp, wp} from '../../helper/Constant';
 
 const ImagesData = ({round, imageSource, ImageStyle}) => {
   return (

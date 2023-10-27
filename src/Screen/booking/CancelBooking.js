@@ -8,17 +8,15 @@ import {
   View,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {CommonHeader, OnBoardingTwoButton} from '../../components';
+import {CommonHeader, OnBoardingSingleButton} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {strings} from '../../helper/Strings';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {cancelBookingRadio} from '../../assets/DummyData/radioButtons';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import DocumentPicker, {types} from 'react-native-document-picker';
 import Modal from 'react-native-modal';
-import TextData from '../../components/TextData';
 import LottieView from 'lottie-react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';

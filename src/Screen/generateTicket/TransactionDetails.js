@@ -39,7 +39,6 @@ const TransactionDetails = ({navigation, route}) => {
   const [TicketTypeData, setTicketTypeData] = useState({});
   const ticketId = useSelector(state => state?.showTicketData?.ticketId);
 
-  console.log(firebaseTicketData);
   const getTicketData = async () => {
     await firestore()
       .collection('SaveTicket')

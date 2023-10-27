@@ -14,12 +14,14 @@ import QRCode from 'react-native-qrcode-generator';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import {strings} from '../../helper/Strings';
-import {CommonHeader} from '../../components';
+import {
+  CommonHeader,
+  OnBoardingText,
+  OnBoardingSingleButton,
+} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
 
 const AirifyReward = ({navigation: {goBack}}) => {
