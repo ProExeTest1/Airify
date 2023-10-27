@@ -66,12 +66,9 @@ const ConfirmPin = ({navigation, route}) => {
   const SelectDate = useSelector(e => e?.date?.normalDate);
   const ReturnSelectedDate = useSelector(e => e?.date?.returnNormalDate);
   const dispatch = useDispatch();
-  console.log(SelectReturnSeatData, 'SelectReturnSeatData');
-  console.log(searchReturnFlightData, 'searchReturnFlightData');
-  console.log(searchReturnFlightDateData, 'searchReturnFlightDateData');
-  console.log(searchReturnFlightCardData, 'searchReturnFlightCardData');
+
+  console.log(searchReturnFlightCardData);
   const checkPin = async pin => {
-    console.log('totalPaymentList', totalPaymentList);
     if (pin.length == 4) {
       if (pin == Number(pinData)) {
         setcondti2(true);
@@ -81,11 +78,20 @@ const ConfirmPin = ({navigation, route}) => {
           .doc(auth().currentUser.uid)
           .update({
             wallet:
-              Number(UserWalletData.wallet) - totalPaymentList.totalPayment,
+              Number(UserWalletData.wallet) -
+              (totalPaymentList.return
+                ? totalPaymentList.return.totalPayment +
+                  totalPaymentList.departure.totalPayment
+                : totalPaymentList.departure.totalPayment),
             transactionHistory: [
               {
                 title: strings.walletTopUp,
-                price: `-$${totalPaymentList.totalPayment}`,
+                price: `-$${
+                  totalPaymentList.return
+                    ? totalPaymentList.return.totalPayment +
+                      totalPaymentList.departure.totalPayment
+                    : totalPaymentList.departure.totalPayment
+                }`,
                 date: moment(new Date()).format('MMM D,YYYY'),
                 time: new Date().toLocaleTimeString('en-IN'),
               },
@@ -119,6 +125,7 @@ const ConfirmPin = ({navigation, route}) => {
                           searchFlightCardData?.totalHours &&
                         e.flightData.day == searchFlightCardData?.day
                       ) {
+                        console.log('SeatData');
                         return {
                           flightData: e.flightData,
                           selectSeat: [
@@ -153,6 +160,7 @@ const ConfirmPin = ({navigation, route}) => {
                           searchReturnFlightCardData?.totalHours &&
                         e.flightData.day == searchReturnFlightCardData?.day
                       ) {
+                        console.log('SelectReturnSeatData');
                         return {
                           flightData: e.flightData,
                           selectSeat: [
@@ -176,11 +184,15 @@ const ConfirmPin = ({navigation, route}) => {
               .set({
                 TotalPoints:
                   Number(UserPointData.TotalPoints) -
-                  totalPaymentList.points.pointsUse,
+                  (totalPaymentList.return.points.pointsUse +
+                    totalPaymentList?.departure.points.pointsUse),
                 PointsHistory: [
                   {
                     title: 'points',
-                    price: `-$${totalPaymentList.points.pointsUse}`,
+                    price: `-${
+                      totalPaymentList.return.points.pointsUse +
+                      totalPaymentList?.departure.points.pointsUse
+                    }`,
                     date: moment(new Date()).format('MMM D,YYYY'),
                     time: new Date().toLocaleTimeString('en-IN'),
                   },
@@ -206,8 +218,8 @@ const ConfirmPin = ({navigation, route}) => {
                       Name: userData.Name,
                       PhoneNumber: userData.PhoneNumber,
                     },
-                    totalPaymentList,
-                    SelectSeatData,
+                    totalPaymentList: totalPaymentList?.departure,
+                    SelectSeatData: SelectSeatData,
                     paymentMethod: SelectPaymentMethod.type,
                     transactionID: randomBookingIDGenerator(9, 'TRN'),
                     referenceID: randomBookingIDGenerator(9, 'REF'),
@@ -216,12 +228,19 @@ const ConfirmPin = ({navigation, route}) => {
                   },
                   Return: {
                     bookingID: randomBookingIDGenerator(9, 'BKG'),
-                    searchReturnFlightCardData,
+                    searchFlightCardData: searchReturnFlightCardData,
+                    contactDetails: {
+                      Email: userData.Email,
+                      Name: userData.Name,
+                      PhoneNumber: userData.PhoneNumber,
+                    },
+                    totalPaymentList: totalPaymentList?.return,
+                    SelectSeatData: SelectReturnSeatData,
+                    paymentMethod: SelectPaymentMethod.type,
                     transactionID: randomBookingIDGenerator(9, 'TRN'),
                     referenceID: randomBookingIDGenerator(9, 'REF'),
-                    SelectReturnSeatData,
-                    searchReturnFlightData,
-                    searchReturnFlightDateData,
+                    searchFlightData: searchReturnFlightData,
+                    searchFlightDateData: searchReturnFlightDateData,
                   },
                 },
               ],
@@ -285,11 +304,11 @@ const ConfirmPin = ({navigation, route}) => {
               .set({
                 TotalPoints:
                   Number(UserPointData.TotalPoints) -
-                  totalPaymentList.points.pointsUse,
+                  totalPaymentList?.departure.points.pointsUse,
                 PointsHistory: [
                   {
                     title: 'points',
-                    price: `-$${totalPaymentList.points.pointsUse}`,
+                    price: `-${totalPaymentList?.departure.points.pointsUse}`,
                     date: moment(new Date()).format('MMM D,YYYY'),
                     time: new Date().toLocaleTimeString('en-IN'),
                   },
@@ -315,15 +334,15 @@ const ConfirmPin = ({navigation, route}) => {
                       Name: userData.Name,
                       PhoneNumber: userData.PhoneNumber,
                     },
-                    totalPaymentList,
-                    SelectSeatData,
+                    totalPaymentList: totalPaymentList?.departure,
+                    SelectSeatData: SelectSeatData,
                     paymentMethod: SelectPaymentMethod.type,
                     transactionID: randomBookingIDGenerator(9, 'TRN'),
                     referenceID: randomBookingIDGenerator(9, 'REF'),
                     searchFlightData,
                     searchFlightDateData,
                   },
-                  Return: {},
+                  Return: false,
                 },
               ],
             })
@@ -347,7 +366,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('Users')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setPinData(documentSnapshot.data().PIN);
           }
@@ -359,7 +378,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setSaveTicketData(documentSnapshot.data().SaveTicket);
           }
@@ -370,7 +389,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('UserWallet')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setUserWalletData(documentSnapshot.data());
           }
@@ -381,7 +400,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('Points')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setUserPointData(documentSnapshot.data());
           }
@@ -392,7 +411,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == 'JaTwXgqSHSESiR6CDzdy') {
             SetSeatData(documentSnapshot.data().AirlineSeatBookData);
           }

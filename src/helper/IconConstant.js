@@ -116,4 +116,5 @@ export const Images = {
   download: require('../assets/icons/download.png'),
   qr: require('../assets/icons/qr.png'),
   ticketWave: require('../assets/icons/ticketWave.png'),
+  uploadDoc: require('../assets/icons/uploaddoc.png'),
 };

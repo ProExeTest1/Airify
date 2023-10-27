@@ -61,7 +61,7 @@ const PaymentMethod = ({navigation, route}) => {
       .onSnapshot(querySnapshot => {
         const users = [];
 
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,

@@ -206,6 +206,15 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           SavedUserAddress: [],
         });
 
+      //------------------------------------------------>  BookingCancel data
+
+      await firestore()
+        .collection('BookingCancel')
+        .doc(isUserCreate.user.uid)
+        .set({
+          BookingCancel: [],
+        });
+
       navigation.navigate('SignUpSuccess');
     } catch (error) {
       console.log(error);

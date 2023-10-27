@@ -233,6 +233,13 @@ const SavedScreen = ({navigation}) => {
     }
   }, [isFocus, savedFlight]);
 
+  const commonSaveFlight = i => {
+    setSelectedOption(i);
+    i === true
+      ? setSearchFlightCardData(savedFlight)
+      : setSearchFlightCardData(expireFlight);
+    setSelectedData({});
+  };
   const applydata = () => {
     dispatch(activeFlightFilter({}));
     dispatch(expiredFlightFilter({}));
@@ -259,9 +266,7 @@ const SavedScreen = ({navigation}) => {
             },
           ]}
           onPress={() => {
-            setSelectedOption(!selectedOption);
-            setSearchFlightCardData(savedFlight);
-            setSelectedData({});
+            commonSaveFlight(true);
           }}>
           <Text
             style={[
@@ -282,9 +287,7 @@ const SavedScreen = ({navigation}) => {
             },
           ]}
           onPress={() => {
-            setSelectedOption(!selectedOption);
-            setSearchFlightCardData(expireFlight);
-            setSelectedData({});
+            commonSaveFlight(false);
           }}>
           <Text
             style={[
@@ -305,6 +308,7 @@ const SavedScreen = ({navigation}) => {
           />
         ) : (
           <ExpiredSavedAddress
+            data={SearchFlightCardData}
             onPress={item => {
               openModal(item);
             }}

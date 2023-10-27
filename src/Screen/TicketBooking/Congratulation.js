@@ -24,11 +24,12 @@ const Congratulation = ({navigation, route}) => {
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 
+  console.log('totalPaymentList>>>>>>>>>>>>>', totalPaymentList);
   const getUserPointData = async () => {
     await firestore()
       .collection('Points')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setUserPointData(documentSnapshot?.data());
           }
@@ -42,11 +43,20 @@ const Congratulation = ({navigation, route}) => {
       .doc(auth().currentUser.uid)
       .update({
         TotalPoints:
-          Number(UserPointData?.TotalPoints) + totalPaymentList.points.getPoint,
+          Number(UserPointData?.TotalPoints) +
+          (totalPaymentList.return
+            ? totalPaymentList.return.points.getPoint +
+              totalPaymentList.departure.points.getPoint
+            : totalPaymentList.departure.points.getPoint),
         PointsHistory: [
           {
             title: 'points',
-            price: `+${totalPaymentList.points.getPoint}`,
+            price: `+${
+              totalPaymentList.return
+                ? totalPaymentList.return.points.getPoint +
+                  totalPaymentList.departure.points.getPoint
+                : totalPaymentList.departure.points.getPoint
+            }`,
             date: moment(new Date()).format('MMM D,YYYY'),
             time: new Date().toLocaleTimeString('en-IN'),
           },
@@ -88,7 +98,11 @@ const Congratulation = ({navigation, route}) => {
             marginTop: hp(2),
             color: '#000',
           }}>
-          Congratulation! You've Earned {totalPaymentList.points.getPoint}{' '}
+          Congratulation! You've Earned{' '}
+          {totalPaymentList.return
+            ? totalPaymentList.return.points.getPoint +
+              totalPaymentList.departure.points.getPoint
+            : totalPaymentList.departure.points.getPoint}{' '}
           Points!
         </Text>
         <Text

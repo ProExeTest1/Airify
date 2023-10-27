@@ -47,6 +47,8 @@ import ConfirmPin from '../screen/TicketBooking/ConfirmPin';
 import TransactionDetails from '../screen/generateTicket/TransactionDetails';
 import Congratulation from '../screen/TicketBooking/Congratulation';
 import ETicket from '../screen/generateTicket/ETicket';
+import BookingTransactionDetails from '../screen/booking/BookingTransactionDetails';
+import CancelBooking from '../screen/booking/CancelBooking';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -129,6 +131,11 @@ const StackNavigation = () => {
         />
         <Stack.Screen name="Congratulation" component={Congratulation} />
         <Stack.Screen name="ETicket" component={ETicket} />
+        <Stack.Screen
+          name="BookingTransactionDetails"
+          component={BookingTransactionDetails}
+        />
+        <Stack.Screen name="CancelBooking" component={CancelBooking} />
       </Stack.Navigator>
     </NavigationContainer>
   );

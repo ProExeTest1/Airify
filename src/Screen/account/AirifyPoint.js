@@ -23,7 +23,7 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
     await firestore()
       .collection('Points')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setPointData(documentSnapshot?.data());
           }
