@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   firstViewStyle: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     marginRight: wp(4),

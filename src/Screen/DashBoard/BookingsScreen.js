@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,12 +19,14 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 import {bookingTransactionData} from '../../redux/action/BookingAction';
+import LottieView from 'lottie-react-native';
 
 const BookingsScreen = ({navigation}) => {
   const [selectedData, setSelectedData] = useState('Active');
   const [activeData, setActiveData] = useState([]);
-  const [completedData, setCompletedData] = useState([]);
+  const [AllData, setAllData] = useState([]);
   const [canceledData, setCanceledData] = useState([]);
+
   const dispatch = useDispatch();
   const getBookingsData = async () => {
     await firestore()
@@ -31,49 +34,35 @@ const BookingsScreen = ({navigation}) => {
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
-            let DepartureData = documentSnapshot.data()?.SaveTicket.map(i => {
-              if (i.Departure) {
-                return {...i.Departure, type: 'Departure', id: i.id};
+            let DepartureData = documentSnapshot?.data()?.SaveTicket.map(i => {
+              if (i?.Departure) {
+                return {...i?.Departure, type: 'Departure', id: i?.id};
               }
             });
             let ReturnData = documentSnapshot.data()?.SaveTicket.map(i => {
-              if (i.Return) {
-                return {...i.Return, type: 'Return', id: i.id};
+              if (i?.Return) {
+                return {...i?.Return, type: 'Return', id: i?.id};
               }
               return undefined;
             });
             const allData = [DepartureData, ReturnData.filter(i => i)].flat();
 
+            setAllData(allData);
+            setSelectedData('Active');
             setActiveData(
-              allData.filter(i => {
+              allData?.filter(i => {
                 return (
                   Date.now() <=
                   new Date(
                     moment(
-                      `${i.searchFlightDateData[1]} ${Number(
-                        i.searchFlightCardData?.pickTime.split(':')[0],
+                      `${i?.searchFlightDateData[1]} ${Number(
+                        i?.searchFlightCardData?.pickTime.split(':')[0],
                       )}:${Number(
-                        i.searchFlightCardData?.pickTime.split(':')[1],
+                        i?.searchFlightCardData?.pickTime.split(':')[1],
                       )}:00`,
                       'MMM DD YYYY HH:mm:ss',
-                    ).format('YYYY-MM-DD HH:mm:ss'),
-                  ).valueOf()
-                );
-              }),
-            );
-            setCompletedData(
-              allData.filter(i => {
-                return (
-                  Date.now() >=
-                  new Date(
-                    moment(
-                      `${i.searchFlightDateData[1]} ${Number(
-                        i.searchFlightCardData?.pickTime.split(':')[0],
-                      )}:${Number(
-                        i.searchFlightCardData?.pickTime.split(':')[1],
-                      )}:00`,
-                      'MMM DD YYYY HH:mm:ss',
-                    ).format('YYYY-MM-DD HH:mm:ss'),
+                    ).utc('en-IN'),
+                    // .format('YYYY-MM-DD HH:mm:ss'),
                   ).valueOf()
                 );
               }),
@@ -95,7 +84,7 @@ const BookingsScreen = ({navigation}) => {
       .collection('BookingCancel')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
             setCanceledData(documentSnapshot.data().BookingCancel);
           }
         });
@@ -130,6 +119,24 @@ const BookingsScreen = ({navigation}) => {
             ]}
             onPress={() => {
               setSelectedData('Active');
+              setActiveData(
+                AllData?.filter(i => {
+                  return (
+                    Date.now() <=
+                    new Date(
+                      moment(
+                        `${i.searchFlightDateData[1]} ${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[0],
+                        )}:${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[1],
+                        )}:00`,
+                        'MMM DD YYYY HH:mm:ss',
+                      ).utc('en-IN'),
+                      // .format('YYYY-MM-DD HH:mm:ss'),
+                    ).valueOf()
+                  );
+                }),
+              );
             }}>
             <Text
               style={[
@@ -152,6 +159,24 @@ const BookingsScreen = ({navigation}) => {
             ]}
             onPress={() => {
               setSelectedData('Completed');
+              setActiveData(
+                AllData?.filter(i => {
+                  return (
+                    Date.now() >
+                    new Date(
+                      moment(
+                        `${i.searchFlightDateData[1]} ${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[0],
+                        )}:${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[1],
+                        )}:00`,
+                        'MMM DD YYYY HH:mm:ss',
+                      ).utc('en-IN'),
+                      // .format('YYYY-MM-DD HH:mm:ss'),
+                    ).valueOf()
+                  );
+                }),
+              );
             }}>
             <Text
               style={[
@@ -177,6 +202,7 @@ const BookingsScreen = ({navigation}) => {
             ]}
             onPress={() => {
               setSelectedData('Canceled');
+              setActiveData(canceledData);
             }}>
             <Text
               style={[
@@ -188,110 +214,122 @@ const BookingsScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <View style={styles.ScrollViewBody}>
-            <FlatList
-              data={(selectedData == 'Active'
-                ? activeData
-                : selectedData == 'Completed'
-                ? completedData
-                : canceledData
-              ).sort((a, b) => {
-                return (
-                  new Date(
-                    `${a.searchFlightDateData[1]} ${Number(
-                      a.searchFlightCardData?.pickTime.split(':')[0],
-                    )}:${Number(
-                      a.searchFlightCardData?.pickTime.split(':')[1],
-                    )}:00`,
-                  ) -
-                  new Date(
-                    `${b.searchFlightDateData[1]} ${Number(
-                      b.searchFlightCardData?.pickTime.split(':')[0],
-                    )}:${Number(
-                      b.searchFlightCardData?.pickTime.split(':')[1],
-                    )}:00`,
-                  )
-                );
-              })}
-              bounces={false}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item, index}) => {
-                return (
-                  <TouchableOpacity
-                    disabled={selectedData == 'Canceled' ? true : false}
-                    onPress={() => {
-                      setCartFlightData(item);
-                    }}
-                    style={[
-                      styles.cardBody,
-                      {marginTop: index === 0 ? hp(3) : 0},
-                    ]}>
-                    <View style={styles.cardHeader}>
-                      <View
-                        style={[
-                          styles.cardHeaderLogo,
-                          {backgroundColor: item?.searchFlightCardData?.logo},
-                        ]}
-                      />
-                      <Text style={styles.cardHeaderText}>
-                        {item?.searchFlightCardData?.airlineName}
-                      </Text>
-                      <Text style={styles.cardPriceTitle}>
-                        {item?.searchFlightDateData
-                          ? `${item?.searchFlightDateData[0].slice(0, 3)} ,${
-                              item?.searchFlightDateData[1]
-                            }`
-                          : null}
-                      </Text>
-                    </View>
-                    <View style={styles.cardDataBody}>
-                      <View style={styles.FlightsPlaseBody}>
-                        <Text style={styles.FlightsPlaseName}>
-                          {item?.searchFlightData?.from}
-                        </Text>
-                        <Text style={styles.FlightsPlaseNicName}>
-                          {item?.searchFlightCardData?.pickTime}
-                        </Text>
-                      </View>
-                      <View style={styles.FlightsPlaseImgBody}>
-                        <Image
-                          style={styles.FlightsPlaseImg}
-                          source={Images.airplaneWhiteIcon}
+          {activeData.length == 0 ? (
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <LottieView
+                source={require('../../helper/noDataFound.json')}
+                autoPlay
+                loop
+                style={{
+                  height: hp(65),
+                  width: wp(100),
+                }}
+              />
+            </View>
+          ) : (
+            <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+              {activeData
+                .sort((a, b) => {
+                  return (
+                    new Date(
+                      moment(
+                        `${a.searchFlightDateData[1]} ${Number(
+                          a.searchFlightCardData?.pickTime.split(':')[0],
+                        )}:${Number(
+                          a.searchFlightCardData?.pickTime.split(':')[1],
+                        )}:00`,
+                        'MMM DD YYYY HH:mm:ss',
+                      ).utc('en-IN'),
+                    ).valueOf() -
+                    new Date(
+                      moment(
+                        `${b.searchFlightDateData[1]} ${Number(
+                          b.searchFlightCardData?.pickTime.split(':')[0],
+                        )}:${Number(
+                          b.searchFlightCardData?.pickTime.split(':')[1],
+                        )}:00`,
+                        'MMM DD YYYY HH:mm:ss',
+                      ).utc('en-IN'),
+                    ).valueOf()
+                  );
+                })
+                .map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      disabled={selectedData == 'Canceled' ? true : false}
+                      onPress={() => {
+                        setCartFlightData(item);
+                      }}
+                      style={[styles.cardBody]}>
+                      <View style={styles.cardHeader}>
+                        <View
+                          style={[
+                            styles.cardHeaderLogo,
+                            {backgroundColor: item?.searchFlightCardData?.logo},
+                          ]}
                         />
-                        <Text style={styles.FlightsPlaseImgText}>
-                          {item?.searchFlightCardData?.totalHours}
+                        <Text style={styles.cardHeaderText}>
+                          {item?.searchFlightCardData?.airlineName}
+                        </Text>
+                        <Text style={styles.cardPriceTitle}>
+                          {item?.searchFlightDateData
+                            ? `${item?.searchFlightDateData[0].slice(0, 3)} ,${
+                                item?.searchFlightDateData[1]
+                              }`
+                            : null}
                         </Text>
                       </View>
-                      <View
-                        style={[
-                          styles.FlightsPlaseBody,
-                          {alignItems: 'flex-end'},
-                        ]}>
+                      <View style={styles.cardDataBody}>
+                        <View style={styles.FlightsPlaseBody}>
+                          <Text style={styles.FlightsPlaseName}>
+                            {item?.searchFlightData?.from}
+                          </Text>
+                          <Text style={styles.FlightsPlaseNicName}>
+                            {item?.searchFlightCardData?.pickTime}
+                          </Text>
+                        </View>
+                        <View style={styles.FlightsPlaseImgBody}>
+                          <Image
+                            style={styles.FlightsPlaseImg}
+                            source={Images.airplaneWhiteIcon}
+                          />
+                          <Text style={styles.FlightsPlaseImgText}>
+                            {item?.searchFlightCardData?.totalHours}
+                          </Text>
+                        </View>
+                        <View
+                          style={[
+                            styles.FlightsPlaseBody,
+                            {alignItems: 'flex-end'},
+                          ]}>
+                          <Text style={styles.FlightsPlaseName}>
+                            {item?.searchFlightData?.to}
+                          </Text>
+                          <Text style={styles.FlightsPlaseNicName}>
+                            {item?.searchFlightCardData?.lendTime}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.cardBottemBody}>
                         <Text style={styles.FlightsPlaseName}>
-                          {item?.searchFlightData?.to}
+                          {item?.searchFlightData?.fromShortform}
                         </Text>
-                        <Text style={styles.FlightsPlaseNicName}>
-                          {item?.searchFlightCardData?.lendTime}
+                        <Text style={styles.FlightsPlaseImgText}>
+                          {item?.searchFlightCardData?.stop}
+                        </Text>
+                        <Text style={styles.FlightsPlaseName}>
+                          {item?.searchFlightData?.toShortform}
                         </Text>
                       </View>
-                    </View>
-                    <View style={styles.cardBottemBody}>
-                      <Text style={styles.FlightsPlaseName}>
-                        {item?.searchFlightData?.fromShortform}
-                      </Text>
-                      <Text style={styles.FlightsPlaseImgText}>
-                        {item?.searchFlightCardData?.stop}
-                      </Text>
-                      <Text style={styles.FlightsPlaseName}>
-                        {item?.searchFlightData?.toShortform}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }}
-              key={({index}) => index}
-            />
-          </View>
+                    </TouchableOpacity>
+                  );
+                })}
+            </ScrollView>
+          )}
         </View>
       </View>
     </View>

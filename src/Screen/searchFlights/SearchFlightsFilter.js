@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import {
   FlatList,
   ScrollView,
@@ -27,8 +27,11 @@ import {
   RefundAndRescheduleData,
   numberOfStops,
 } from '../../assets/DummyData/Data';
+import {useRoute} from '@react-navigation/native';
+import {RescheduleFilterData} from '../../redux/action/RescheduleAction';
 
 const SearchFlightsFilter = ({navigation}) => {
+  const route = useRoute();
   const func = () => {
     temp = [];
     SearchFlightData?.map((item, index) => {
@@ -137,37 +140,60 @@ const SearchFlightsFilter = ({navigation}) => {
     setAirlinesList(func().map(i => i.airlineName));
   };
   const close = () => {
-    dispatch(SearchFlightFilterData({}));
-    navigation.navigate('SearchFlights');
+    dispatch(
+      route?.params?.header == 'rescheduleTrip'
+        ? RescheduleFilterData({})
+        : SearchFlightFilterData({}),
+    );
+    navigation.goBack();
   };
   const applySortdata = () => {
     dispatch(
-      SearchFlightFilterData({
-        airlinesList: AirlinesList?.length > 0 ? AirlinesList : null,
-        amenitiesList: amenitiesList?.length > 0 ? amenitiesList : null,
-        arrivalTime: departureTime1?.title ? departureTime1 : null,
-        cabinClassList: CabinClassList?.length > 0 ? CabinClassList : null,
-        departureTime: departureTime2?.title ? departureTime2 : null,
-        flightDuration: priceTargets3?.length > 0 ? priceTargets3 : null,
-        flightPreferencesList:
-          FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
-        numberOfStopsData:
-          numberOfStopsData.length > 0 ? numberOfStopsData : null,
-        priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
-        stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
-        refundAndRescheduleList:
-          RefundAndRescheduleList.length > 0 ? RefundAndRescheduleList : null,
-      }),
+      route?.params?.header == 'rescheduleTrip'
+        ? RescheduleFilterData({
+            airlinesList: AirlinesList?.length > 0 ? AirlinesList : null,
+            amenitiesList: amenitiesList?.length > 0 ? amenitiesList : null,
+            arrivalTime: departureTime1?.title ? departureTime1 : null,
+            cabinClassList: CabinClassList?.length > 0 ? CabinClassList : null,
+            departureTime: departureTime2?.title ? departureTime2 : null,
+            flightDuration: priceTargets3?.length > 0 ? priceTargets3 : null,
+            flightPreferencesList:
+              FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
+            numberOfStopsData:
+              numberOfStopsData.length > 0 ? numberOfStopsData : null,
+            priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+            stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
+            refundAndRescheduleList:
+              RefundAndRescheduleList.length > 0
+                ? RefundAndRescheduleList
+                : null,
+          })
+        : SearchFlightFilterData({
+            airlinesList: AirlinesList?.length > 0 ? AirlinesList : null,
+            amenitiesList: amenitiesList?.length > 0 ? amenitiesList : null,
+            arrivalTime: departureTime1?.title ? departureTime1 : null,
+            cabinClassList: CabinClassList?.length > 0 ? CabinClassList : null,
+            departureTime: departureTime2?.title ? departureTime2 : null,
+            flightDuration: priceTargets3?.length > 0 ? priceTargets3 : null,
+            flightPreferencesList:
+              FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
+            numberOfStopsData:
+              numberOfStopsData.length > 0 ? numberOfStopsData : null,
+            priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+            stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
+            refundAndRescheduleList:
+              RefundAndRescheduleList.length > 0
+                ? RefundAndRescheduleList
+                : null,
+          }),
     );
-    navigation.navigate('SearchFlights');
+    navigation.goBack();
   };
   return (
     <View style={styles.body}>
       <PickerHeaderBar
         headerName={'Filter'}
-        navigation={() =>
-          navigation.navigate('SearchFlights')
-        }></PickerHeaderBar>
+        navigation={() => navigation.goBack()}></PickerHeaderBar>
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
           <View style={{paddingTop: hp(4)}}></View>

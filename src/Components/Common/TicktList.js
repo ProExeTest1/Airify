@@ -18,6 +18,7 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
       dispatch(SearchFlightCardData(item));
       navigation.navigate('ReturnSearchFlight', {TripType: 'Round-trip'});
     } else {
+      console.log('<><><><><><><><><><><><><><><>', item);
       if (tripType == 'Round-Trip') {
         dispatch(SearchFlightReturnCardAction(item));
         navigation.navigate('FlightDetails', {TripType: 'Round-Trip'});

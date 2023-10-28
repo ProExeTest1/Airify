@@ -16,6 +16,7 @@ import {
   SearchFlightsHeader,
   TicketList,
   CreatePriceAlert,
+  CardList,
 } from '../../components';
 import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import Modal from 'react-native-modal';
@@ -27,8 +28,20 @@ import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 import {strings} from '../../helper/Strings';
 import moment from 'moment';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import {getDate} from '../../assets/DummyData/GetDate';
+import {
+  RescheduleDateData,
+  RescheduleNormalDateData,
+  rescheduleSelectNewCardData,
+} from '../../redux/action/RescheduleAction';
 
-const SearchFlights = ({navigation, route}) => {
+const RescheduleSearchFlight = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
@@ -39,23 +52,30 @@ const SearchFlights = ({navigation, route}) => {
   const [ToggleSwitchBut2, setToggleSwitchBut2] = useState(false);
   const [SearchFlightCardData, setSearchFlightCardData] =
     useState(SearchFlightData);
-
   const [selectedData, setSelectedData] = useState({});
 
   const dispatch = useDispatch();
 
-  const searchFlightFilterData = useSelector(
-    e => e?.searchFlight?.searchFlightFilterData,
+  const rescheduleData = useSelector(
+    e => e?.rescheduleFlightdata?.rescheduleCardData,
   );
-  const SelectDate = useSelector(e => e.date.normalDate);
+  const rescheduleDateData = useSelector(
+    e => e?.rescheduleFlightdata?.rescheduleDateData,
+  );
 
-  /* ----------------------------------------------------> date function */
+  const SelectDate = useSelector(
+    e => e?.rescheduleFlightdata?.rescheduleNormalDateData,
+  );
+  const searchFlightFilterData = useSelector(
+    e => e?.rescheduleFlightdata?.rescheduleFilterData,
+  );
+  //   /* ----------------------------------------------------> date function */
 
   const setSelectDate = ({date}) => {
     let dateChange = date.split('/');
     let newDate = new Date();
     dispatch(
-      depatureDateAction(
+      RescheduleDateData(
         `${moment(
           new Date(
             newDate.setFullYear(
@@ -115,9 +135,9 @@ const SearchFlights = ({navigation, route}) => {
     setModalVisible2(false);
   };
 
-  {
-    /* ----------------------------------------------------> sort function */
-  }
+  //   {
+  //     /* ----------------------------------------------------> sort function */
+  //   }
 
   const applySortdaata = () => {
     const sortData = SearchFlightData.sort((a, b) => {
@@ -164,9 +184,9 @@ const SearchFlights = ({navigation, route}) => {
     setModalVisible2(false);
   };
 
-  {
-    /* ----------------------------------------------------> card list filter */
-  }
+  //   {
+  //     /* ----------------------------------------------------> card list filter */
+  //   }
 
   useEffect(() => {
     if (searchFlightFilterData?.priceRange) {
@@ -239,31 +259,166 @@ const SearchFlights = ({navigation, route}) => {
     Alert.alert('Filter data not match');
   };
 
+  const setData = i => {
+    dispatch(rescheduleSelectNewCardData(i));
+    navigation.navigate('FlightDetails', {
+      TripType: 'One-Way',
+      navigation: 'ReshceduleFilldetails',
+    });
+  };
+
   return (
     <View style={styles.body}>
       {/* ----------------------------------------------------> Header components */}
 
-      <SearchFlightsHeader
-        SelectDate={SelectDate}
-        setSelectDate={setSelectDate}
-        onShare={onShare}
-        dispatch={dispatch}
-        headerName={
-          tripType === 'Round-Trip'
-            ? strings.select_departure_flight
-            : strings.searchFlight
-        }
-        setModalVisible1={setModalVisible1}
-        navigation={navigation}
-      />
+      <View style={styles.header}>
+        <View style={styles.headerNevBody}>
+          <View style={styles.headerTitleBody}>
+            <Text style={styles.headerTitle}>Reschedule Trip</Text>
+          </View>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image style={styles.BackImg} source={Images.backIcon} />
+          </TouchableOpacity>
+          <Menu>
+            <MenuTrigger>
+              <Image
+                style={styles.BackImg}
+                source={Images.menuIcon}
+                resizeMode="contain"
+              />
+            </MenuTrigger>
+            <MenuOptions style={styles.dropdownBody}>
+              <MenuOption onSelect={() => onShare()}>
+                <View
+                  style={[
+                    styles.dropdownList,
+                    {borderBottomWidth: 2, borderColor: '#e2e2e2'},
+                  ]}>
+                  <Image
+                    style={styles.dropdownIcon}
+                    source={Images.shareIcon}
+                  />
+                  <Text style={styles.dropdownText}>{strings.shareResult}</Text>
+                </View>
+              </MenuOption>
+              <MenuOptions onSelect={() => setModalVisible1(true)}>
+                <View style={styles.dropdownList}>
+                  <Image style={styles.dropdownIcon} source={Images.bell} />
+                  <Text style={styles.dropdownText}>{strings.priceAlerts}</Text>
+                </View>
+              </MenuOptions>
+            </MenuOptions>
+          </Menu>
+        </View>
+        <View style={styles.headerNevBody}>
+          <View style={styles.FlightsPlaseBody}>
+            <Text style={styles.FlightsPlaseNicName}>
+              {rescheduleData?.searchFlightData?.fromShortform}
+            </Text>
+            <Text style={styles.FlightsPlaseName}>
+              {rescheduleData?.searchFlightData?.from}
+            </Text>
+          </View>
+          <View style={styles.FlightsPlaseImgBody}>
+            <Image
+              style={styles.FlightsPlaseImg}
+              source={Images.airplaneBlueIcon}
+            />
+            <Text style={styles.FlightsPlaseImgText}>
+              {rescheduleData?.searchFlightData?.passenger} .{' '}
+              {rescheduleData?.searchFlightData?.class?.replace(' Class', '')}
+            </Text>
+          </View>
+          <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
+            <Text style={styles.FlightsPlaseNicName}>
+              {rescheduleData?.searchFlightData?.toShortform}
+            </Text>
+            <Text style={styles.FlightsPlaseName}>
+              {rescheduleData?.searchFlightData?.to}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.dateListBody}>
+          <View style={styles.dateIconBody}>
+            <Image style={styles.dateIcon} source={Images.calendar}></Image>
+          </View>
+          <View style={styles.dateline}></View>
+          <FlatList
+            bounces={false}
+            data={getDate()}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    setSelectDate(item);
+                    dispatch(RescheduleNormalDateData(item));
+                  }}
+                  style={[
+                    styles.dateIconBody,
+                    {
+                      backgroundColor:
+                        item?.date === SelectDate?.date ? '#fff' : '#295dff',
+                    },
+                  ]}>
+                  <Text
+                    style={[
+                      styles.date,
+                      {
+                        color:
+                          item?.date === SelectDate?.date ? '#295dff' : '#fff',
+                      },
+                    ]}>
+                    {item.date.split('/')[0]}
+                  </Text>
+                  <Text
+                    style={{
+                      color:
+                        item?.date === SelectDate?.date ? '#295dff' : '#fff',
+                    }}>
+                    {item.day.slice(0, 3)}
+                  </Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
+      </View>
 
       {/* ----------------------------------------------------> Ticket List */}
 
-      <TicketList
-        SelectDate={SelectDate}
-        SearchFlightCard={SearchFlightCardData}
-        tripType1={tripType}
-      />
+      <View style={styles.ScrollViewBody}>
+        <FlatList
+          data={SearchFlightCardData.filter(i => {
+            if (
+              `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
+              SelectDate?.date
+            ) {
+              return (
+                i.pickTime >
+                `${new Date(Date.now() + 3600000 * 3).getHours()}:${new Date(
+                  Date.now() + 3600000 * 3,
+                ).getMinutes()}`
+              );
+            }
+            return i;
+          })}
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          renderItem={({item, index}) => {
+            return (
+              <CardList
+                item={item}
+                searchFlight={rescheduleData?.searchFlightData}
+                index={index}
+                setCartFlightData={setData}
+              />
+            );
+          }}
+          key={({index}) => index}
+        />
+      </View>
 
       <View style={styles.sortBody}>
         <TouchableOpacity
@@ -274,7 +429,11 @@ const SearchFlights = ({navigation, route}) => {
         </TouchableOpacity>
         <View style={styles.sortLine}></View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SearchFlightsFilter')}
+          onPress={() =>
+            navigation.navigate('SearchFlightsFilter', {
+              header: 'rescheduleTrip',
+            })
+          }
           style={styles.sortImgBody}>
           <Image style={styles.sortImg} source={Images.filterIcon} />
           <Text style={styles.sortText}>{strings.filter}</Text>
@@ -347,6 +506,9 @@ const SearchFlights = ({navigation, route}) => {
     </View>
   );
 };
+
+export default RescheduleSearchFlight;
+
 const styles = StyleSheet.create({
   body: {
     flex: 1,
@@ -412,5 +574,107 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#e2e2e2',
   },
+  header: {
+    backgroundColor: '#295dff',
+    paddingTop: Platform.OS === 'ios' ? hp(6) : hp(2),
+  },
+  headerNevBody: {
+    marginBottom: hp(3),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: wp(4),
+    justifyContent: 'space-between',
+  },
+  BackImg: {
+    width: wp(8),
+    height: wp(8),
+    tintColor: color.white,
+  },
+  headerTitleBody: {
+    width: wp(100),
+    position: 'absolute',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: fontSize(22),
+  },
+  FlightsPlaseNicName: {
+    color: '#fff',
+    fontWeight: 'bold',
+    marginBottom: hp(1.5),
+    fontSize: fontSize(22),
+  },
+  FlightsPlaseName: {
+    color: '#fff',
+  },
+  FlightsPlaseBody: {
+    width: wp(24),
+    paddingHorizontal: wp(4),
+  },
+  FlightsPlaseImgBody: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  FlightsPlaseImg: {
+    width: hp(20),
+    height: hp(5.5),
+  },
+  FlightsPlaseImgText: {
+    color: '#fff',
+    fontSize: fontSize(14),
+  },
+  dateListBody: {
+    paddingStart: wp(8),
+    flexDirection: 'row',
+    paddingBottom: hp(3),
+  },
+  dateIconBody: {
+    width: hp(7),
+    height: hp(7),
+    borderWidth: 1,
+    borderRadius: 10,
+    marginEnd: wp(2.5),
+    borderColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dateIcon: {
+    width: hp(3.2),
+    height: hp(3.2),
+    tintColor: '#fff',
+  },
+  dateline: {
+    borderWidth: 0.5,
+    marginEnd: wp(2.5),
+    borderColor: '#fff',
+  },
+  date: {
+    fontWeight: 'bold',
+    marginBottom: hp(0.3),
+    fontSize: fontSize(18),
+  },
+  dropdownBody: {
+    top: wp(10),
+    width: wp(50),
+    borderRadius: 10,
+    position: 'absolute',
+    backgroundColor: '#fff',
+  },
+  dropdownList: {
+    paddingStart: wp(3),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: hp(1.5),
+  },
+  dropdownIcon: {
+    width: wp(6.5),
+    height: wp(6.5),
+    marginEnd: wp(4),
+  },
+  dropdownText: {
+    fontWeight: '500',
+    fontSize: fontSize(18),
+  },
 });
-export default SearchFlights;

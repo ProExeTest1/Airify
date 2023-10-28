@@ -9,6 +9,7 @@ import AddressReducer from './AddressReducer';
 import SaveFlightReducer from './SaveFlightReducer';
 import showTicketReducer from './showTicketReducer';
 import BookingReducer from './BookingReducer';
+import RescheduleReducer from './RescheduleReducer';
 
 export const rootReducer = combineReducers({
   date: dateReducer,
@@ -21,4 +22,5 @@ export const rootReducer = combineReducers({
   searchFlight: searchFlightReducer,
   showTicketData: showTicketReducer,
   bookingTransactiondata: BookingReducer,
+  rescheduleFlightdata: RescheduleReducer,
 });

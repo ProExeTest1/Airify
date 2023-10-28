@@ -34,6 +34,7 @@ const CancelBooking = ({navigation}) => {
   const firebaseTicketData = useSelector(
     state => state?.bookingTransactiondata?.bookingTransactiondata,
   );
+  console.log(firebaseTicketData);
   const openModal = () => {
     setModal(true);
   };
@@ -106,7 +107,7 @@ const CancelBooking = ({navigation}) => {
                 if (firebaseTicketData.type == 'Return') {
                   return {
                     id: item.id,
-                    Departure: item.Return,
+                    Departure: item.Departure,
                     Return: false,
                   };
                 }

@@ -27,7 +27,8 @@ import {
 } from '../../redux/action/SelectSeatAction';
 import moment from 'moment';
 import {showTicketActionData} from '../../redux/action/showTicketAction';
-const ConfirmPin = ({navigation, route}) => {
+
+const RescheduleConfirmPin = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const [pinData, setPinData] = useState('');
   const [condti, setcondti] = useState(true);
@@ -551,7 +552,7 @@ const ConfirmPin = ({navigation, route}) => {
   );
 };
 
-export default ConfirmPin;
+export default RescheduleConfirmPin;
 
 const styles = StyleSheet.create({
   container: {

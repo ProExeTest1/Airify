@@ -25,27 +25,21 @@ import {strings} from '../../helper/Strings';
 import {ShareConstant} from '../../helper/ShareConstant';
 import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 
-const FlightDetailsScreen = ({navigation, route}) => {
+const RescheduleFlightdetails = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  const navigationType = route?.params?.navigation;
-  //ReshceduleFilldetails
   const [savedFlight, setSavedFlight] = useState([]);
   const [press, setPress] = useState(false);
   const [value, setValue] = useState();
   const [ticketType, setTicketType] = useState('Departure');
   const item = useSelector(state =>
     ticketType === 'Departure'
-      ? navigationType === 'ReshceduleFilldetails'
-        ? state.rescheduleFlightdata.rescheduleSelectNewCard
-        : state.searchFlight.searchFlightCardData
+      ? state.searchFlight.searchFlightCardData
       : state.searchFlight.searchFlightReturnCardData,
   );
 
   const searchFlightData = useSelector(e =>
     ticketType === 'Departure'
-      ? navigationType === 'ReshceduleFilldetails'
-        ? e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData
-        : e?.place?.searchFlightData
+      ? e?.place?.searchFlightData
       : e?.searchFlight?.searchFlightReturnData,
   );
   const ontoggleSwitch = () => {
@@ -311,7 +305,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
   );
 };
 
-export default FlightDetailsScreen;
+export default RescheduleFlightdetails;
 
 const styles = StyleSheet.create({
   headerViewStyle: {

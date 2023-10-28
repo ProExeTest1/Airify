@@ -21,7 +21,7 @@ import {
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -30,10 +30,17 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
 import Modal from 'react-native-modal';
 import {useRoute} from '@react-navigation/native';
+import {
+  RescheduleCardData,
+  RescheduleDateData,
+  RescheduleNormalDateData,
+} from '../../redux/action/RescheduleAction';
+import moment from 'moment';
 
 const BookingTransactionDetails = ({navigation}) => {
   const [modal, setModal] = useState(false);
   const route = useRoute();
+  const dispatch = useDispatch();
   const openModal = () => {
     setModal(true);
   };
@@ -314,7 +321,25 @@ const BookingTransactionDetails = ({navigation}) => {
                   style={[
                     styles.rescheduleButtonStyle,
                     {borderColor: color.commonBlue},
-                  ]}>
+                  ]}
+                  onPress={() => {
+                    dispatch(RescheduleCardData(firebaseTicketData));
+                    dispatch(
+                      RescheduleNormalDateData({
+                        date: moment(
+                          firebaseTicketData.searchFlightDateData[1],
+                          'MMM DD YYYY',
+                        ).format('D/M/YYYY'),
+                        day: firebaseTicketData?.searchFlightDateData[0],
+                      }),
+                    );
+                    dispatch(
+                      RescheduleDateData(
+                        firebaseTicketData.searchFlightDateData[1],
+                      ),
+                    );
+                    navigation?.navigate('RescheduleSearchFlight');
+                  }}>
                   <Text
                     style={[
                       styles.rescheduleTextStyle,

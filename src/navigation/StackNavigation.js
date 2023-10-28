@@ -49,6 +49,10 @@ import Congratulation from '../screen/TicketBooking/Congratulation';
 import ETicket from '../screen/generateTicket/ETicket';
 import BookingTransactionDetails from '../screen/booking/BookingTransactionDetails';
 import CancelBooking from '../screen/booking/CancelBooking';
+import RescheduleConfirmPin from '../screen/RescheludeTrip/RescheduleConfirmPin';
+import RescheduleFlightdetails from '../screen/RescheludeTrip/RescheduleFlightdetails';
+import ReschedulePaymentConfirmation from '../screen/RescheludeTrip/ReschedulePaymentConfirmation';
+import RescheduleSearchFlight from '../screen/RescheludeTrip/RescheduleSearchFlight';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
@@ -136,6 +140,22 @@ const StackNavigation = () => {
           component={BookingTransactionDetails}
         />
         <Stack.Screen name="CancelBooking" component={CancelBooking} />
+        <Stack.Screen
+          name="RescheduleConfirmPin"
+          component={RescheduleConfirmPin}
+        />
+        <Stack.Screen
+          name="RescheduleFlightdetails"
+          component={RescheduleFlightdetails}
+        />
+        <Stack.Screen
+          name="ReschedulePaymentConfirmation"
+          component={ReschedulePaymentConfirmation}
+        />
+        <Stack.Screen
+          name="RescheduleSearchFlight"
+          component={RescheduleSearchFlight}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
