@@ -8,13 +8,15 @@ import {CountryPicker} from 'react-native-country-codes-picker';
 
 import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
-import {CommonHeader} from '../../components';
+import {
+  CommonHeader,
+  OnBoardingTextInput,
+  OnBoardingSingleButton,
+  DatePickerTextInput,
+  CheckButton,
+} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import CheckButton from '../../components/CheckButton';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
-import DatePickerTextInput from '../../components/AccountComponent/DatePickerTextInput';
 
 const AddAddress = ({navigation}) => {
   const route = useRoute();

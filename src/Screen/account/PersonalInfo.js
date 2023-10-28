@@ -17,15 +17,17 @@ import {CountryPicker} from 'react-native-country-codes-picker';
 import firestore, {firebase} from '@react-native-firebase/firestore';
 
 import {strings} from '../../helper/Strings';
-import {CommonHeader} from '../../components';
+import {
+  CommonHeader,
+  ImagePickerData,
+  OnBoardingTextInput,
+  CountryPickTextInput,
+  OnBoardingSingleButton,
+} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import ImagePickerData from '../../components/ImagePickerData';
 import {genderRatioButton} from '../../assets/DummyData/radioButtons';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import CountryPickTextInput from '../../components/CountryPickTextInput';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 
 const PersonalInfo = ({navigation: {goBack}, navigation}) => {
   const [name, setName] = useState('');

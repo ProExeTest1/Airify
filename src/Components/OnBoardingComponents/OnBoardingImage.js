@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 
-import {hp} from '../helper/Constant';
+import {hp} from '../../helper/Constant';
 
 const OnBoardingImage = ({onBoardingImage}) => {
   return (

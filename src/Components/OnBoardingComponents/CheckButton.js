@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-import {hp, wp} from '../helper/Constant';
-import {Images} from '../helper/IconConstant';
+import {hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
 
 const CheckButton = ({check, onPress, mainStyle}) => {
   return (

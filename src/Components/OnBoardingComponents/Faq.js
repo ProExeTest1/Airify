@@ -8,13 +8,13 @@ import {
   Image,
 } from 'react-native';
 
-import {strings} from '../helper/Strings';
-import SearchBar from './Common/SearchBar';
-import {Images} from '../helper/IconConstant';
-import {color} from '../helper/ColorConstant';
-import {FaqData} from '../assets/DummyData/Data';
-import {fontSize, hp, wp} from '../helper/Constant';
-import {FaqDummy} from '../assets/DummyData/FaqDummy';
+import {strings} from '../../helper/Strings';
+import SearchBar from '../Common/SearchBar';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
+import {FaqData} from '../../assets/DummyData/Data';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {FaqDummy} from '../../assets/DummyData/FaqDummy';
 
 const Faq = () => {
   const [categorySelect, setCategory] = useState({
@@ -129,7 +129,7 @@ const Faq = () => {
                 </View>
                 {item.isOpen && (
                   <View style={styles.answerStyle}>
-                    <Text>{item.answer}</Text>
+                    <Text style={{color: color.black}}>{item.answer}</Text>
                   </View>
                 )}
               </View>

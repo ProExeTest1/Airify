@@ -110,7 +110,6 @@ const DatePickerScreen = ({navigation, route}) => {
     tomorrow = moment(tomorrow).add(1, 'day').format('YYYY-MM-DD');
     let selectedDate = moment(selected).format('MM/DD/YYYY');
     let selectedreturnDate = moment(returnDate).format('MM/DD/YYYY');
-    console.log(selectedreturnDate, 'selectedreturnDate');
     let flag = 0;
     let flag2 = 0;
     //Condition for date vallidation

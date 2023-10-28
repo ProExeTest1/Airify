@@ -26,6 +26,26 @@ import CardHeader from './TicketBookingComponents/CardHeader';
 import PriceDetails from './TicketBookingComponents/PriceDetails';
 import ReturnDepartureSwitch from './Common/ReturnDepartureSwitch';
 import Loader from './Common/Loader';
+//
+import ActiveSavedAddress from './OnBoardingComponents/ActiveSavedAddress';
+import ButtonData from './OnBoardingComponents/ButtonData';
+import CheckButton from './OnBoardingComponents/CheckButton';
+import ContactUs from './OnBoardingComponents/ContactUs';
+import CountryPickTextInput from './OnBoardingComponents/CountryPickTextInput';
+import ExpiredSavedAddress from './OnBoardingComponents/ExpiredSavedAddress';
+import Faq from './OnBoardingComponents/Faq';
+import ImagePickerData from './OnBoardingComponents/ImagePickerData';
+import ImagesData from './OnBoardingComponents/ImagesData';
+import OnBoardingImage from './OnBoardingComponents/OnBoardingImage';
+import OnBoardingModuleHeader from './OnBoardingComponents/OnBoardingModuleHeader';
+import OnBoardingSingleButton from './OnBoardingComponents/OnBoardingSingleButton';
+import OnBoardingText from './OnBoardingComponents/OnBoardingText';
+import OnBoardingTextInput from './OnBoardingComponents/OnBoardingTextInput';
+import SavedAddresCart from './OnBoardingComponents/SavedAddresCart';
+import TextData from './OnBoardingComponents/TextData';
+import CommonDropDown from './AccountComponent/CommonDropDown';
+import DatePickerTextInput from './AccountComponent/DatePickerTextInput';
+import TextInputPassenger from './AccountComponent/TextInputPassenger';
 
 export {
   GetTime,
@@ -56,4 +76,23 @@ export {
   PriceDetails,
   ReturnDepartureSwitch,
   Loader,
+  ActiveSavedAddress,
+  ButtonData,
+  CheckButton,
+  ContactUs,
+  CountryPickTextInput,
+  ExpiredSavedAddress,
+  Faq,
+  ImagePickerData,
+  ImagesData,
+  OnBoardingImage,
+  OnBoardingModuleHeader,
+  OnBoardingSingleButton,
+  OnBoardingText,
+  OnBoardingTextInput,
+  SavedAddresCart,
+  TextData,
+  CommonDropDown,
+  DatePickerTextInput,
+  TextInputPassenger,
 };

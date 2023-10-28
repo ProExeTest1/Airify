@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 
-import {fontSize, hp, wp} from '../helper/Constant';
+import {fontSize, hp, wp} from '../../helper/Constant';
 
 const OnBoardingModuleHeader = ({
   width,

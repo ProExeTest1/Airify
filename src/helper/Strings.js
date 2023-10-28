@@ -280,4 +280,21 @@ export const strings = {
     'You are obligated to present your e-boarding pass when you will enter the airplane flight.',
 
   eTicket: 'E-Ticket',
+
+  //bookings screen
+
+  bookings: 'Bookings',
+  cancelBooking: 'Cancel Booking',
+  cancelBookingTitle: 'Are you sure you want to cancel your ticket booking?',
+  cancelBookingText:
+    'Please review the cancellation policy before \n proceeding. Your refund will be processed according \n to cur terms and conditions',
+  Bookingcancel: "No, Don't Cancel",
+  BookingYes: 'Yes, Cancel Booking',
+  reasonText: 'Choose a reason for cancellation.',
+  documentText: 'Upload supporting documents (if any)',
+  upload: 'Upload',
+  CancelSuccess: 'Booking Cancellation \n Successful!',
+  cancelBookingSuccessText:
+    'Your ficket bookina has been canceled \n as requested. A confirmation email \n win refund deles will be sene your \n registered email address. | hank you \n for choosing our service',
+  ok: 'Ok',
 };

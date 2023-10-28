@@ -84,7 +84,6 @@ const FillPassengerDetails = ({navigation, route}) => {
   const setFlatlistDataa = i => {
     if (ticketType === 'Return') {
       dispatch(ReturnSelectSeatActionData(i));
-      console.log(i, 'rturn seats');
     } else {
       dispatch(SelectSeatActionData(i));
     }
@@ -104,20 +103,17 @@ const FillPassengerDetails = ({navigation, route}) => {
     if (tripType === 'Round-Trip' && ticketType === 'Departure') {
       if (
         passengerLength < newArr?.length &&
-        SelectSeat?.every(i => i?.seatNo)
+        !SelectSeat?.every(i => i?.seatNo)
       ) {
         AlertConstant('Please first add passengers to click on plus icon');
       } else {
         setTicketType('Return');
       }
     } else {
-      if (
-        passengerLength < newArr?.length &&
-        SelectSeat?.every(i => i?.seatNo)
-      ) {
-        AlertConstant('Please first add passengers to click on plus icon');
-      } else {
+      if (SelectSeat.length > 0 && SelectSeat?.every(i => i?.seatNo != false)) {
         navigation?.navigate('PaymentConfirmation', {TripType: tripType});
+      } else {
+        AlertConstant('Please first add passengers to click on plus icon');
       }
     }
   };

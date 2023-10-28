@@ -4,8 +4,7 @@ import {View, StyleSheet, Image} from 'react-native';
 import {hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {OnBoardingText, OnBoardingSingleButton} from '../../components';
 
 const SignUpSuccess = ({navigation}) => {
   return (

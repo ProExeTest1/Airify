@@ -8,10 +8,10 @@ import {
   Image,
 } from 'react-native';
 
-import {strings} from '../helper/Strings';
-import {hp, wp} from '../helper/Constant';
-import {Images} from '../helper/IconConstant';
-import {color} from '../helper/ColorConstant';
+import {strings} from '../../helper/Strings';
+import {hp, wp} from '../../helper/Constant';
+import {Images} from '../../helper/IconConstant';
+import {color} from '../../helper/ColorConstant';
 
 const CountryPickTextInput = ({
   value,

@@ -119,8 +119,6 @@ const SearchFlightsHeader = ({
                   if (tripType === 'Round-trip') {
                     dispatch(returnNormalDateAction(item));
                   } else {
-                    console.log(item, 'departure item');
-
                     dispatch(dateAction(item));
                   }
                 }}

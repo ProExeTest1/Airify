@@ -166,7 +166,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
             <View style={styles.saveShareViewStyle}>
               <TouchableOpacity
                 onPress={() => {
-                  savedFlight.some(
+                  savedFlight?.some(
                     a =>
                       a.airlineName == item.airlineName &&
                       a.landingTime == item.lendTime &&

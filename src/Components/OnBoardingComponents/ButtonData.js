@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, StyleSheet, TouchableOpacity} from 'react-native';
 
-import {hp, wp} from '../helper/Constant';
+import {hp, wp} from '../../helper/Constant';
 
 const ButtonData = ({button, textStyle, buttonStyle, onPress}) => {
   return (

@@ -15,14 +15,16 @@ import {RadioButton} from 'react-native-radio-buttons-group';
 import firestore from '@react-native-firebase/firestore';
 
 import {strings} from '../../helper/Strings';
-import {CommonHeader} from '../../components';
+import {
+  CommonHeader,
+  ActiveSavedAddress,
+  ExpiredSavedAddress,
+  OnBoardingTwoButton,
+} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
-import ActiveSavedAddress from '../../components/ActiveSavedAddress';
-import ExpiredSavedAddress from '../../components/ExpiredSavedAddress';
-import OnBoardingTwoButton from '../../components/OnBoardingTwoButton';
 import {
   activeFlightFilter,
   expiredFlightFilter,
@@ -233,6 +235,13 @@ const SavedScreen = ({navigation}) => {
     }
   }, [isFocus, savedFlight]);
 
+  const commonSaveFlight = i => {
+    setSelectedOption(i);
+    i === true
+      ? setSearchFlightCardData(savedFlight)
+      : setSearchFlightCardData(expireFlight);
+    setSelectedData({});
+  };
   const applydata = () => {
     dispatch(activeFlightFilter({}));
     dispatch(expiredFlightFilter({}));
@@ -259,9 +268,7 @@ const SavedScreen = ({navigation}) => {
             },
           ]}
           onPress={() => {
-            setSelectedOption(!selectedOption);
-            setSearchFlightCardData(savedFlight);
-            setSelectedData({});
+            commonSaveFlight(true);
           }}>
           <Text
             style={[
@@ -282,9 +289,7 @@ const SavedScreen = ({navigation}) => {
             },
           ]}
           onPress={() => {
-            setSelectedOption(!selectedOption);
-            setSearchFlightCardData(expireFlight);
-            setSelectedData({});
+            commonSaveFlight(false);
           }}>
           <Text
             style={[
@@ -305,6 +310,7 @@ const SavedScreen = ({navigation}) => {
           />
         ) : (
           <ExpiredSavedAddress
+            data={SearchFlightCardData}
             onPress={item => {
               openModal(item);
             }}

@@ -12,59 +12,58 @@ import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-import {color} from '../helper/ColorConstant';
-import {Images} from '../helper/IconConstant';
-import {fontSize, hp, wp} from '../helper/Constant';
-import {activeFlight} from '../redux/action/SavedFlights';
+import {color} from '../../helper/ColorConstant';
+import {Images} from '../../helper/IconConstant';
+import {fontSize, hp, wp} from '../../helper/Constant';
+import {expiredFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
 
-const ActiveSavedAddress = ({onPress, data}) => {
+const ExpiredSavedAddress = ({onPress}) => {
   const dispatch = useDispatch();
-  const [activeAddressData, setActiveAddressData] = useState([]);
+  const [expireAddressData, setExpireAddressData] = useState([]);
 
   useEffect(() => {
-    ActiveAddressData();
+    ExpireAddressData();
   }, []);
 
-  const ActiveAddressData = async () => {
+  const ExpireAddressData = async () => {
     await firestore()
       .collection('SavedFlights')
       .onSnapshot(querySnapshot => {
-        const users = [];
+        let users;
         querySnapshot?.forEach(documentSnapshot => {
-          users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
+          if (documentSnapshot.id == auth().currentUser.uid) {
+            users = documentSnapshot.data()?.savedFlights;
+          }
         });
-        users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
-            const tmp = item?.savedFlights?.filter(i => {
-              (addressDate = moment(i?.date, 'ddd,MMM DD YYYY').format(
-                'MM/DD/YYYY',
-              )),
-                (todayDate = new Date().toLocaleDateString());
-
-              if (moment(todayDate).isSameOrBefore(addressDate)) {
-                return [activeAddressData, ...activeAddressData, i];
-              }
-            });
-            setActiveAddressData(tmp);
-            dispatch(activeFlight(tmp));
-            return false;
+        let activeData = users.filter(item => {
+          if (
+            Date.now() >=
+            new Date(
+              moment(
+                `${item.date.split(',')[1]} ${Number(
+                  item?.departureTime.split(':')[0],
+                )}:${Number(item?.departureTime.split(':')[1])}:00`,
+                'MMM DD YYYY HH:mm:ss',
+              ).format('YYYY-MM-DD HH:mm:ss'),
+            ).valueOf()
+          ) {
+            return true;
           } else {
             return false;
           }
         });
+        setExpireAddressData(activeData);
+        dispatch(expiredFlight(activeData));
       });
   };
   return (
     <View style={styles.container}>
-      {data?.length > 0 || activeAddressData?.length > 0 ? (
+      {expireAddressData?.length > 0 ? (
         <FlatList
           bounces={false}
+          data={expireAddressData}
           showsVerticalScrollIndicator={false}
-          data={data?.length > 0 ? data : activeAddressData}
           renderItem={({item, index}) => {
             return (
               <TouchableOpacity
@@ -83,7 +82,12 @@ const ActiveSavedAddress = ({onPress, data}) => {
                   <Text style={styles.cardPrice}>{item?.price}</Text>
                   <Image
                     source={Images.filled_save}
-                    style={styles.filledSavedStyle}
+                    style={{
+                      width: hp(2.5),
+                      height: hp(2.5),
+                      resizeMode: 'contain',
+                      tintColor: color.commonBlue,
+                    }}
                   />
                 </View>
                 <View style={styles.cardDataBody}>
@@ -129,15 +133,19 @@ const ActiveSavedAddress = ({onPress, data}) => {
                     {
                       paddingTop: hp(2),
                       borderTopWidth: 1,
-                      alignItems: 'center',
                       borderColor: color.grayLight,
                     },
                   ]}>
                   <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
-                  <Text style={[styles.cardPrice, {marginLeft: wp(30)}]}>
-                    {item?.flightPrice}
-                  </Text>
-                  <Text style={styles.cardPriceTitle}>/pax</Text>
+                  <View
+                    style={{
+                      borderRadius: 4,
+                      paddingVertical: hp(1),
+                      paddingHorizontal: wp(2),
+                      backgroundColor: color.Grey,
+                    }}>
+                    <Text>Expired</Text>
+                  </View>
                 </View>
               </TouchableOpacity>
             );
@@ -150,7 +158,7 @@ const ActiveSavedAddress = ({onPress, data}) => {
             justifyContent: 'center',
           }}>
           <LottieView
-            source={require('../helper/noDataFound.json')}
+            source={require('../../helper/noDataFound.json')}
             autoPlay
             loop
             style={{
@@ -218,8 +226,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   FlightsPlaseImg: {
-    width: hp(17),
     height: hp(5),
+    width: hp(17),
   },
   FlightsPlaseImgText: {
     color: color.darkLight,
@@ -237,17 +245,11 @@ const styles = StyleSheet.create({
   },
   cardBottemBody: {
     paddingTop: hp(1),
-    alignItems: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
     paddingBottom: hp(2.5),
     justifyContent: 'space-between',
   },
-  filledSavedStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    resizeMode: 'contain',
-    tintColor: color.commonBlue,
-  },
 });
 
-export default ActiveSavedAddress;
+export default ExpiredSavedAddress;

@@ -19,7 +19,6 @@ const PriceDetails = ({
   isReturn,
   DiscountData,
 }) => {
-  console.log(isReturn, 'isReurn');
   const insurancePrice =
     isReturn === 'Round-Trip'
       ? Math.round((totalSeat * (ticketPrice + returnTicketPrice) * 2.8) / 100)
@@ -39,7 +38,7 @@ const PriceDetails = ({
       : Math.round((totalSeat * ticketPrice * DiscountData?.discountPR) / 100)
     : 0;
   const TotalPoint = TotalPoints ? TotalPoints : 0;
-  const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
+  const validPoint = ToggleSwitchBut1 ? Math.round(TotalPoint / 100) : 0;
   const havePonts = TotalPoint % 100;
   return (
     <View style={styles.cardBody}>

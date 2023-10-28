@@ -8,69 +8,46 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   CardHeader,
   CommonHeader,
   FlightDetailsCard,
   FlightServices,
+  OnBoardingTwoButton,
   PriceDetails,
-  ReturnDepartureSwitch,
+  TextData,
 } from '../../components';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import Barcode from '@kichiyaki/react-native-barcode-generator';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
-import {SearchFlightReturnAction} from '../../redux/action/SearchFlightAction';
-import {SearchFlightAction} from '../../redux/action/PlaceAction';
+import Modal from 'react-native-modal';
+import {useRoute} from '@react-navigation/native';
 
-const TransactionDetails = ({navigation, route}) => {
-  //BKG951233154
-  const tripType = route?.params?.TripType;
-  const dispatch = useDispatch();
-  const [ticketType, setTicketType] = useState('Departure');
-  const [firebaseTicketData, setFirebaseTicketData] = useState({});
-  const [TicketTypeData, setTicketTypeData] = useState({});
-  const ticketId = useSelector(state => state?.showTicketData?.ticketId);
-
-  const getTicketData = async () => {
-    await firestore()
-      .collection('SaveTicket')
-      .onSnapshot(querySnapshot => {
-        querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot?.id == auth().currentUser.uid) {
-            setFirebaseTicketData(
-              documentSnapshot?.data().SaveTicket.find(e => e.id == ticketId)
-                .Departure,
-            );
-            setTicketTypeData(
-              documentSnapshot?.data().SaveTicket.find(e => e.id == ticketId),
-            );
-          }
-        });
-      });
+const BookingTransactionDetails = ({navigation}) => {
+  const [modal, setModal] = useState(false);
+  const route = useRoute();
+  const openModal = () => {
+    setModal(true);
   };
-  useEffect(() => {
-    getTicketData();
-  }, []);
+  const closeModal = async () => {
+    setModal(false);
+  };
+
+  const firebaseTicketData = useSelector(
+    state => state?.bookingTransactiondata?.bookingTransactiondata,
+  );
+
   const copyToClipboard = () => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');
-  };
-  const ontoggleSwitch = () => {
-    if (ticketType === 'Departure') {
-      setTicketType('Return');
-      setFirebaseTicketData(TicketTypeData.Return);
-    } else {
-      setTicketType('Departure');
-      setFirebaseTicketData(TicketTypeData.Departure);
-    }
   };
   return (
     <View style={{flex: 1}}>
@@ -81,9 +58,7 @@ const TransactionDetails = ({navigation, route}) => {
           <CommonHeader
             headerName={'Transaction Details'}
             navigation1={() => {
-              navigation?.navigate('TabNavigation');
-              dispatch(SearchFlightReturnAction({}));
-              dispatch(SearchFlightAction({}));
+              navigation.goBack();
             }}
             onPress1={true}
             onPress2={false}
@@ -91,19 +66,10 @@ const TransactionDetails = ({navigation, route}) => {
             Images2={null}
             Images1Color={color.white}
           />
-          {tripType === 'Round-Trip' ? (
-            <ReturnDepartureSwitch
-              onPress={ontoggleSwitch}
-              ticketType={ticketType}
-            />
-          ) : null}
           <ScrollView
             bounces={false}
             showsVerticalScrollIndicator={false}
-            style={[
-              styles.scrollViewStyle,
-              {marginTop: tripType === 'Round-Trip' ? hp(1) : hp(0)},
-            ]}>
+            style={[styles.scrollViewStyle]}>
             <View
               style={{
                 flexDirection: 'row',
@@ -202,7 +168,6 @@ const TransactionDetails = ({navigation, route}) => {
                   firebaseTicketData?.totalPaymentList?.points?.havePoint +
                   firebaseTicketData?.totalPaymentList?.points?.pointsUse
                 }
-                isReturn={tripType}
                 returnTicketPrice={
                   Number(
                     firebaseTicketData?.searchFlightCardData?.price
@@ -343,33 +308,92 @@ const TransactionDetails = ({navigation, route}) => {
               }}
             />
 
-            <TouchableOpacity
-              style={[
-                styles.rescheduleButtonStyle,
-                {borderColor: color.commonBlue},
-              ]}>
-              <Text
-                style={[styles.rescheduleTextStyle, {color: color.commonBlue}]}>
-                Recshedule Trip
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.rescheduleButtonStyle,
-                {borderColor: 'red', marginBottom: hp(4)},
-              ]}>
-              <Text style={[styles.rescheduleTextStyle, {color: 'red'}]}>
-                Cancel Booking
-              </Text>
-            </TouchableOpacity>
+            {route.params.header == 'Active' && (
+              <>
+                <TouchableOpacity
+                  style={[
+                    styles.rescheduleButtonStyle,
+                    {borderColor: color.commonBlue},
+                  ]}>
+                  <Text
+                    style={[
+                      styles.rescheduleTextStyle,
+                      {color: color.commonBlue},
+                    ]}>
+                    Recshedule Trip
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.rescheduleButtonStyle,
+                    {borderColor: 'red', marginBottom: hp(4)},
+                  ]}
+                  onPress={() => {
+                    openModal();
+                  }}>
+                  <Text style={[styles.rescheduleTextStyle, {color: 'red'}]}>
+                    Cancel Booking
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
           </ScrollView>
         </>
       )}
+      <Modal
+        isVisible={modal}
+        backdropOpacity={0.8}
+        onDismiss={closeModal}
+        onBackdropPress={closeModal}
+        style={styles.modalStyle}>
+        <View style={styles.modalViewStyle}>
+          <View style={styles.modalsubViewStyle}>
+            <TextData
+              text={strings.cancelBooking}
+              textStyle={styles.modalLogoutTextStyle}
+            />
+            <View style={styles.lineStyle} />
+            <TextData
+              text={strings.cancelBookingTitle}
+              textStyle={[
+                styles.modalLogoutTextStyle,
+                {color: color.black, marginTop: hp(2), textAlign: 'center'},
+              ]}
+            />
+            <TextData
+              text={strings.cancelBookingText}
+              textStyle={[
+                styles.modalLogoutTextStyle,
+                {
+                  color: color.black,
+                  marginTop: hp(2),
+                  textAlign: 'center',
+                  fontSize: fontSize(14),
+                  fontWeight: '400',
+                },
+              ]}
+            />
+            <View style={styles.TwoButtonViewStyle}>
+              <OnBoardingTwoButton
+                buttonTextOne={strings.Bookingcancel}
+                buttonTextTwo={strings.BookingYes}
+                onPress1={() => {
+                  closeModal();
+                }}
+                onPress2={() => {
+                  navigation.navigate('CancelBooking');
+                  closeModal();
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
-export default TransactionDetails;
+export default BookingTransactionDetails;
 
 const styles = StyleSheet.create({
   scrollViewStyle: {flex: 1},
@@ -496,5 +520,34 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     color: color.black,
     fontWeight: 'bold',
+  },
+  modalStyle: {
+    margin: wp(0),
+    justifyContent: 'flex-end',
+  },
+  modalViewStyle: {
+    borderRadius: 16,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingBottom: hp(4),
+  },
+  modalsubViewStyle: {
+    marginTop: hp(5),
+    alignItems: 'center',
+  },
+  modalLogoutTextStyle: {
+    color: color.red,
+    fontWeight: '600',
+    fontSize: fontSize(18),
+  },
+  lineStyle: {
+    height: 2,
+    marginTop: hp(2),
+    marginHorizontal: wp(5),
+    paddingHorizontal: wp(42),
+    backgroundColor: color.lightGray,
+  },
+  TwoButtonViewStyle: {
+    marginTop: hp(4),
   },
 });

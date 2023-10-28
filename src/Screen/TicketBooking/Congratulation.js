@@ -19,8 +19,6 @@ import moment from 'moment';
 const Congratulation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const header = route?.params?.header;
-  console.log('=>>>>>>>>> tripTyope', tripType);
-  console.log('=>>>>>>>>> headerType', header);
   const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 
@@ -42,11 +40,20 @@ const Congratulation = ({navigation, route}) => {
       .doc(auth().currentUser.uid)
       .update({
         TotalPoints:
-          Number(UserPointData?.TotalPoints) + totalPaymentList.points.getPoint,
+          Number(UserPointData?.TotalPoints) +
+          (totalPaymentList.return
+            ? totalPaymentList.return.points.getPoint +
+              totalPaymentList.departure.points.getPoint
+            : totalPaymentList.departure.points.getPoint),
         PointsHistory: [
           {
             title: 'points',
-            price: `+${totalPaymentList.points.getPoint}`,
+            price: `+${
+              totalPaymentList.return
+                ? totalPaymentList.return.points.getPoint +
+                  totalPaymentList.departure.points.getPoint
+                : totalPaymentList.departure.points.getPoint
+            }`,
             date: moment(new Date()).format('MMM D,YYYY'),
             time: new Date().toLocaleTimeString('en-IN'),
           },
@@ -88,7 +95,11 @@ const Congratulation = ({navigation, route}) => {
             marginTop: hp(2),
             color: '#000',
           }}>
-          Congratulation! You've Earned {totalPaymentList.points.getPoint}{' '}
+          Congratulation! You've Earned{' '}
+          {totalPaymentList.return
+            ? totalPaymentList.return.points.getPoint +
+              totalPaymentList.departure.points.getPoint
+            : totalPaymentList.departure.points.getPoint}{' '}
           Points!
         </Text>
         <Text

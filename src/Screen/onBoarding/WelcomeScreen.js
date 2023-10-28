@@ -5,8 +5,7 @@ import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {OnBoardingText, OnBoardingSingleButton} from '../../components';
 
 const WelcomeScreen = ({navigation}) => {
   return (

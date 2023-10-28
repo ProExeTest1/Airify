@@ -15,17 +15,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
-import CheckButton from '../../components/CheckButton';
+import CheckButton from '../../components/OnBoardingComponents/CheckButton';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import OnBoardingText from '../../components/OnBoardingText';
-import OnBoardingTextInput from '../../components/OnBoardingTextInput';
-import OnBoardingModuleHeader from '../../components/OnBoardingModuleHeader';
-import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {
+  OnBoardingText,
+  OnBoardingTextInput,
+  OnBoardingModuleHeader,
+  OnBoardingSingleButton,
+} from '../../components';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [Email, setEmail] = useState('');
   const [modal, setModal] = useState(false);
+  const [condition, setCondition] = useState(false);
   const [Password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
 
@@ -48,11 +51,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
       AlertConstant('Please Enter Valid Password');
       return;
     } else {
-      openModal();
-      setTimeout(() => {
-        handleLogin();
-        closeModal();
-      }, 5000);
+      handleLogin();
     }
   };
   useEffect(() => {
@@ -82,10 +81,14 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem('remember-key', jsonValue);
       }
-      navigation.navigate('TabNavigation');
+      openModal();
+      setTimeout(() => {
+        closeModal();
+        navigation.navigate('TabNavigation');
+      }, 2000);
     } catch (error) {
-      console.log(error.message);
-      AlertConstant(error.message);
+      // console.log(error.message);
+      AlertConstant('Please Enter Valid Credetials');
     }
   };
 
