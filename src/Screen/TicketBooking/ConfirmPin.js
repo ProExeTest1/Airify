@@ -347,7 +347,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('Users')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setPinData(documentSnapshot.data().PIN);
           }
@@ -359,7 +359,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setSaveTicketData(documentSnapshot.data().SaveTicket);
           }
@@ -370,7 +370,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('UserWallet')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setUserWalletData(documentSnapshot.data());
           }
@@ -381,7 +381,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('Points')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setUserPointData(documentSnapshot.data());
           }
@@ -392,7 +392,7 @@ const ConfirmPin = ({navigation, route}) => {
     await firestore()
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == 'JaTwXgqSHSESiR6CDzdy') {
             SetSeatData(documentSnapshot.data().AirlineSeatBookData);
           }

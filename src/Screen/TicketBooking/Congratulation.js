@@ -28,7 +28,7 @@ const Congratulation = ({navigation, route}) => {
     await firestore()
       .collection('Points')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setUserPointData(documentSnapshot?.data());
           }

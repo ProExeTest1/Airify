@@ -40,7 +40,7 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
       .collection('SavedUserAddress')
       .onSnapshot(querySnapshot => {
         const savedAddressData = [];
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           savedAddressData.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,

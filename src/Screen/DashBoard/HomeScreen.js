@@ -149,7 +149,7 @@ const HomeScreen = ({navigation}) => {
     const subscriber = firestore()
       .collection('Users')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             dispatch(UserDataAction(documentSnapshot.data()));
             setUserData(documentSnapshot.data());

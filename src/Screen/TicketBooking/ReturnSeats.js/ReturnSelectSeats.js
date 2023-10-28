@@ -60,7 +60,7 @@ const ReturnSelectSeats = ({navigation}) => {
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
         const users = [];
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot.data(),
           });

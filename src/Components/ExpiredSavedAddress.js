@@ -31,7 +31,7 @@ const ExpiredSavedAddress = ({onPress}) => {
       .collection('SavedFlights')
       .onSnapshot(querySnapshot => {
         const users = [];
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,

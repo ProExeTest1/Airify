@@ -180,7 +180,7 @@ const FillPassengerDetails = ({navigation, route}) => {
     await firestore()
       .collection('PassengerList')
       .onSnapshot(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             setPassengerList(documentSnapshot.data()?.PassengerList);
             setPassengerLength(documentSnapshot.data()?.PassengerList?.length);
