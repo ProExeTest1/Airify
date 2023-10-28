@@ -30,6 +30,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
 import Modal from 'react-native-modal';
 import {useRoute} from '@react-navigation/native';
+import moment from 'moment';
 
 const BookingTransactionDetails = ({navigation}) => {
   const [modal, setModal] = useState(false);
@@ -40,6 +41,8 @@ const BookingTransactionDetails = ({navigation}) => {
   const closeModal = async () => {
     setModal(false);
   };
+
+  console.log(moment('Oct 29 2023', 'MMM DD YYYY').format('D/M/YYYY'));
 
   const firebaseTicketData = useSelector(
     state => state?.bookingTransactiondata?.bookingTransactiondata,

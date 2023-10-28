@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  NativeModules,
   ScrollView,
   SectionList,
   StyleSheet,
@@ -233,6 +234,7 @@ const AccountScreen = ({navigation}) => {
                   auth().signOut();
                   navigation.navigate('WelcomeScreen');
                   closeModal();
+                  NativeModules.DevSettings.reload();
                 }}
               />
             </View>

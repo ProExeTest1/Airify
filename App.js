@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {
+  Alert,
   LogBox,
   StatusBar,
   StyleSheet,
@@ -15,7 +16,6 @@ import {store} from './src/redux/store';
 import {getDate} from './src/assets/DummyData/GetDate';
 import StackNavigation from './src/navigation/StackNavigation';
 import {SearchFlightData} from './src/assets/DummyData/SearchFlightData';
-import {useIsFocused} from '@react-navigation/native';
 
 function App() {
   Text.defaultProps = Text.defaultProps || {};

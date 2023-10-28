@@ -26,23 +26,22 @@ const AddAddress = ({navigation}) => {
   const [countryCode, setCountryCode] = useState('');
   const [contactName, setContactName] = useState('');
   const [addressLabel, setAddressLabel] = useState('');
-
+  console.log('checked', checked);
   const userSelectedAddress = useSelector(
     address => address?.AddressData?.addressData,
   );
-
   useEffect(() => {
-    if (route?.params?.mode == 'Edit') {
+    if (route?.params?.data?.mode == 'Edit') {
       setAddressData();
     }
   }, []);
 
   const setAddressData = async () => {
-    setNote(route?.params?.data?.Note);
-    setChecked(route?.params?.data?.Primary);
-    setAddressLabel(route?.params?.data?.Label);
-    setContactName(route?.params?.data?.ContactName);
-    setCountryCode(route?.params?.data?.CountryCode);
+    setNote(route?.params?.data?.data?.Note);
+    setChecked(route?.params?.data?.data?.Primary);
+    setAddressLabel(route?.params?.data?.data?.Label);
+    setContactName(route?.params?.data?.data?.ContactName);
+    setCountryCode(route?.params?.data?.data?.CountryCode);
   };
   const addressDetails = async () => {
     const pd = await firestore()
@@ -89,7 +88,7 @@ const AddAddress = ({navigation}) => {
           .doc(auth().currentUser.uid)
           .update({
             SavedUserAddress: item?.data()?.SavedUserAddress?.map(i => {
-              if (i.ContactName == route?.params?.data?.ContactName) {
+              if (i.ContactName == route?.params?.data?.data?.ContactName) {
                 return {
                   Note: note,
                   Primary: checked,
@@ -109,7 +108,7 @@ const AddAddress = ({navigation}) => {
     <View style={styles.container}>
       <CommonHeader
         headerName={
-          route.params.mode == 'Edit'
+          route?.params?.data?.mode == 'Edit'
             ? strings.changeAddress
             : strings.addressDetail
         }
@@ -177,11 +176,15 @@ const AddAddress = ({navigation}) => {
         <View style={styles.buttonViewStyle}>
           <OnBoardingSingleButton
             buttonText={
-              route.params.mode == 'Edit' ? strings.changeAddress : strings.save
+              route?.params?.data?.mode == 'Edit'
+                ? strings.changeAddress
+                : strings.save
             }
             buttonStyle={styles.buttonStyle}
             onPress={() => {
-              route.params.mode == 'Edit' ? changeAddress() : addressDetails();
+              route?.params?.data?.mode == 'Edit'
+                ? changeAddress()
+                : addressDetails();
             }}
           />
         </View>

@@ -37,6 +37,7 @@ import {
   OnBoardingModuleHeader,
   OnBoardingSingleButton,
 } from '../../components';
+import DeviceInfo from 'react-native-device-info';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const swiperRef = useRef();
@@ -140,6 +141,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           console.log('error in download', err);
         });
 
+      const DeviceUniqueId = await DeviceInfo.getUniqueId();
+
       await firestore().collection('Users').doc(isUserCreate.user.uid).set({
         Name: name,
         Email: Email,
@@ -156,6 +159,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         FlyData: selectedFlyWay,
         NotificationList: NotificationData,
         SecurityData: SecurityData,
+        DeviceId: DeviceUniqueId,
       });
 
       //------------------------------------------------>  UserWallet data
@@ -352,7 +356,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     fontSize: fontSize(14),
                     fontWeight: '400',
                   }}>
-                  {strings.signUp}
+                  {strings.signInText}
                 </Text>
               </TouchableOpacity>
             </View>

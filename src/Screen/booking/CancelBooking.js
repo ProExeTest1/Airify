@@ -106,7 +106,7 @@ const CancelBooking = ({navigation}) => {
                 if (firebaseTicketData.type == 'Return') {
                   return {
                     id: item.id,
-                    Departure: item.Return,
+                    Departure: item.Departure,
                     Return: false,
                   };
                 }
@@ -152,11 +152,13 @@ const CancelBooking = ({navigation}) => {
         });
       });
   };
+
   useEffect(() => {
     getUserWalletData();
     getBookingCancelData();
     getSaveTicketData();
   }, []);
+
   return (
     <View style={styles.container}>
       <CommonHeader

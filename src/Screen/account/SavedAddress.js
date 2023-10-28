@@ -27,7 +27,6 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 
 const SavedAddress = ({navigation: {goBack}, navigation}) => {
   const [addressData, setAddressData] = useState([]);
-
   useEffect(() => {
     SavedAddress();
   }, []);
@@ -41,10 +40,11 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
       .onSnapshot(querySnapshot => {
         const savedAddressData = [];
         querySnapshot?.forEach(documentSnapshot => {
-          savedAddressData.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            savedAddressData.push({
+              ...documentSnapshot.data(),
+            });
+          }
         });
         savedAddressData.map(item => {
           const tmp = item?.SavedUserAddress?.filter(i => {
@@ -53,7 +53,8 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
           const tmp1 = item?.SavedUserAddress?.filter(i => {
             return i.Primary != true && i;
           });
-          setAddressData(tmp?.concat(tmp1));
+          const allData = tmp?.concat(tmp1);
+          setAddressData(allData);
         });
       });
   };
