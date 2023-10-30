@@ -26,7 +26,6 @@ const BookingsScreen = ({navigation}) => {
   const [AllData, setAllData] = useState([]);
   const [completedData, setCompletedData] = useState([]);
   const [canceledData, setCanceledData] = useState([]);
-  console.log(activeData);
   // setCompletedData(
   //   allData.filter(i => {
   //     return (
@@ -183,10 +182,10 @@ const BookingsScreen = ({navigation}) => {
                     Date.now() >
                     new Date(
                       moment(
-                        `${i.searchFlightDateData[1]} ${Number(
-                          i.searchFlightCardData?.pickTime.split(':')[0],
+                        `${i?.searchFlightDateData[1]} ${Number(
+                          i?.searchFlightCardData?.pickTime.split(':')[0],
                         )}:${Number(
-                          i.searchFlightCardData?.pickTime.split(':')[1],
+                          i?.searchFlightCardData?.pickTime.split(':')[1],
                         )}:00`,
                         'MMM DD YYYY HH:mm:ss',
                       ).utc('en-IN'),

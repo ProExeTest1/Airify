@@ -24,7 +24,6 @@ import moment from 'moment';
 
 const SelectSeat = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  console.log(tripType, 'trip type');
   const temp = useSelector(e => e.SelectSeatData.SelectSeatData);
   const searchFlightCardData = useSelector(
     state => state.searchFlight.searchFlightCardData,
@@ -63,11 +62,9 @@ const SelectSeat = ({navigation, route}) => {
             ...documentSnapshot.data(),
           });
         });
-        console.log(users, 'users');
         const setAllData = users[0]?.AirlineSeatBookData?.find(
           i => i?.date == date?.date,
         );
-        console.log(setAllData, 'setAllData1');
         setFirebaseData(setAllData);
         setOccuiedData(
           setAllData?.flightData?.find(i => {

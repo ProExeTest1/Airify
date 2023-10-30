@@ -22,6 +22,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 
 const CancelBooking = ({navigation}) => {
   const [selectedData, setSelectedData] = useState({});
@@ -34,6 +35,7 @@ const CancelBooking = ({navigation}) => {
   const firebaseTicketData = useSelector(
     state => state?.bookingTransactiondata?.bookingTransactiondata,
   );
+
   const openModal = () => {
     setModal(true);
   };
@@ -113,6 +115,9 @@ const CancelBooking = ({navigation}) => {
               }
               return item;
             }).filter(i => i.Departure || i.Return),
+          })
+          .then(() => {
+            BookingUpdateNotification();
           });
       } catch (error) {
         console.log('error', error);
@@ -159,6 +164,62 @@ const CancelBooking = ({navigation}) => {
     getSaveTicketData();
   }, []);
 
+  const BookingUpdateNotification = async () => {
+    firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(i => {
+        let users = i.data()?.NotificationList?.map(i => {
+          return i;
+        });
+        users?.map(async i => {
+          console.log('i?.title', i?.title);
+          if (i?.title == 'Refunds and Cancellations') {
+            console.log('i?.isOn', i?.isOn);
+            if (i?.isOn == true) {
+              // Request permissions (required for iOS)
+              await notifee.requestPermission();
+
+              // Create a channel (required for Android)
+              const channelId = await notifee.createChannel({
+                id: auth().currentUser?.uid,
+                name: 'Ticket Booking',
+              });
+
+              // Display a notification
+              await notifee.displayNotification({
+                title: 'Your Ticket Cancel Successfully',
+                body: `${firebaseTicketData?.totalPaymentList?.totalPayment} rupees refund in few minutes.`,
+                android: {
+                  channelId,
+                  smallIcon: 'ic_notification',
+                  sound: 'default',
+                  pressAction: {
+                    id: 'default',
+                  },
+                },
+              });
+
+              notifee.onForegroundEvent(({type, detail}) => {
+                console.log('type', type);
+                switch (type) {
+                  case EventType.DISMISSED:
+                    console.log(
+                      'User dismissed notification',
+                      detail.notification,
+                    );
+                    break;
+                  case EventType.PRESS:
+                    navigation.navigate('WalletScreen');
+                    break;
+                }
+              });
+            }
+          }
+        });
+      });
+  };
   return (
     <View style={styles.container}>
       <CommonHeader

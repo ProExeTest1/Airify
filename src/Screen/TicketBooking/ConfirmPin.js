@@ -20,6 +20,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import {randomBookingIDGenerator} from '../../helper/RandomPromoCodegenerator';
 import {useDispatch, useSelector} from 'react-redux';
 import LottieView from 'lottie-react-native';
+import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 import {
   DiscountDataAction,
   SelectSeatActionData,
@@ -27,6 +28,7 @@ import {
 } from '../../redux/action/SelectSeatAction';
 import moment from 'moment';
 import {showTicketActionData} from '../../redux/action/showTicketAction';
+
 const ConfirmPin = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const [pinData, setPinData] = useState('');
@@ -243,6 +245,8 @@ const ConfirmPin = ({navigation, route}) => {
               ],
             })
             .then(async () => {
+              BookingUpdateNotification();
+              PaymentNotification();
               setTimeout(() => {
                 // dispatch(ReturnSelectSeatActionData([]));
                 dispatch(SelectSeatActionData([]));
@@ -344,6 +348,8 @@ const ConfirmPin = ({navigation, route}) => {
               ],
             })
             .then(async () => {
+              BookingUpdateNotification();
+              PaymentNotification();
               setTimeout(() => {
                 // dispatch(ReturnSelectSeatActionData([]));
                 dispatch(SelectSeatActionData([]));
@@ -358,6 +364,123 @@ const ConfirmPin = ({navigation, route}) => {
         Alert.alert('PIN is not match');
       }
     }
+  };
+
+  const BookingUpdateNotification = async () => {
+    firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(i => {
+        let users = i.data()?.NotificationList?.map(i => {
+          return i;
+        });
+        users?.map(async i => {
+          if (i?.title == 'Ticket Booking Updates') {
+            if (i?.isOn == true) {
+              // Request permissions (required for iOS)
+              await notifee.requestPermission();
+
+              // Create a channel (required for Android)
+              const channelId = await notifee.createChannel({
+                id: auth().currentUser?.uid,
+                name: 'Ticket Booking',
+              });
+
+              // Display a notification
+              await notifee.displayNotification({
+                title: 'Your Ticket Book Successfully',
+                body: `${searchFlightData?.to} to ${searchFlightData?.from} ticket is book of class ${searchFlightData?.class}`,
+                android: {
+                  channelId,
+                  smallIcon: 'ic_notification',
+                  sound: 'default',
+                  pressAction: {
+                    id: 'default',
+                  },
+                },
+              });
+
+              notifee.onForegroundEvent(({type, detail}) => {
+                console.log('type', type);
+                switch (type) {
+                  case EventType.DISMISSED:
+                    console.log(
+                      'User dismissed notification',
+                      detail.notification,
+                    );
+                    break;
+                  case EventType.PRESS:
+                    navigation.navigate('BookingsScreen');
+                    break;
+                }
+              });
+            }
+          }
+        });
+      });
+  };
+  const PaymentNotification = async () => {
+    await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(i => {
+        let users = i.data()?.NotificationList?.map(i => {
+          return i;
+        });
+        users?.map(async i => {
+          if (i?.title == 'Ticket Booking Updates') {
+            if (i?.isOn == true) {
+              // Request permissions (required for iOS)
+              await notifee.requestPermission();
+              // Create a channel (required for Android)
+              const channelId = await notifee.createChannel({
+                id: auth().currentUser?.uid,
+                name: 'Ticket Booking',
+              });
+              // Display a notification
+              await notifee.displayNotification({
+                title: 'Payment Successfully',
+                body: `Hii ${userData?.Name}, You debited $${
+                  totalPaymentList.return
+                    ? totalPaymentList.return.totalPayment +
+                      totalPaymentList.departure.totalPayment
+                    : totalPaymentList.departure.totalPayment
+                } by wallet. Clear Balance is $${
+                  Number(UserWalletData.wallet) -
+                  (totalPaymentList.return
+                    ? totalPaymentList.return.totalPayment +
+                      totalPaymentList.departure.totalPayment
+                    : totalPaymentList.departure.totalPayment)
+                }. `,
+                android: {
+                  channelId,
+                  smallIcon: 'ic_notification',
+                  sound: 'default',
+                  pressAction: {
+                    id: 'default',
+                  },
+                },
+              });
+              notifee.onForegroundEvent(({type, detail}) => {
+                console.log('type', type);
+                switch (type) {
+                  case EventType.DISMISSED:
+                    console.log(
+                      'User dismissed notification',
+                      detail.notification,
+                    );
+                    break;
+                  case EventType.PRESS:
+                    navigation.navigate('Popup');
+                    break;
+                }
+              });
+            }
+          }
+        });
+      });
   };
   const getPinData = async () => {
     await firestore()

@@ -26,7 +26,6 @@ const AddAddress = ({navigation}) => {
   const [countryCode, setCountryCode] = useState('');
   const [contactName, setContactName] = useState('');
   const [addressLabel, setAddressLabel] = useState('');
-  console.log('checked', checked);
   const userSelectedAddress = useSelector(
     address => address?.AddressData?.addressData,
   );

@@ -42,8 +42,6 @@ const BookingTransactionDetails = ({navigation}) => {
     setModal(false);
   };
 
-  console.log(moment('Oct 29 2023', 'MMM DD YYYY').format('D/M/YYYY'));
-
   const firebaseTicketData = useSelector(
     state => state?.bookingTransactiondata?.bookingTransactiondata,
   );

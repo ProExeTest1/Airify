@@ -17,6 +17,8 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {SelectpaymentMethodAction} from '../../redux/action/SelectSeatAction';
+import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PaymentMethod = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -35,6 +37,7 @@ const PaymentMethod = ({navigation, route}) => {
     10,
   );
   const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
+
   const dataForTurnary =
     tripType === 'Round-Trip'
       ? totalSeatPrice +
@@ -51,8 +54,8 @@ const PaymentMethod = ({navigation, route}) => {
       dispatch(SelectpaymentMethodAction(selectOpc));
       navigation.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
+      BookingUpdateNotification();
       navigation.navigate('TopUp', {TripType: tripType});
-      Alert.alert('please TopUp your Wallet');
     }
   };
   const getFirebaseData = async () => {
@@ -77,9 +80,66 @@ const PaymentMethod = ({navigation, route}) => {
         });
       });
   };
+
+  console.log('dataForTurnary', dataForTurnary);
   useEffect(() => {
     getFirebaseData();
   }, []);
+
+  const BookingUpdateNotification = async () => {
+    await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(i => {
+        let users = i.data()?.NotificationList?.map(i => {
+          return i;
+        });
+        users?.map(async i => {
+          if (i?.title == 'Low Balance in Wallet') {
+            if (i?.isOn == true) {
+              // Request permissions (required for iOS)
+              await notifee.requestPermission();
+
+              // Create a channel (required for Android)
+              const channelId = await notifee.createChannel({
+                id: auth().currentUser?.uid,
+                name: 'Ticket Booking',
+              });
+
+              // Display a notification
+              await notifee.displayNotification({
+                title: 'Wallet Popup',
+                body: `You have no enough balance in your popup.`,
+                android: {
+                  channelId,
+                  smallIcon: 'ic_notification',
+                  sound: 'default',
+                  pressAction: {
+                    id: 'default',
+                  },
+                },
+              });
+
+              notifee.onForegroundEvent(({type, detail}) => {
+                console.log('type', type);
+                switch (type) {
+                  case EventType.DISMISSED:
+                    console.log(
+                      'User dismissed notification',
+                      detail.notification,
+                    );
+                    break;
+                  case EventType.PRESS:
+                    navigation.navigate('TopUp', {TripType: tripType});
+                    break;
+                }
+              });
+            }
+          }
+        });
+      });
+  };
   return (
     <View style={styles.container}>
       <CommonHeader

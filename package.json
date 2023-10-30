@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@kichiyaki/react-native-barcode-generator": "^0.6.7",
+    "@notifee/react-native": "^7.8.0",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-clipboard/clipboard": "^1.12.1",

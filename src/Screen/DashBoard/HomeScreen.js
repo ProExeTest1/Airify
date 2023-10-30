@@ -158,6 +158,7 @@ const HomeScreen = ({navigation}) => {
         });
       });
   };
+
   const TripOption = ({tripType}) => {
     return (
       <TouchableOpacity
@@ -318,7 +319,9 @@ const HomeScreen = ({navigation}) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => SearchFlightsBut()}
+            onPress={() => {
+              SearchFlightsBut();
+            }}
             style={styles.searchButtonStyle}>
             <Text style={styles.searchFontStyle}>Search Flights</Text>
           </TouchableOpacity>

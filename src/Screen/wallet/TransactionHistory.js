@@ -45,6 +45,7 @@ const TransactionHistory = ({navigation}) => {
         />
         <View style={{flex: 1, paddingHorizontal: wp(8)}}>
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={transactionHistory}
             bounces={false}
             renderItem={({item, index}) => (
