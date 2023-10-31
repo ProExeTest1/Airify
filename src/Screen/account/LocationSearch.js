@@ -100,8 +100,7 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
           buttonText={strings.addButton}
           onPress={() => {
             navigation.navigate('AddAddress', {
-              data: route?.params?.data,
-              mode: 'Edit',
+              data: route?.params,
             });
           }}
         />

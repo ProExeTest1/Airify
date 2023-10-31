@@ -18,6 +18,7 @@ import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {SelectpaymentMethodAction} from '../../redux/action/SelectSeatAction';
 import {ReschedulePaymentMethodAction} from '../../redux/action/RescheduleAction';
+import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 
 const PaymentMethod = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -46,6 +47,7 @@ const PaymentMethod = ({navigation, route}) => {
     10,
   );
   const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
+
   const dataForTurnary =
     typeReschedule == 'Reschedule'
       ? typePaymeta <= WalletData?.wallet
@@ -70,8 +72,8 @@ const PaymentMethod = ({navigation, route}) => {
         ? navigation.goBack()
         : navigation.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
+      BookingUpdateNotification();
       navigation.navigate('TopUp', {TripType: tripType});
-      Alert.alert('please TopUp your Wallet');
     }
   };
   const getFirebaseData = async () => {
@@ -96,9 +98,86 @@ const PaymentMethod = ({navigation, route}) => {
         });
       });
   };
+
+  console.log('dataForTurnary', dataForTurnary);
   useEffect(() => {
     getFirebaseData();
   }, []);
+
+  const BookingUpdateNotification = async () => {
+    await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(i => {
+        let users = i.data()?.NotificationList?.map(i => {
+          return i;
+        });
+        users?.map(async e => {
+          if (e?.title == 'Low Balance in Wallet') {
+            if (e?.isOn == true) {
+              // Request permissions (required for iOS)
+              await notifee.requestPermission();
+
+              // Create a channel (required for Android)
+              const channelId = await notifee.createChannel({
+                id: auth().currentUser?.uid,
+                name: 'Ticket Booking',
+              });
+
+              // Display a notification
+              await notifee.displayNotification({
+                title: 'Wallet Popup',
+                body: `You have no enough balance in your popup.`,
+                android: {
+                  channelId,
+                  smallIcon: 'ic_notification',
+                  sound: 'default',
+                  pressAction: {
+                    id: 'default',
+                  },
+                },
+              });
+
+              notifee.onForegroundEvent(async ({type, detail}) => {
+                await firestore()
+                  .collection('NotificationHistory')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(async i => {
+                    await firestore()
+                      .collection('NotificationHistory')
+                      .doc(auth().currentUser.uid)
+                      .update({
+                        NotificationHistory: [
+                          ...i?.data()?.NotificationHistory,
+                          {
+                            id: detail?.notification?.id,
+                            title: detail?.notification?.title,
+                            body: detail?.notification?.body,
+                            date: Date.now(),
+                            NotificationType: e?.title,
+                          },
+                        ],
+                      });
+                  });
+                switch (type) {
+                  case EventType.DISMISSED:
+                    console.log(
+                      'User dismissed notification',
+                      detail.notification,
+                    );
+                    break;
+                  case EventType.PRESS:
+                    navigation.navigate('TopUp', {TripType: tripType});
+                    break;
+                }
+              });
+            }
+          }
+        });
+      });
+  };
   return (
     <View style={styles.container}>
       <CommonHeader

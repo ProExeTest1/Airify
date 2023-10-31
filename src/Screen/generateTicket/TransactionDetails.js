@@ -53,7 +53,7 @@ const TransactionDetails = ({navigation, route}) => {
           if (documentSnapshot?.id == auth().currentUser.uid) {
             setFirebaseTicketData(
               documentSnapshot?.data().SaveTicket.find(e => e.id == ticketId)
-                .Departure,
+                ?.Departure,
             );
             setTicketTypeData(
               documentSnapshot?.data().SaveTicket.find(e => e.id == ticketId),

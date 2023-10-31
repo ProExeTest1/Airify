@@ -36,7 +36,7 @@ const ActiveSavedAddress = ({onPress, data}) => {
             users = documentSnapshot.data()?.savedFlights;
           }
         });
-        let activeData = users.filter(item => {
+        let activeData = users?.filter(item => {
           if (
             Date.now() <=
             new Date(

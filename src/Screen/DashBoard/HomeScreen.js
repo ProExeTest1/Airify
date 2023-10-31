@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
-
 import {
   ClassPickerModal,
   CustomPaperTextInput,
@@ -20,7 +19,6 @@ import {
   PassengerPickerModal,
   SwiperFlatlistComponent,
 } from '../../components/index';
-
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {useSelector, useDispatch} from 'react-redux';
@@ -43,6 +41,7 @@ const HomeScreen = ({navigation}) => {
   const reduxReturnDate = useSelector(state => state.date.returnDate);
 
   const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
+
   //Maintaining textInput value with redux data
   let depatureData = reduxDepaturePlace
     ? reduxDepaturePlace.city + '(' + reduxDepaturePlace.airport + ')'
@@ -159,6 +158,7 @@ const HomeScreen = ({navigation}) => {
         });
       });
   };
+
   const TripOption = ({tripType}) => {
     return (
       <TouchableOpacity
@@ -319,7 +319,9 @@ const HomeScreen = ({navigation}) => {
             />
           </View>
           <TouchableOpacity
-            onPress={() => SearchFlightsBut()}
+            onPress={() => {
+              SearchFlightsBut();
+            }}
             style={styles.searchButtonStyle}>
             <Text style={styles.searchFontStyle}>Search Flights</Text>
           </TouchableOpacity>

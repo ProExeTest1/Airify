@@ -37,6 +37,8 @@ import {
   OnBoardingModuleHeader,
   OnBoardingSingleButton,
 } from '../../components';
+import DeviceInfo from 'react-native-device-info';
+import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const swiperRef = useRef();
@@ -50,6 +52,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [phoneNo, setPhoneNo] = useState('');
   const [Password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
+  const promocode = randomPromoCodeGenerator(6);
   const [journeyData, setJourneyData] = useState([]);
   const [countryCode, setCountryCode] = useState('');
   const [datePicker, setDatePicker] = useState(false);
@@ -91,6 +94,9 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     ) {
       AlertConstant('Please Enter Valid Password');
       return;
+    } else if (!checked == true) {
+      AlertConstant('Can You agree with terms & condition.');
+      return;
     } else {
       swiperRef.current.scrollBy(1);
     }
@@ -127,7 +133,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .putFile(uploadStorage);
       try {
         await task;
-        Alert.alert('Image uploaded', 'Image uploaded successfully');
+        Alert.alert('Congrats!', "You're successfully register");
       } catch (error) {
         console.log(error);
       }
@@ -137,6 +143,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .catch(err => {
           console.log('error in download', err);
         });
+
+      const DeviceUniqueId = await DeviceInfo.getUniqueId();
 
       await firestore().collection('Users').doc(isUserCreate.user.uid).set({
         Name: name,
@@ -154,6 +162,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         FlyData: selectedFlyWay,
         NotificationList: NotificationData,
         SecurityData: SecurityData,
+        DeviceId: DeviceUniqueId,
+        ReferralCode: promocode,
       });
 
       //------------------------------------------------>  UserWallet data
@@ -166,7 +176,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           transactionHistory: [],
         });
 
-      //------------------------------------------------>  SaveTicket data
+      //------------------------------------------------>  SaveFlight data
 
       await firestore()
         .collection('SavedFlights')
@@ -216,6 +226,14 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .doc(isUserCreate.user.uid)
         .set({
           BookingCancel: [],
+        });
+
+      //-------------------------------------------------> Notification History Data
+      await firestore()
+        .collection('NotificationHistory')
+        .doc(isUserCreate.user.uid)
+        .set({
+          NotificationHistory: [],
         });
 
       navigation.navigate('SignUpSuccess');
@@ -350,7 +368,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     fontSize: fontSize(14),
                     fontWeight: '400',
                   }}>
-                  {strings.signUp}
+                  {strings.signInText}
                 </Text>
               </TouchableOpacity>
             </View>

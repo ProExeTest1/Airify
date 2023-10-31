@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 
 import TopUp from '../screen/wallet/TopUp';
@@ -19,7 +19,7 @@ import PersonalInfo from '../screen/account/PersonalInfo';
 import Notification from '../screen/account/Notification';
 import pointHistory from '../screen/account/PointHistory';
 import AirifyReward from '../screen/account/AirifyReward';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import SignInScreen from '../screen/onBoarding/SignInScreen';
 import SignUpScreen from '../screen/onBoarding/SignUpScreen';
 import LocationSearch from '../screen/account/LocationSearch';

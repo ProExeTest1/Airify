@@ -31,7 +31,6 @@ const SelectSeat = ({navigation, route}) => {
       ? state?.rescheduleFlightdata.rescheduleSelectNewCard
       : state.searchFlight.searchFlightCardData,
   );
-  console.log(searchFlightCardData, type);
   const dispatch = useDispatch();
   const searchFlightData = useSelector(e =>
     type == 'Reschedule'

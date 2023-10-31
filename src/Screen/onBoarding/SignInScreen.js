@@ -24,6 +24,7 @@ import {
   OnBoardingModuleHeader,
   OnBoardingSingleButton,
 } from '../../components';
+import DeviceInfo from 'react-native-device-info';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [Email, setEmail] = useState('');
@@ -73,9 +74,13 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
         Email,
         Password,
       );
-      await firestore().collection('Users').doc(auth().currentUser.uid).update({
-        Password: Password,
-      });
+      await firestore()
+        .collection('Users')
+        .doc(auth().currentUser.uid)
+        .update({
+          DeviceId: await DeviceInfo.getUniqueId(),
+          Password: Password,
+        });
       if (checked == true) {
         let value = {Email, Password};
         const jsonValue = JSON.stringify(value);
