@@ -15,9 +15,9 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
         Images2={null}
         onPress1={true}
         onPress2={false}
-        Images1={Images.backIcon}
-        Images1Color={color.white}
-        headerName={strings.discountVoucher}
+        Images1={Images?.backIcon}
+        Images1Color={color?.white}
+        headerName={strings?.discountVoucher}
         navigation1={() => {
           goBack();
         }}
@@ -31,18 +31,21 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
           renderItem={({item}) => {
             return (
               <View style={styles.flatListInnerViewStyle}>
-                <Text style={styles.cartTitleTextStyle}>{item.header}</Text>
+                <Text style={styles.cartTitleTextStyle}>{item?.header}</Text>
                 <Text numberOfLines={1} style={styles.textStyle}>
-                  {item.title}
+                  {item?.title}
                 </Text>
                 <View style={{flexDirection: 'row', marginTop: hp(1)}}>
                   <View style={styles.cartView}>
-                    <Image source={Images.clock} style={styles.timeIconStyle} />
+                    <Image
+                      source={Images?.clock}
+                      style={styles.timeIconStyle}
+                    />
                     <View>
                       <Text style={styles.validationTextStyle}>
-                        {strings.ValidUntil}
+                        {strings?.ValidUntil}
                       </Text>
-                      <Text style={styles.textStyle}>{item.ValidUntil}</Text>
+                      <Text style={styles.textStyle}>{item?.ValidUntil}</Text>
                     </View>
                   </View>
                   <View style={styles.secondViewStyle}>
@@ -52,10 +55,10 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
                     />
                     <View>
                       <Text style={styles.validationTextStyle}>
-                        {strings.minTransaction}
+                        {strings?.minTransaction}
                       </Text>
                       <Text style={styles.textStyle}>
-                        {item.MinTransaction}
+                        {item?.MinTransaction}
                       </Text>
                     </View>
                   </View>

@@ -15,6 +15,7 @@ import {color} from '../../helper/ColorConstant';
 import {wp, fontSize, hp} from '../../helper/Constant';
 import {TimeData} from '../../assets/DummyData/timeData';
 import {MultiSliderComponets, OnBoardingTwoButton} from '../index';
+import {useSelector} from 'react-redux';
 
 const CreatePriceAlert = ({
   addAlert,
@@ -27,7 +28,25 @@ const CreatePriceAlert = ({
   setDepartureTime,
   setToggleSwitchBut1,
   setToggleSwitchBut2,
+  tripType,
 }) => {
+  const reduxDestinationPlace = useSelector(state =>
+    tripType == 'Round-Trip'
+      ? state?.place?.depaturePlace
+      : state?.place?.destinationPlace,
+  );
+  const reduxDepaturePlace = useSelector(state =>
+    tripType == 'Round-Trip'
+      ? state?.place?.destinationPlace
+      : state?.place?.depaturePlace,
+  );
+  const searchFlightData = useSelector(e =>
+    tripType === 'Round-Trip'
+      ? e?.searchFlight?.searchFlightReturnData
+      : e?.place?.searchFlightData,
+  );
+  console.log(searchFlightData, 'totalSeat');
+  const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
   return (
     <View style={styles.createAlertBody}>
       <View style={styles.createAlertTitleBody}>
@@ -42,8 +61,13 @@ const CreatePriceAlert = ({
       <View style={styles.createAlertCardBody}>
         <View style={styles.cardDataBody}>
           <View style={styles.FlightsPlaseBody}>
-            <Text style={styles.FlightsPlaseName}>New York</Text>
-            <Text style={styles.FlightsPlaseNicName}>JFK</Text>
+            <Text style={styles.FlightsPlaseName}>
+              {searchFlightData?.from}
+            </Text>
+            <Text style={styles.FlightsPlaseNicName}>
+              {' '}
+              {searchFlightData?.fromShortform}
+            </Text>
           </View>
           <View style={styles.FlightsPlaseImgBody}>
             <Image
@@ -62,19 +86,28 @@ const CreatePriceAlert = ({
             </Text>
           </View>
           <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
-            <Text style={styles.FlightsPlaseName}>Paris</Text>
-            <Text style={styles.FlightsPlaseNicName}>CDG</Text>
+            <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
+            <Text style={styles.FlightsPlaseNicName}>
+              {' '}
+              {searchFlightData?.toShortform}
+            </Text>
           </View>
         </View>
         <View style={styles.cardBottemBody}>
-          <Text style={styles.FlightsPlaseName}>Usa</Text>
-          <Text style={styles.FlightsPlaseImgText}>1 pax - Economy</Text>
-          <Text style={styles.FlightsPlaseName}>France</Text>
+          <Text style={styles.FlightsPlaseName}>
+            {reduxDepaturePlace?.country}
+          </Text>
+          <Text style={styles.FlightsPlaseImgText}>
+            {totalSeat} {strings.pax.slice(1)} - {searchFlightData?.class}
+          </Text>
+          <Text style={styles.FlightsPlaseName}>
+            {reduxDestinationPlace?.country}
+          </Text>
         </View>
       </View>
       <View style={styles.PriceTargetsBody}>
-        <Image style={styles.PriceTargetsImg} source={Images.dollarIcon} />
-        <Text style={styles.PriceTargetsTitle}>{strings.PriceTarget}</Text>
+        <Image style={styles.PriceTargetsImg} source={Images?.dollarIcon} />
+        <Text style={styles.PriceTargetsTitle}>{strings?.PriceTarget}</Text>
         <Text
           style={
             styles.PriceTargetsText
@@ -88,8 +121,8 @@ const CreatePriceAlert = ({
         onValuesChangeFinish={a => setPriceTargets(a)}
       />
       <View style={styles.PriceTargetsBody}>
-        <Image style={styles.PriceTargetsImg} source={Images.timeIcon} />
-        <Text style={styles.PriceTargetsTitle}>{strings.DepartureTime}</Text>
+        <Image style={styles.PriceTargetsImg} source={Images?.timeIcon} />
+        <Text style={styles.PriceTargetsTitle}>{strings?.DepartureTime}</Text>
         <ToggleSwitch
           isOn={ToggleSwitchBut1}
           size="medium"
@@ -100,6 +133,7 @@ const CreatePriceAlert = ({
       {ToggleSwitchBut1 && (
         <FlatList
           data={TimeData}
+          bounces={false}
           numColumns={2}
           renderItem={({item, index}) => (
             <TouchableOpacity
@@ -118,15 +152,15 @@ const CreatePriceAlert = ({
                       : '#e4e4e4',
                 },
               ]}>
-              <Text style={styles.departureTitleStyle}>{item.title}</Text>
-              <Text style={styles.departureTimeTextStyle}>{item.time}</Text>
+              <Text style={styles.departureTitleStyle}>{item?.title}</Text>
+              <Text style={styles.departureTimeTextStyle}>{item?.time}</Text>
             </TouchableOpacity>
           )}
         />
       )}
       <View style={styles.PriceTargetsBody}>
-        <Image style={styles.PriceTargetsImg} source={Images.flightIcon} />
-        <Text style={styles.PriceTargetsTitle}>{strings.DirectFlight}</Text>
+        <Image style={styles.PriceTargetsImg} source={Images?.flightIcon} />
+        <Text style={styles.PriceTargetsTitle}>{strings?.DirectFlight}</Text>
         <ToggleSwitch
           size="medium"
           isOn={ToggleSwitchBut2}

@@ -57,7 +57,7 @@ const Security = ({navigation: {goBack}}) => {
           renderItem={({item}) => {
             return (
               <View style={styles.FlatListView}>
-                <Text style={styles.titleStyle}>{item.title}</Text>
+                <Text style={styles.titleStyle}>{item?.title}</Text>
                 {item.title == 'Device Management' ? (
                   <TouchableOpacity>
                     <Image
@@ -93,7 +93,7 @@ const Security = ({navigation: {goBack}}) => {
         />
 
         <TouchableOpacity style={styles.buttonStyle}>
-          <Text style={styles.buttonTextStyle}>{strings.changePassword}</Text>
+          <Text style={styles.buttonTextStyle}>{strings?.changePassword}</Text>
         </TouchableOpacity>
       </View>
     </View>

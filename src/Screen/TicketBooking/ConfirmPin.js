@@ -445,6 +445,7 @@ const ConfirmPin = ({navigation, route}) => {
             alignSelf: 'center',
             fontSize: fontSize(18),
             marginBottom: hp(3),
+            color: color.black,
           }}>
           Enter the PIN to confirm ticket payment.
         </Text>
@@ -472,6 +473,7 @@ const ConfirmPin = ({navigation, route}) => {
                   marginTop: hp(5),
                   fontSize: fontSize(18),
                   fontWeight: '500',
+                  color: color.black,
                 }}>
                 Processing Payment...
               </Text>
@@ -496,7 +498,9 @@ const ConfirmPin = ({navigation, route}) => {
                 }}>
                 Booking Confirmed!
               </Text>
-              <Text>Congratulation! your flight ticket is Confirmed</Text>
+              <Text style={styles.textStyle}>
+                Congratulation! your flight ticket is Confirmed
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible2(false);
@@ -596,5 +600,8 @@ const styles = StyleSheet.create({
     paddingVertical: hp(1),
     borderBottomWidth: 1,
     borderColor: '#e2e2e2',
+  },
+  textStyle: {
+    color: color.black,
   },
 });

@@ -14,6 +14,7 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {NotificationData} from '../../assets/DummyData/NotificationData';
+import {strings} from '../../helper/Strings';
 
 const NotificationScreen = ({navigation}) => {
   return (
@@ -30,7 +31,7 @@ const NotificationScreen = ({navigation}) => {
             />
           </TouchableOpacity>
           <View style={styles.headerTextViewStyle}>
-            <Text style={styles.headerTextStyle}>Notification</Text>
+            <Text style={styles.headerTextStyle}>{strings.notification}</Text>
           </View>
           <TouchableOpacity
             onPress={() => {

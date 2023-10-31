@@ -26,21 +26,21 @@ const Language = ({navigation: {goBack}}) => {
   }, []);
 
   const data = () => {
-    const det = languageDummyJson.data.countries.map(i =>
-      i.languages.map(e => {
+    const det = languageDummyJson?.data?.countries?.map(i =>
+      i?.languages.map(e => {
         return {
-          emoji: i.emoji,
-          language: e.name,
+          emoji: i?.emoji,
+          language: e?.name,
         };
       }),
     );
-    setLanguageData(det.flat());
+    setLanguageData(det?.flat());
   };
 
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('selected_Language');
-      setSelectedLanguage(JSON.parse(jsonValue));
+      const jsonValue = await AsyncStorage?.getItem('selected_Language');
+      setSelectedLanguage(JSON?.parse(jsonValue));
     } catch (e) {
       console.log('e :>> ', e);
     }
@@ -48,7 +48,7 @@ const Language = ({navigation: {goBack}}) => {
 
   const languageSelectionAsync = async item => {
     try {
-      await AsyncStorage.setItem('selected_Language', JSON.stringify(item));
+      await AsyncStorage?.setItem('selected_Language', JSON.stringify(item));
     } catch (error) {
       console.log('error :>> ', error);
     }

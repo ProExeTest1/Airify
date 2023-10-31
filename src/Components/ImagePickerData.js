@@ -12,6 +12,7 @@ import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import ButtonData from './ButtonData';
 import {hp, wp} from '../helper/Constant';
 import {Images} from '../helper/IconConstant';
+import {strings} from '../helper/Strings';
 
 const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
   const [modal, setModal] = useState(false);
@@ -45,11 +46,11 @@ const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.CAMERA,
       {
-        title: 'App Camera Permission',
-        message: 'App needs access to your camera ',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
+        title: strings.title,
+        message: strings.alert_meassage,
+        buttonNeutral: strings.Ask_me_latter,
+        buttonNegative: strings.cancel,
+        buttonPositive: strings.ok,
       },
     );
 

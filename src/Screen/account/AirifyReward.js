@@ -3,16 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
-  ToastAndroid,
-  Alert,
-  Platform,
   TouchableOpacity,
   Image,
   Share,
 } from 'react-native';
-import QRCode from 'react-native-qrcode-generator';
 import Clipboard from '@react-native-clipboard/clipboard';
-
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
@@ -21,17 +16,15 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingText from '../../components/OnBoardingText';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
+import {AlertConstant} from '../../helper/AlertConstant';
+import QRCode from 'react-native-qrcode-svg';
 
 const AirifyReward = ({navigation: {goBack}}) => {
   const promocode = randomPromoCodeGenerator(6);
 
   const copyToClipboard = () => {
     Clipboard.setString(promocode);
-    if (Platform.OS === 'android') {
-      ToastAndroid.show('Text copied to clipboard!', ToastAndroid.SHORT);
-    } else if (Platform.OS === 'ios') {
-      Alert.alert('Text copied to clipboard!');
-    }
+    AlertConstant(strings?.text_copied_clipboard);
   };
 
   const onShare = async () => {
@@ -39,29 +32,29 @@ const AirifyReward = ({navigation: {goBack}}) => {
       const result = await Share.share({
         message: promocode,
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
+      if (result?.action === Share?.sharedAction) {
+        if (result?.activityType) {
           // shared with activity type of result.activityType
         } else {
           // shared
         }
-      } else if (result.action === Share.dismissedAction) {
+      } else if (result?.action === Share?.dismissedAction) {
         // dismissed
       }
     } catch (error) {
-      Alert.alert(error.message);
+      AlertConstant(error.message);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles?.container}>
       <CommonHeader
         onPress1={true}
         onPress2={false}
         Images2={Images.info}
         Images1={Images.backIcon}
         Images1Color={color.white}
-        headerName={strings.airifyReward}
+        headerName={strings?.airifyReward}
         navigation1={() => {
           goBack();
         }}
@@ -69,16 +62,15 @@ const AirifyReward = ({navigation: {goBack}}) => {
       />
       <View>
         <OnBoardingText
-          OnBoardingMainText={strings.getSpecialReward}
+          OnBoardingMainText={strings?.getSpecialReward}
           OnBoardingMainTextStyle={styles.bodyMainText}
-          OnBoardingSubText={strings.getSpecialRewardSub}
+          OnBoardingSubText={strings?.getSpecialRewardSub}
         />
         <View style={styles.qrCodeStyle}>
           <QRCode
-            size={300}
-            bgColor="black"
-            fgColor="white"
             value={promocode}
+            size={hp(35)}
+            logoBackgroundColor="transparent"
           />
         </View>
       </View>
@@ -103,7 +95,7 @@ const AirifyReward = ({navigation: {goBack}}) => {
             borderColor: color.grey1,
           }}>
           <OnBoardingSingleButton
-            buttonText={strings.shareCode}
+            buttonText={strings?.shareCode}
             onPress={() => {
               onShare();
             }}

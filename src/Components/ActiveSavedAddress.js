@@ -17,6 +17,7 @@ import {Images} from '../helper/IconConstant';
 import {fontSize, hp, wp} from '../helper/Constant';
 import {activeFlight} from '../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
+import {strings} from '../helper/Strings';
 
 const ActiveSavedAddress = ({onPress, data}) => {
   const dispatch = useDispatch();
@@ -136,7 +137,7 @@ const ActiveSavedAddress = ({onPress, data}) => {
                   <Text style={[styles.cardPrice, {marginLeft: wp(30)}]}>
                     {item?.flightPrice}
                   </Text>
-                  <Text style={styles.cardPriceTitle}>/pax</Text>
+                  <Text style={styles.cardPriceTitle}>{strings.pax}</Text>
                 </View>
               </TouchableOpacity>
             );

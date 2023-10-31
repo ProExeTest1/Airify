@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flex: 1,
     marginLeft: wp(2),
+    color: color.black,
   },
   iconStyle: {
     marginTop: hp(2.4),

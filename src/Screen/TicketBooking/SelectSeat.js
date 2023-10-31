@@ -199,7 +199,7 @@ const SelectSeat = ({navigation, route}) => {
                   styles.selectedIcon,
                   {backgroundColor: color.commonBlue},
                 ]}></View>
-              <Text>Selected</Text>
+              <Text style={styles.textStyle}>Selected</Text>
             </View>
             <View style={styles.selectedBody}>
               <View
@@ -207,7 +207,7 @@ const SelectSeat = ({navigation, route}) => {
                   styles.selectedIcon,
                   {backgroundColor: '#8596b3'},
                 ]}></View>
-              <Text>Occupied</Text>
+              <Text style={styles.textStyle}>Occupied</Text>
             </View>
             <View style={styles.selectedBody}>
               <View
@@ -215,7 +215,7 @@ const SelectSeat = ({navigation, route}) => {
                   styles.selectedIcon,
                   {backgroundColor: '#cdd0d6'},
                 ]}></View>
-              <Text>Available</Text>
+              <Text style={styles.textStyle}>Available</Text>
             </View>
           </View>
 
@@ -364,10 +364,12 @@ const styles = StyleSheet.create({
   SeatText: {
     marginBottom: hp(0.5),
     fontSize: fontSize(13),
+    color: color.black,
   },
   seatNumberText: {
     fontSize: fontSize(19),
     fontWeight: 'bold',
+    color: color.black,
   },
   okButton: {
     backgroundColor: color.commonBlue,
@@ -390,7 +392,6 @@ const styles = StyleSheet.create({
   flightLogo: {
     height: wp(7.5),
     width: wp(7.5),
-
     borderRadius: 50,
     marginEnd: wp(4),
   },
@@ -428,6 +429,7 @@ const styles = StyleSheet.create({
   seatRowNumberText: {
     fontSize: fontSize(17),
     fontWeight: 'bold',
+    color: color.black,
   },
   seatButBody: {
     flex: 1,
@@ -445,5 +447,8 @@ const styles = StyleSheet.create({
     height: hp(5),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textStyle: {
+    color: color.black,
   },
 });

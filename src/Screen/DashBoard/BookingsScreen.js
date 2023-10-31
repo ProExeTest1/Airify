@@ -2,16 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Modal from 'react-native-modal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {strings} from '../../helper/Strings';
-import {CardList, CommonHeader, TicketList} from '../../components';
+import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -22,17 +22,34 @@ import {bookingTransactionData} from '../../redux/action/BookingAction';
 const BookingsScreen = ({navigation}) => {
   const [selectedData, setSelectedData] = useState('Active');
   const [activeData, setActiveData] = useState([]);
+  const [AllData, setAllData] = useState([]);
   const [completedData, setCompletedData] = useState([]);
   const [canceledData, setCanceledData] = useState([]);
+  // setCompletedData(
+  //   allData.filter(i => {
+  //     return (
+  //       Date.now() >=
+  //       new Date(
+  //         moment(
+  //           `${i.searchFlightDateData[1]} ${Number(
+  //             i.searchFlightCardData?.pickTime.split(':')[0],
+  //           )}:${Number(
+  //             i.searchFlightCardData?.pickTime.split(':')[1],
+  //           )}:00`,
+  //           'MMM DD YYYY HH:mm:ss',
+  //         ).format('YYYY-MM-DD HH:mm:ss'),
+  //       ).valueOf()
+  //     );
+  //   }),
+  // );
+
   const dispatch = useDispatch();
-  console.log(activeData.length, completedData.length, canceledData.length);
   const getBookingsData = async () => {
     await firestore()
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth().currentUser.uid) {
-            console.log(documentSnapshot.data()?.SaveTicket);
             let DepartureData = documentSnapshot.data()?.SaveTicket.map(i => {
               if (i.Departure) {
                 return {...i.Departure, type: 'Departure', id: i.id};
@@ -45,10 +62,11 @@ const BookingsScreen = ({navigation}) => {
               return undefined;
             });
             const allData = [DepartureData, ReturnData.filter(i => i)].flat();
-            console.log(allData);
 
+            setAllData(allData);
+            setSelectedData('Active');
             setActiveData(
-              allData.filter(i => {
+              allData?.filter(i => {
                 return (
                   Date.now() <=
                   new Date(
@@ -59,24 +77,8 @@ const BookingsScreen = ({navigation}) => {
                         i.searchFlightCardData?.pickTime.split(':')[1],
                       )}:00`,
                       'MMM DD YYYY HH:mm:ss',
-                    ).format('YYYY-MM-DD HH:mm:ss'),
-                  ).valueOf()
-                );
-              }),
-            );
-            setCompletedData(
-              allData.filter(i => {
-                return (
-                  Date.now() >=
-                  new Date(
-                    moment(
-                      `${i.searchFlightDateData[1]} ${Number(
-                        i.searchFlightCardData?.pickTime.split(':')[0],
-                      )}:${Number(
-                        i.searchFlightCardData?.pickTime.split(':')[1],
-                      )}:00`,
-                      'MMM DD YYYY HH:mm:ss',
-                    ).format('YYYY-MM-DD HH:mm:ss'),
+                    ).utc('en-IN'),
+                    // .format('YYYY-MM-DD HH:mm:ss'),
                   ).valueOf()
                 );
               }),
@@ -108,7 +110,6 @@ const BookingsScreen = ({navigation}) => {
     getBookingsData();
     getBookingCancelData();
   }, []);
-  console.log(selectedData);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -134,6 +135,24 @@ const BookingsScreen = ({navigation}) => {
             ]}
             onPress={() => {
               setSelectedData('Active');
+              setActiveData(
+                AllData?.filter(i => {
+                  return (
+                    Date.now() <=
+                    new Date(
+                      moment(
+                        `${i.searchFlightDateData[1]} ${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[0],
+                        )}:${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[1],
+                        )}:00`,
+                        'MMM DD YYYY HH:mm:ss',
+                      ).utc('en-IN'),
+                      // .format('YYYY-MM-DD HH:mm:ss'),
+                    ).valueOf()
+                  );
+                }),
+              );
             }}>
             <Text
               style={[
@@ -156,6 +175,24 @@ const BookingsScreen = ({navigation}) => {
             ]}
             onPress={() => {
               setSelectedData('Completed');
+              setActiveData(
+                AllData?.filter(i => {
+                  return (
+                    Date.now() >
+                    new Date(
+                      moment(
+                        `${i.searchFlightDateData[1]} ${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[0],
+                        )}:${Number(
+                          i.searchFlightCardData?.pickTime.split(':')[1],
+                        )}:00`,
+                        'MMM DD YYYY HH:mm:ss',
+                      ).utc('en-IN'),
+                      // .format('YYYY-MM-DD HH:mm:ss'),
+                    ).valueOf()
+                  );
+                }),
+              );
             }}>
             <Text
               style={[
@@ -165,7 +202,7 @@ const BookingsScreen = ({navigation}) => {
                     selectedData == 'Completed' ? color.white : color.black,
                 },
               ]}>
-              Completed
+              {strings.completed}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -181,54 +218,52 @@ const BookingsScreen = ({navigation}) => {
             ]}
             onPress={() => {
               setSelectedData('Canceled');
+              setActiveData(canceledData);
             }}>
             <Text
               style={[
                 styles.buttonTextStyle,
                 {color: selectedData == 'Canceled' ? color.white : color.black},
               ]}>
-              Canceled
+              {strings.canceled}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.container}>
-          <View style={styles.ScrollViewBody}>
-            <FlatList
-              data={(selectedData == 'Active'
-                ? activeData
-                : selectedData == 'Completed'
-                ? completedData
-                : canceledData
-              ).sort((a, b) => {
+          <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+            {activeData
+              .sort((a, b) => {
                 return (
                   new Date(
-                    `${a.searchFlightDateData[1]} ${Number(
-                      a.searchFlightCardData?.pickTime.split(':')[0],
-                    )}:${Number(
-                      a.searchFlightCardData?.pickTime.split(':')[1],
-                    )}:00`,
-                  ) -
+                    moment(
+                      `${a.searchFlightDateData[1]} ${Number(
+                        a.searchFlightCardData?.pickTime.split(':')[0],
+                      )}:${Number(
+                        a.searchFlightCardData?.pickTime.split(':')[1],
+                      )}:00`,
+                      'MMM DD YYYY HH:mm:ss',
+                    ).utc('en-IN'),
+                  ).valueOf() -
                   new Date(
-                    `${b.searchFlightDateData[1]} ${Number(
-                      b.searchFlightCardData?.pickTime.split(':')[0],
-                    )}:${Number(
-                      b.searchFlightCardData?.pickTime.split(':')[1],
-                    )}:00`,
-                  )
+                    moment(
+                      `${b.searchFlightDateData[1]} ${Number(
+                        b.searchFlightCardData?.pickTime.split(':')[0],
+                      )}:${Number(
+                        b.searchFlightCardData?.pickTime.split(':')[1],
+                      )}:00`,
+                      'MMM DD YYYY HH:mm:ss',
+                    ).utc('en-IN'),
+                  ).valueOf()
                 );
-              })}
-              bounces={false}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item, index}) => {
+              })
+              .map((item, index) => {
                 return (
                   <TouchableOpacity
+                    disabled={selectedData == 'Canceled' ? true : false}
                     onPress={() => {
                       setCartFlightData(item);
                     }}
-                    style={[
-                      styles.cardBody,
-                      {marginTop: index === 0 ? hp(3) : 0},
-                    ]}>
+                    style={[styles.cardBody]}>
                     <View style={styles.cardHeader}>
                       <View
                         style={[
@@ -291,10 +326,8 @@ const BookingsScreen = ({navigation}) => {
                     </View>
                   </TouchableOpacity>
                 );
-              }}
-              key={({index}) => index}
-            />
-          </View>
+              })}
+          </ScrollView>
         </View>
       </View>
     </View>

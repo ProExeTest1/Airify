@@ -26,6 +26,7 @@ import {genderRatioButton} from '../../assets/DummyData/radioButtons';
 import OnBoardingTextInput from '../../components/OnBoardingTextInput';
 import CountryPickTextInput from '../../components/CountryPickTextInput';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const PersonalInfo = ({navigation: {goBack}, navigation}) => {
   const [name, setName] = useState('');
@@ -64,7 +65,7 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
         .putFile(uploadStorage);
       try {
         await task;
-        Alert.alert('Image uploaded', 'Image uploaded successfully');
+        AlertConstant(strings.image_uploaded1, strings.image_uploaded);
       } catch (error) {
         console.log(error);
       }
@@ -160,11 +161,11 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
               setShow(true);
             }}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.DateBirth}</Text>
           <OnBoardingTextInput
             value={date}
             container={styles.textInputContainer}
-            textInputPlaceholder={strings.DateBirth}
+            textInputPlaceholder={strings?.DateBirth}
             onPress={() => {
               setDatePicker(true);
             }}
@@ -172,7 +173,7 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
               setDatePicker(true);
             }}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.gender}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.gender}</Text>
           <View style={styles.genderRadioButtonViewStyle}>
             <FlatList
               horizontal
@@ -186,7 +187,7 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
                     label={item.label}
                     color={color.black}
                     onPress={() => setSelectedData(item)}
-                    selected={item.id === selectedData?.id}
+                    selected={item?.id === selectedData?.id}
                     labelStyle={{
                       fontSize: fontSize(14),
                       fontWeight: '400',
@@ -198,7 +199,7 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
             />
           </View>
 
-          <Text style={styles.textInputTitleStyle}>{strings.country}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.country}</Text>
           <CountryPickTextInput
             value={countryName}
             countryCode={countryCode}
@@ -208,20 +209,20 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
               setShowCountryName(true);
             }}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.address}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.address}</Text>
           <OnBoardingTextInput
             keyboardType={'default'}
             value={address}
             container={styles.textInputContainer}
-            textInputPlaceholder={strings.address}
+            textInputPlaceholder={strings?.address}
             onChangeText={address => setAddress(address)}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.passport}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.passport}</Text>
           <OnBoardingTextInput
             value={passport}
             keyboardType={'default'}
             container={styles.textInputContainer}
-            textInputPlaceholder={strings.passport}
+            textInputPlaceholder={strings?.passport}
             onChangeText={passport => setPassport(passport)}
           />
         </View>
@@ -240,13 +241,13 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
           show={show ? show : showCountryName}
           pickerButtonOnPress={item => {
             setShow(false);
-            setCountryCode(item.flag);
+            setCountryCode(item?.flag);
             setShowCountryName(false);
             setCountryName(item?.name?.en);
           }}
         />
         <OnBoardingSingleButton
-          buttonText={strings.save}
+          buttonText={strings?.save}
           buttonStyle={styles.buttonStyle}
           onPress={() => {
             handleSignUp();

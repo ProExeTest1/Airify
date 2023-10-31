@@ -7,7 +7,7 @@ export const dummyData = [
   },
   {
     id: 2,
-    image: require('../images/DummyImage.png'),
+    image: require('../images/book-flight-tickets.webp'),
   },
   {
     id: 3,
@@ -15,7 +15,7 @@ export const dummyData = [
   },
   {
     id: 4,
-    image: require('../images/DummyImage.png'),
+    image: require('../images/book-flight-tickets.webp'),
   },
 ];
 

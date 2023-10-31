@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
+import {strings} from '../../helper/Strings';
 
 const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
   return (
@@ -20,7 +21,7 @@ const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
             styles.optionStyle,
             {color: ticketType === 'Departure' ? color.white : color.black},
           ]}>
-          Departure
+          {strings.departure}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -36,7 +37,7 @@ const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
             styles.optionStyle,
             {color: ticketType === 'Return' ? color.white : color.black},
           ]}>
-          Return
+          {strings.return}
         </Text>
       </TouchableOpacity>
     </View>

@@ -1,4 +1,4 @@
-export const strings = {
+export const strings = Object.freeze({
   //OnBoarding Button Text
   OnBoardingButtonOne: 'Skip',
   OnBoardingButtonSecond: 'Continue',
@@ -118,8 +118,14 @@ export const strings = {
   SectionFour: 'SECTION 4 - MODIFICATIONS TO THE SERVICE AND JOB RATES',
   SectionFourText:
     'Job Rates posted are subject to change without notice. We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time. We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.',
+  //Permission alert
 
-  //
+  title: 'App Camera Permission',
+  alert_meassage: 'App needs access to your camera',
+  Ask_me_latter: 'Ask Me Later',
+  cancel: 'Cancel',
+
+  // HomeScreen
   passengerModalHeader: 'Number of Passengers',
   Adult: 'Adult',
   Child: 'Child',
@@ -140,6 +146,9 @@ export const strings = {
   one_way: 'One-Way',
   roundTrip: 'Round trip',
   classheader: 'Seat Class',
+
+  //Special Offer screen
+
   exclusive_offer: 'Exclusive 25% Off on Your Next Flight!',
   offeerDiscription:
     'Unlock a world of saving and adventure with Airify! For a limited time. we are thrilled to offer you an exclusive 25% discount on your next flight.',
@@ -150,6 +159,10 @@ export const strings = {
   PriceAlertHeader: 'Create Price Alert',
   PriceAlertDis: 'Never miss a deal! Get notified when flight prices drop.',
   PriceTarget: 'Price Targets',
+  text_copied_clipboard: 'Text copied to clipboard!',
+
+  // Search Flights
+
   DepartureTime: 'Departure Time',
   DirectFlight: 'Only Direct Flights',
   searchFlight: 'Search Flights',
@@ -159,6 +172,28 @@ export const strings = {
   priceAlerts: 'Price Alerts',
   filter: 'Filter',
   sort: 'Sort',
+  pax: '/pax',
+  departure: 'Departure',
+  return: 'Return',
+  internation_airport: 'International Airport',
+  EK_202: 'EK-202 ',
+  internation_airport: ' Internation Airport of',
+  price_range: 'Price Range',
+  no_of_stops: 'Number of Stops',
+  stop_duration: 'Stop Duration',
+  Airlines: 'Airlines',
+  Flight_Duration: 'Flight Duration',
+  Amenities: 'Amenities',
+  Arrival_Time: 'Arrival Time',
+  refund_reschedule: 'Refund & Reschedule',
+  Flight_Preferences: 'Flight Preferences',
+  //Search Flight Alert
+
+  wrong_return_date: 'You selected wrong Return date',
+  return_departure_not_same: 'Return and Departure date cannot be same',
+
+  // User Account Flow
+
   logout: 'Logout',
   logoutText: 'Are you sure you want to logout ?',
   cancel: 'Cancel',
@@ -177,16 +212,14 @@ export const strings = {
   aboutAirify: 'About Airify',
   Version: 'Airify v10.7.5',
   helpCenter: 'Help Center',
-
+  expired: 'Expired',
   FAQ: 'FAQ',
   contactUs: 'Contact Us',
-
   search: 'Search',
   passengerList: 'Passenger List',
   no: 'No.',
   name: 'Name',
   newPassenger: 'Add New Passenger',
-
   firstName: 'First Name',
   lastName: 'Last Name',
   title: 'Title',
@@ -203,8 +236,9 @@ export const strings = {
   contactDetail: 'Contact Details',
   editPassenger: 'Edit Passenger',
   edit: 'Edit',
-
-  // wallet
+  details: 'Details',
+  address_already_saved: 'Address is already exits',
+  // User Wallet
 
   wallet: 'Wallet',
   yourBalance: 'Your balance',
@@ -229,8 +263,23 @@ export const strings = {
   tax: 'Tax',
   total_price: 'Total Price',
   fillInDetails: 'Fill In Details',
-
+  book: 'Book',
+  pay: 'Pay',
+  discount: 'Discount',
+  points_used: ' Points Used',
+  booking_id: 'BookingID',
+  payment_method: 'Payment Method',
+  status: 'Status',
+  paid: 'PAID',
+  transaction_id: 'Transacation ID',
+  reference_id: 'Reference ID',
+  show_eticket: 'Show E-Ticket',
+  reschedule_trip: 'Recshedule Trip',
+  cancel_booking: 'Cancel Booking',
+  completed: 'Completed',
+  canceled: 'Canceled',
   // Saved Address
+
   savedAddress: 'Saved Address',
   changeAddress: 'Change Address',
   addNewAddress: 'Add New Address',
@@ -296,5 +345,39 @@ export const strings = {
   CancelSuccess: 'Booking Cancellation \n Successful!',
   cancelBookingSuccessText:
     'Your ficket bookina has been canceled \n as requested. A confirmation email \n win refund deles will be sene your \n registered email address. | hank you \n for choosing our service',
-  ok: 'Ok',
-};
+  ok: 'OK',
+
+  // Passenger Alerts
+  enter_first_name: 'Please Enter First Name',
+  enter_last_name: 'Please Enter last name',
+  select_title: 'Please select title',
+  enter_DOB: 'Please Enter Date of Birth',
+  select_country_code: 'Please select country code',
+  enter_phone_no: 'Please Enter Phone Number',
+  enter_email_address: 'Please Enter Email Address',
+  enter_identity_card_no: 'Please Enter Identity Card Number',
+  enter_identity_issued_country: 'Please Select Identity Card Issue Country',
+  enter_identity_issued_date: 'Please Select Identity Card Issue Date',
+  enter_identity_issued_expiry_date: 'Please Select Identity Card Expiry Date',
+  enter_passport_no: 'Please Enter Passport Number',
+  enter_passport_expiry_date: 'Please Select Passport Expiry Date',
+  enter_passport_issued_country: 'Please Select Passport Issue Country',
+  select_nationality: 'Please Select Nationality',
+  enter_driving_license: 'Please Enter Driving License Number',
+  enter_driving_license_issued_country:
+    'Please Select driving license issue country',
+  enter_driving_license_issued_date: 'Please Select driving license issue Date',
+  select_driving_license_expiry_date:
+    'Please Select driving license Expiry Date',
+  passenger_exist: 'Passenger is already exits',
+  image_uploaded: 'Image uploaded successfully',
+  image_uploaded1: 'Image uploaded',
+  address_deleted: 'Address Deleted Successfully',
+  select_reason: 'Please Select Reason',
+  choose_10days: 'Choose maximum 10 days from the today',
+  choose_date: 'Please choose date',
+  destination_departure_not_same:
+    'Destination Place and Departure Place does not be same',
+  fill_all_details: 'Please Fill All Details',
+  none_of_place_exist: 'None of this place exist',
+});

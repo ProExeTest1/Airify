@@ -278,7 +278,7 @@ const PatmentConfirmation = ({navigation, route}) => {
                   style={
                     styles.boxTitle
                   }>{`You Have ${PointsData?.TotalPoints} Points`}</Text>
-                <Text style={{marginTop: hp(1)}}>
+                <Text style={{marginTop: hp(1), color: color.black}}>
                   {`100 points equals $1. You will get ${
                     ticketPrice / 2
                   } points after this booking`}
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: wp(6),
     paddingTop: hp(2),
-    paddingBottom: hp(4),
+    paddingBottom: hp(2),
     flexDirection: 'row',
   },
 
@@ -397,11 +397,13 @@ const styles = StyleSheet.create({
   },
   boxTitle: {
     fontSize: fontSize(17),
+    color: color.black,
     fontWeight: 'bold',
     flex: 1,
   },
   boxVelue: {
     fontSize: fontSize(18),
+    color: color.black,
   },
   StopsButBody: {
     // paddingVertical: hp(1.5),
@@ -463,6 +465,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: fontSize(18),
     fontWeight: '600',
+    color: color.black,
   },
   walletPraice: {
     fontSize: fontSize(18),

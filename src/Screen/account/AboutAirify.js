@@ -33,7 +33,7 @@ const AboutAirify = ({navigation: {goBack}}) => {
       />
       <View style={styles.iconViewStyle}>
         <Image source={Images.welcomeScreenIcon} style={styles.iconStyle} />
-        <Text style={styles.versionStyle}>{strings.Version}</Text>
+        <Text style={styles.versionStyle}>{strings?.Version}</Text>
       </View>
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <FlatList
@@ -42,10 +42,10 @@ const AboutAirify = ({navigation: {goBack}}) => {
           renderItem={({item}) => {
             return (
               <TouchableOpacity style={styles.flatListView}>
-                <Text style={styles.flatListText}>{item.title}</Text>
+                <Text style={styles.flatListText}>{item?.title}</Text>
                 <Image
                   resizeMode="contain"
-                  source={Images.forward}
+                  source={Images?.forward}
                   style={styles.forwardIconStyle}
                 />
               </TouchableOpacity>

@@ -27,7 +27,7 @@ const pointHistory = ({navigation: {goBack}}) => {
       <View style={styles.bodyView}>
         <View style={styles.flatListHeader}>
           <Text style={{fontSize: fontSize(20), fontWeight: 'bold'}}>
-            {strings.pointHistory}
+            {strings?.pointHistory}
           </Text>
         </View>
         <FlatList
@@ -44,12 +44,12 @@ const pointHistory = ({navigation: {goBack}}) => {
                       ? 'You earn points'
                       : 'You use points'}
                   </Text>
-                  <Text style={styles.mainTextStyle}>{item.price}</Text>
+                  <Text style={styles.mainTextStyle}>{item?.price}</Text>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text>{item.date} </Text>
+                  <Text>{item?.date} </Text>
                   <View style={styles.dotStyle} />
-                  <Text> {item.time}</Text>
+                  <Text> {item?.time}</Text>
                 </View>
               </View>
             );

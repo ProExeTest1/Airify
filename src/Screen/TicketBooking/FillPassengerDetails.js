@@ -404,7 +404,7 @@ const FillPassengerDetails = ({navigation, route}) => {
                         </Text>
                       </View>
                     )}
-                    <View style={{flex: 1}}>
+                    <View style={{flex: 1, marginLeft: wp(4)}}>
                       <Text style={styles.searNumberListTitleText}>
                         {item.name}
                       </Text>
@@ -601,5 +601,6 @@ const styles = StyleSheet.create({
   searNumberListTitleText: {
     fontSize: fontSize(17),
     fontWeight: '500',
+    color: color.black,
   },
 });

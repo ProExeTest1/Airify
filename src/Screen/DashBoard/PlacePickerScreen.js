@@ -18,6 +18,7 @@ import {
   depaturePlaceAction,
   destinationPlaceAction,
 } from '../../redux/action/PlaceAction';
+import {strings} from '../../helper/Strings';
 
 const PlacePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -120,7 +121,9 @@ const PlacePickerScreen = ({navigation, route}) => {
       />
       {search.length <= 0 && searchEnable ? (
         <View style={styles.notFoundViewStyle}>
-          <Text style={styles.notFoundTextStyle}>None of this place exist</Text>
+          <Text style={styles.notFoundTextStyle}>
+            {strings.none_of_place_exist}
+          </Text>
         </View>
       ) : (
         <View style={styles.flatlistViewStyle}>
@@ -154,7 +157,7 @@ const PlacePickerScreen = ({navigation, route}) => {
                         </Text>
                         <Text style={styles.smallTextStyle}>-</Text>
                         <Text style={styles.smallTextStyle}>
-                          Internation Airport of {item.capital}
+                          {strings.internation_airport} {item.capital}
                         </Text>
                       </View>
                     </View>

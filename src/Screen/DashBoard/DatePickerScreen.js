@@ -13,6 +13,7 @@ import {
   returnNormalDateAction,
 } from '../../redux/action/DateAction';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {strings} from '../../helper/Strings';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -164,17 +165,17 @@ const DatePickerScreen = ({navigation, route}) => {
         dispatch(dateAction(choosenDate));
         navigation.navigate('TabNavigation');
       } else {
-        AlertConstant('Choose maximum 10 days from the today');
+        AlertConstant(strings.choose_10days);
       }
     } else {
-      AlertConstant('Please choose date');
+      AlertConstant(strings.choose_date);
     }
   };
   return (
     <View>
       <PickerHeaderBar
         headerName={'Select Date'}
-        navigation={() => navigation.goBack('')}
+        navigation={() => navigation?.goBack('')}
       />
       <View style={styles.currentDateStyle}>
         <View style={styles.dateMainViewStyle}>
@@ -233,7 +234,7 @@ const DatePickerScreen = ({navigation, route}) => {
       </View>
       <View style={styles.bottomViewStyle}>
         <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
-          <Text style={styles.searchFontStyle}>OK</Text>
+          <Text style={styles.searchFontStyle}>{strings.ok}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -277,11 +278,8 @@ const styles = StyleSheet.create({
   searchButtonStyle: {
     alignItems: 'center',
     marginHorizontal: wp(5),
-    paddingVertical: hp(2),
-    height: hp(7),
-    width: wp(84),
+    paddingVertical: hp(2.2),
     borderRadius: 16,
-    alignSelf: 'center',
     backgroundColor: 'blue',
     marginVertical: hp(2.5),
     justifyContent: 'center',

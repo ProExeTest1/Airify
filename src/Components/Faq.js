@@ -102,7 +102,7 @@ const Faq = () => {
                   paddingVertical: hp(2),
                 }}>
                 <View style={styles.viewStyle}>
-                  <Text style={styles.questionStyle}>{item.question}</Text>
+                  <Text style={styles.questionStyle}>{item?.question}</Text>
                   <TouchableOpacity
                     onPress={() => {
                       const d = faqDummyData.map(i => {
@@ -115,11 +115,11 @@ const Faq = () => {
                       setFaqDummyData(d);
                     }}>
                     <Image
-                      source={Images.downArrow}
+                      source={Images?.downArrow}
                       style={[
                         styles.iconStyle,
                         {
-                          transform: item.isOpen
+                          transform: item?.isOpen
                             ? [{rotate: '180deg'}]
                             : [{rotate: '0deg'}],
                         },
@@ -129,7 +129,7 @@ const Faq = () => {
                 </View>
                 {item.isOpen && (
                   <View style={styles.answerStyle}>
-                    <Text style={{color: color.black}}>{item.answer}</Text>
+                    <Text style={{color: color.black}}>{item?.answer}</Text>
                   </View>
                 )}
               </View>

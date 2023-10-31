@@ -17,6 +17,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {SelectpaymentMethodAction} from '../../redux/action/SelectSeatAction';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const PaymentMethod = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -29,7 +30,10 @@ const PaymentMethod = ({navigation, route}) => {
     state => state?.searchFlight?.searchFlightReturnCardData,
   );
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
-  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const ticketPrice = parseInt(
+    item?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
   const returbTicketPrice = parseInt(
     returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
     10,
@@ -49,10 +53,10 @@ const PaymentMethod = ({navigation, route}) => {
   const setDataFunction = () => {
     if (dataForTurnary) {
       dispatch(SelectpaymentMethodAction(selectOpc));
-      navigation.navigate('PaymentConfirmation', {TripType: tripType});
+      navigation?.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
       navigation.navigate('TopUp', {TripType: tripType});
-      Alert.alert('please TopUp your Wallet');
+      AlertConstant('please TopUp your Wallet');
     }
   };
   const getFirebaseData = async () => {
@@ -63,12 +67,12 @@ const PaymentMethod = ({navigation, route}) => {
 
         querySnapshot?.forEach(documentSnapshot => {
           users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
+            ...documentSnapshot?.data(),
+            key: documentSnapshot?.id,
           });
         });
         users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
+          if (item?.key == auth()?.currentUser?.uid) {
             setWalletData(item);
             return true;
           } else {
@@ -288,6 +292,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: fontSize(18),
     fontWeight: '600',
+    color: color.black,
   },
   myWalletBody: {
     flexDirection: 'row',

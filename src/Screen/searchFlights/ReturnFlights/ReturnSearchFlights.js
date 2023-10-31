@@ -294,6 +294,7 @@ const ReturnSearchFlights = ({navigation, route}) => {
           ToggleSwitchBut1={ToggleSwitchBut1}
           ToggleSwitchBut2={ToggleSwitchBut2}
           addAlert={addAlert}
+          tripType={tripType}
           closeModal={closeModal1}></CreatePriceAlert>
       </Modal>
 

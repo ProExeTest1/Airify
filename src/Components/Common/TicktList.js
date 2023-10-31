@@ -10,6 +10,7 @@ import {
   SearchFlightReturnCardAction,
 } from '../../redux/action/SearchFlightAction';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {strings} from '../../helper/Strings';
 
 const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   const navigation = useNavigation();
@@ -17,28 +18,39 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
 
   const reduxReturnDate = useSelector(state => state.date.returnDate);
-  console.log(reduxReturnDate, 'reduxReturnDate');
   console.log(reduxDepatureDate, 'reduxDepatureDate');
+  console.log(reduxReturnDate, 'reduxReturnDate');
+  // console.log(
+  //   reduxDepatureDate < reduxReturnDate,
+  //   'reduxDepatureDate < reduxReturnDate',
+  // );
   const setCartFlightData = item => {
-    if (
-      reduxDepatureDate === reduxReturnDate &&
-      reduxDepatureDate > reduxReturnDate
-    ) {
-      console.log('yes');
-      AlertConstant('Return and Departure date cannot be same');
-    } else {
-      console.log('no');
-      if (tripType1 === 'Round-Trip') {
-        dispatch(SearchFlightCardData(item));
-        navigation.navigate('ReturnSearchFlight', {TripType: 'Round-trip'});
-      } else {
-        if (tripType == 'Round-Trip') {
-          dispatch(SearchFlightReturnCardAction(item));
-          navigation.navigate('FlightDetails', {TripType: 'Round-Trip'});
-        } else {
+    if (tripType1 === 'Round-Trip') {
+      if (reduxDepatureDate !== reduxReturnDate) {
+        if (reduxDepatureDate < reduxReturnDate) {
           dispatch(SearchFlightCardData(item));
-          navigation.navigate('FlightDetails', {TripType: 'One-Way'});
+          navigation?.navigate('ReturnSearchFlight', {TripType: 'Round-trip'});
+        } else {
+          AlertConstant(strings.wrong_return_date);
         }
+      } else {
+        AlertConstant(strings.return_departure_not_same);
+      }
+    } else {
+      if (tripType == 'Round-Trip') {
+        if (reduxDepatureDate !== reduxReturnDate) {
+          if (reduxDepatureDate < reduxReturnDate) {
+            dispatch(SearchFlightReturnCardAction(item));
+            navigation?.navigate('FlightDetails', {TripType: 'Round-Trip'});
+          } else {
+            AlertConstant(strings.wrong_return_date);
+          }
+        } else {
+          AlertConstant(strings.return_departure_not_same);
+        }
+      } else {
+        dispatch(SearchFlightCardData(item));
+        navigation?.navigate('FlightDetails', {TripType: 'One-Way'});
       }
     }
   };

@@ -214,7 +214,10 @@ const FlightDetailsScreen = ({navigation, route}) => {
           ticketType={ticketType}
         />
       ) : null}
-      <ScrollView bounces={false} style={styles.ScrollViewStyle}>
+      <ScrollView
+        bounces={false}
+        style={styles.ScrollViewStyle}
+        showsVerticalScrollIndicator={false}>
         <View style={{paddingHorizontal: wp(4), marginTop: hp(2), flex: 1}}>
           <FlightDetailsCard
             searchFlightData={searchFlightData}

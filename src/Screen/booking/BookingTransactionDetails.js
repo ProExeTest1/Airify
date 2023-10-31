@@ -21,8 +21,6 @@ import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import Barcode from '@kichiyaki/react-native-barcode-generator';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -80,7 +78,9 @@ const BookingTransactionDetails = ({navigation}) => {
                 marginVertical: hp(1),
                 marginTop: hp(3),
               }}>
-              <Text style={styles.seatNumberListTitleText1}>Booking ID:</Text>
+              <Text style={styles.seatNumberListTitleText1}>
+                {strings.booking_id}:
+              </Text>
               <TouchableOpacity
                 onPress={copyToClipboard}
                 style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -120,7 +120,7 @@ const BookingTransactionDetails = ({navigation}) => {
                   resizeMode="contain"
                 />
                 <Text style={styles.cardHeaderText}>
-                  {strings.FlightAmenities}
+                  {strings?.FlightAmenities}
                 </Text>
               </View>
               <FlightServices
@@ -203,24 +203,26 @@ const BookingTransactionDetails = ({navigation}) => {
 
               <View
                 style={[styles.TransactionDetailsStyle, {marginTop: hp(2)}]}>
-                <Text style={styles.labeltxtStyle}>Payment Method</Text>
+                <Text style={styles.labeltxtStyle}>
+                  {strings.payment_method}
+                </Text>
                 <Text style={styles.dataTextStyle}>
                   {firebaseTicketData?.paymentMethod}
                 </Text>
               </View>
               <View style={styles.TransactionDetailsStyle}>
-                <Text style={styles.labeltxtStyle}>Status</Text>
+                <Text style={styles.labeltxtStyle}>{strings.status}</Text>
                 <View
                   style={{
                     padding: hp(1),
                     backgroundColor: color.commonBlue,
                     borderRadius: 5,
                   }}>
-                  <Text style={{color: color.white}}>PAID</Text>
+                  <Text style={{color: color.white}}>{strings.paid}</Text>
                 </View>
               </View>
               <View style={styles.TransactionDetailsStyle}>
-                <Text style={styles.labeltxtStyle}>Booking ID</Text>
+                <Text style={styles.labeltxtStyle}>{strings.booking_id}</Text>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.dataTextStyle}>
@@ -234,7 +236,9 @@ const BookingTransactionDetails = ({navigation}) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.TransactionDetailsStyle}>
-                <Text style={styles.labeltxtStyle}>Transacation ID</Text>
+                <Text style={styles.labeltxtStyle}>
+                  {strings.transaction_id}
+                </Text>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.dataTextStyle}>
@@ -249,7 +253,7 @@ const BookingTransactionDetails = ({navigation}) => {
               </View>
               <View
                 style={[styles.TransactionDetailsStyle, {marginBottom: hp(2)}]}>
-                <Text style={styles.labeltxtStyle}>Reference ID</Text>
+                <Text style={styles.labeltxtStyle}>{strings.reference_id}</Text>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.dataTextStyle}>
@@ -302,7 +306,9 @@ const BookingTransactionDetails = ({navigation}) => {
                           },
                         });
                       }}>
-                      <Text style={styles.buttonTextStyle}>Show E-Ticket</Text>
+                      <Text style={styles.buttonTextStyle}>
+                        {strings.show_eticket}
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 );
@@ -321,7 +327,7 @@ const BookingTransactionDetails = ({navigation}) => {
                       styles.rescheduleTextStyle,
                       {color: color.commonBlue},
                     ]}>
-                    Recshedule Trip
+                    {strings.reschedule_trip}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -333,7 +339,7 @@ const BookingTransactionDetails = ({navigation}) => {
                     openModal();
                   }}>
                   <Text style={[styles.rescheduleTextStyle, {color: 'red'}]}>
-                    Cancel Booking
+                    {strings.cancelBooking}
                   </Text>
                 </TouchableOpacity>
               </>

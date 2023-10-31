@@ -64,15 +64,6 @@ const TransactionDetails = ({navigation, route}) => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');
   };
-  const ontoggleSwitch = () => {
-    if (ticketType === 'Departure') {
-      setTicketType('Return');
-      setFirebaseTicketData(TicketTypeData.Return);
-    } else {
-      setTicketType('Departure');
-      setFirebaseTicketData(TicketTypeData.Departure);
-    }
-  };
   return (
     <View style={{flex: 1}}>
       {firebaseTicketData?.bookingID && (
@@ -94,7 +85,14 @@ const TransactionDetails = ({navigation, route}) => {
           />
           {tripType === 'Round-Trip' ? (
             <ReturnDepartureSwitch
-              onPress={ontoggleSwitch}
+              onPress1={() => {
+                setTicketType('Departure');
+                setFirebaseTicketData(TicketTypeData.Departure);
+              }}
+              onPress2={() => {
+                setTicketType('Return');
+                setFirebaseTicketData(TicketTypeData.Return);
+              }}
               ticketType={ticketType}
             />
           ) : null}

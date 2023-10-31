@@ -20,7 +20,7 @@ import {color} from '../../helper/ColorConstant';
 import TextData from '../../components/TextData';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {SettingData} from '../../assets/DummyData/SettingData';
-import {CommonHeader, OnBoardingTwoButton} from '../../components';
+import {CommonHeader, Loader, OnBoardingTwoButton} from '../../components';
 
 const AccountScreen = ({navigation}) => {
   const [modal, setModal] = useState(false);
@@ -81,15 +81,21 @@ const AccountScreen = ({navigation}) => {
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={styles.headerStyle}>
           <View style={styles.profilePicViewStyle}>
-            <Image
-              resizeMode="stretch"
-              style={styles.profilePicStyle}
-              source={{uri: userData?.profileImageURL}}
-            />
-            <View style={styles.headertextStyle}>
-              <Text style={styles.NameStyle}>{userData?.Name}</Text>
-              <Text style={styles.userNameStyle}>{userData?.Email}</Text>
-            </View>
+            {userData?.profileImageURL ? (
+              <>
+                <Image
+                  resizeMode="stretch"
+                  style={styles.profilePicStyle}
+                  source={{uri: userData?.profileImageURL}}
+                />
+                <View style={styles.headertextStyle}>
+                  <Text style={styles.NameStyle}>{userData?.Name}</Text>
+                  <Text style={styles.userNameStyle}>{userData?.Email}</Text>
+                </View>
+              </>
+            ) : (
+              <Loader color={color.commonBlue} />
+            )}
           </View>
           <TouchableOpacity style={styles.bellTouchStyle}>
             <Image

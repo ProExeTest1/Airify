@@ -48,7 +48,7 @@
     "react-native-otp-inputs": "^7.4.0",
     "react-native-paper": "^5.10.6",
     "react-native-popup-menu": "^0.16.1",
-    "react-native-qrcode-generator": "^1.2.2",
+    "react-native-qrcode-svg": "^6.2.0",
     "react-native-radio-buttons-group": "^3.0.5",
     "react-native-razorpay": "^2.3.0",
     "react-native-responsive-fontsize": "^0.5.1",

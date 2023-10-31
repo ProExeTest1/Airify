@@ -45,9 +45,9 @@ const ReturnSelectSeats = ({navigation}) => {
   const setSelectSeat = seat => {
     setseatData(
       seatData.map(i => {
-        if (i.name === seatNameData.name) {
+        if (i?.name === seatNameData?.name) {
           return {
-            name: i.name,
+            name: i?.name,
             seatNo: seat,
           };
         }
@@ -66,7 +66,7 @@ const ReturnSelectSeats = ({navigation}) => {
           });
         });
         console.log(users, 'querySnapshot');
-        const setAllData = users[0].AirlineSeatBookData.find(
+        const setAllData = users[0]?.AirlineSeatBookData?.find(
           i => i?.date == new Date(SelectDate)?.toLocaleDateString('en-IN'),
         );
         console.log(setAllData, 'setAllData');
@@ -74,12 +74,12 @@ const ReturnSelectSeats = ({navigation}) => {
         setOccuiedData(
           setAllData?.flightData?.find(i => {
             return (
-              i.flightData.airlineName == searchFlightCardData.airlineName &&
-              i.flightData.lendTime == searchFlightCardData.lendTime &&
-              i.flightData.pickTime == searchFlightCardData.pickTime &&
-              i.flightData.price == searchFlightCardData.price &&
-              i.flightData.stop == searchFlightCardData.stop &&
-              i.flightData.totalHours == searchFlightCardData.totalHours
+              i?.flightData?.airlineName == searchFlightCardData?.airlineName &&
+              i?.flightData?.lendTime == searchFlightCardData?.lendTime &&
+              i?.flightData?.pickTime == searchFlightCardData?.pickTime &&
+              i?.flightData?.price == searchFlightCardData?.price &&
+              i?.flightData?.stop == searchFlightCardData?.stop &&
+              i?.flightData?.totalHours == searchFlightCardData?.totalHours
             );
           }).selectSeat,
         );
@@ -117,7 +117,7 @@ const ReturnSelectSeats = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <CommonHeader
-        headerName={`${strings.selectSeat} (Return)`}
+        headerName={`${strings?.selectSeat} (Return)`}
         navigation1={() => {
           navigation.goBack();
         }}
@@ -196,7 +196,7 @@ const ReturnSelectSeats = ({navigation}) => {
                   styles.selectedIcon,
                   {backgroundColor: color.commonBlue},
                 ]}></View>
-              <Text>Selected</Text>
+              <Text style={styles.textStyle}>Selected</Text>
             </View>
             <View style={styles.selectedBody}>
               <View
@@ -204,7 +204,7 @@ const ReturnSelectSeats = ({navigation}) => {
                   styles.selectedIcon,
                   {backgroundColor: '#8596b3'},
                 ]}></View>
-              <Text>Occupied</Text>
+              <Text style={styles.textStyle}>Occupied</Text>
             </View>
             <View style={styles.selectedBody}>
               <View
@@ -212,7 +212,7 @@ const ReturnSelectSeats = ({navigation}) => {
                   styles.selectedIcon,
                   {backgroundColor: '#cdd0d6'},
                 ]}></View>
-              <Text>Available</Text>
+              <Text style={styles.textStyle}>Available</Text>
             </View>
           </View>
 
@@ -361,10 +361,12 @@ const styles = StyleSheet.create({
   SeatText: {
     marginBottom: hp(0.5),
     fontSize: fontSize(13),
+    color: color.black,
   },
   seatNumberText: {
     fontSize: fontSize(19),
     fontWeight: 'bold',
+    color: color.black,
   },
   okButton: {
     backgroundColor: color.commonBlue,
@@ -387,7 +389,6 @@ const styles = StyleSheet.create({
   flightLogo: {
     height: wp(7.5),
     width: wp(7.5),
-
     borderRadius: 50,
     marginEnd: wp(4),
   },
@@ -425,6 +426,7 @@ const styles = StyleSheet.create({
   seatRowNumberText: {
     fontSize: fontSize(17),
     fontWeight: 'bold',
+    color: color.black,
   },
   seatButBody: {
     flex: 1,
@@ -442,5 +444,8 @@ const styles = StyleSheet.create({
     height: hp(5),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textStyle: {
+    color: color.black,
   },
 });

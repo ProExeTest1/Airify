@@ -9,6 +9,7 @@ import {
   FlightDetailsData1,
 } from '../../assets/DummyData/FlightDetailsData';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {strings} from '../../helper/Strings';
 
 const FlightDetails = () => {
   const cardData = useSelector(
@@ -55,7 +56,7 @@ const FlightDetails = () => {
           {depatureData}, {reduxDepaturePlace.country}
         </Text>
         <Text style={styles.dateStyle}>
-          {reduxDepaturePlace.capitalName} International Airport
+          {reduxDepaturePlace.capitalName} {strings.internation_airport}
         </Text>
         <View style={styles.secondInnerViewStyle}>
           <View style={styles.airlineNameStyle}>
@@ -69,7 +70,7 @@ const FlightDetails = () => {
               <Text style={styles.cardHeaderText}>{cardData?.airlineName}</Text>
             </View>
             <Text style={styles.classtextStyle}>
-              EK-202 {searchFlightData.class.split(' ')[0]}
+              {strings.EK_202} {searchFlightData.class.split(' ')[0]}
             </Text>
           </View>
 
@@ -126,7 +127,7 @@ const FlightDetails = () => {
           {destinationData}, {reduxDestinationPlace.country}
         </Text>
         <Text style={styles.dateStyle}>
-          {reduxDestinationPlace.capitalName} International Airport
+          {reduxDestinationPlace.capitalName} {strings.internation_airport}
         </Text>
       </View>
     </View>
@@ -153,18 +154,19 @@ const styles = StyleSheet.create({
     tintColor: '#383838',
   },
   flatlistViewStyle: {
-    alignItems: 'center',
+    // alignItems: 'center',
     borderColor: '#e2e2e2',
-    marginVertical: Platform.OS === 'ios' ? hp(0.9) : hp(0.5),
+    marginVertical: hp(0.9),
   },
   flatlistTextStyle: {
     color: '#383838',
     fontSize: fontSize(15),
-    marginHorizontal: wp(3),
+    marginLeft: wp(3),
+    flex: 1,
   },
   flatlist1InnerViewStyle: {
     flexDirection: 'row',
-    marginVertical: Platform.OS == 'ios' ? hp(1) : hp(0.7),
+    marginVertical: hp(0.7),
   },
   mainViewStyle: {
     flex: 1,
@@ -197,12 +199,12 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 0.5,
     padding: hp(1.2),
-    marginVertical: Platform.OS === 'ios' ? hp(1) : hp(0.5),
+    marginVertical: hp(1),
   },
   airlineNameStyle: {
     borderColor: '#e2e2e2',
     borderBottomWidth: 0.5,
-    paddingVertical: Platform.OS === 'ios' ? hp(0.4) : hp(0),
+    paddingVertical: hp(0.4),
   },
   classtextStyle: {
     color: color.black,

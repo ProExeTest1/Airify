@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {CommonHeader, OnBoardingTwoButton} from '../../components';
+import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {strings} from '../../helper/Strings';
@@ -18,12 +18,12 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingSingleButton from '../../components/OnBoardingSingleButton';
 import DocumentPicker, {types} from 'react-native-document-picker';
 import Modal from 'react-native-modal';
-import TextData from '../../components/TextData';
 import LottieView from 'lottie-react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const CancelBooking = ({navigation}) => {
   const [selectedData, setSelectedData] = useState({});
@@ -58,7 +58,7 @@ const CancelBooking = ({navigation}) => {
 
   const confirmCancel = async () => {
     if (!selectedData?.id) {
-      Alert.alert('Please Select Reason');
+      AlertConstant(strings.select_reason);
     } else {
       try {
         openModal();
@@ -67,7 +67,7 @@ const CancelBooking = ({navigation}) => {
           .doc(auth().currentUser.uid)
           .update({
             wallet:
-              Number(UserWalletData.wallet) +
+              Number(UserWalletData?.wallet) +
               firebaseTicketData?.totalPaymentList?.totalPayment,
             transactionHistory: [
               {
@@ -81,14 +81,14 @@ const CancelBooking = ({navigation}) => {
           });
         await firestore()
           .collection('BookingCancel')
-          .doc(auth().currentUser.uid)
+          .doc(auth()?.currentUser?.uid)
           .set({
             BookingCancel: [
               ...BookingCancelData,
               {
                 ...firebaseTicketData,
-                resume: selectedData.label,
-                documents: fileResponse.length == 0 ? false : fileResponse,
+                resume: selectedData?.label,
+                documents: fileResponse?.length == 0 ? false : fileResponse,
               },
             ],
           });
@@ -96,8 +96,8 @@ const CancelBooking = ({navigation}) => {
           .collection('SaveTicket')
           .doc(auth().currentUser.uid)
           .update({
-            SaveTicket: SaveTicketData.map(item => {
-              if (item.id == firebaseTicketData.id) {
+            SaveTicket: SaveTicketData?.map(item => {
+              if (item.id == firebaseTicketData?.id) {
                 if (firebaseTicketData.type == 'Departure') {
                   return {
                     id: item.id,

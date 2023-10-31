@@ -17,6 +17,7 @@ import {Images} from '../helper/IconConstant';
 import {fontSize, hp, wp} from '../helper/Constant';
 import {expiredFlight} from '../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
+import {strings} from '../helper/Strings';
 
 const ExpiredSavedAddress = ({onPress}) => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const ExpiredSavedAddress = ({onPress}) => {
             new Date(
               moment(
                 `${item?.date?.split(',')[1]} ${Number(
-                  item?.departureTime.split(':')[0],
+                  item?.departureTime?.split(':')[0],
                 )}:${Number(item?.departureTime?.split(':')[1])}:00`,
                 'MMM DD YYYY HH:mm:ss',
               )?.format('YYYY-MM-DD HH:mm:ss'),
@@ -96,7 +97,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                       {item?.departurePlace}
                     </Text>
                     <Text style={styles.FlightsPlaseNicName}>
-                      {item.departureTime}
+                      {item?.departureTime}
                     </Text>
                   </View>
                   <View style={styles.FlightsPlaseImgBody}>
@@ -105,7 +106,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                       source={Images.airplaneWhiteIcon}
                     />
                     <Text style={styles.FlightsPlaseImgText}>
-                      {item.totalHours}
+                      {item?.totalHours}
                     </Text>
                   </View>
                   <View
@@ -144,7 +145,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                       paddingHorizontal: wp(2),
                       backgroundColor: color.Grey,
                     }}>
-                    <Text>Expired</Text>
+                    <Text>{strings?.expired}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
