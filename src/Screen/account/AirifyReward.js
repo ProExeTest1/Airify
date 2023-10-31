@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -22,11 +22,11 @@ import {
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const AirifyReward = ({navigation: {goBack}}) => {
-  const promocode = randomPromoCodeGenerator(6);
-
+  const [promocode, setPromocode] = useState('');
   const copyToClipboard = () => {
     Clipboard.setString(promocode);
     if (Platform.OS === 'android') {
@@ -34,6 +34,19 @@ const AirifyReward = ({navigation: {goBack}}) => {
     } else if (Platform.OS === 'ios') {
       Alert.alert('Text copied to clipboard!');
     }
+  };
+
+  useEffect(() => {
+    promocodeData();
+  }, []);
+  const promocodeData = async () => {
+    const promocode = await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(i => {
+        setPromocode(i?.data()?.ReferralCode);
+      });
   };
 
   const onShare = async () => {
@@ -105,7 +118,8 @@ const AirifyReward = ({navigation: {goBack}}) => {
           <OnBoardingSingleButton
             buttonText={strings.shareCode}
             onPress={() => {
-              onShare();
+              // onShare();
+              PaymentNotification();
             }}
           />
         </View>

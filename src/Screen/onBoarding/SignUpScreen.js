@@ -38,6 +38,7 @@ import {
   OnBoardingSingleButton,
 } from '../../components';
 import DeviceInfo from 'react-native-device-info';
+import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const swiperRef = useRef();
@@ -51,6 +52,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [phoneNo, setPhoneNo] = useState('');
   const [Password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
+  const promocode = randomPromoCodeGenerator(6);
   const [journeyData, setJourneyData] = useState([]);
   const [countryCode, setCountryCode] = useState('');
   const [datePicker, setDatePicker] = useState(false);
@@ -59,6 +61,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [selectedFlyWay, setSelectedFlyWay] = useState([]);
   const [selectedDineWay, setSelectedDineWay] = useState([]);
   const [selectedJourneyData, setSelectedJourneyData] = useState([]);
+
   useEffect(() => {
     JourneyData();
     onPressAdd();
@@ -160,6 +163,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         NotificationList: NotificationData,
         SecurityData: SecurityData,
         DeviceId: DeviceUniqueId,
+        ReferralCode: promocode,
       });
 
       //------------------------------------------------>  UserWallet data
@@ -222,6 +226,14 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .doc(isUserCreate.user.uid)
         .set({
           BookingCancel: [],
+        });
+
+      //-------------------------------------------------> Notification History Data
+      await firestore()
+        .collection('NotificationHistory')
+        .doc(isUserCreate.user.uid)
+        .set({
+          NotificationHistory: [],
         });
 
       navigation.navigate('SignUpSuccess');

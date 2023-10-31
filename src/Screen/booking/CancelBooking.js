@@ -173,11 +173,9 @@ const CancelBooking = ({navigation}) => {
         let users = i.data()?.NotificationList?.map(i => {
           return i;
         });
-        users?.map(async i => {
-          console.log('i?.title', i?.title);
-          if (i?.title == 'Refunds and Cancellations') {
-            console.log('i?.isOn', i?.isOn);
-            if (i?.isOn == true) {
+        users?.map(async e => {
+          if (e?.title == 'Refunds and Cancellations') {
+            if (e?.isOn == true) {
               // Request permissions (required for iOS)
               await notifee.requestPermission();
 
@@ -201,8 +199,28 @@ const CancelBooking = ({navigation}) => {
                 },
               });
 
-              notifee.onForegroundEvent(({type, detail}) => {
-                console.log('type', type);
+              notifee.onForegroundEvent(async ({type, detail}) => {
+                await firestore()
+                  .collection('NotificationHistory')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(async i => {
+                    await firestore()
+                      .collection('NotificationHistory')
+                      .doc(auth().currentUser.uid)
+                      .update({
+                        NotificationHistory: [
+                          ...i?.data()?.NotificationHistory,
+                          {
+                            id: detail?.notification?.id,
+                            title: detail?.notification?.title,
+                            body: detail?.notification?.body,
+                            date: Date.now(),
+                            NotificationType: e?.title,
+                          },
+                        ],
+                      });
+                  });
                 switch (type) {
                   case EventType.DISMISSED:
                     console.log(

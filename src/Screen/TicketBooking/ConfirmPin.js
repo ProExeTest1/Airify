@@ -20,7 +20,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import {randomBookingIDGenerator} from '../../helper/RandomPromoCodegenerator';
 import {useDispatch, useSelector} from 'react-redux';
 import LottieView from 'lottie-react-native';
-import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
+import notifee, {EventType} from '@notifee/react-native';
 import {
   DiscountDataAction,
   SelectSeatActionData,
@@ -375,9 +375,9 @@ const ConfirmPin = ({navigation, route}) => {
         let users = i.data()?.NotificationList?.map(i => {
           return i;
         });
-        users?.map(async i => {
-          if (i?.title == 'Ticket Booking Updates') {
-            if (i?.isOn == true) {
+        users?.map(async e => {
+          if (e?.title == 'Ticket Booking Updates') {
+            if (e?.isOn == true) {
               // Request permissions (required for iOS)
               await notifee.requestPermission();
 
@@ -401,8 +401,28 @@ const ConfirmPin = ({navigation, route}) => {
                 },
               });
 
-              notifee.onForegroundEvent(({type, detail}) => {
-                console.log('type', type);
+              notifee.onForegroundEvent(async ({type, detail}) => {
+                await firestore()
+                  .collection('NotificationHistory')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(async i => {
+                    await firestore()
+                      .collection('NotificationHistory')
+                      .doc(auth().currentUser.uid)
+                      .update({
+                        NotificationHistory: [
+                          ...i?.data()?.NotificationHistory,
+                          {
+                            id: detail?.notification?.id,
+                            title: detail?.notification?.title,
+                            body: detail?.notification?.body,
+                            date: Date.now(),
+                            NotificationType: e?.title,
+                          },
+                        ],
+                      });
+                  });
                 switch (type) {
                   case EventType.DISMISSED:
                     console.log(
@@ -429,9 +449,9 @@ const ConfirmPin = ({navigation, route}) => {
         let users = i.data()?.NotificationList?.map(i => {
           return i;
         });
-        users?.map(async i => {
-          if (i?.title == 'Ticket Booking Updates') {
-            if (i?.isOn == true) {
+        users?.map(async e => {
+          if (e?.title == 'Ticket Booking Updates') {
+            if (e?.isOn == true) {
               // Request permissions (required for iOS)
               await notifee.requestPermission();
               // Create a channel (required for Android)
@@ -463,8 +483,28 @@ const ConfirmPin = ({navigation, route}) => {
                   },
                 },
               });
-              notifee.onForegroundEvent(({type, detail}) => {
-                console.log('type', type);
+              notifee.onForegroundEvent(async ({type, detail}) => {
+                await firestore()
+                  .collection('NotificationHistory')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(async i => {
+                    await firestore()
+                      .collection('NotificationHistory')
+                      .doc(auth().currentUser.uid)
+                      .update({
+                        NotificationHistory: [
+                          ...i?.data()?.NotificationHistory,
+                          {
+                            id: detail?.notification?.id,
+                            title: detail?.notification?.title,
+                            body: detail?.notification?.body,
+                            date: Date.now(),
+                            NotificationType: e?.title,
+                          },
+                        ],
+                      });
+                  });
                 switch (type) {
                   case EventType.DISMISSED:
                     console.log(

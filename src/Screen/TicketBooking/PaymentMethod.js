@@ -95,9 +95,9 @@ const PaymentMethod = ({navigation, route}) => {
         let users = i.data()?.NotificationList?.map(i => {
           return i;
         });
-        users?.map(async i => {
-          if (i?.title == 'Low Balance in Wallet') {
-            if (i?.isOn == true) {
+        users?.map(async e => {
+          if (e?.title == 'Low Balance in Wallet') {
+            if (e?.isOn == true) {
               // Request permissions (required for iOS)
               await notifee.requestPermission();
 
@@ -121,8 +121,28 @@ const PaymentMethod = ({navigation, route}) => {
                 },
               });
 
-              notifee.onForegroundEvent(({type, detail}) => {
-                console.log('type', type);
+              notifee.onForegroundEvent(async ({type, detail}) => {
+                await firestore()
+                  .collection('NotificationHistory')
+                  .doc(auth().currentUser.uid)
+                  .get()
+                  .then(async i => {
+                    await firestore()
+                      .collection('NotificationHistory')
+                      .doc(auth().currentUser.uid)
+                      .update({
+                        NotificationHistory: [
+                          ...i?.data()?.NotificationHistory,
+                          {
+                            id: detail?.notification?.id,
+                            title: detail?.notification?.title,
+                            body: detail?.notification?.body,
+                            date: Date.now(),
+                            NotificationType: e?.title,
+                          },
+                        ],
+                      });
+                  });
                 switch (type) {
                   case EventType.DISMISSED:
                     console.log(
