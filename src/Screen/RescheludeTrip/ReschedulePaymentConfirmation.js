@@ -12,6 +12,8 @@ import {
   CommonHeader,
   FlightDetailsCard,
   PriceDetails,
+  ReschedulePriceDetails,
+  RescheduleSwitch,
   ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
@@ -29,6 +31,10 @@ import {
   totalPaymentListAction,
 } from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {
+  ReschedulePaymentMethodAction,
+  RescheduleTotalPaymentListAction,
+} from '../../redux/action/RescheduleAction';
 
 const ReschedulePaymentConfirmation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -36,43 +42,53 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [ToggleSwitchBut1, setToggleSwitchBut1] = useState(false);
   const [WalletData, setWalletData] = useState({});
-  const [ticketType, setTicketType] = useState('Departure');
+  const [ticketType, setTicketType] = useState('Old Trip');
   const [PointsData, setPointsData] = useState({});
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  const returnItem = useSelector(
-    state => state?.searchFlight?.searchFlightReturnCardData,
+
+  const item = useSelector(state =>
+    ticketType === 'Old Trip'
+      ? state?.rescheduleFlightdata?.rescheduleCardData?.searchFlightCardData
+      : state?.rescheduleFlightdata.rescheduleSelectNewCard,
   );
+  const oldTripData = useSelector(
+    e => e?.rescheduleFlightdata?.rescheduleCardData,
+  );
+  const newTripData = useSelector(
+    e => e?.rescheduleFlightdata.rescheduleSelectNewCard,
+  );
+  console.log(oldTripData.type); //Departure//Return
+  const searchFlightData = useSelector(e =>
+    ticketType === 'Old Trip'
+      ? e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData
+      : e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData,
+  );
+
+  const searchFlightDateData = useSelector(e =>
+    ticketType === 'Old Trip'
+      ? e?.rescheduleFlightdata?.rescheduleCardData?.searchFlightDateData.toString()
+      : e?.rescheduleFlightdata?.rescheduleDateData,
+  ).split(',');
   const ticketPrice = parseInt(
     item?.price?.slice(1, 8)?.split(',')?.join(''),
     10,
   );
-  const returbTicketPrice = parseInt(
-    returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
-    10,
-  );
-  const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const returnSearchFlightData = useSelector(
-    e => e?.searchFlight?.searchFlightReturnData,
+
+  const PaymentMethodData = useSelector(
+    e => e?.rescheduleFlightdata?.ReschedulePaymentMethodData,
   );
   const totalSeat = Number(searchFlightData?.passenger.split(' ')[0]);
-  const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
-    ',',
-  );
-  const returnSearchFlightDateData = useSelector(
-    e => e?.date?.returnDate,
-  ).split(',');
 
   const TotalPoint = Number(PointsData.TotalPoints);
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = ToggleSwitchBut1 ? TotalPoint % 100 : TotalPoint;
-  const Discount = Number(DiscountData.discountPR)
-    ? Number(DiscountData.discountPR)
-    : 0;
 
-  const PaymentMethodData = useSelector(
-    e => e?.SelectSeatData?.SelectPaymentMethod,
-  );
+  const ontoggleSwitch = () => {
+    if (ticketType === 'Old Trip') {
+      setTicketType('New Trip');
+    } else {
+      setTicketType('Old Trip');
+    }
+  };
 
   const getFirebaseData = async () => {
     await firestore()
@@ -118,72 +134,47 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
         });
       });
   };
-  const totalSeatPrice = returbTicketPrice * totalSeat;
+  const totalSeatPrice =
+    Number(newTripData?.price.replace(',', '').slice(1)) * totalSeat;
   const payNow = () => {
-    if (PaymentMethodData?.type) {
+    if (ticketType === 'Old Trip') {
+      setTicketType('New Trip');
+    } else if (PaymentMethodData?.type) {
       dispatch(
-        totalPaymentListAction({
-          departure: {
-            seat: {
-              totalSeat: totalSeat,
-              totalSeatPrice: ticketPrice * totalSeat,
-            },
-            travalInsurance: Math.round((totalSeat * ticketPrice * 2.8) / 100),
-            tax: Math.round((totalSeat * ticketPrice * 1.5) / 100),
-            points: {
-              pointsUse: Math.round((validPoint * 100) / 2),
-              havePoint: havePonts / 2,
-              getPoint: (totalSeat * ticketPrice) / 2,
-              usePointPrice: -Math.round(validPoint / 2),
-            },
-            discount: {
-              ValidDiscount: DiscountData?.id ? true : false,
-              discountData: DiscountData,
-              useDiscountPrice:
-                (Number(totalSeat) * Number(ticketPrice) * Discount) / 100,
-            },
-            totalPayment:
-              totalSeat * ticketPrice +
-              Math.round((totalSeat * ticketPrice * 2.8) / 100) +
-              Math.round((totalSeat * ticketPrice * 1.5) / 100) -
-              (Number(totalSeat) * Number(ticketPrice) * Number(Discount)) /
-                100 -
-              Number(Math.round(validPoint / 2)),
+        RescheduleTotalPaymentListAction({
+          seat: {
+            totalSeat: totalSeat,
+            totalSeatPrice: totalSeatPrice,
           },
-          return:
-            tripType !== 'Round-Trip'
-              ? false
-              : {
-                  seat: {
-                    totalSeat: totalSeat,
-                    totalSeatPrice: totalSeatPrice,
-                  },
-                  travalInsurance: Math.round((totalSeatPrice * 2.8) / 100),
+          travalInsurance: Math.round((totalSeatPrice * 2.8) / 100),
 
-                  tax: Math.round((totalSeatPrice * 1.5) / 100),
+          tax: Math.round((totalSeatPrice * 1.5) / 100),
 
-                  points: {
-                    pointsUse: Math.round((validPoint * 100) / 2),
-                    havePoint: havePonts / 2,
-                    getPoint: totalSeatPrice / 2,
-                    usePointPrice: -Math.round(validPoint / 2),
-                  },
-                  discount: {
-                    ValidDiscount: DiscountData?.id ? true : false,
-                    discountData: DiscountData,
-                    useDiscountPrice: (Number(totalSeatPrice) * Discount) / 100,
-                  },
-                  totalPayment: Math.round(
-                    totalSeatPrice +
-                      Math.round((totalSeatPrice * 2.8) / 100) +
-                      Math.round((totalSeatPrice * 1.5) / 100) -
-                      (Number(totalSeatPrice) * Discount) / 100 -
-                      Math.round(validPoint / 2),
-                  ),
-                },
+          points: {
+            pointsUse: Math.round(validPoint * 100),
+            havePoint: havePonts,
+            getPoint: totalSeatPrice / 2,
+            usePointPrice: -Math.round(validPoint),
+          },
+          discount: {
+            ValidDiscount: false,
+            discountData: {},
+            useDiscountPrice: 0,
+          },
+          totalPayment: Math.round(
+            totalSeatPrice +
+              Math.round((totalSeatPrice * 2.8) / 100) +
+              Math.round((totalSeatPrice * 1.5) / 100),
+          ),
+          rescheduletotalPayment: Math.round(
+            totalSeatPrice +
+              Math.round((totalSeatPrice * 2.8) / 100) +
+              Math.round((totalSeatPrice * 1.5) / 100) -
+              oldTripData?.totalPaymentList?.totalPayment,
+          ),
         }),
       );
-      navigation?.navigate('ConfirmPin', {TripType: tripType});
+      navigation?.navigate('RescheduleConfirmPin');
     } else {
       AlertConstant('please select Payment Method');
     }
@@ -202,6 +193,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
           navigation.goBack();
           dispatch(DiscountDataAction({}));
           dispatch(SelectpaymentMethodAction({}));
+          dispatch(ReschedulePaymentMethodAction({}));
         }}
         navigation2={() => {}}
         Images1Color={'#fff'}
@@ -212,6 +204,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
         Images2={null}
       />
       <TicktBookingProgressBar progress={2}></TicktBookingProgressBar>
+      <RescheduleSwitch onPress={ontoggleSwitch} ticketType={ticketType} />
 
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -220,17 +213,20 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
             searchFlightDateData={searchFlightDateData}
             item={item}
           />
-          {tripType === 'Round-Trip' ? (
-            <FlightDetailsCard
-              searchFlightData={returnSearchFlightData}
-              searchFlightDateData={returnSearchFlightDateData}
-              item={returnItem}
-            />
-          ) : null}
           <View style={styles.boxBody}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('PaymentMethod', {TripType: tripType})
+                ticketType !== 'Old Trip' &&
+                navigation.navigate('PaymentMethod', {
+                  TripType: tripType,
+                  type: 'Reschedule',
+                  payment: Number(
+                    totalSeatPrice +
+                      Math.round((totalSeatPrice * 2.8) / 100) +
+                      Math.round((totalSeatPrice * 1.5) / 100) -
+                      oldTripData?.totalPaymentList?.totalPayment,
+                  ),
+                })
               }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
                 <Image style={styles.boxIcon} source={Images?.payment}></Image>
@@ -239,7 +235,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
               </View>
               <View style={styles.StopsButBody}></View>
             </TouchableOpacity>
-            {PaymentMethodData?.type && (
+            {(PaymentMethodData?.type || ticketType === 'Old Trip') && (
               <View style={styles.discountBody}>
                 <View style={{flexDirection: 'row', flex: 1}}>
                   <View style={styles.PaymentMethodBody}>
@@ -248,72 +244,107 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
                       source={Images.wallet}
                     />
                     <Text style={styles.PaymentMethodName}>My Wallet</Text>
-                    <Text style={styles.walletPraice}>
-                      ${WalletData?.wallet}
-                    </Text>
+                    {ticketType !== 'Old Trip' && (
+                      <Text style={styles.walletPraice}>
+                        ${WalletData?.wallet}
+                      </Text>
+                    )}
                   </View>
                 </View>
               </View>
             )}
           </View>
-          <View style={styles.boxBody}>
-            <View style={styles.boxTitleBody}>
-              <Image style={styles.boxIcon} source={Images.coinsIcon}></Image>
-              <View style={[styles.boxTitle, {paddingEnd: wp(5)}]}>
-                <Text
-                  style={
-                    styles.boxTitle
-                  }>{`You Have ${PointsData?.TotalPoints} Points`}</Text>
-                <Text style={{marginTop: hp(1)}}>
-                  {`100 points equals $1. You will get ${
-                    ticketPrice / 2
-                  } points after this booking`}
-                </Text>
-              </View>
-              <View>
-                <ToggleSwitch
-                  isOn={ToggleSwitchBut1}
-                  size="medium"
-                  onColor={color.commonBlue}
-                  onToggle={isOn => {
-                    Number(PointsData?.TotalPoints) > 100
-                      ? setToggleSwitchBut1(isOn)
-                      : Alert.alert(
-                          'your points is not valid please increase your point',
-                        );
-                  }}
-                />
-              </View>
-            </View>
-            <View style={styles.StopsButBody}></View>
-          </View>
-
-          <View style={styles.boxBody}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation?.navigate('UseDiscountVoucher', {TripType: tripType})
-              }>
-              <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
-                <Image style={styles.boxIcon} source={Images?.discount}></Image>
-                <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
-                <Image style={styles.skipIcon} source={Images?.forward}></Image>
+          {ticketType === 'Old Trip' ? (
+            <View style={styles.boxBody}>
+              <View style={styles.boxTitleBody}>
+                <Image style={styles.boxIcon} source={Images.coinsIcon}></Image>
+                <View style={[styles.boxTitle, {paddingEnd: wp(5)}]}>
+                  <Text style={styles.boxTitle}>{`You Have ${Math.round(
+                    oldTripData?.totalPaymentList?.points?.pointsUse +
+                      oldTripData?.totalPaymentList?.points?.havePoint,
+                  )} Points`}</Text>
+                  <Text style={{marginTop: hp(1)}}>
+                    {`100 points equals $1. You will get ${oldTripData?.totalPaymentList?.points?.getPoint} points after this booking`}
+                  </Text>
+                </View>
+                <View>
+                  <ToggleSwitch
+                    isOn={
+                      ticketType === 'Old Trip'
+                        ? oldTripData?.totalPaymentList?.points?.pointsUse !== 0
+                        : ToggleSwitchBut1
+                    }
+                    size="medium"
+                    onColor={color.commonBlue}
+                    onToggle={isOn => {
+                      ticketType === 'Old Trip'
+                        ? null
+                        : Number(PointsData?.TotalPoints) > 100
+                        ? setToggleSwitchBut1(isOn)
+                        : Alert.alert(
+                            'your points is not valid please increase your point',
+                          );
+                    }}
+                  />
+                </View>
               </View>
               <View style={styles.StopsButBody}></View>
-            </TouchableOpacity>
-            {DiscountData?.id && (
-              <View style={styles.discountBody}>
-                <View style={styles.discountBut}>
-                  <Text style={styles.discountText}>{DiscountData?.id}</Text>
-                  <TouchableOpacity
-                    onPress={() => dispatch(DiscountDataAction({}))}
-                    style={{marginStart: wp(4)}}>
-                    <Text style={styles.discountText}>X</Text>
-                  </TouchableOpacity>
+            </View>
+          ) : null}
+
+          {ticketType === 'Old Trip' &&
+            oldTripData?.totalPaymentList?.discount?.ValidDiscount && (
+              <View style={styles.boxBody}>
+                <TouchableOpacity
+                  onPress={() => {
+                    ticketType !== 'Old Trip' &&
+                      navigation?.navigate('UseDiscountVoucher', {
+                        TripType: tripType,
+                        type: 'Reschedule',
+                      });
+                  }}>
+                  <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
+                    <Image
+                      style={styles.boxIcon}
+                      source={Images?.discount}></Image>
+                    <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
+                    <Image
+                      style={styles.skipIcon}
+                      source={Images?.forward}></Image>
+                  </View>
+                  <View style={styles.StopsButBody}></View>
+                </TouchableOpacity>
+                <View style={styles.discountBody}>
+                  <View style={styles.discountBut}>
+                    <Text style={styles.discountText}>
+                      {
+                        oldTripData?.totalPaymentList?.discount?.discountData
+                          ?.id
+                      }
+                    </Text>
+                    <TouchableOpacity style={{marginStart: wp(4)}}>
+                      <Text style={styles.discountText}>X</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             )}
-          </View>
-          <PriceDetails
+          <ReschedulePriceDetails
+            oldPrice={oldTripData?.totalPaymentList?.totalPayment}
+            newPrice={
+              Number(newTripData.price.replace(',', '').slice(1)) *
+              Number(totalSeat)
+            }
+            oldTripData={oldTripData?.searchFlightCardData}
+            newTripData={newTripData}
+            totalPassenger={Number(searchFlightData.passenger.split(' ')[0])}
+            ticketPrice={ticketPrice}
+            totalSeat={totalSeat}
+            DiscountData={false}
+            TotalPoints={PointsData.TotalPoints}
+            ToggleSwitchBut1={ToggleSwitchBut1}
+          />
+          {/* <PriceDetails
             item={item}
             totalPassenger={Number(searchFlightData?.passenger?.split(' ')[0])}
             ticketPrice={ticketPrice}
@@ -324,7 +355,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
             returnTicketPrice={returbTicketPrice}
             returnItem={returnItem}
             DiscountData={DiscountData}
-          />
+          /> */}
         </ScrollView>
       </View>
       <View style={styles.bottomButtonBody}>

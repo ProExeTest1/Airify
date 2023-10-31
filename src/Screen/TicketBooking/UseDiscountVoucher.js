@@ -17,16 +17,26 @@ import {DiscountVoucherDummy} from '../../assets/DummyData/Discount';
 import {useDispatch, useSelector} from 'react-redux';
 import {DiscountDataAction} from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {RescheduleDiscountDataAction} from '../../redux/action/RescheduleAction';
 
 const UseDiscountVoucher = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
+  const type = route?.params?.type;
   const dispatch = useDispatch();
   const [DiscountData, setDiscountData] = useState(
     useSelector(e => e.SelectSeatData.DiscountData),
   );
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
+  const item = useSelector(state =>
+    type == 'Reschedule'
+      ? state?.rescheduleFlightdata?.rescheduleCardData?.searchFlightCardData
+      : state.searchFlight.searchFlightCardData,
+  );
+  const searchFlightData = useSelector(e =>
+    type == 'Reschedule'
+      ? e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData
+      : e?.place?.searchFlightData,
+  );
+  const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
   const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
   const CheckData = () => {
     if (DiscountData?.id) {
@@ -36,8 +46,12 @@ const UseDiscountVoucher = ({navigation, route}) => {
         ) <
         ticketPrice * totalSeat
       ) {
-        dispatch(DiscountDataAction(DiscountData));
-        navigation.navigate('PaymentConfirmation', {TripType: tripType});
+        type == 'Reschedule'
+          ? dispatch(RescheduleDiscountDataAction(DiscountData))
+          : dispatch(DiscountDataAction(DiscountData));
+        type == 'Reschedule'
+          ? navigation.goBack()
+          : navigation.navigate('PaymentConfirmation', {TripType: tripType});
       } else {
         AlertConstant('this voucher not valid for you');
       }

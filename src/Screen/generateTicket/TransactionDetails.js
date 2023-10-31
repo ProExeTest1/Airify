@@ -29,6 +29,12 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {SearchFlightReturnAction} from '../../redux/action/SearchFlightAction';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
+import {
+  RescheduleCardData,
+  RescheduleDateData,
+  RescheduleNormalDateData,
+} from '../../redux/action/RescheduleAction';
+import moment from 'moment';
 
 const TransactionDetails = ({navigation, route}) => {
   //BKG951233154
@@ -344,6 +350,24 @@ const TransactionDetails = ({navigation, route}) => {
             />
 
             <TouchableOpacity
+              onPress={() => {
+                dispatch(RescheduleCardData(firebaseTicketData));
+                dispatch(
+                  RescheduleNormalDateData({
+                    date: moment(
+                      firebaseTicketData.searchFlightDateData[1],
+                      'MMM DD YYYY',
+                    ).format('D/M/YYYY'),
+                    day: firebaseTicketData?.searchFlightDateData[0],
+                  }),
+                );
+                dispatch(
+                  RescheduleDateData(
+                    `${firebaseTicketData?.searchFlightDateData[0]} ,${firebaseTicketData.searchFlightDateData[1]}`,
+                  ),
+                );
+                navigation?.navigate('RescheduleSearchFlight');
+              }}
               style={[
                 styles.rescheduleButtonStyle,
                 {borderColor: color.commonBlue},

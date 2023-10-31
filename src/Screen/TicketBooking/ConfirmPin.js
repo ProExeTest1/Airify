@@ -27,6 +27,16 @@ import {
 } from '../../redux/action/SelectSeatAction';
 import moment from 'moment';
 import {showTicketActionData} from '../../redux/action/showTicketAction';
+import {
+  RescheduleCardData,
+  RescheduleDateData,
+  RescheduleFilterData,
+  RescheduleNormalDateData,
+  ReschedulePaymentMethodAction,
+  RescheduleSelectSeatData,
+  RescheduleTotalPaymentListAction,
+  rescheduleSelectNewCardData,
+} from '../../redux/action/RescheduleAction';
 const ConfirmPin = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const [pinData, setPinData] = useState('');
@@ -244,10 +254,14 @@ const ConfirmPin = ({navigation, route}) => {
             })
             .then(async () => {
               setTimeout(() => {
-                // dispatch(ReturnSelectSeatActionData([]));
-                dispatch(SelectSeatActionData([]));
-                dispatch(DiscountDataAction({}));
-                dispatch(SelectpaymentMethodAction({}));
+                dispatch(RescheduleCardData({}));
+                dispatch(rescheduleSelectNewCardData({}));
+                dispatch(RescheduleFilterData({}));
+                dispatch(RescheduleDateData(''));
+                dispatch(RescheduleNormalDateData({}));
+                dispatch(RescheduleSelectSeatData([]));
+                dispatch(RescheduleTotalPaymentListAction({}));
+                dispatch(ReschedulePaymentMethodAction({}));
                 setcondti2(false);
               }, 2000);
             });

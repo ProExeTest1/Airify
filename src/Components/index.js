@@ -46,7 +46,8 @@ import TextData from './OnBoardingComponents/TextData';
 import CommonDropDown from './AccountComponent/CommonDropDown';
 import DatePickerTextInput from './AccountComponent/DatePickerTextInput';
 import TextInputPassenger from './AccountComponent/TextInputPassenger';
-
+import RescheduleSwitch from './Common/RescheduleSwitch';
+import ReschedulePriceDetails from './TicketBookingComponents/ReschedulePriceDetails';
 export {
   GetTime,
   CardList,
@@ -95,4 +96,6 @@ export {
   CommonDropDown,
   DatePickerTextInput,
   TextInputPassenger,
+  RescheduleSwitch,
+  ReschedulePriceDetails,
 };

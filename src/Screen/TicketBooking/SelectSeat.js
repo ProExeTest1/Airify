@@ -21,23 +21,47 @@ import firestore from '@react-native-firebase/firestore';
 import {SelectSeatActionData} from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 import moment from 'moment';
+import {RescheduleSelectSeatData} from '../../redux/action/RescheduleAction';
 
 const SelectSeat = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  const temp = useSelector(e => e.SelectSeatData.SelectSeatData);
-  const searchFlightCardData = useSelector(
-    state => state.searchFlight.searchFlightCardData,
+  const type = route?.params?.type; //Reschedule
+  const searchFlightCardData = useSelector(state =>
+    type == 'Reschedule'
+      ? state?.rescheduleFlightdata.rescheduleSelectNewCard
+      : state.searchFlight.searchFlightCardData,
   );
+  console.log(searchFlightCardData, type);
   const dispatch = useDispatch();
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const SelectDate = useSelector(e => e.date.depatureDate);
+  const searchFlightData = useSelector(e =>
+    type == 'Reschedule'
+      ? e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData
+      : e?.place?.searchFlightData,
+  );
+  const SelectDate = useSelector(e =>
+    type == 'Reschedule'
+      ? e?.rescheduleFlightdata?.rescheduleDateData
+      : e.date.depatureDate,
+  );
 
   const [FirebaseData, setFirebaseData] = useState({});
-  const [seatData, setseatData] = useState(temp);
+  const [seatData, setseatData] = useState(
+    useSelector(e =>
+      type == 'Reschedule'
+        ? e.rescheduleFlightdata.SelectSeatData
+        : e.SelectSeatData.SelectSeatData,
+    ),
+  );
   const [OccuiedData, setOccuiedData] = useState([]);
 
   const date = useSelector(e => e.date.normalDate);
-  const [seatNameData, setseatNameData] = useState(temp[0]);
+  const [seatNameData, setseatNameData] = useState(
+    useSelector(e =>
+      type == 'Reschedule'
+        ? e.rescheduleFlightdata.SelectSeatData
+        : e.SelectSeatData.SelectSeatData,
+    )[0],
+  );
   const setSelectSeat = seat => {
     setseatData(
       seatData.map(i => {
@@ -99,9 +123,15 @@ const SelectSeat = ({navigation, route}) => {
   const setSeat = async () => {
     const selectedSeat = seatData?.filter(i => i.seatNo).map(e => e.seatNo);
     if (selectedSeat?.length === seatData?.length) {
-      dispatch(SelectSeatActionData(seatData));
+      dispatch(
+        type == 'Reschedule'
+          ? RescheduleSelectSeatData(seatData)
+          : SelectSeatActionData(seatData),
+      );
       setseatData([]);
-      navigation?.navigate('FillPassengerDetails', {TripType: tripType});
+      type == 'Reschedule'
+        ? navigation?.goBack()
+        : navigation?.navigate('FillPassengerDetails', {TripType: tripType});
     } else {
       AlertConstant('please select seat');
     }

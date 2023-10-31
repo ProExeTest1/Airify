@@ -18,8 +18,16 @@ import moment from 'moment';
 
 const Congratulation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
+  const type = route?.params?.type;
   const header = route?.params?.header;
-  const totalPaymentList = useSelector(e => e.SelectSeatData.totalPaymentList);
+  console.log(header);
+  const totalPaymentList = useSelector(e =>
+    type == 'Reschedule'
+      ? e.rescheduleFlightdata.RescheduletotalPaymentList
+      : e.SelectSeatData.totalPaymentList,
+  );
+
+  console.log(totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 
   const getUserPointData = async () => {
@@ -41,7 +49,9 @@ const Congratulation = ({navigation, route}) => {
       .update({
         TotalPoints:
           Number(UserPointData?.TotalPoints) +
-          (totalPaymentList.return
+          (type == 'Reschedule'
+            ? totalPaymentList.points.getPoint
+            : totalPaymentList.return
             ? totalPaymentList.return.points.getPoint +
               totalPaymentList.departure.points.getPoint
             : totalPaymentList.departure.points.getPoint),
@@ -49,7 +59,9 @@ const Congratulation = ({navigation, route}) => {
           {
             title: 'points',
             price: `+${
-              totalPaymentList.return
+              type == 'Reschedule'
+                ? totalPaymentList.points.getPoint
+                : totalPaymentList.return
                 ? totalPaymentList.return.points.getPoint +
                   totalPaymentList.departure.points.getPoint
                 : totalPaymentList.departure.points.getPoint
@@ -96,7 +108,9 @@ const Congratulation = ({navigation, route}) => {
             color: '#000',
           }}>
           Congratulation! You've Earned{' '}
-          {totalPaymentList.return
+          {type == 'Reschedule'
+            ? totalPaymentList.points.getPoint
+            : totalPaymentList.return
             ? totalPaymentList.return.points.getPoint +
               totalPaymentList.departure.points.getPoint
             : totalPaymentList.departure.points.getPoint}{' '}

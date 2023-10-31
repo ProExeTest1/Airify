@@ -71,7 +71,7 @@ const RescheduleSearchFlight = ({navigation, route}) => {
   );
   //   /* ----------------------------------------------------> date function */
 
-  const setSelectDate = ({date}) => {
+  const setSelectDate = ({date, day}) => {
     let dateChange = date.split('/');
     let newDate = new Date();
     dispatch(

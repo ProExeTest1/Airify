@@ -17,14 +17,25 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {SelectpaymentMethodAction} from '../../redux/action/SelectSeatAction';
+import {ReschedulePaymentMethodAction} from '../../redux/action/RescheduleAction';
 
 const PaymentMethod = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
+  const typeReschedule = route?.params?.type;
+  const typePaymeta = route?.params?.payment; //Reschedule
   const dispatch = useDispatch();
   const [WalletData, setWalletData] = useState({});
   const [selectOpc, setSelectOpc] = useState({});
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
-  const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const item = useSelector(state =>
+    typeReschedule === 'Reschedule'
+      ? state?.rescheduleFlightdata?.rescheduleCardData?.searchFlightCardData
+      : state.searchFlight.searchFlightCardData,
+  );
+  const searchFlightData = useSelector(e =>
+    typeReschedule === 'Reschedule'
+      ? e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData
+      : e?.place?.searchFlightData,
+  );
   const returnItem = useSelector(
     state => state?.searchFlight?.searchFlightReturnCardData,
   );
@@ -36,7 +47,9 @@ const PaymentMethod = ({navigation, route}) => {
   );
   const totalSeatPrice = (ticketPrice + returbTicketPrice) * totalSeat;
   const dataForTurnary =
-    tripType === 'Round-Trip'
+    typeReschedule == 'Reschedule'
+      ? typePaymeta <= WalletData?.wallet
+      : tripType === 'Round-Trip'
       ? totalSeatPrice +
           Math.round((totalSeatPrice * 2.8) / 100) +
           Math.round((totalSeatPrice * 1.5) / 100) <=
@@ -48,8 +61,14 @@ const PaymentMethod = ({navigation, route}) => {
 
   const setDataFunction = () => {
     if (dataForTurnary) {
-      dispatch(SelectpaymentMethodAction(selectOpc));
-      navigation.navigate('PaymentConfirmation', {TripType: tripType});
+      dispatch(
+        typeReschedule == 'Reschedule'
+          ? ReschedulePaymentMethodAction(selectOpc)
+          : SelectpaymentMethodAction(selectOpc),
+      );
+      typeReschedule == 'Reschedule'
+        ? navigation.goBack()
+        : navigation.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
       navigation.navigate('TopUp', {TripType: tripType});
       Alert.alert('please TopUp your Wallet');

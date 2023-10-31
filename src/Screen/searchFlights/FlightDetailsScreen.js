@@ -55,9 +55,15 @@ const FlightDetailsScreen = ({navigation, route}) => {
       setTicketType('Departure');
     }
   };
+
   const searchFlightDateData = useSelector(e =>
-    ticketType === 'Departure' ? e?.date?.depatureDate : e?.date?.returnDate,
+    ticketType === 'Departure'
+      ? navigationType === 'ReshceduleFilldetails'
+        ? e?.rescheduleFlightdata?.rescheduleDateData
+        : e?.date?.depatureDate
+      : e?.date?.returnDate,
   ).split(',');
+  console.log(searchFlightDateData);
   const SelectDate = useSelector(e =>
     ticketType === 'Departure'
       ? e?.date?.normalDate
@@ -279,7 +285,11 @@ const FlightDetailsScreen = ({navigation, route}) => {
             if (tripType === 'Round-Trip' && ticketType === 'Departure') {
               setTicketType('Return');
             } else {
-              navigation.navigate('FillPassengerDetails', {TripType: tripType});
+              navigationType == 'ReshceduleFilldetails'
+                ? navigation.navigate('RescheduleFillPassengerDetails')
+                : navigation.navigate('FillPassengerDetails', {
+                    TripType: tripType,
+                  });
             }
           }}
           style={styles.continueButtonStyle}>

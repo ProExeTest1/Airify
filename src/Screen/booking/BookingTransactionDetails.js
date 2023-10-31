@@ -56,6 +56,12 @@ const BookingTransactionDetails = ({navigation}) => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');
   };
+  console.log(
+    moment(firebaseTicketData.searchFlightDateData[1], 'MMM DD YYYY').format(
+      'D/M/YYYY',
+    ),
+    firebaseTicketData.searchFlightDateData[1],
+  );
   return (
     <View style={{flex: 1}}>
       {firebaseTicketData?.bookingID && (
@@ -335,7 +341,7 @@ const BookingTransactionDetails = ({navigation}) => {
                     );
                     dispatch(
                       RescheduleDateData(
-                        firebaseTicketData.searchFlightDateData[1],
+                        `${firebaseTicketData?.searchFlightDateData[0]} ,${firebaseTicketData.searchFlightDateData[1]}`,
                       ),
                     );
                     navigation?.navigate('RescheduleSearchFlight');
