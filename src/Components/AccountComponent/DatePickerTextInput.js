@@ -25,7 +25,7 @@ const DatePickerTextInput = ({
 
   return (
     <View style={[styles.container, container]}>
-      <TouchableOpacity onPress={onPress} style={{}}>
+      <TouchableOpacity onPress={onPress}>
         <Image
           source={textInputIcon}
           style={[styles.textInputIconStyle, textInputIconStyle]}
@@ -44,7 +44,7 @@ const DatePickerTextInput = ({
       {textInputPlaceholder == 'Password' ||
       textInputPlaceholder == 'Confirm New Password' ? (
         <TouchableOpacity
-          style={{alignItems: 'flex-end', marginRight: wp(2)}}
+          style={styles.imageTouchStyle}
           onPress={() => {
             textInputPlaceholder == 'Password' ||
             textInputPlaceholder == 'Confirm New Password'
@@ -52,37 +52,25 @@ const DatePickerTextInput = ({
               : setFocus(false);
           }}>
           <Image
-            style={{
-              paddingRight: 15,
-              height: hp(2),
-              width: hp(2),
-              tintColor: '#A0A0A0',
-            }}
+            style={styles.imageStyle}
             source={focus ? Images.HidePassword : Images.ViewPassword}
           />
         </TouchableOpacity>
       ) : null}
       {textInputPlaceholder == 'Date of Birth' ? (
         <TouchableOpacity
-          style={{alignItems: 'flex-end', marginRight: wp(2)}}
+          style={styles.imageTouchStyle}
           onPress={() => {
             onPressCalender();
             setFocus(false);
           }}>
-          <Image
-            style={{
-              paddingRight: 15,
-              height: hp(2),
-              width: hp(2),
-              tintColor: '#A0A0A0',
-            }}
-            source={Images.calender}
-          />
+          <Image style={styles.imageStyle} source={Images.calender} />
         </TouchableOpacity>
       ) : null}
     </View>
   );
 };
+export default DatePickerTextInput;
 
 const styles = StyleSheet.create({
   container: {
@@ -105,6 +93,14 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: wp(2),
   },
+  imageTouchStyle: {
+    alignItems: 'flex-end',
+    marginRight: wp(2),
+  },
+  imageStyle: {
+    paddingRight: 15,
+    height: hp(2),
+    width: hp(2),
+    tintColor: '#A0A0A0',
+  },
 });
-
-export default DatePickerTextInput;

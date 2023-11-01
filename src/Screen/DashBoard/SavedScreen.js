@@ -407,7 +407,7 @@ const SavedScreen = ({navigation}) => {
               <Text style={[styles.cardPrice, {marginLeft: wp(30)}]}>
                 {savedItem?.flightPrice}
               </Text>
-              <Text style={styles.cardPriceTitle}>/pax</Text>
+              <Text style={styles.cardPriceTitle}>{strings.pax}</Text>
             </View>
           </View>
           <View
@@ -453,7 +453,7 @@ const SavedScreen = ({navigation}) => {
           onPress={() => setModalVisible2(true)}
           style={styles.sortImgBody}>
           <Image style={styles.sortImg} source={Images.sortIcon} />
-          <Text style={styles.sortText}>Sort</Text>
+          <Text style={styles.sortText}>{strings.sort}</Text>
         </TouchableOpacity>
         <View style={styles.sortLine}></View>
         <TouchableOpacity

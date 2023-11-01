@@ -98,12 +98,12 @@ const Congratulation = ({navigation, route}) => {
             marginTop: hp(2),
             color: '#000',
           }}>
-          Congratulation! You've Earned{' '}
+          {strings.you_earned}{' '}
           {totalPaymentList.return
             ? totalPaymentList.return.points.getPoint +
               totalPaymentList.departure.points.getPoint
             : totalPaymentList.departure.points.getPoint}{' '}
-          Points!
+          {strings.points}
         </Text>
         <Text
           style={{
@@ -111,8 +111,7 @@ const Congratulation = ({navigation, route}) => {
             marginTop: hp(2),
             color: '#000',
           }}>
-          Your next adventure lust cot even barer. Use your points for discounts
-          on future flights!
+          {strings.use_your_point}
         </Text>
       </View>
       <View style={styles.bottomButtonBody}>
@@ -121,7 +120,7 @@ const Congratulation = ({navigation, route}) => {
             setPoint();
           }}
           style={styles.okButton}>
-          <Text style={styles.okButtonText}>Ok</Text>
+          <Text style={styles.okButtonText}>{strings.ok}</Text>
         </TouchableOpacity>
       </View>
     </View>

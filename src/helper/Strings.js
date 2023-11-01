@@ -187,6 +187,17 @@ export const strings = Object.freeze({
   Arrival_Time: 'Arrival Time',
   refund_reschedule: 'Refund & Reschedule',
   Flight_Preferences: 'Flight Preferences',
+  Departure_Time: 'Departure Time',
+  Cabin_Class: 'Cabin Class',
+  Original: 'Original',
+  Flight_Details: 'Flight Details',
+  Flight: 'Flight',
+  Refund_Info: 'Refund Info',
+  Reschedule_info: 'Reschedule info',
+  Selected: 'Selected',
+  Occupied: 'Occupied',
+  Available: 'Available',
+  seat: 'Seat',
   //Search Flight Alert
 
   wrong_return_date: 'You selected wrong Return date',
@@ -278,6 +289,13 @@ export const strings = Object.freeze({
   cancel_booking: 'Cancel Booking',
   completed: 'Completed',
   canceled: 'Canceled',
+  show_your_id_barcode: ' Show your ID and this barcode at the check-in gate',
+  enjoy_travelling_world: 'Enjoy traveling around the world with us',
+  arify_weblink: 'www.airify.yourdomain',
+  use_your_point:
+    'Your next adventure lust cot even barer. Use your points for discounts on future flights!',
+  you_earned: 'Congratulation! You`ve Earned',
+  points: ' Points!',
   // Saved Address
 
   savedAddress: 'Saved Address',
@@ -303,14 +321,15 @@ export const strings = Object.freeze({
   discountVoucher: 'Discounts / Vouchers',
   ValidUntil: 'Valid Until',
   minTransaction: 'Min Transaction',
-
+  Claim_Discount: 'Claim Discount',
   airifyReward: 'Airify Rewards',
   getSpecialReward: 'Get Special Rewards!',
+  date_string: 'Dec 31,2023',
   getSpecialRewardSub:
     'Get special offers, & even free travel every \n time your friend joins via your referral code.',
   copyCode: 'Copy or share the referral code below.',
   shareCode: 'Share Referral Code',
-
+  price_string: '$1,000.00',
   airifyPoint: 'Airify Point',
   totalPoint: 'Total Airify Points',
   line: '100 points = $1.00. You can use these points as payment',
@@ -329,6 +348,22 @@ export const strings = Object.freeze({
     'You are obligated to present your e-boarding pass when you will enter the airplane flight.',
 
   eTicket: 'E-Ticket',
+  Payment_Method: 'Payment Method',
+  Enter_the_PIN_to_confirm_ticket_payment:
+    'Enter the PIN to confirm ticket payment.',
+  processing_payment: 'Processing Payment...',
+  booking_confirmed: ' Booking Confirmed!',
+  congrats: ' Congratulation! your flight ticket is Confirmed',
+  View_Transacation: '  View Transacation',
+  back_to_home: 'Back to Home',
+  My_Wallet: 'My Wallet',
+  you_have: 'You have',
+  you_get: '100 points equals $1. You will get',
+  point_after_booking: 'points after this booking',
+  PayPal: 'PayPal',
+  Google_Pay: 'Google Pay',
+  Apple_Pay: 'Apple Pay',
+  Visa_Pay: 'Visa Pay',
 
   //bookings screen
 
@@ -380,4 +415,26 @@ export const strings = Object.freeze({
     'Destination Place and Departure Place does not be same',
   fill_all_details: 'Please Fill All Details',
   none_of_place_exist: 'None of this place exist',
+  enter_valid_email: 'Please Enter Email which are use in login',
+  pasword_reset_email_send: 'Password reset email has been sent successfully.',
+  please_enter_valid_email: 'Please Enter valid Email',
+  please_enter_valid_password: 'Please Enter Valid Password',
+  please_select_profile_image: 'Please Select Profile Image',
+  enter_valid_name: 'Please Enter Valid name',
+  PIN_is_not_match: 'PIN is not match',
+  add_passenger_first: 'Please first add passengers to click on plus icon',
+  add_passenger_on_click:
+    'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
+  please_select_payment_method: 'please select Payment Method',
+  not_valid_points: 'your points is not valid please increase your point',
+  please_topup_wallet: 'please TopUp your Wallet',
+  payment_alert:
+    'PayPal,Google Pay,Apple Pay and Visa pay not available at that time please pay with Wallet',
+  your_selected: 'your selected seat',
+  already_booked: 'is already booked',
+  please_select_seat: 'please select seat',
+  not_valid_voucher: 'this voucher not valid for you',
+  select_voucher: 'please select one voucher',
+  enter_valid_currency: 'please enter valid currency',
+  enter_amount: 'please enter valid amount',
 });

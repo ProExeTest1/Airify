@@ -11,6 +11,7 @@ import {
 } from '../../redux/action/SearchFlightAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {strings} from '../../helper/Strings';
+import moment from 'moment';
 
 const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   const navigation = useNavigation();
@@ -24,14 +25,31 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   //   reduxDepatureDate < reduxReturnDate,
   //   'reduxDepatureDate < reduxReturnDate',
   // );
+  let departureDate = moment(reduxDepatureDate.split(',')[1]).format(
+    'DD/MM/YYYY',
+  );
+  let returnDate = moment(reduxReturnDate.split(',')[1]).format('DD/MM/YYYY');
   const setCartFlightData = item => {
     if (tripType1 === 'Round-Trip') {
       if (reduxDepatureDate !== reduxReturnDate) {
-        if (reduxDepatureDate < reduxReturnDate) {
-          dispatch(SearchFlightCardData(item));
-          navigation?.navigate('ReturnSearchFlight', {TripType: 'Round-trip'});
+        if (departureDate.split('/')[1] === returnDate.split('/')[1]) {
+          if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+            dispatch(SearchFlightCardData(item));
+            navigation?.navigate('ReturnSearchFlight', {
+              TripType: 'Round-trip',
+            });
+          } else {
+            AlertConstant(strings.wrong_return_date);
+          }
         } else {
-          AlertConstant(strings.wrong_return_date);
+          if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+            dispatch(SearchFlightCardData(item));
+            navigation?.navigate('ReturnSearchFlight', {
+              TripType: 'Round-trip',
+            });
+          } else {
+            AlertConstant(strings.wrong_return_date);
+          }
         }
       } else {
         AlertConstant(strings.return_departure_not_same);
@@ -39,11 +57,24 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
     } else {
       if (tripType == 'Round-Trip') {
         if (reduxDepatureDate !== reduxReturnDate) {
-          if (reduxDepatureDate < reduxReturnDate) {
-            dispatch(SearchFlightReturnCardAction(item));
-            navigation?.navigate('FlightDetails', {TripType: 'Round-Trip'});
+          if (departureDate.split('/')[1] === returnDate.split('/')[1]) {
+            if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+              dispatch(SearchFlightReturnCardAction(item));
+              navigation?.navigate('FlightDetails', {TripType: 'Round-Trip'});
+            } else {
+              AlertConstant(strings.wrong_return_date);
+            }
           } else {
-            AlertConstant(strings.wrong_return_date);
+            if (departureDate.split('/')[1] < returnDate.split('/')[1]) {
+              if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+                dispatch(SearchFlightReturnCardAction(item));
+                navigation?.navigate('FlightDetails', {TripType: 'Round-Trip'});
+              } else {
+                AlertConstant(strings.wrong_return_date);
+              }
+            } else {
+              AlertConstant(strings.wrong_return_date);
+            }
           }
         } else {
           AlertConstant(strings.return_departure_not_same);
@@ -58,7 +89,7 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
-        data={SearchFlightCard.filter(i => {
+        data={SearchFlightCard?.filter(i => {
           if (
             `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
             SelectDate?.date

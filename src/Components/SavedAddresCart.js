@@ -11,9 +11,6 @@ const SavedAddressCart = () => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   return (
     <TouchableOpacity
-      onPress={() => {
-        setCartFlightData(item);
-      }}
       style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />

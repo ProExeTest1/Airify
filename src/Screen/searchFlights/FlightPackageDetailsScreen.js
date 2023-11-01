@@ -11,6 +11,7 @@ import {
   RefundableTermsAndConditions,
   RescheduleTermsAndConditons,
 } from '../../assets/DummyData/FlightDetailsData';
+import {strings} from '../../helper/Strings';
 
 const FlightPackageDetailsScreen = ({navigation, route}) => {
   const headerData = route?.params?.header;
@@ -36,7 +37,7 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
               styles.optionTextStyle,
               {color: press === 'Flight' ? color.white : color.black},
             ]}>
-            Flight
+            {strings.Flight}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -50,7 +51,7 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
               styles.optionTextStyle,
               {color: press === 'Refund' ? color.white : color.black},
             ]}>
-            Refund Info
+            {strings.Refund_Info}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -66,7 +67,7 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
             ]}
             ellipsizeMode="tail"
             numberOfLines={1}>
-            Reschedule info
+            {strings.Reschedule_info}
           </Text>
         </TouchableOpacity>
       </View>

@@ -51,15 +51,7 @@ const TextInputPassenger = ({
               onPressCountryPicker();
               setFocus(false);
             }}>
-            <Image
-              style={{
-                height: hp(2),
-                width: hp(2),
-                tintColor: '#A0A0A0',
-                right: wp(4),
-              }}
-              source={textInputIcon}
-            />
+            <Image style={styles.textInputIconstyle} source={textInputIcon} />
           </View>
         ) : null}
         <TextInput
@@ -81,14 +73,7 @@ const TextInputPassenger = ({
               onPressCalender();
               setFocus(false);
             }}>
-            <Image
-              style={{
-                height: hp(2),
-                width: hp(2),
-                tintColor: '#A0A0A0',
-              }}
-              source={calenderIcon}
-            />
+            <Image style={styles.calenderIcon} source={calenderIcon} />
           </TouchableOpacity>
         ) : null}
       </TouchableOpacity>
@@ -96,6 +81,7 @@ const TextInputPassenger = ({
   );
 };
 
+export default TextInputPassenger;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: wp(3),
@@ -121,6 +107,15 @@ const styles = StyleSheet.create({
     paddingVertical: Platform.OS === 'ios' ? hp(2.5) : hp(0.5),
     backgroundColor: color.lightWhite,
   },
+  textInputIconstyle: {
+    height: hp(2),
+    width: hp(2),
+    tintColor: '#A0A0A0',
+    right: wp(4),
+  },
+  calenderIcon: {
+    height: hp(2),
+    width: hp(2),
+    tintColor: '#A0A0A0',
+  },
 });
-
-export default TextInputPassenger;

@@ -14,7 +14,7 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
 
   const validation = () => {
     if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      AlertConstant('Please Enter Email which are use in login');
+      AlertConstant(strings.enter_valid_email);
       return;
     } else {
       sendOTP();
@@ -26,7 +26,7 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
       await auth()
         .sendPasswordResetEmail(email)
         .then(() => {
-          AlertConstant('Password reset email has been sent successfully.');
+          AlertConstant(strings.pasword_reset_email_send);
         })
         .catch(err => {
           console.log('err :>> ', err);

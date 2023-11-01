@@ -14,11 +14,7 @@ const SwiperFlatlistComponent = ({showPagination}) => {
         data={dummyData}
         autoplayDelay={3}
         disableGesture={true}
-        paginationStyleItem={{
-          width: hp(0.9),
-          height: hp(0.9),
-          borderRadius: 5,
-        }}
+        paginationStyleItem={styles.paginationStyleItem}
         showPagination={showPagination}
         renderItem={({item}) => {
           return (
@@ -47,5 +43,10 @@ const styles = StyleSheet.create({
     width: wp(88),
     height: hp(25),
     borderRadius: 14,
+  },
+  paginationStyleItem: {
+    width: hp(0.9),
+    height: hp(0.9),
+    borderRadius: 5,
   },
 });

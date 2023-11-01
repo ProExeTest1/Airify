@@ -30,14 +30,7 @@ const GetTime = ({departureTime, setDepartureTime}) => {
           <Text style={{color: '#7e7e7f', marginBottom: hp(1)}}>
             {item.title}
           </Text>
-          <Text
-            style={{
-              color: '#000',
-              fontWeight: '500',
-              fontSize: fontSize(16),
-            }}>
-            {item.time}
-          </Text>
+          <Text style={styles.textStyle}>{item.time}</Text>
         </TouchableOpacity>
       )}
     />
@@ -56,5 +49,10 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     paddingHorizontal: wp(4),
     backgroundColor: '#fafafa',
+  },
+  textStyle: {
+    color: '#000',
+    fontWeight: '500',
+    fontSize: fontSize(16),
   },
 });

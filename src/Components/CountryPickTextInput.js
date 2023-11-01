@@ -26,11 +26,7 @@ const CountryPickTextInput = ({
   placeholderTextColor,
 }) => {
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        marginVertical: hp(1),
-      }}>
+    <View style={styles.mainViewStyle}>
       <TouchableOpacity
         style={styles.viewStyle}
         disabled={strings.Phone ? disabled : true}
@@ -85,6 +81,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: wp(4),
     color: color.black,
+  },
+  mainViewStyle: {
+    alignItems: 'center',
+    marginVertical: hp(1),
   },
 });
 

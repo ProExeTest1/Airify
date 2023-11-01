@@ -38,14 +38,14 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation = () => {
     if (!Email?.trim()?.match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      AlertConstant('Please Enter valid Email');
+      AlertConstant(strings.please_enter_valid_email);
       return;
     } else if (
       !Password.trim().match(
         /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
       )
     ) {
-      AlertConstant('Please Enter Valid Password');
+      AlertConstant(strings.please_enter_valid_password);
       return;
     } else {
       openModal();

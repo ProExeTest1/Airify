@@ -8,14 +8,9 @@ import {strings} from '../../helper/Strings';
 
 const TicktBookingProgressBar = ({progress}) => {
   return (
-    <View
-      style={{
-        height: hp(10),
-        backgroundColor: color.commonBlue,
-        paddingHorizontal: wp(12),
-      }}>
+    <View style={styles.mainViewstyle}>
       <View style={styles.progressInnerViewStyle}>
-        <View style={{alignItems: 'center', width: wp(15)}}>
+        <View style={styles.firstViewStyle}>
           <View
             style={[
               styles.progressViewStyle,
@@ -23,11 +18,7 @@ const TicktBookingProgressBar = ({progress}) => {
             ]}>
             {progress > 1 ? (
               <Image
-                style={{
-                  height: wp(5),
-                  width: wp(5),
-                  tintColor: color.commonBlue,
-                }}
+                style={styles.doneIconstyle}
                 source={Images.doneIcon}></Image>
             ) : (
               <Text
@@ -50,7 +41,7 @@ const TicktBookingProgressBar = ({progress}) => {
             },
           ]}
         />
-        <View style={{alignItems: 'center', width: wp(15)}}>
+        <View style={styles.firstViewStyle}>
           <View
             style={[
               styles.progressViewStyle,
@@ -58,11 +49,7 @@ const TicktBookingProgressBar = ({progress}) => {
             ]}>
             {progress > 2 ? (
               <Image
-                style={{
-                  height: wp(5),
-                  width: wp(5),
-                  tintColor: color.commonBlue,
-                }}
+                style={styles.doneIconstyle}
                 source={Images.doneIcon}></Image>
             ) : (
               <Text
@@ -85,7 +72,7 @@ const TicktBookingProgressBar = ({progress}) => {
             },
           ]}
         />
-        <View style={{alignItems: 'center', width: wp(15)}}>
+        <View style={styles.firstViewStyle}>
           <View
             style={[
               styles.progressViewStyle,
@@ -131,5 +118,22 @@ const styles = StyleSheet.create({
     width: wp(14),
     marginTop: hp(2),
   },
-  progressTextStyle: {color: '#DBDDE1', marginTop: hp(0.5)},
+  progressTextStyle: {
+    color: '#DBDDE1',
+    marginTop: hp(0.5),
+  },
+  mainViewstyle: {
+    height: hp(10),
+    backgroundColor: color.commonBlue,
+    paddingHorizontal: wp(12),
+  },
+  firstViewStyle: {
+    alignItems: 'center',
+    width: wp(15),
+  },
+  doneIconstyle: {
+    height: wp(5),
+    width: wp(5),
+    tintColor: color.commonBlue,
+  },
 });

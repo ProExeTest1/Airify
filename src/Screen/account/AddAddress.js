@@ -162,11 +162,7 @@ const AddAddress = ({navigation}) => {
           }}
           onChangeText={countryCode => setCountryCode(countryCode)}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <View style={styles.checkButtonViewStyle}>
           <CheckButton
             check={checked}
             onPress={() => {
@@ -252,7 +248,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     borderColor: color.grayLight,
   },
-  checkBoxStyle: {marginLeft: wp(2), color: color.black, fontWeight: '500'},
+  checkBoxStyle: {
+    marginLeft: wp(2),
+    color: color.black,
+    fontWeight: '500',
+  },
+  checkButtonViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
 
 export default AddAddress;

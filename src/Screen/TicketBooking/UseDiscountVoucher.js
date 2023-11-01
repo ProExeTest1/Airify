@@ -22,28 +22,31 @@ const UseDiscountVoucher = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const dispatch = useDispatch();
   const [DiscountData, setDiscountData] = useState(
-    useSelector(e => e.SelectSeatData.DiscountData),
+    useSelector(e => e?.SelectSeatData?.DiscountData),
   );
-  const item = useSelector(state => state.searchFlight.searchFlightCardData);
+  const item = useSelector(state => state?.searchFlight?.searchFlightCardData);
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
-  const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
-  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
+  const ticketPrice = parseInt(
+    item?.price?.slice(1, 8)?.split(',').join(''),
+    10,
+  );
   const CheckData = () => {
     if (DiscountData?.id) {
       if (
         Number(
-          DiscountData?.MinTransaction.replace('$', '').replaceAll(',', ''),
+          DiscountData?.MinTransaction?.replace('$', '').replaceAll(',', ''),
         ) <
         ticketPrice * totalSeat
       ) {
         dispatch(DiscountDataAction(DiscountData));
         navigation.navigate('PaymentConfirmation', {TripType: tripType});
       } else {
-        AlertConstant('this voucher not valid for you');
+        AlertConstant(strings.not_valid_voucher);
       }
     } else {
       setDiscountData({});
-      AlertConstant('please select one voucher');
+      AlertConstant(strings.select_voucher);
     }
   };
   return (
@@ -86,7 +89,7 @@ const UseDiscountVoucher = ({navigation, route}) => {
                           marginTop: 'auto',
                           color: color.black,
                         }}>
-                        {item.ValidUntil}
+                        {item?.ValidUntil}
                       </Text>
                     </View>
                   </View>
@@ -106,7 +109,7 @@ const UseDiscountVoucher = ({navigation, route}) => {
                           marginTop: 'auto',
                           color: color.black,
                         }}>
-                        {item.MinTransaction}
+                        {item?.MinTransaction}
                       </Text>
                     </View>
                   </View>
@@ -147,7 +150,7 @@ const UseDiscountVoucher = ({navigation, route}) => {
             CheckData();
           }}
           style={styles.okButton}>
-          <Text style={styles.okButtonText}>Ok</Text>
+          <Text style={styles.okButtonText}>{strings.ok}</Text>
         </TouchableOpacity>
       </View>
     </View>

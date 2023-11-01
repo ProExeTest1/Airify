@@ -56,7 +56,7 @@ const PaymentMethod = ({navigation, route}) => {
       navigation?.navigate('PaymentConfirmation', {TripType: tripType});
     } else {
       navigation.navigate('TopUp', {TripType: tripType});
-      AlertConstant('please TopUp your Wallet');
+      AlertConstant(strings.please_topup_wallet);
     }
   };
   const getFirebaseData = async () => {
@@ -114,7 +114,7 @@ const PaymentMethod = ({navigation, route}) => {
             },
           ]}>
           <Image style={styles.PaymentMethodIcon} source={Images.wallet} />
-          <Text style={styles.PaymentMethodName}>My Wallet</Text>
+          <Text style={styles.PaymentMethodName}>{strings.My_Wallet}</Text>
           <View style={styles.myWalletBody}>
             <Text
               style={[
@@ -155,7 +155,7 @@ const PaymentMethod = ({navigation, route}) => {
             style={styles.PaymentMethodOtherIcon}
             source={Images.paypalIcon}
           />
-          <Text style={styles.PaymentMethodName}>PayPal</Text>
+          <Text style={styles.PaymentMethodName}>{strings.PayPal}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -181,7 +181,7 @@ const PaymentMethod = ({navigation, route}) => {
             },
           ]}>
           <Image style={styles.PaymentMethodOtherIcon} source={Images.google} />
-          <Text style={styles.PaymentMethodName}>Google Pay</Text>
+          <Text style={styles.PaymentMethodName}>{strings.Google_Pay}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -205,7 +205,7 @@ const PaymentMethod = ({navigation, route}) => {
             },
           ]}>
           <Image style={styles.PaymentMethodOtherIcon} source={Images.apple} />
-          <Text style={styles.PaymentMethodName}>Apple Pay</Text>
+          <Text style={styles.PaymentMethodName}>{strings.Apple_Pay}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -234,7 +234,7 @@ const PaymentMethod = ({navigation, route}) => {
             style={styles.PaymentMethodOtherIcon}
             source={Images.visaIcon}
           />
-          <Text style={styles.PaymentMethodName}>Visa Pay</Text>
+          <Text style={styles.PaymentMethodName}>{strings.Visa_Pay}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -254,9 +254,7 @@ const PaymentMethod = ({navigation, route}) => {
           onPress={() => {
             selectOpc.type === 'My Wallet'
               ? setDataFunction()
-              : Alert.alert(
-                  'PayPal,Google Pay,Apple Pay and Visa pay not available at that time please pay with Wallet',
-                );
+              : AlertConstant(strings.payment_alert);
           }}
           style={styles.okButton}>
           <Text style={styles.okButtonText}>{strings.payNow}</Text>

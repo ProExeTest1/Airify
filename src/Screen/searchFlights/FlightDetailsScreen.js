@@ -147,7 +147,9 @@ const FlightDetailsScreen = ({navigation, route}) => {
         <SafeAreaView>
           <View style={styles.safeHeaderViewStyle}>
             <View style={styles.headerTextViewStyle}>
-              <Text style={styles.headerTextStyle}>Flight Details</Text>
+              <Text style={styles.headerTextStyle}>
+                {strings.Flight_Details}
+              </Text>
             </View>
             <TouchableOpacity onPress={() => navigation?.goBack('')}>
               <Image
@@ -239,10 +241,12 @@ const FlightDetailsScreen = ({navigation, route}) => {
               resizeMode="contain"
             />
             <View style={styles.secondCardHeaderStyle}>
-              <Text style={styles.secondCardheaderTextStyle}>Original</Text>
+              <Text style={styles.secondCardheaderTextStyle}>
+                {strings.Original}
+              </Text>
               <Text style={styles.cardPrice}>
                 {item?.price}
-                <Text style={styles.cardPriceTitle}>/pax</Text>
+                <Text style={styles.cardPriceTitle}>{strings.pax}</Text>
               </Text>
             </View>
           </View>
@@ -256,7 +260,8 @@ const FlightDetailsScreen = ({navigation, route}) => {
       <View style={styles.thirdCardStyle}>
         <View>
           <Text style={styles.priceTextStyle}>
-            Total Price : {searchFlightData?.passenger?.split(' ')[0]} person(s)
+            {strings.total_price} : {searchFlightData?.passenger?.split(' ')[0]}{' '}
+            person(s)
           </Text>
           <Text style={styles.cardPrice}>
             $

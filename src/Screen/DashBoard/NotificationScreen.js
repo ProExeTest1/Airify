@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
   },
   listTouchStyle: {
-    width: '95%',
     alignSelf: 'center',
     alignItems: 'center',
     flexDirection: 'row',

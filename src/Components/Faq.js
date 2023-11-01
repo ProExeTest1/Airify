@@ -32,7 +32,7 @@ const Faq = () => {
   const searchFaqQuestion = text => {
     if (text) {
       const abc = faqDummyData.filter(item => {
-        if (item.question.toLocaleLowerCase().match(text)) {
+        if (item?.question?.toLocaleLowerCase()?.match(text)) {
           return item;
         }
       });
@@ -42,7 +42,7 @@ const Faq = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{marginHorizontal: wp(2), paddingVertical: hp(1)}}>
+      <View style={styles.innerContainer}>
         <FlatList
           horizontal
           data={FaqData}
@@ -89,18 +89,11 @@ const Faq = () => {
       <View style={styles.flatListView}>
         <FlatList
           bounces={false}
-          data={searchText.length ? searchData : faqDummyData}
+          data={searchText?.length ? searchData : faqDummyData}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
-              <View
-                style={{
-                  backgroundColor: color.white,
-                  marginVertical: hp(1),
-                  paddingHorizontal: wp(4),
-                  marginHorizontal: wp(4),
-                  paddingVertical: hp(2),
-                }}>
+              <View style={styles.flatlistInnerView}>
                 <View style={styles.viewStyle}>
                   <Text style={styles.questionStyle}>{item?.question}</Text>
                   <TouchableOpacity
@@ -146,6 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: color.Grey,
   },
+  innerContainer: {marginHorizontal: wp(2), paddingVertical: hp(1)},
   textStyle: {
     fontWeight: '500',
     fontSize: fontSize(16),
@@ -188,6 +182,13 @@ const styles = StyleSheet.create({
   },
   textStyle1: {
     color: color.black,
+  },
+  flatlistInnerView: {
+    backgroundColor: color.white,
+    marginVertical: hp(1),
+    paddingHorizontal: wp(4),
+    marginHorizontal: wp(4),
+    paddingVertical: hp(2),
   },
 });
 

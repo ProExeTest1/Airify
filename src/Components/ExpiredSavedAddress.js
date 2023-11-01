@@ -83,12 +83,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                   <Text style={styles.cardPrice}>{item?.price}</Text>
                   <Image
                     source={Images.filled_save}
-                    style={{
-                      width: hp(2.5),
-                      height: hp(2.5),
-                      resizeMode: 'contain',
-                      tintColor: color.commonBlue,
-                    }}
+                    style={styles.saveIconStyle}
                   />
                 </View>
                 <View style={styles.cardDataBody}>
@@ -128,23 +123,9 @@ const ExpiredSavedAddress = ({onPress}) => {
                     {item?.destinationShortForm}
                   </Text>
                 </View>
-                <View
-                  style={[
-                    styles.cardBottemBody,
-                    {
-                      paddingTop: hp(2),
-                      borderTopWidth: 1,
-                      borderColor: color.grayLight,
-                    },
-                  ]}>
+                <View style={[styles.cardBottemBody, styles.cardBottemBody2]}>
                   <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
-                  <View
-                    style={{
-                      borderRadius: 4,
-                      paddingVertical: hp(1),
-                      paddingHorizontal: wp(2),
-                      backgroundColor: color.Grey,
-                    }}>
+                  <View style={styles.expiredViewStyle}>
                     <Text>{strings?.expired}</Text>
                   </View>
                 </View>
@@ -153,19 +134,12 @@ const ExpiredSavedAddress = ({onPress}) => {
           }}
         />
       ) : (
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={styles.LottieViewStyle}>
           <LottieView
             source={require('../helper/noDataFound.json')}
             autoPlay
             loop
-            style={{
-              height: hp(65),
-              width: wp(100),
-            }}
+            style={styles.lottiStyle}
           />
         </View>
       )}
@@ -250,6 +224,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: hp(2.5),
     justifyContent: 'space-between',
+  },
+  cardBottemBody2: {
+    paddingTop: hp(2),
+    borderTopWidth: 1,
+    alignItems: 'center',
+    borderColor: color.grayLight,
+  },
+  saveIconStyle: {
+    width: hp(2.5),
+    height: hp(2.5),
+    resizeMode: 'contain',
+    tintColor: color.commonBlue,
+  },
+  expiredViewStyle: {
+    borderRadius: 4,
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(2),
+    backgroundColor: color.Grey,
+  },
+  LottieViewStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lottiStyle: {
+    height: hp(65),
+    width: wp(100),
   },
 });
 

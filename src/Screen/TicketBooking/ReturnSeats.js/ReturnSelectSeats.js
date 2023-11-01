@@ -196,7 +196,7 @@ const ReturnSelectSeats = ({navigation}) => {
                   styles.selectedIcon,
                   {backgroundColor: color.commonBlue},
                 ]}></View>
-              <Text style={styles.textStyle}>Selected</Text>
+              <Text style={styles.textStyle}>{strings.Selected}</Text>
             </View>
             <View style={styles.selectedBody}>
               <View
@@ -204,7 +204,7 @@ const ReturnSelectSeats = ({navigation}) => {
                   styles.selectedIcon,
                   {backgroundColor: '#8596b3'},
                 ]}></View>
-              <Text style={styles.textStyle}>Occupied</Text>
+              <Text style={styles.textStyle}>{strings.Occupied}</Text>
             </View>
             <View style={styles.selectedBody}>
               <View
@@ -212,7 +212,7 @@ const ReturnSelectSeats = ({navigation}) => {
                   styles.selectedIcon,
                   {backgroundColor: '#cdd0d6'},
                 ]}></View>
-              <Text style={styles.textStyle}>Available</Text>
+              <Text style={styles.textStyle}>{strings.Available}</Text>
             </View>
           </View>
 
@@ -289,7 +289,7 @@ const ReturnSelectSeats = ({navigation}) => {
       </ScrollView>
       <View style={styles.bottomButtonBody}>
         <View style={{flex: 1}}>
-          <Text style={styles.SeatText}>Seat</Text>
+          <Text style={styles.SeatText}>{strings.seat}</Text>
           <Text style={styles.seatNumberText} numberOfLines={1}>
             {seatData
               ?.filter(i => i.seatNo)
@@ -299,7 +299,7 @@ const ReturnSelectSeats = ({navigation}) => {
         </View>
         <View style={{flex: 2.5}}>
           <TouchableOpacity style={styles.okButton} onPress={() => setSeat()}>
-            <Text style={styles.okButtonText}>OK</Text>
+            <Text style={styles.okButtonText}>{strings.ok}</Text>
           </TouchableOpacity>
         </View>
       </View>

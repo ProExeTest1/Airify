@@ -288,9 +288,7 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
                 marginVertical: hp(1),
               }}
             />
-            <Text style={styles.textStyle}>
-              Show your ID and this barcode at the check-in gate
-            </Text>
+            <Text style={styles.textStyle}>{strings.show_your_id_barcode}</Text>
           </View>
           <View style={styles.curveViewStyle}>
             <View style={[styles.curveStyle, {right: wp(8)}]}></View>
@@ -394,9 +392,11 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
           </View>
           <View style={{alignItems: 'center', marginTop: hp(0.5)}}>
             <Text style={styles.textStyle}>
-              Enjoy traveling around the world with us
+              {strings.enjoy_travelling_world}
             </Text>
-            <Text style={{color: color.commonBlue}}>www.airify.yourdomain</Text>
+            <Text style={{color: color.commonBlue}}>
+              {strings.arify_weblink}
+            </Text>
           </View>
         </View>
         <Image

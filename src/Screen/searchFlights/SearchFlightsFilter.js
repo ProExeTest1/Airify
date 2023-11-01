@@ -27,15 +27,16 @@ import {
   RefundAndRescheduleData,
   numberOfStops,
 } from '../../assets/DummyData/Data';
+import {strings} from '../../helper/Strings';
 
 const SearchFlightsFilter = ({navigation}) => {
   const func = () => {
     temp = [];
     SearchFlightData?.map((item, index) => {
       if (index === 0) {
-        temp.push({airlineName: item.airlineName, logo: item.logo});
-      } else if (temp.every(i => i.airlineName !== item.airlineName)) {
-        temp.push({airlineName: item.airlineName, logo: item.logo});
+        temp?.push({airlineName: item?.airlineName, logo: item?.logo});
+      } else if (temp.every(i => i.airlineName !== item?.airlineName)) {
+        temp?.push({airlineName: item?.airlineName, logo: item?.logo});
       }
     });
     return temp;
@@ -173,7 +174,7 @@ const SearchFlightsFilter = ({navigation}) => {
           <View style={{paddingTop: hp(4)}}></View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Price Range</Text>
+              <Text style={styles.boxTitle}>{strings.price_range}</Text>
               <Text style={styles.boxVelue}>
                 {`$${priceTargets1[0]} - $${priceTargets1[1]}`}
               </Text>
@@ -188,7 +189,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Number of Stops</Text>
+              <Text style={styles.boxTitle}>{strings.no_of_stops}</Text>
             </View>
             <View style={styles.StopsButBody}>
               <FlatList
@@ -215,7 +216,7 @@ const SearchFlightsFilter = ({navigation}) => {
             {numberOfStopsData !== 'Direct' && (
               <>
                 <View style={styles.boxTitleBody}>
-                  <Text style={styles.boxTitle}>Stop Duration</Text>
+                  <Text style={styles.boxTitle}>{strings.stop_duration}</Text>
                   <Text style={styles.boxVelue}>
                     {`${priceTargets2[0]} - ${priceTargets2[1]} hours`}
                   </Text>
@@ -232,7 +233,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Airlines</Text>
+              <Text style={styles.boxTitle}>{strings.Airlines}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setAirlinesCondition(!AirlinesCondition);
@@ -283,7 +284,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Flight Duration</Text>
+              <Text style={styles.boxTitle}>{strings.Flight_Duration}</Text>
               <Text style={styles.boxVelue}>
                 {`${priceTargets3[0]}h - ${priceTargets3[1]}h`}
               </Text>
@@ -298,7 +299,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Amenities</Text>
+              <Text style={styles.boxTitle}>{strings.Amenities}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setAmenitiesCondition(!amenitiesCondition);
@@ -343,7 +344,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Arrival Time</Text>
+              <Text style={styles.boxTitle}>{strings.Arrival_Time}</Text>
             </View>
             <View style={{paddingTop: hp(2)}}>
               <GetTime
@@ -354,7 +355,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Departure Time</Text>
+              <Text style={styles.boxTitle}>{strings.Departure_Time}</Text>
             </View>
             <View style={{paddingTop: hp(2)}}>
               <GetTime
@@ -365,7 +366,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Refund & Reschedule</Text>
+              <Text style={styles.boxTitle}>{strings.refund_reschedule}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setRefundAndRescheduleCondition(
@@ -418,7 +419,7 @@ const SearchFlightsFilter = ({navigation}) => {
 
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Flight Preferences</Text>
+              <Text style={styles.boxTitle}>{strings.Flight_Preferences}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setFlightPreferencesCondition(!FlightPreferencesCondition);
@@ -468,7 +469,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Cabin Class</Text>
+              <Text style={styles.boxTitle}>{strings.Cabin_Class}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setCabinClassCondition(!CabinClassCondition);

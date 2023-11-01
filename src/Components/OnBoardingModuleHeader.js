@@ -23,7 +23,7 @@ const OnBoardingModuleHeader = ({
 
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={styles.innerContainer}>
         {width && (
           <View style={styles.widthView}>
             <View style={styles.outView}>
@@ -39,14 +39,7 @@ const OnBoardingModuleHeader = ({
         </TouchableOpacity>
       </View>
       <Text style={styles.WelcomeTextStyle}>{MainText}</Text>
-      <Text
-        style={[
-          styles.WelcomeTextStyle,
-          {
-            marginTop: hp(2),
-            fontSize: fontSize(14),
-          },
-        ]}>
+      <Text style={[styles.WelcomeTextStyle, styles.WelcomeTextStyle2]}>
         {SubText}
       </Text>
     </View>
@@ -60,6 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     paddingTop: Platform.OS === 'ios' ? hp(8) : hp(2),
   },
+  innerContainer: {flexDirection: 'row', alignItems: 'center'},
   backImageStyle: {
     width: hp(3),
     height: hp(3),
@@ -71,6 +65,10 @@ const styles = StyleSheet.create({
     marginTop: hp(4),
     fontWeight: '600',
     fontSize: fontSize(26),
+  },
+  WelcomeTextStyle2: {
+    marginTop: hp(2),
+    fontSize: fontSize(14),
   },
   widthView: {
     width: wp(100),

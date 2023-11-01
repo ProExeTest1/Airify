@@ -79,14 +79,14 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation = index => {
     if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      AlertConstant('Please Enter Valid Email');
+      AlertConstant(strings.please_enter_valid_email);
       return;
     } else if (
       !Password.trim().match(
         /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
       )
     ) {
-      AlertConstant('Please Enter Valid Password');
+      AlertConstant(strings.please_enter_valid_password);
       return;
     } else {
       swiperRef.current.scrollBy(1);
@@ -95,16 +95,16 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
   const validation2 = index => {
     if (!pickerResponse.trim()) {
-      AlertConstant('Please Select Profile Image');
+      AlertConstant(strings.please_select_profile_image);
       return;
     } else if (!phoneNo.trim()) {
-      AlertConstant('Please Enter Phone Number');
+      AlertConstant(strings.enter_phone_no);
       return;
     } else if (!name.trim().match('[a-zA-Z ]{3,30}')) {
-      AlertConstant('Please Enter Valid name');
+      AlertConstant(strings.enter_valid_name);
       return;
     } else if (!date.trim()) {
-      AlertConstant('Please Enter Date of Birth');
+      AlertConstant(strings.enter_DOB);
       return;
     } else {
       swiperRef.current.scrollBy(1);

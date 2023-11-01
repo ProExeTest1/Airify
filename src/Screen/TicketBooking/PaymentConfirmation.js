@@ -50,12 +50,12 @@ const PatmentConfirmation = ({navigation, route}) => {
     returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
     10,
   );
-  const DiscountData = useSelector(e => e.SelectSeatData.DiscountData);
+  const DiscountData = useSelector(e => e?.SelectSeatData?.DiscountData);
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   const returnSearchFlightData = useSelector(
     e => e?.searchFlight?.searchFlightReturnData,
   );
-  const totalSeat = Number(searchFlightData?.passenger.split(' ')[0]);
+  const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ',',
   );
@@ -63,11 +63,11 @@ const PatmentConfirmation = ({navigation, route}) => {
     e => e?.date?.returnDate,
   ).split(',');
 
-  const TotalPoint = Number(PointsData.TotalPoints);
+  const TotalPoint = Number(PointsData?.TotalPoints);
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = ToggleSwitchBut1 ? TotalPoint % 100 : TotalPoint;
-  const Discount = Number(DiscountData.discountPR)
-    ? Number(DiscountData.discountPR)
+  const Discount = Number(DiscountData?.discountPR)
+    ? Number(DiscountData?.discountPR)
     : 0;
 
   const PaymentMethodData = useSelector(
@@ -199,7 +199,7 @@ const PatmentConfirmation = ({navigation, route}) => {
       );
       navigation?.navigate('ConfirmPin', {TripType: tripType});
     } else {
-      AlertConstant('please select Payment Method');
+      AlertConstant(strings.please_select_payment_method);
     }
   };
   useEffect(() => {
@@ -248,7 +248,7 @@ const PatmentConfirmation = ({navigation, route}) => {
               }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
                 <Image style={styles.boxIcon} source={Images?.payment}></Image>
-                <Text style={styles.boxTitle}>Payment Method</Text>
+                <Text style={styles.boxTitle}>{strings.payment_method}</Text>
                 <Image style={styles.skipIcon} source={Images?.forward}></Image>
               </View>
               <View style={styles.StopsButBody}></View>
@@ -261,7 +261,9 @@ const PatmentConfirmation = ({navigation, route}) => {
                       style={styles.PaymentMethodIcon}
                       source={Images.wallet}
                     />
-                    <Text style={styles.PaymentMethodName}>My Wallet</Text>
+                    <Text style={styles.PaymentMethodName}>
+                      {strings.My_Wallet}
+                    </Text>
                     <Text style={styles.walletPraice}>
                       ${WalletData?.wallet}
                     </Text>
@@ -277,11 +279,11 @@ const PatmentConfirmation = ({navigation, route}) => {
                 <Text
                   style={
                     styles.boxTitle
-                  }>{`You Have ${PointsData?.TotalPoints} Points`}</Text>
+                  }>{`${strings.you_have} ${PointsData?.TotalPoints} ${strings.points}`}</Text>
                 <Text style={{marginTop: hp(1), color: color.black}}>
-                  {`100 points equals $1. You will get ${
-                    ticketPrice / 2
-                  } points after this booking`}
+                  {`${strings.you_get} ${ticketPrice / 2} ${
+                    strings.point_after_booking
+                  }`}
                 </Text>
               </View>
               <View>
@@ -292,9 +294,7 @@ const PatmentConfirmation = ({navigation, route}) => {
                   onToggle={isOn => {
                     Number(PointsData?.TotalPoints) > 100
                       ? setToggleSwitchBut1(isOn)
-                      : Alert.alert(
-                          'your points is not valid please increase your point',
-                        );
+                      : AlertConstant(strings.not_valid_points);
                   }}
                 />
               </View>
@@ -309,7 +309,7 @@ const PatmentConfirmation = ({navigation, route}) => {
               }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
                 <Image style={styles.boxIcon} source={Images?.discount}></Image>
-                <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
+                <Text style={styles.boxTitle}>{strings.discountVoucher}</Text>
                 <Image style={styles.skipIcon} source={Images?.forward}></Image>
               </View>
               <View style={styles.StopsButBody}></View>

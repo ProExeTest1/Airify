@@ -9,7 +9,6 @@ import {
 import React, {useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import CheckBox from '../../components/Common/CheckBox';
@@ -32,6 +31,7 @@ import {
   activeFlightFilter,
   expiredFlightFilter,
 } from '../../redux/action/SavedFlights';
+import {strings} from '../../helper/Strings';
 
 const SavedFlightFilter = ({navigation}) => {
   const route = useRoute();
@@ -42,14 +42,14 @@ const SavedFlightFilter = ({navigation}) => {
     temp = [];
     SearchFlightData?.map((item, index) => {
       if (index === 0) {
-        temp.push({airlineName: item.airlineName, logo: item.logo});
-      } else if (temp.every(i => i.airlineName !== item.airlineName)) {
-        temp.push({airlineName: item.airlineName, logo: item.logo});
+        temp?.push({airlineName: item?.airlineName, logo: item.logo});
+      } else if (temp.every(i => i?.airlineName !== item.airlineName)) {
+        temp?.push({airlineName: item?.airlineName, logo: item.logo});
       }
     });
     return temp;
   };
-  const searchFlightFilterData = route.params?.header
+  const searchFlightFilterData = route?.params?.header
     ? savedFlight
     : expireFlight;
   let dispatch = useDispatch();
@@ -162,11 +162,11 @@ const SavedFlightFilter = ({navigation}) => {
             flightPreferencesList:
               FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
             numberOfStopsData:
-              numberOfStopsData.length > 0 ? numberOfStopsData : null,
-            priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+              numberOfStopsData?.length > 0 ? numberOfStopsData : null,
+            priceRange: priceTargets1?.length > 0 ? priceTargets1 : null,
             stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
             refundAndRescheduleList:
-              RefundAndRescheduleList.length > 0
+              RefundAndRescheduleList?.length > 0
                 ? RefundAndRescheduleList
                 : null,
           })
@@ -180,11 +180,11 @@ const SavedFlightFilter = ({navigation}) => {
             flightPreferencesList:
               FlightPreferencesList?.length > 0 ? FlightPreferencesList : null,
             numberOfStopsData:
-              numberOfStopsData.length > 0 ? numberOfStopsData : null,
-            priceRange: priceTargets1.length > 0 ? priceTargets1 : null,
+              numberOfStopsData?.length > 0 ? numberOfStopsData : null,
+            priceRange: priceTargets1?.length > 0 ? priceTargets1 : null,
             stopsDuration: priceTargets2?.length > 0 ? priceTargets2 : null,
             refundAndRescheduleList:
-              RefundAndRescheduleList.length > 0
+              RefundAndRescheduleList?.length > 0
                 ? RefundAndRescheduleList
                 : null,
           }),
@@ -292,17 +292,19 @@ const SavedFlightFilter = ({navigation}) => {
                     </Text>
                     <CheckBox
                       onClick={() => {
-                        AirlinesList.some(i => i === item.airlineName)
+                        AirlinesList?.some(i => i === item?.airlineName)
                           ? setAirlinesList(
-                              AirlinesList.filter(i => i !== item.airlineName),
+                              AirlinesList?.filter(
+                                i => i !== item?.airlineName,
+                              ),
                             )
                           : setAirlinesList([
                               ...AirlinesList,
-                              item.airlineName,
+                              item?.airlineName,
                             ]);
                       }}
                       isChecked={AirlinesList.some(
-                        i => i === item.airlineName,
+                        i => i === item?.airlineName,
                       )}></CheckBox>
                   </View>
                 )}
@@ -326,7 +328,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Amenities</Text>
+              <Text style={styles.boxTitle}>{strings.Amenities}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setAmenitiesCondition(!amenitiesCondition);
@@ -349,7 +351,7 @@ const SavedFlightFilter = ({navigation}) => {
                       styles.AirlinesFlatlistView,
                       {
                         marginBottom:
-                          index === AmenitiesData.length - 1 ? hp(2) : 0,
+                          index === AmenitiesData?.length - 1 ? hp(2) : 0,
                       },
                     ]}>
                     <Text style={styles.AirlinesFlatlistText}>{item}</Text>
@@ -361,7 +363,7 @@ const SavedFlightFilter = ({navigation}) => {
                             )
                           : setAmenitiesList([...amenitiesList, item]);
                       }}
-                      isChecked={amenitiesList.some(
+                      isChecked={amenitiesList?.some(
                         i => i === item,
                       )}></CheckBox>
                   </View>
@@ -371,7 +373,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Arrival Time</Text>
+              <Text style={styles.boxTitle}>{strings.Arrival_Time}</Text>
             </View>
             <View style={{paddingTop: hp(2)}}>
               <GetTime
@@ -382,7 +384,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Departure Time</Text>
+              <Text style={styles.boxTitle}>{strings.Departure_Time}</Text>
             </View>
             <View style={{paddingTop: hp(2)}}>
               <GetTime
@@ -393,7 +395,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Refund & Reschedule</Text>
+              <Text style={styles.boxTitle}>{strings.refund_reschedule}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setRefundAndRescheduleCondition(
@@ -418,7 +420,7 @@ const SavedFlightFilter = ({navigation}) => {
                       styles.AirlinesFlatlistView,
                       {
                         marginBottom:
-                          index === RefundAndRescheduleData.length - 1
+                          index === RefundAndRescheduleData?.length - 1
                             ? hp(2)
                             : 0,
                       },
@@ -428,14 +430,14 @@ const SavedFlightFilter = ({navigation}) => {
                       onClick={() => {
                         RefundAndRescheduleList.some(i => i === item)
                           ? setRefundAndRescheduleList(
-                              RefundAndRescheduleList.filter(i => i !== item),
+                              RefundAndRescheduleList?.filter(i => i !== item),
                             )
                           : setRefundAndRescheduleList([
                               ...RefundAndRescheduleList,
                               item,
                             ]);
                       }}
-                      isChecked={RefundAndRescheduleList.some(
+                      isChecked={RefundAndRescheduleList?.some(
                         i => i === item,
                       )}></CheckBox>
                   </View>
@@ -446,7 +448,7 @@ const SavedFlightFilter = ({navigation}) => {
 
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Flight Preferences</Text>
+              <Text style={styles.boxTitle}>{strings.Flight_Preferences}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setFlightPreferencesCondition(!FlightPreferencesCondition);
@@ -469,7 +471,7 @@ const SavedFlightFilter = ({navigation}) => {
                       styles.AirlinesFlatlistView,
                       {
                         marginBottom:
-                          index === FlightPreferencesData.length - 1
+                          index === FlightPreferencesData?.length - 1
                             ? hp(2)
                             : 0,
                       },
@@ -486,7 +488,7 @@ const SavedFlightFilter = ({navigation}) => {
                               item,
                             ]);
                       }}
-                      isChecked={FlightPreferencesList.some(
+                      isChecked={FlightPreferencesList?.some(
                         i => i === item,
                       )}></CheckBox>
                   </View>
@@ -496,7 +498,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Cabin Class</Text>
+              <Text style={styles.boxTitle}>{strings.Cabin_Class}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setCabinClassCondition(!CabinClassCondition);
@@ -519,7 +521,7 @@ const SavedFlightFilter = ({navigation}) => {
                       styles.AirlinesFlatlistView,
                       {
                         marginBottom:
-                          index === CabinClassData.length - 1 ? hp(2) : 0,
+                          index === CabinClassData?.length - 1 ? hp(2) : 0,
                       },
                     ]}>
                     <Text style={styles.AirlinesFlatlistText}>{item}</Text>
@@ -531,7 +533,7 @@ const SavedFlightFilter = ({navigation}) => {
                             )
                           : setCabinClassList([...CabinClassList, item]);
                       }}
-                      isChecked={CabinClassList.some(
+                      isChecked={CabinClassList?.some(
                         i => i === item,
                       )}></CheckBox>
                   </View>
