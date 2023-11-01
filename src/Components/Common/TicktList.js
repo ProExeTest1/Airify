@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {View, StyleSheet, FlatList} from 'react-native';
 
@@ -9,22 +9,78 @@ import {
   SearchFlightCardData,
   SearchFlightReturnCardAction,
 } from '../../redux/action/SearchFlightAction';
+import {AlertConstant} from '../../helper/AlertConstant';
+import {strings} from '../../helper/Strings';
+import moment from 'moment';
 
 const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
+
+  const reduxReturnDate = useSelector(state => state.date.returnDate);
+  let departureDate = moment(
+    reduxDepatureDate.split(',')[1],
+    'MMM D YYYY',
+  ).format('D/M/YYYY');
+  console.log(reduxReturnDate);
+  let returnDate = moment(reduxReturnDate.split(',')[1], 'MMM D YYYY').format(
+    'D/M/YYYY',
+  );
+  console.log(departureDate, returnDate, 'reduxDepatureDate < reduxReturnDate');
   const setCartFlightData = item => {
     if (tripType1 === 'Round-Trip') {
-      dispatch(SearchFlightCardData(item));
-      navigation.navigate('ReturnSearchFlight', {TripType: 'Round-trip'});
+      if (reduxDepatureDate !== reduxReturnDate) {
+        if (departureDate.split('/')[1] === returnDate.split('/')[1]) {
+          if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+            dispatch(SearchFlightCardData(item));
+            navigation?.navigate('ReturnSearchFlight', {
+              TripType: 'Round-trip',
+            });
+          } else {
+            AlertConstant(strings.wrong_return_date);
+          }
+        } else {
+          if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+            dispatch(SearchFlightCardData(item));
+            navigation?.navigate('ReturnSearchFlight', {
+              TripType: 'Round-trip',
+            });
+          } else {
+            AlertConstant(strings.wrong_return_date);
+          }
+        }
+      } else {
+        AlertConstant(strings.return_departure_not_same);
+      }
     } else {
-      console.log('<><><><><><><><><><><><><><><>', item);
       if (tripType == 'Round-Trip') {
-        dispatch(SearchFlightReturnCardAction(item));
-        navigation.navigate('FlightDetails', {TripType: 'Round-Trip'});
+        if (reduxDepatureDate !== reduxReturnDate) {
+          if (departureDate.split('/')[1] === returnDate.split('/')[1]) {
+            if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+              dispatch(SearchFlightReturnCardAction(item));
+              navigation?.navigate('FlightDetails', {TripType: 'Round-Trip'});
+            } else {
+              AlertConstant(strings.wrong_return_date);
+            }
+          } else {
+            if (departureDate.split('/')[1] < returnDate.split('/')[1]) {
+              if (departureDate.split('/')[0] < returnDate.split('/')[0]) {
+                dispatch(SearchFlightReturnCardAction(item));
+                navigation?.navigate('FlightDetails', {TripType: 'Round-Trip'});
+              } else {
+                AlertConstant(strings.wrong_return_date);
+              }
+            } else {
+              AlertConstant(strings.wrong_return_date);
+            }
+          }
+        } else {
+          AlertConstant(strings.return_departure_not_same);
+        }
       } else {
         dispatch(SearchFlightCardData(item));
-        navigation.navigate('FlightDetails', {TripType: 'One-Way'});
+        navigation?.navigate('FlightDetails', {TripType: 'One-Way'});
       }
     }
   };
@@ -32,7 +88,7 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
-        data={SearchFlightCard.filter(i => {
+        data={SearchFlightCard?.filter(i => {
           if (
             `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
             SelectDate?.date

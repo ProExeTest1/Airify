@@ -1,9 +1,16 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 import {hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const OnBoardingTextInput = ({
   value,
@@ -46,7 +53,7 @@ const OnBoardingTextInput = ({
       {textInputPlaceholder == 'Password' ||
       textInputPlaceholder == 'Confirm New Password' ? (
         <TouchableOpacity
-          style={{alignItems: 'flex-end', marginRight: wp(2)}}
+          style={styles.imageTouchStyle}
           onPress={() => {
             textInputPlaceholder == 'Password' ||
             textInputPlaceholder == 'Confirm New Password'
@@ -54,12 +61,7 @@ const OnBoardingTextInput = ({
               : setFocus(false);
           }}>
           <Image
-            style={{
-              width: hp(2),
-              height: hp(2),
-              paddingRight: 15,
-              tintColor: '#A0A0A0',
-            }}
+            style={styles.hidePasswordStyle}
             source={focus ? Images.HidePassword : Images.ViewPassword}
           />
         </TouchableOpacity>
@@ -71,15 +73,7 @@ const OnBoardingTextInput = ({
             onPressCalender();
             setFocus(false);
           }}>
-          <Image
-            style={{
-              width: hp(2),
-              height: hp(2),
-              paddingRight: 15,
-              tintColor: '#A0A0A0',
-            }}
-            source={Images.calender}
-          />
+          <Image style={styles.calenderIconStyle} source={Images.calender} />
         </TouchableOpacity>
       ) : null}
     </TouchableOpacity>
@@ -88,7 +82,7 @@ const OnBoardingTextInput = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: hp(6),
+    height: hp(6.5),
     width: wp(90),
     borderRadius: wp(2),
     paddingStart: wp(2),
@@ -108,6 +102,22 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: wp(2),
     color: color.black,
+  },
+  calenderIconStyle: {
+    width: hp(2),
+    height: hp(2),
+    paddingRight: 15,
+    tintColor: '#A0A0A0',
+  },
+  hidePasswordStyle: {
+    width: hp(2),
+    height: hp(2),
+    paddingRight: 15,
+    tintColor: '#A0A0A0',
+  },
+  imageTouchStyle: {
+    alignItems: 'flex-end',
+    marginRight: wp(2),
   },
 });
 

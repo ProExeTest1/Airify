@@ -66,7 +66,7 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
         .putFile(uploadStorage);
       try {
         await task;
-        Alert.alert('Image uploaded', 'Image uploaded successfully');
+        AlertConstant(strings.image_uploaded1, strings.image_uploaded);
       } catch (error) {
         console.log(error);
       }
@@ -154,19 +154,21 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
           <Text style={styles.textInputTitleStyle}>{strings.Phone}</Text>
           <CountryPickTextInput
             value={phoneNo}
-            disabled={true}
-            countryCode={countryCode}
-            placeholder={strings.Phone}
             onChangeText={phoneNo => setPhoneNo(phoneNo)}
+            placeholder={strings.Phone}
+            disabled={true}
             onPress2={() => {
               setShow(true);
             }}
+            countryCode={countryCode}
+            placeholderTextColor={color.darkGray}
+            textInputStyle={styles.textInputCountryPicker}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.DateBirth}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.DateBirth}</Text>
           <OnBoardingTextInput
             value={date}
             container={styles.textInputContainer}
-            textInputPlaceholder={strings.DateBirth}
+            textInputPlaceholder={strings?.DateBirth}
             onPress={() => {
               setDatePicker(true);
             }}
@@ -174,10 +176,11 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
               setDatePicker(true);
             }}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.gender}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.gender}</Text>
           <View style={styles.genderRadioButtonViewStyle}>
             <FlatList
               horizontal
+              bounces={false}
               data={genderRatioButton}
               renderItem={({item, index}) => (
                 <View style={{paddingVertical: hp(1)}}>
@@ -187,15 +190,19 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
                     label={item.label}
                     color={color.black}
                     onPress={() => setSelectedData(item)}
-                    selected={item.id === selectedData?.id}
-                    labelStyle={{fontSize: fontSize(14), fontWeight: '400'}}
+                    selected={item?.id === selectedData?.id}
+                    labelStyle={{
+                      fontSize: fontSize(14),
+                      fontWeight: '400',
+                      color: color.black,
+                    }}
                   />
                 </View>
               )}
             />
           </View>
 
-          <Text style={styles.textInputTitleStyle}>{strings.country}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.country}</Text>
           <CountryPickTextInput
             value={countryName}
             countryCode={countryCode}
@@ -204,21 +211,23 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
             onPress1={() => {
               setShowCountryName(true);
             }}
+            placeholderTextColor={color.darkGray}
+            textInputStyle={styles.textInputCountryPicker}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.address}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.address}</Text>
           <OnBoardingTextInput
             keyboardType={'default'}
             value={address}
             container={styles.textInputContainer}
-            textInputPlaceholder={strings.address}
+            textInputPlaceholder={strings?.address}
             onChangeText={address => setAddress(address)}
           />
-          <Text style={styles.textInputTitleStyle}>{strings.passport}</Text>
+          <Text style={styles.textInputTitleStyle}>{strings?.passport}</Text>
           <OnBoardingTextInput
             value={passport}
             keyboardType={'default'}
             container={styles.textInputContainer}
-            textInputPlaceholder={strings.passport}
+            textInputPlaceholder={strings?.passport}
             onChangeText={passport => setPassport(passport)}
           />
         </View>
@@ -237,13 +246,13 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
           show={show ? show : showCountryName}
           pickerButtonOnPress={item => {
             setShow(false);
-            setCountryCode(item.flag);
+            setCountryCode(item?.flag);
             setShowCountryName(false);
             setCountryName(item?.name?.en);
           }}
         />
         <OnBoardingSingleButton
-          buttonText={strings.save}
+          buttonText={strings?.save}
           buttonStyle={styles.buttonStyle}
           onPress={() => {
             handleSignUp();
@@ -273,6 +282,13 @@ const styles = StyleSheet.create({
   },
   genderRadioButtonViewStyle: {
     paddingHorizontal: wp(4),
+  },
+  placeholderTextColor: {
+    backgroundColor: 'red',
+  },
+  textInputCountryPicker: {
+    height: hp(10),
+    color: color.black,
   },
 });
 

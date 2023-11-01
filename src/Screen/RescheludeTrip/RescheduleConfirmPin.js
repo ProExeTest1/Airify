@@ -42,17 +42,17 @@ const RescheduleConfirmPin = ({navigation, route}) => {
     e => e?.rescheduleFlightdata?.rescheduleCardData,
   );
   const searchFlightCardData = useSelector(
-    state => state?.rescheduleFlightdata.rescheduleSelectNewCard,
+    state => state?.rescheduleFlightdata?.rescheduleSelectNewCard,
   );
-  const userData = useSelector(state => state.userData.userdata);
+  const userData = useSelector(state => state?.userData?.userdata);
   const SelectSeatData = useSelector(
     e => e.rescheduleFlightdata.SelectSeatData,
   );
   const totalPaymentList = useSelector(
-    e => e.rescheduleFlightdata.RescheduletotalPaymentList,
+    e => e?.rescheduleFlightdata?.RescheduletotalPaymentList,
   );
   const SelectPaymentMethod = useSelector(
-    e => e.rescheduleFlightdata.ReschedulePaymentMethodData,
+    e => e?.rescheduleFlightdata?.ReschedulePaymentMethodData,
   );
   const searchFlightData = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData,
@@ -60,10 +60,10 @@ const RescheduleConfirmPin = ({navigation, route}) => {
 
   console.log(searchFlightCardData);
   const searchFlightDateData = useSelector(
-    e => e.rescheduleFlightdata?.rescheduleDateData,
+    e => e?.rescheduleFlightdata?.rescheduleDateData,
   ).split(',');
   const SelectDate = useSelector(
-    e => e.rescheduleFlightdata?.rescheduleNormalDateData,
+    e => e?.rescheduleFlightdata?.rescheduleNormalDateData,
   );
   console.log(SelectDate);
   const dispatch = useDispatch();
@@ -75,42 +75,45 @@ const RescheduleConfirmPin = ({navigation, route}) => {
         setModalVisible2(true);
         await firestore()
           .collection('UserWallet')
-          .doc(auth().currentUser.uid)
+          .doc(auth()?.currentUser?.uid)
           .update({
             wallet:
-              totalPaymentList.rescheduletotalPayment.toString().slice(0, 1) ==
-              '-'
-                ? Number(UserWalletData.wallet) +
+              totalPaymentList?.rescheduletotalPayment
+                ?.toString()
+                .slice(0, 1) == '-'
+                ? Number(UserWalletData?.wallet) +
                   Number(
-                    totalPaymentList.rescheduletotalPayment.toString().slice(1),
+                    totalPaymentList?.rescheduletotalPayment
+                      ?.toString()
+                      .slice(1),
                   )
-                : Number(UserWalletData.wallet) -
-                  Number(totalPaymentList.rescheduletotalPayment),
+                : Number(UserWalletData?.wallet) -
+                  Number(totalPaymentList?.rescheduletotalPayment),
 
             transactionHistory: [
               {
                 title: 'Payment Success',
                 price: `$${
-                  totalPaymentList.rescheduletotalPayment
+                  totalPaymentList?.rescheduletotalPayment
                     .toString()
                     .slice(0, 1) == '-'
                     ? '+'
                     : '-'
                 }${
-                  totalPaymentList.rescheduletotalPayment
-                    .toString()
-                    .slice(0, 1) == '-'
+                  totalPaymentList?.rescheduletotalPayment
+                    ?.toString()
+                    ?.slice(0, 1) == '-'
                     ? Number(
-                        totalPaymentList.rescheduletotalPayment
-                          .toString()
-                          .slice(1),
+                        totalPaymentList?.rescheduletotalPayment
+                          ?.toString()
+                          ?.slice(1),
                       )
-                    : Number(totalPaymentList.rescheduletotalPayment)
+                    : Number(totalPaymentList?.rescheduletotalPayment)
                 }`,
                 date: moment(new Date()).format('MMM D,YYYY'),
                 time: new Date().toLocaleTimeString('en-IN'),
               },
-              ...UserWalletData.transactionHistory,
+              ...UserWalletData?.transactionHistory,
             ],
           });
 
@@ -118,41 +121,44 @@ const RescheduleConfirmPin = ({navigation, route}) => {
           .collection('AirlineSeatBookData')
           .doc('JaTwXgqSHSESiR6CDzdy')
           .update({
-            AirlineSeatBookData: SeatData.map(i => {
+            AirlineSeatBookData: SeatData?.map(i => {
               if (
                 i.date ==
                 moment(
-                  oldTripData.searchFlightDateData[1],
+                  oldTripData?.searchFlightDateData[1],
                   'MMM DD YYYY',
                 ).format('D/M/YYYY')
               ) {
                 return {
                   date: i.date,
                   day: i.day,
-                  flightData: i.flightData.map(e => {
+                  flightData: i?.flightData?.map(e => {
                     if (
-                      e.flightData.airlineName ==
+                      e?.flightData?.airlineName ==
                         oldTripData?.searchFlightCardData?.airlineName &&
-                      e.flightData.lendTime ==
+                      e?.flightData?.lendTime ==
                         oldTripData?.searchFlightCardData?.lendTime &&
-                      e.flightData.logo ==
+                      e?.flightData?.logo ==
                         oldTripData?.searchFlightCardData?.logo &&
-                      e.flightData.pickTime ==
+                      e?.flightData?.pickTime ==
                         oldTripData?.searchFlightCardData?.pickTime &&
-                      e.flightData.price ==
+                      e?.flightData?.price ==
                         oldTripData?.searchFlightCardData?.price &&
-                      e.flightData.stop ==
+                      e?.flightData?.stop ==
                         oldTripData?.searchFlightCardData?.stop &&
-                      e.flightData.stopDuration ==
+                      e?.flightData?.stopDuration ==
                         oldTripData?.searchFlightCardData?.stopDuration &&
-                      e.flightData.totalHours ==
+                      e?.flightData?.totalHours ==
                         oldTripData?.searchFlightCardData?.totalHours &&
-                      e.flightData.day == oldTripData?.searchFlightCardData?.day
+                      e?.flightData?.day ==
+                        oldTripData?.searchFlightCardData?.day
                     ) {
                       return {
                         flightData: e.flightData,
                         selectSeat: e?.selectSeat.filter(i =>
-                          oldTripData?.SelectSeatData?.some(a => a.seatNo == i),
+                          oldTripData?.SelectSeatData?.some(
+                            a => a?.seatNo == i,
+                          ),
                         ),
                       };
                     }
@@ -164,26 +170,28 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                 return {
                   date: i.date,
                   day: i.day,
-                  flightData: i.flightData.map(e => {
+                  flightData: i.flightData?.map(e => {
                     if (
-                      e.flightData.airlineName ==
+                      e?.flightData?.airlineName ==
                         searchFlightCardData?.airlineName &&
-                      e.flightData.lendTime == searchFlightCardData?.lendTime &&
-                      e.flightData.logo == searchFlightCardData?.logo &&
-                      e.flightData.pickTime == searchFlightCardData?.pickTime &&
-                      e.flightData.price == searchFlightCardData?.price &&
-                      e.flightData.stop == searchFlightCardData?.stop &&
-                      e.flightData.stopDuration ==
+                      e?.flightData?.lendTime ==
+                        searchFlightCardData?.lendTime &&
+                      e?.flightData?.logo == searchFlightCardData?.logo &&
+                      e?.flightData?.pickTime ==
+                        searchFlightCardData?.pickTime &&
+                      e?.flightData?.price == searchFlightCardData?.price &&
+                      e?.flightData?.stop == searchFlightCardData?.stop &&
+                      e?.flightData?.stopDuration ==
                         searchFlightCardData?.stopDuration &&
-                      e.flightData.totalHours ==
+                      e?.flightData?.totalHours ==
                         searchFlightCardData?.totalHours &&
-                      e.flightData.day == searchFlightCardData?.day
+                      e?.flightData?.day == searchFlightCardData?.day
                     ) {
                       return {
-                        flightData: e.flightData,
+                        flightData: e?.flightData,
                         selectSeat: [
                           ...e?.selectSeat,
-                          SelectSeatData.map(a => a.seatNo),
+                          SelectSeatData?.map(a => a?.seatNo),
                         ].flat(),
                       };
                     }
@@ -198,10 +206,10 @@ const RescheduleConfirmPin = ({navigation, route}) => {
         dispatch(showTicketActionData(oldTripData?.id));
         await firestore()
           .collection('SaveTicket')
-          .doc(auth().currentUser.uid)
+          .doc(auth()?.currentUser?.uid)
           .update({
-            SaveTicket: SaveTicketData.map((item, index) => {
-              if (item.id == oldTripData.id) {
+            SaveTicket: SaveTicketData?.map((item, index) => {
+              if (item?.id == oldTripData?.id) {
                 console.log(item);
                 return {
                   Departure:
@@ -210,9 +218,9 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                           bookingID: randomBookingIDGenerator(9, 'BKG'),
                           searchFlightCardData,
                           contactDetails: {
-                            Email: userData.Email,
-                            Name: userData.Name,
-                            PhoneNumber: userData.PhoneNumber,
+                            Email: userData?.Email,
+                            Name: userData?.Name,
+                            PhoneNumber: userData?.PhoneNumber,
                           },
                           totalPaymentList: totalPaymentList,
                           SelectSeatData: SelectSeatData,
@@ -269,8 +277,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
       .collection('Users')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setPinData(documentSnapshot.data().PIN);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setPinData(documentSnapshot?.data()?.PIN);
           }
         });
       });
@@ -281,8 +289,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setSaveTicketData(documentSnapshot.data().SaveTicket);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setSaveTicketData(documentSnapshot?.data()?.SaveTicket);
           }
         });
       });
@@ -292,8 +300,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
       .collection('UserWallet')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setUserWalletData(documentSnapshot.data());
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setUserWalletData(documentSnapshot?.data());
           }
         });
       });
@@ -303,8 +311,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
       .collection('Points')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setUserPointData(documentSnapshot.data());
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setUserPointData(documentSnapshot?.data());
           }
         });
       });
@@ -314,8 +322,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == 'JaTwXgqSHSESiR6CDzdy') {
-            SetSeatData(documentSnapshot.data().AirlineSeatBookData);
+          if (documentSnapshot?.id == 'JaTwXgqSHSESiR6CDzdy') {
+            SetSeatData(documentSnapshot?.data()?.AirlineSeatBookData);
           }
         });
       });
@@ -347,6 +355,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
             alignSelf: 'center',
             fontSize: fontSize(18),
             marginBottom: hp(3),
+            color: color.black,
           }}>
           Enter the PIN to confirm ticket payment.
         </Text>
@@ -374,6 +383,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                   marginTop: hp(5),
                   fontSize: fontSize(18),
                   fontWeight: '500',
+                  color: color.black,
                 }}>
                 Processing Payment...
               </Text>
@@ -398,7 +408,9 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                 }}>
                 Booking Confirmed!
               </Text>
-              <Text>Congratulation! your flight ticket is Confirmed</Text>
+              <Text style={{color: color.black}}>
+                Congratulation! your flight ticket is Confirmed
+              </Text>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible2(false);
@@ -469,6 +481,7 @@ const styles = StyleSheet.create({
     width: wp(14),
     borderRadius: 10,
     fontSize: fontSize(20),
+    color: color.black,
   },
   slide: {
     flexDirection: 'row',

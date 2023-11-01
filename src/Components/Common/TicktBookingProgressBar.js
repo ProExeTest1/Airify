@@ -3,17 +3,14 @@ import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
+import {bookingTransactionData} from '../../redux/action/BookingAction';
+import {strings} from '../../helper/Strings';
 
 const TicktBookingProgressBar = ({progress}) => {
   return (
-    <View
-      style={{
-        height: hp(10),
-        backgroundColor: color.commonBlue,
-        paddingHorizontal: wp(12),
-      }}>
+    <View style={styles.mainViewstyle}>
       <View style={styles.progressInnerViewStyle}>
-        <View style={{alignItems: 'center', width: wp(15)}}>
+        <View style={styles.firstViewStyle}>
           <View
             style={[
               styles.progressViewStyle,
@@ -21,11 +18,7 @@ const TicktBookingProgressBar = ({progress}) => {
             ]}>
             {progress > 1 ? (
               <Image
-                style={{
-                  height: wp(5),
-                  width: wp(5),
-                  tintColor: color.commonBlue,
-                }}
+                style={styles.doneIconstyle}
                 source={Images.doneIcon}></Image>
             ) : (
               <Text
@@ -37,15 +30,18 @@ const TicktBookingProgressBar = ({progress}) => {
               </Text>
             )}
           </View>
-          <Text style={styles.progressTextStyle}>Book</Text>
+          <Text style={styles.progressTextStyle}>{strings.book}</Text>
         </View>
         <View
           style={[
             styles.lineViewStyle,
-            {borderColor: progress > 1 ? '#fff' : '#00000050'},
+            {
+              borderColor: progress > 1 ? '#fff' : '#00000050',
+              backgroundColor: progress > 1 ? '#fff' : '#00000050',
+            },
           ]}
         />
-        <View style={{alignItems: 'center', width: wp(15)}}>
+        <View style={styles.firstViewStyle}>
           <View
             style={[
               styles.progressViewStyle,
@@ -53,11 +49,7 @@ const TicktBookingProgressBar = ({progress}) => {
             ]}>
             {progress > 2 ? (
               <Image
-                style={{
-                  height: wp(5),
-                  width: wp(5),
-                  tintColor: color.commonBlue,
-                }}
+                style={styles.doneIconstyle}
                 source={Images.doneIcon}></Image>
             ) : (
               <Text
@@ -69,15 +61,18 @@ const TicktBookingProgressBar = ({progress}) => {
               </Text>
             )}
           </View>
-          <Text style={styles.progressTextStyle}>Pay</Text>
+          <Text style={styles.progressTextStyle}>{strings.pay}</Text>
         </View>
         <View
           style={[
             styles.lineViewStyle,
-            {borderColor: progress > 2 ? '#fff' : '#00000050'},
+            {
+              borderColor: progress > 2 ? '#fff' : '#00000050',
+              backgroundColor: progress > 2 ? '#fff' : '#00000050',
+            },
           ]}
         />
-        <View style={{alignItems: 'center', width: wp(15)}}>
+        <View style={styles.firstViewStyle}>
           <View
             style={[
               styles.progressViewStyle,
@@ -91,7 +86,7 @@ const TicktBookingProgressBar = ({progress}) => {
               3
             </Text>
           </View>
-          <Text style={styles.progressTextStyle}>E-Ticket</Text>
+          <Text style={styles.progressTextStyle}>{strings.eTicket}</Text>
         </View>
       </View>
     </View>
@@ -123,5 +118,22 @@ const styles = StyleSheet.create({
     width: wp(14),
     marginTop: hp(2),
   },
-  progressTextStyle: {color: '#DBDDE1', marginTop: hp(0.5)},
+  progressTextStyle: {
+    color: '#DBDDE1',
+    marginTop: hp(0.5),
+  },
+  mainViewstyle: {
+    height: hp(10),
+    backgroundColor: color.commonBlue,
+    paddingHorizontal: wp(12),
+  },
+  firstViewStyle: {
+    alignItems: 'center',
+    width: wp(15),
+  },
+  doneIconstyle: {
+    height: wp(5),
+    width: wp(5),
+    tintColor: color.commonBlue,
+  },
 });

@@ -8,9 +8,8 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {useRoute} from '@react-navigation/native';
 import Barcode from '@kichiyaki/react-native-barcode-generator';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const ETicket = ({navigation: {goBack}, navigation}) => {
   const [getImage, setGetImage] = useState({});
@@ -252,12 +251,12 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
 
 </html>
       `,
-      fileName: 'test',
+      fileName: 'Airify_Ticket',
       directory: 'Documents',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
-    alert(file.filePath);
+    AlertConstant(file.filePath);
   };
 
   return (
@@ -289,7 +288,7 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
                 marginVertical: hp(1),
               }}
             />
-            <Text>Show your ID and this barcode at the check-in gate</Text>
+            <Text style={styles.textStyle}>{strings.show_your_id_barcode}</Text>
           </View>
           <View style={styles.curveViewStyle}>
             <View style={[styles.curveStyle, {right: wp(8)}]}></View>
@@ -391,9 +390,13 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
               text={FlightData?.SelectSeatData[0]?.seatNo}
             />
           </View>
-          <View style={{alignItems: 'center', marginTop: hp(1)}}>
-            <Text>Enjoy traveling around the world with us</Text>
-            <Text style={{color: color.commonBlue}}>www.airify.yourdomain</Text>
+          <View style={{alignItems: 'center', marginTop: hp(0.5)}}>
+            <Text style={styles.textStyle}>
+              {strings.enjoy_travelling_world}
+            </Text>
+            <Text style={{color: color.commonBlue}}>
+              {strings.arify_weblink}
+            </Text>
           </View>
         </View>
         <Image
@@ -542,6 +545,9 @@ const styles = StyleSheet.create({
   labelTextStyle: {
     fontSize: fontSize(14),
     color: '#383838',
+  },
+  textStyle: {
+    color: color.black,
   },
 });
 

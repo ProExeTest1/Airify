@@ -23,6 +23,7 @@ import auth from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import moment from 'moment';
 import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const CancelBooking = ({navigation}) => {
   const [selectedData, setSelectedData] = useState({});
@@ -58,7 +59,7 @@ const CancelBooking = ({navigation}) => {
 
   const confirmCancel = async () => {
     if (!selectedData?.id) {
-      Alert.alert('Please Select Reason');
+      AlertConstant(strings.select_reason);
     } else {
       try {
         openModal();
@@ -67,7 +68,7 @@ const CancelBooking = ({navigation}) => {
           .doc(auth().currentUser.uid)
           .update({
             wallet:
-              Number(UserWalletData.wallet) +
+              Number(UserWalletData?.wallet) +
               firebaseTicketData?.totalPaymentList?.totalPayment,
             transactionHistory: [
               {
@@ -136,14 +137,14 @@ const CancelBooking = ({navigation}) => {
 
         await firestore()
           .collection('BookingCancel')
-          .doc(auth().currentUser.uid)
+          .doc(auth()?.currentUser?.uid)
           .set({
             BookingCancel: [
               ...BookingCancelData,
               {
                 ...firebaseTicketData,
-                resume: selectedData.label,
-                documents: fileResponse.length == 0 ? false : fileResponse,
+                resume: selectedData?.label,
+                documents: fileResponse?.length == 0 ? false : fileResponse,
               },
             ],
           });
@@ -151,8 +152,8 @@ const CancelBooking = ({navigation}) => {
           .collection('SaveTicket')
           .doc(auth().currentUser.uid)
           .update({
-            SaveTicket: SaveTicketData.map(item => {
-              if (item.id == firebaseTicketData.id) {
+            SaveTicket: SaveTicketData?.map(item => {
+              if (item.id == firebaseTicketData?.id) {
                 if (firebaseTicketData.type == 'Departure') {
                   return {
                     id: item.id,
@@ -332,7 +333,11 @@ const CancelBooking = ({navigation}) => {
                   selected={item.id === selectedData?.id}
                   onPress={() => setSelectedData(item)}
                   label={item.label}
-                  labelStyle={{fontSize: fontSize(18), fontWeight: '500'}}
+                  labelStyle={{
+                    fontSize: fontSize(18),
+                    fontWeight: '500',
+                    color: color.black,
+                  }}
                   color={color.commonBlue}
                 />
               </View>
@@ -370,7 +375,7 @@ const CancelBooking = ({navigation}) => {
               }}
             />
             <Text style={styles.successMessage}>{strings.CancelSuccess}</Text>
-            <Text style={{textAlign: 'center'}}>
+            <Text style={{textAlign: 'center', color: color.black}}>
               {strings.cancelBookingSuccessText}
             </Text>
             <TouchableOpacity

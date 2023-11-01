@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import {strings} from '../../helper/Strings';
-import {CommonHeader} from '../../components';
+import {CommonHeader, Loader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -58,7 +58,12 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
       </View>
       <View style={styles.bodyView}>
         <View style={styles.flatListHeader}>
-          <Text style={{fontSize: fontSize(20), fontWeight: 'bold'}}>
+          <Text
+            style={{
+              fontSize: fontSize(20),
+              fontWeight: 'bold',
+              color: color.black,
+            }}>
             {strings.pointHistory}
           </Text>
           <TouchableOpacity
@@ -68,38 +73,50 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
                 header: pointData?.PointsHistory,
               });
             }}>
-            <Text style={{color: color.commonBlue, fontWeight: 'bold'}}>
+            <Text
+              style={{
+                color: color.commonBlue,
+                fontWeight: 'bold',
+                color: color.black,
+              }}>
               {strings.ViewAll}
             </Text>
             <Image source={Images.upArrow} style={styles.arrowStyle} />
           </TouchableOpacity>
         </View>
-        <FlatList
-          bounces={false}
-          data={pointData?.PointsHistory}
-          scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-          ListFooterComponent={() => <View style={{marginBottom: hp(35)}} />}
-          renderItem={({item}) => {
-            return (
-              <View style={styles.flatListView}>
-                <View style={styles.flatListSubView}>
-                  <Text style={styles.mainTextStyle}>
-                    {item.price.slice(0, 1) == '+'
-                      ? 'You earn points'
-                      : 'You use points'}
-                  </Text>
-                  <Text style={styles.mainTextStyle}>{item.price}</Text>
+        {pointData?.PointsHistory ? (
+          <FlatList
+            bounces={false}
+            data={pointData?.PointsHistory}
+            scrollEnabled={false}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={() => <View style={{marginBottom: hp(35)}} />}
+            renderItem={({item}) => {
+              return (
+                <View style={styles.flatListView}>
+                  <View style={styles.flatListSubView}>
+                    <Text style={styles.mainTextStyle}>
+                      {item.price.slice(0, 1) == '+'
+                        ? 'You earn points'
+                        : 'You use points'}
+                    </Text>
+                    <Text style={styles.mainTextStyle}>{item.price}</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={styles.textStyle}>{item.date} </Text>
+                    <View style={styles.dotStyle} />
+                    <Text style={styles.textStyle}> {item.time}</Text>
+                  </View>
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text>{item.date} </Text>
-                  <View style={styles.dotStyle} />
-                  <Text> {item.time}</Text>
-                </View>
-              </View>
-            );
-          }}
-        />
+              );
+            }}
+          />
+        ) : (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Loader color={color.commonBlue} />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -176,6 +193,10 @@ const styles = StyleSheet.create({
   },
   mainTextStyle: {
     fontWeight: 'bold',
+    color: color.black,
+  },
+  textStyle: {
+    color: color.black,
   },
 });
 

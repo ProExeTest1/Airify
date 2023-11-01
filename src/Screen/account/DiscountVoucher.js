@@ -15,9 +15,9 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
         Images2={null}
         onPress1={true}
         onPress2={false}
-        Images1={Images.backIcon}
-        Images1Color={color.white}
-        headerName={strings.discountVoucher}
+        Images1={Images?.backIcon}
+        Images1Color={color?.white}
+        headerName={strings?.discountVoucher}
         navigation1={() => {
           goBack();
         }}
@@ -31,16 +31,21 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
           renderItem={({item}) => {
             return (
               <View style={styles.flatListInnerViewStyle}>
-                <Text style={styles.cartTitleTextStyle}>{item.header}</Text>
-                <Text numberOfLines={1}>{item.title}</Text>
+                <Text style={styles.cartTitleTextStyle}>{item?.header}</Text>
+                <Text numberOfLines={1} style={styles.textStyle}>
+                  {item?.title}
+                </Text>
                 <View style={{flexDirection: 'row', marginTop: hp(1)}}>
                   <View style={styles.cartView}>
-                    <Image source={Images.clock} style={styles.timeIconStyle} />
+                    <Image
+                      source={Images?.clock}
+                      style={styles.timeIconStyle}
+                    />
                     <View>
-                      <Text style={{fontSize: fontSize(10)}}>
-                        {strings.ValidUntil}
+                      <Text style={styles.validationTextStyle}>
+                        {strings?.ValidUntil}
                       </Text>
-                      <Text>{item.ValidUntil}</Text>
+                      <Text style={styles.textStyle}>{item?.ValidUntil}</Text>
                     </View>
                   </View>
                   <View style={styles.secondViewStyle}>
@@ -49,10 +54,12 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
                       style={styles.timeIconStyle}
                     />
                     <View>
-                      <Text style={{fontSize: fontSize(10)}}>
-                        {strings.minTransaction}
+                      <Text style={styles.validationTextStyle}>
+                        {strings?.minTransaction}
                       </Text>
-                      <Text>{item.MinTransaction}</Text>
+                      <Text style={styles.textStyle}>
+                        {item?.MinTransaction}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -70,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flatListOuterViewStyle: {
-    marginBottom: hp(13),
+    flex: 1,
     paddingHorizontal: wp(6),
     paddingVertical: hp(2.5),
   },
@@ -85,6 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: hp(1),
     fontSize: fontSize(18),
+    color: color.black,
   },
   cartView: {
     flex: 1,
@@ -115,6 +123,13 @@ const styles = StyleSheet.create({
     paddingVertical: hp(1),
     paddingHorizontal: wp(8.5),
     backgroundColor: color.commonBlue,
+  },
+  textStyle: {
+    color: color.black,
+  },
+  validationTextStyle: {
+    fontSize: fontSize(10),
+    color: color.black,
   },
 });
 

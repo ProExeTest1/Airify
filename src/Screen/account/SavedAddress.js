@@ -24,6 +24,7 @@ import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const SavedAddress = ({navigation: {goBack}, navigation}) => {
   const [addressData, setAddressData] = useState([]);
@@ -42,7 +43,8 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
         querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot?.id == auth()?.currentUser?.uid) {
             savedAddressData.push({
-              ...documentSnapshot.data(),
+              ...documentSnapshot?.data(),
+              key: documentSnapshot?.id,
             });
           }
         });
@@ -64,17 +66,17 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
       const result = await Share.share({
         message: userSelectedAddress?.display_name,
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
+      if (result?.action === Share.sharedAction) {
+        if (result?.activityType) {
           // shared with activity type of result.activityType
         } else {
           // shared
         }
-      } else if (result.action === Share.dismissedAction) {
+      } else if (result?.action === Share.dismissedAction) {
         // dismissed
       }
     } catch (error) {
-      Alert.alert(error.message);
+      AlertConstant(error.message);
     }
   };
 
@@ -95,13 +97,13 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
             }),
           });
       });
-    Alert.alert('Address Deleted Successfully');
+    AlertConstant(strings.address_deleted);
   };
 
   const setAsPrimary = async item => {
     const Primary = firestore()
       .collection('SavedUserAddress')
-      .doc(auth().currentUser.uid)
+      .doc(auth()?.currentUser?.uid)
       .get()
       .then(async i => {
         await firestore()
@@ -123,16 +125,16 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
       <CommonHeader
         onPress1={true}
         onPress2={true}
-        Images2={Images.plus}
-        Images1={Images.backIcon}
+        Images2={Images?.plus}
+        Images1={Images?.backIcon}
         Images1Color={color.white}
-        headerName={strings.savedAddress}
-        cancelButtonStyle={styles.plusIconStyle}
+        headerName={strings?.savedAddress}
+        cancelButtonStyle={styles?.plusIconStyle}
         navigation1={() => {
           goBack();
         }}
         navigation2={() => {
-          navigation.navigate('LocationSearch');
+          navigation?.navigate('LocationSearch');
         }}
       />
       <View style={styles.FlatListViewStyle}>
@@ -190,13 +192,13 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
                   <TouchableOpacity
                     style={[styles.ChangeAddressButtonStyle, {flex: 1}]}
                     onPress={() => {
-                      navigation.navigate('LocationSearch', {
+                      navigation?.navigate('LocationSearch', {
                         mode: 'Edit',
                         data: item,
                       });
                     }}>
                     <Text style={styles.ChangeAddressButtonTextStyle}>
-                      {strings.changeAddress}
+                      {strings?.changeAddress}
                     </Text>
                   </TouchableOpacity>
                   {item.Primary != true && (
@@ -213,7 +215,7 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
                           ]}>
                           <Image
                             style={styles.BackImg}
-                            source={Images.menuIcon}
+                            source={Images?.menuIcon}
                           />
                         </View>
                       </MenuTrigger>
@@ -232,7 +234,7 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
                               source={Images.location}
                             />
                             <Text style={styles.dropdownText}>
-                              {strings.setPrimary}
+                              {strings?.setPrimary}
                             </Text>
                           </View>
                         </MenuOption>
@@ -240,11 +242,11 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
                           <View style={styles.dropdownList}>
                             <Image
                               style={styles.dropdownIcon}
-                              source={Images.delete}
+                              source={Images?.delete}
                             />
                             <Text
                               style={[styles.dropdownText, {color: color.red}]}>
-                              {strings.deleteAddress}
+                              {strings?.deleteAddress}
                             </Text>
                           </View>
                         </MenuOption>

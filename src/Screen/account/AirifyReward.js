@@ -3,109 +3,109 @@ import {
   View,
   Text,
   StyleSheet,
-  ToastAndroid,
-  Alert,
-  Platform,
   TouchableOpacity,
   Image,
   Share,
+  ActivityIndicator,
 } from 'react-native';
-import QRCode from 'react-native-qrcode-generator';
 import Clipboard from '@react-native-clipboard/clipboard';
-
 import {strings} from '../../helper/Strings';
 import {
   CommonHeader,
   OnBoardingText,
   OnBoardingSingleButton,
+  Loader,
 } from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import QRCode from 'react-native-qrcode-svg';
 
 const AirifyReward = ({navigation: {goBack}}) => {
   const [promocode, setPromocode] = useState('');
+  console.log(promocode, 'promocode');
   const copyToClipboard = () => {
-    Clipboard.setString(promocode);
-    if (Platform.OS === 'android') {
-      ToastAndroid.show('Text copied to clipboard!', ToastAndroid.SHORT);
-    } else if (Platform.OS === 'ios') {
-      Alert.alert('Text copied to clipboard!');
-    }
+    Clipboard?.setString(promocode);
+    AlertConstant(strings?.text_copied_clipboard);
   };
 
   useEffect(() => {
     promocodeData();
   }, []);
   const promocodeData = async () => {
-    const promocode = await firestore()
-      .collection('Users')
-      .doc(auth().currentUser.uid)
-      .get()
-      .then(i => {
+    await firestore()
+      ?.collection('Users')
+      ?.doc(auth()?.currentUser?.uid)
+      ?.get()
+      ?.then(i => {
         setPromocode(i?.data()?.ReferralCode);
       });
   };
 
   const onShare = async () => {
     try {
-      const result = await Share.share({
+      const result = await Share?.share({
         message: promocode,
       });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
+      if (result?.action === Share?.sharedAction) {
+        if (result?.activityType) {
           // shared with activity type of result.activityType
         } else {
           // shared
         }
-      } else if (result.action === Share.dismissedAction) {
+      } else if (result?.action === Share?.dismissedAction) {
         // dismissed
       }
     } catch (error) {
-      Alert.alert(error.message);
+      AlertConstant(error?.message);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles?.container}>
       <CommonHeader
         onPress1={true}
         onPress2={false}
-        Images2={Images.info}
-        Images1={Images.backIcon}
-        Images1Color={color.white}
-        headerName={strings.airifyReward}
+        Images2={Images?.info}
+        Images1={Images?.backIcon}
+        Images1Color={color?.white}
+        headerName={strings?.airifyReward}
         navigation1={() => {
           goBack();
         }}
-        cancelButtonStyle1={styles.plusIconStyle}
+        cancelButtonStyle1={styles?.plusIconStyle}
       />
       <View>
         <OnBoardingText
-          OnBoardingMainText={strings.getSpecialReward}
-          OnBoardingMainTextStyle={styles.bodyMainText}
-          OnBoardingSubText={strings.getSpecialRewardSub}
+          OnBoardingMainText={strings?.getSpecialReward}
+          OnBoardingMainTextStyle={styles?.bodyMainText}
+          OnBoardingSubText={strings?.getSpecialRewardSub}
         />
-        <View style={styles.qrCodeStyle}>
-          <QRCode
-            size={300}
-            bgColor="black"
-            fgColor="white"
-            value={promocode}
-          />
+        <View style={styles?.qrCodeStyle}>
+          {promocode ? (
+            <QRCode
+              value={promocode}
+              size={hp(35)}
+              logoBackgroundColor="transparent"
+            />
+          ) : (
+            <ActivityIndicator size="small" />
+          )}
         </View>
       </View>
-      <View style={styles.referralCodeView}>
-        <Text style={{fontSize: fontSize(16)}}>{strings.copyCode}</Text>
-        <View style={styles.textView}>
-          <Text style={styles.promocodeTextStyle}>{promocode}</Text>
+      <View style={styles?.referralCodeView}>
+        <Text style={{fontSize: fontSize(16), color: color?.black}}>
+          {strings?.copyCode}
+        </Text>
+        <View style={styles?.textView}>
+          <Text style={styles?.promocodeTextStyle}>{promocode}</Text>
           <TouchableOpacity onPress={() => copyToClipboard()}>
             <Image
               resizeMode="contain"
-              source={Images.copy}
-              style={styles.copyImageStyle}
+              source={Images?.copy}
+              style={styles?.copyImageStyle}
             />
           </TouchableOpacity>
         </View>
@@ -113,13 +113,12 @@ const AirifyReward = ({navigation: {goBack}}) => {
           style={{
             borderTopWidth: 1,
             paddingVertical: hp(2),
-            borderColor: color.grey1,
+            borderColor: color?.grey1,
           }}>
           <OnBoardingSingleButton
-            buttonText={strings.shareCode}
+            buttonText={strings?.shareCode}
             onPress={() => {
-              // onShare();
-              PaymentNotification();
+              onShare();
             }}
           />
         </View>

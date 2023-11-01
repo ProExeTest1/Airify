@@ -18,6 +18,7 @@ import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const TopUp = ({navigation}) => {
   const [userData, setUserData] = useState({});
@@ -134,7 +135,7 @@ const TopUp = ({navigation}) => {
         });
       navigation.goBack();
     } else {
-      Alert.alert('plsss enter valid ');
+      AlertConstant(strings.enter_valid_currency);
     }
   };
 
@@ -180,7 +181,7 @@ const TopUp = ({navigation}) => {
             onPress={() => {
               textInput1.length !== 0
                 ? handlePayment()
-                : Alert.alert('please enter valid amount');
+                : AlertConstant(strings.enter_amount);
             }}
             style={styles.ContinueButton}>
             <Text style={styles.ContinueText}>{strings.continue}</Text>

@@ -21,7 +21,7 @@ const Notification = ({navigation: {goBack}}) => {
     try {
       const notificationList = await firestore()
         .collection('Users')
-        .doc(auth().currentUser.uid)
+        .doc(auth()?.currentUser?.uid)
         .get();
       setNotificationList(notificationList?.data()?.NotificationList);
     } catch (error) {
@@ -50,7 +50,7 @@ const Notification = ({navigation: {goBack}}) => {
           renderItem={({item}) => {
             return (
               <View style={styles.FlatListView}>
-                <Text style={styles.titleStyle}>{item.title}</Text>
+                <Text style={styles.titleStyle}>{item?.title}</Text>
                 <ToggleSwitch
                   isOn={item?.isOn}
                   size="medium"
@@ -58,9 +58,9 @@ const Notification = ({navigation: {goBack}}) => {
                   onToggle={async () => {
                     await firestore()
                       .collection('Users')
-                      .doc(auth().currentUser.uid)
+                      .doc(auth()?.currentUser?.uid)
                       .update({
-                        NotificationList: NotificationList.map(i => {
+                        NotificationList: NotificationList?.map(i => {
                           if (i.id === item.id) {
                             i.isOn = !i.isOn;
                             return i;
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
   flatListBodyViewStyle: {
     flex: 1,

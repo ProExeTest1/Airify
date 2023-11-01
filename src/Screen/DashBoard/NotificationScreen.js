@@ -16,7 +16,8 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
-// import {NotificationData} from '../../assets/DummyData/NotificationData';
+import {strings} from '../../helper/Strings';
+import {CommonHeader} from '../../components';
 
 const NotificationScreen = ({navigation}) => {
   const [NotificationData, SetNotificationData] = useState([]);
@@ -42,30 +43,21 @@ const NotificationScreen = ({navigation}) => {
   }, []);
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.safeHeaderViewStyle}>
-        <View style={styles.headerinnerViewStyle}>
-          <TouchableOpacity onPress={() => navigation.goBack('')}>
-            <Image
-              source={Images.backIcon}
-              style={styles.cancelButtonStyle}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          <View style={styles.headerTextViewStyle}>
-            <Text style={styles.headerTextStyle}>Notification</Text>
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Notification');
-            }}>
-            <Image
-              source={Images.setting}
-              style={styles.cancelButtonStyle}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+      <CommonHeader
+        headerName={strings.notification}
+        navigation1={() => {
+          navigation.goBack();
+        }}
+        navigation2={() => {
+          navigation.navigate('Notification');
+        }}
+        onPress1={true}
+        onPress2={false}
+        Images1={Images.backIcon}
+        Images2={Images.setting}
+        cancelButtonStyle1={styles.plusIconStyle}
+        Images1Color={color.white}
+      />
       <View style={styles.sectionListStyle}>
         <FlatList
           bounces={false}
@@ -136,7 +128,9 @@ const NotificationScreen = ({navigation}) => {
           renderSectionHeader={({section: {time}}) => (
             <View style={styles.listHeaderViewStyle}>
               <Text style={styles.header}>{time}</Text>
-              <View style={styles.listHeaderLineStyle} />
+              <View style={styles.listHeaderLineStyle}>
+                {/* <Text>hello</Text> */}
+              </View>
             </View>
           )}
         />
@@ -151,42 +145,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: color.white,
-  },
-  header: {
-    fontWeight: '500',
-    color: color.grey,
-    fontSize: fontSize(16),
-  },
-  headerViewStyle: {
-    backgroundColor: color.commonBlue,
-  },
-  cancelButtonStyle: {
-    width: hp(3),
-    height: hp(3),
-    tintColor: color.white,
-  },
-  headerTextStyle: {
-    fontWeight: 'bold',
-    color: color.white,
-    fontSize: fontSize(22),
-  },
-  safeHeaderViewStyle: {
-    backgroundColor: color.commonBlue,
-    paddingHorizontal: wp(7),
-    paddingVertical: Platform.OS == 'android' ? hp(1) : hp(3),
-  },
-  headerinnerViewStyle: {
-    height: hp(7),
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingHorizontal: wp(8),
-    justifyContent: 'space-between',
-    backgroundColor: color.commonBlue,
-  },
-  headerTextViewStyle: {
-    alignItems: 'center',
-    paddingVertical: hp(1),
   },
   sectionListStyle: {
     flex: 1,
@@ -235,11 +193,8 @@ const styles = StyleSheet.create({
     marginBottom: hp(0.5),
   },
   forwardIconStyle: {
-    right: 20,
     width: hp(4.4),
     height: wp(4.4),
-    height: wp(4.4),
-    width: hp(4.4),
   },
   listHeaderViewStyle: {
     alignItems: 'center',
@@ -247,10 +202,8 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(3),
   },
   listHeaderLineStyle: {
-    right: 0,
+    borderWidth: 0.7,
     height: 0,
-    borderWidth: 0.5,
-    position: 'absolute',
     marginHorizontal: wp(3),
     borderColor: color.grey,
     flex: 1,

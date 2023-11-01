@@ -17,6 +17,7 @@ import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {activeFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
+import {strings} from '../../helper/Strings';
 
 const ActiveSavedAddress = ({onPress, data}) => {
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ const ActiveSavedAddress = ({onPress, data}) => {
       .onSnapshot(querySnapshot => {
         let users;
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            users = documentSnapshot.data()?.savedFlights;
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            users = documentSnapshot?.data()?.savedFlights;
           }
         });
         let activeData = users?.filter(item => {
@@ -41,9 +42,9 @@ const ActiveSavedAddress = ({onPress, data}) => {
             Date.now() <=
             new Date(
               moment(
-                `${item.date.split(',')[1]} ${Number(
-                  item?.departureTime.split(':')[0],
-                )}:${Number(item?.departureTime.split(':')[1])}:00`,
+                `${item?.date?.split(',')[1]} ${Number(
+                  item?.departureTime?.split(':')[0],
+                )}:${Number(item?.departureTime?.split(':')[1])}:00`,
                 'MMM DD YYYY HH:mm:ss',
               ).format('YYYY-MM-DD HH:mm:ss'),
             ).valueOf()
@@ -91,7 +92,7 @@ const ActiveSavedAddress = ({onPress, data}) => {
                       {item?.departurePlace}
                     </Text>
                     <Text style={styles.FlightsPlaseNicName}>
-                      {item.departureTime}
+                      {item?.departureTime}
                     </Text>
                   </View>
                   <View style={styles.FlightsPlaseImgBody}>
@@ -100,7 +101,7 @@ const ActiveSavedAddress = ({onPress, data}) => {
                       source={Images.airplaneWhiteIcon}
                     />
                     <Text style={styles.FlightsPlaseImgText}>
-                      {item.totalHours}
+                      {item?.totalHours}
                     </Text>
                   </View>
                   <View
@@ -117,45 +118,29 @@ const ActiveSavedAddress = ({onPress, data}) => {
                   <Text style={styles.FlightsPlaseName}>
                     {item?.departureShortForm}
                   </Text>
-                  <Text style={styles.FlightsPlaseImgText}>{item.stops}</Text>
+                  <Text style={styles.FlightsPlaseImgText}>{item?.stops}</Text>
                   <Text style={styles.FlightsPlaseName}>
                     {item?.destinationShortForm}
                   </Text>
                 </View>
-                <View
-                  style={[
-                    styles.cardBottemBody,
-                    {
-                      paddingTop: hp(2),
-                      borderTopWidth: 1,
-                      alignItems: 'center',
-                      borderColor: color.grayLight,
-                    },
-                  ]}>
+                <View style={[styles.cardBottemBody, styles.cardBottemBody2]}>
                   <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
                   <Text style={[styles.cardPrice, {marginLeft: wp(30)}]}>
                     {item?.flightPrice}
                   </Text>
-                  <Text style={styles.cardPriceTitle}>/pax</Text>
+                  <Text style={styles.cardPriceTitle}>{strings?.pax}</Text>
                 </View>
               </TouchableOpacity>
             );
           }}
         />
       ) : (
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={styles.LottieViewStyle}>
           <LottieView
             source={require('../../helper/noDataFound.json')}
             autoPlay
             loop
-            style={{
-              height: hp(65),
-              width: wp(100),
-            }}
+            style={styles.lottiStyle}
           />
         </View>
       )}
@@ -241,11 +226,26 @@ const styles = StyleSheet.create({
     paddingBottom: hp(2.5),
     justifyContent: 'space-between',
   },
+  cardBottemBody2: {
+    paddingTop: hp(2),
+    borderTopWidth: 1,
+    alignItems: 'center',
+    borderColor: color.grayLight,
+  },
+
   filledSavedStyle: {
     width: hp(2.5),
     height: hp(2.5),
     resizeMode: 'contain',
     tintColor: color.commonBlue,
+  },
+  LottieViewStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lottiStyle: {
+    height: hp(65),
+    width: wp(100),
   },
 });
 

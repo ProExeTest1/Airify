@@ -42,7 +42,7 @@ const CustomPaperTextInput = ({
         left={
           <TextInput.Icon
             icon={icon}
-            style={{marginTop: hp(2.4), tintColor: 'white'}}
+            style={{marginTop: hp(2.4)}}
             onPress={onPress}
           />
         }

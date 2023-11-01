@@ -17,10 +17,7 @@ const CheckButton = ({check, onPress, mainStyle}) => {
         mainStyle,
       ]}>
       {check ? (
-        <Image
-          style={{height: hp(4), width: wp(4), resizeMode: 'contain'}}
-          source={Images?.checkMark}
-        />
+        <Image style={styles.checkMarkstyle} source={Images?.checkMark} />
       ) : null}
     </TouchableOpacity>
   );
@@ -35,6 +32,11 @@ const styles = StyleSheet.create({
     marginLeft: wp(4),
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  checkMarkstyle: {
+    height: hp(4),
+    width: wp(4),
+    resizeMode: 'contain',
   },
 });
 

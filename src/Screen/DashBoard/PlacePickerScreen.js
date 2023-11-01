@@ -18,6 +18,7 @@ import {
   depaturePlaceAction,
   destinationPlaceAction,
 } from '../../redux/action/PlaceAction';
+import {strings} from '../../helper/Strings';
 
 const PlacePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -120,7 +121,9 @@ const PlacePickerScreen = ({navigation, route}) => {
       />
       {search.length <= 0 && searchEnable ? (
         <View style={styles.notFoundViewStyle}>
-          <Text style={styles.notFoundTextStyle}>None of this place exist</Text>
+          <Text style={styles.notFoundTextStyle}>
+            {strings.none_of_place_exist}
+          </Text>
         </View>
       ) : (
         <View style={styles.flatlistViewStyle}>
@@ -132,7 +135,7 @@ const PlacePickerScreen = ({navigation, route}) => {
               let firstLatter = JSON.stringify(item.capital).charAt(2);
               let secondlatter = JSON.stringify(item.name.common).charAt(1);
               return (
-                <View>
+                <View style={{flex: 1}}>
                   <TouchableOpacity
                     style={styles.cityTouchStyle}
                     onPress={() =>
@@ -144,17 +147,16 @@ const PlacePickerScreen = ({navigation, route}) => {
                     }>
                     <View style={{flex: 1}}>
                       <View style={styles.textViewStyle}>
-                        <Text style={styles.textStyle}>{item.capital}</Text>
-                        <Text style={styles.textStyle}>{' - '}</Text>
-                        <Text style={styles.textStyle}>{item.name.common}</Text>
+                        <Text numberOfLines={1} style={styles.textStyle}>
+                          {item.capital}
+                          {' - '}
+                          {item.name.common}
+                        </Text>
                       </View>
                       <View style={styles.smallTextViewStyle}>
-                        <Text style={styles.smallTextStyle}>
-                          {firstLatter + secondlatter}
-                        </Text>
-                        <Text style={styles.smallTextStyle}>-</Text>
-                        <Text style={styles.smallTextStyle}>
-                          Internation Airport of {item.capital}
+                        <Text numberOfLines={1} style={styles.smallTextStyle}>
+                          {firstLatter + secondlatter} -{' '}
+                          {strings.internation_airport} {item.capital}
                         </Text>
                       </View>
                     </View>
@@ -188,13 +190,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
+    flex: 1,
     paddingVertical: hp(2),
   },
   lineStyle: {
-    width: wp(90),
+    flex: 1,
     height: hp(0),
     borderWidth: 0.5,
-    alignSelf: 'center',
   },
   forwardIconStyle: {
     width: hp(4.4),
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
   },
   textViewStyle: {
-    width: '70%',
+    flex: 1,
     flexDirection: 'row',
   },
   smallTextViewStyle: {

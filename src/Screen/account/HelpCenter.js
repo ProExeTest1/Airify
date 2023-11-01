@@ -62,7 +62,7 @@ const HelpCenter = ({navigation: {goBack}}) => {
               styles.buttonTextStyle,
               {color: !selectedOption ? color.white : color.black},
             ]}>
-            {strings.contactUs}
+            {strings?.contactUs}
           </Text>
         </TouchableOpacity>
       </View>

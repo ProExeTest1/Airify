@@ -190,51 +190,51 @@ const RescheduleSearchFlight = ({navigation, route}) => {
 
   useEffect(() => {
     if (searchFlightFilterData?.priceRange) {
-      const filterData = SearchFlightData.filter(item => {
+      const filterData = SearchFlightData?.filter(item => {
         let priceRange =
           searchFlightFilterData?.priceRange[0] <
-            Number(item.price.slice(1).replaceAll(',', '')) &&
+            Number(item?.price?.slice(1).replaceAll(',', '')) &&
           searchFlightFilterData?.priceRange[1] >
-            Number(item.price.slice(1).replaceAll(',', ''));
+            Number(item?.price?.slice(1).replaceAll(',', ''));
 
         let numberOfStops =
           searchFlightFilterData?.numberOfStopsData === '2+ Stop'
             ? Number(item.stop.slice(0, 1)) >= 2
-            : searchFlightFilterData?.numberOfStopsData === item.stop;
+            : searchFlightFilterData?.numberOfStopsData === item?.stop;
 
         let airlinesList =
-          searchFlightFilterData.airlinesList !== null
-            ? searchFlightFilterData.airlinesList.some(
-                i => i === item.airlineName,
+          searchFlightFilterData?.airlinesList !== null
+            ? searchFlightFilterData?.airlinesList?.some(
+                i => i === item?.airlineName,
               )
             : true;
 
-        let flightDurationTime = item.totalHours.slice(0, -1).split('h ');
+        let flightDurationTime = item?.totalHours?.slice(0, -1)?.split('h ');
         let flightDuration =
           searchFlightFilterData?.flightDuration[0] <=
             Number(flightDurationTime[0]) &&
           searchFlightFilterData?.flightDuration[1] >
             Number(flightDurationTime[0]);
 
-        let arrivalTimeList = item.lendTime.slice(0, 2);
+        let arrivalTimeList = item?.lendTime?.slice(0, 2);
         let searchFlightFilterArrival =
-          searchFlightFilterData?.arrivalTime?.time.split(' - ');
+          searchFlightFilterData?.arrivalTime?.time?.split(' - ');
         let arrivalTime =
-          searchFlightFilterData.arrivalTime !== null
-            ? Number(searchFlightFilterArrival[0].slice(0, 2)) <=
+          searchFlightFilterData?.arrivalTime !== null
+            ? Number(searchFlightFilterArrival[0]?.slice(0, 2)) <=
                 Number(arrivalTimeList) &&
-              Number(searchFlightFilterArrival[1].slice(0, 2)) >
+              Number(searchFlightFilterArrival[1]?.slice(0, 2)) >
                 Number(arrivalTimeList)
             : true;
 
-        let departureTimeList = item.pickTime.slice(0, 2);
+        let departureTimeList = item?.pickTime?.slice(0, 2);
         let searchFlightFilterdeparture =
           searchFlightFilterData?.departureTime?.time.split(' - ');
         let departureTime =
           searchFlightFilterData.departureTime !== null
-            ? Number(searchFlightFilterdeparture[0].slice(0, 2)) <=
+            ? Number(searchFlightFilterdeparture[0]?.slice(0, 2)) <=
                 Number(departureTimeList) &&
-              Number(searchFlightFilterdeparture[1].slice(0, 2)) >
+              Number(searchFlightFilterdeparture[1]?.slice(0, 2)) >
                 Number(departureTimeList)
             : true;
 
@@ -247,7 +247,9 @@ const RescheduleSearchFlight = ({navigation, route}) => {
           departureTime
         );
       });
-      filterData.length > 0 ? setSearchFlightCardData(filterData) : applydata();
+      filterData?.length > 0
+        ? setSearchFlightCardData(filterData)
+        : applydata();
     } else {
       setSearchFlightCardData(SearchFlightData);
     }
@@ -276,7 +278,7 @@ const RescheduleSearchFlight = ({navigation, route}) => {
           <View style={styles.headerTitleBody}>
             <Text style={styles.headerTitle}>Reschedule Trip</Text>
           </View>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation?.goBack()}>
             <Image style={styles.BackImg} source={Images.backIcon} />
           </TouchableOpacity>
           <Menu>
@@ -390,7 +392,7 @@ const RescheduleSearchFlight = ({navigation, route}) => {
 
       <View style={styles.ScrollViewBody}>
         <FlatList
-          data={SearchFlightCardData.filter(i => {
+          data={SearchFlightCardData?.filter(i => {
             if (
               `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
               SelectDate?.date
@@ -430,7 +432,7 @@ const RescheduleSearchFlight = ({navigation, route}) => {
         <View style={styles.sortLine}></View>
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('SearchFlightsFilter', {
+            navigation?.navigate('SearchFlightsFilter', {
               header: 'rescheduleTrip',
             })
           }
@@ -477,10 +479,10 @@ const RescheduleSearchFlight = ({navigation, route}) => {
               renderItem={({item, index}) => (
                 <View style={{paddingVertical: hp(1)}}>
                   <RadioButton
-                    key={item.id}
-                    selected={item.id === selectedData?.id}
+                    key={item?.id}
+                    selected={item?.id === selectedData?.id}
                     onPress={() => setSelectedData(item)}
-                    label={item.label}
+                    label={item?.label}
                     labelStyle={{fontSize: fontSize(18), fontWeight: '500'}}
                     color={color.commonBlue}
                   />
@@ -547,6 +549,7 @@ const styles = StyleSheet.create({
   sortText: {
     fontSize: fontSize(20),
     fontWeight: '500',
+    color: color.black,
   },
   sortImg: {
     height: wp(6),
@@ -568,6 +571,7 @@ const styles = StyleSheet.create({
   createAlertTitle: {
     fontSize: fontSize(20),
     fontWeight: '600',
+    color: color.black,
   },
   sortModalBody: {
     paddingVertical: hp(1),
@@ -654,6 +658,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: hp(0.3),
     fontSize: fontSize(18),
+    color: color.black,
   },
   dropdownBody: {
     top: wp(10),
@@ -676,5 +681,6 @@ const styles = StyleSheet.create({
   dropdownText: {
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
 });

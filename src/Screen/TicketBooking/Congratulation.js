@@ -20,11 +20,11 @@ const Congratulation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const type = route?.params?.type;
   const header = route?.params?.header;
-  console.log(header);
+  console.log(header, 'header212121');
   const totalPaymentList = useSelector(e =>
     type == 'Reschedule'
-      ? e.rescheduleFlightdata.RescheduletotalPaymentList
-      : e.SelectSeatData.totalPaymentList,
+      ? e?.rescheduleFlightdata?.RescheduletotalPaymentList
+      : e?.SelectSeatData?.totalPaymentList,
   );
 
   console.log(totalPaymentList);
@@ -35,7 +35,7 @@ const Congratulation = ({navigation, route}) => {
       .collection('Points')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
             setUserPointData(documentSnapshot?.data());
           }
         });
@@ -45,34 +45,36 @@ const Congratulation = ({navigation, route}) => {
   const setPoint = async () => {
     await firestore()
       .collection('Points')
-      .doc(auth().currentUser.uid)
+      .doc(auth()?.currentUser?.uid)
       .update({
         TotalPoints:
           Number(UserPointData?.TotalPoints) +
           (type == 'Reschedule'
-            ? totalPaymentList.points.getPoint
-            : totalPaymentList.return
-            ? totalPaymentList.return.points.getPoint +
-              totalPaymentList.departure.points.getPoint
-            : totalPaymentList.departure.points.getPoint),
+            ? totalPaymentList?.points?.getPoint
+            : totalPaymentList?.return
+            ? totalPaymentList?.return?.points?.getPoint +
+              totalPaymentList?.departure?.points?.getPoint
+            : totalPaymentList?.departure?.points?.getPoint),
         PointsHistory: [
           {
             title: 'points',
             price: `+${
               type == 'Reschedule'
-                ? totalPaymentList.points.getPoint
-                : totalPaymentList.return
-                ? totalPaymentList.return.points.getPoint +
-                  totalPaymentList.departure.points.getPoint
-                : totalPaymentList.departure.points.getPoint
+                ? totalPaymentList?.points?.getPoint
+                : totalPaymentList?.return
+                ? totalPaymentList?.return?.points?.getPoint +
+                  totalPaymentList?.departure?.points?.getPoint
+                : totalPaymentList?.departure?.points?.getPoint
             }`,
             date: moment(new Date()).format('MMM D,YYYY'),
             time: new Date().toLocaleTimeString('en-IN'),
           },
           ...UserPointData?.PointsHistory,
         ],
+      })
+      .then(() => {
+        navigation?.navigate(header, {TripType: tripType});
       });
-    navigation.navigate(header, {TripType: tripType});
   };
   useEffect(() => {
     getUserPointData();
@@ -107,14 +109,14 @@ const Congratulation = ({navigation, route}) => {
             marginTop: hp(2),
             color: '#000',
           }}>
-          Congratulation! You've Earned{' '}
+          {strings.you_earned}{' '}
           {type == 'Reschedule'
             ? totalPaymentList.points.getPoint
             : totalPaymentList.return
             ? totalPaymentList.return.points.getPoint +
               totalPaymentList.departure.points.getPoint
             : totalPaymentList.departure.points.getPoint}{' '}
-          Points!
+          {strings.points}
         </Text>
         <Text
           style={{
@@ -122,8 +124,7 @@ const Congratulation = ({navigation, route}) => {
             marginTop: hp(2),
             color: '#000',
           }}>
-          Your next adventure lust cot even barer. Use your points for discounts
-          on future flights!
+          {strings.use_your_point}
         </Text>
       </View>
       <View style={styles.bottomButtonBody}>
@@ -132,7 +133,7 @@ const Congratulation = ({navigation, route}) => {
             setPoint();
           }}
           style={styles.okButton}>
-          <Text style={styles.okButtonText}>Ok</Text>
+          <Text style={styles.okButtonText}>{strings.ok}</Text>
         </TouchableOpacity>
       </View>
     </View>

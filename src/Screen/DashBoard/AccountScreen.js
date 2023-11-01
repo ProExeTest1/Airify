@@ -20,7 +20,12 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {SettingData} from '../../assets/DummyData/SettingData';
-import {CommonHeader, OnBoardingTwoButton, TextData} from '../../components';
+import {
+  CommonHeader,
+  OnBoardingTwoButton,
+  TextData,
+  Loader,
+} from '../../components';
 
 const AccountScreen = ({navigation}) => {
   const [modal, setModal] = useState(false);
@@ -81,15 +86,21 @@ const AccountScreen = ({navigation}) => {
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={styles.headerStyle}>
           <View style={styles.profilePicViewStyle}>
-            <Image
-              resizeMode="stretch"
-              style={styles.profilePicStyle}
-              source={{uri: userData?.profileImageURL}}
-            />
-            <View style={styles.headertextStyle}>
-              <Text style={styles.NameStyle}>{userData?.Name}</Text>
-              <Text style={styles.userNameStyle}>{userData?.Email}</Text>
-            </View>
+            {userData?.profileImageURL ? (
+              <>
+                <Image
+                  resizeMode="stretch"
+                  style={styles.profilePicStyle}
+                  source={{uri: userData?.profileImageURL}}
+                />
+                <View style={styles.headertextStyle}>
+                  <Text style={styles.NameStyle}>{userData?.Name}</Text>
+                  <Text style={styles.userNameStyle}>{userData?.Email}</Text>
+                </View>
+              </>
+            ) : (
+              <Loader color={color.commonBlue} />
+            )}
           </View>
           <TouchableOpacity style={styles.bellTouchStyle}>
             <Image
@@ -312,6 +323,7 @@ const styles = StyleSheet.create({
   listTitleTextStyle: {
     fontWeight: '600',
     fontSize: fontSize(16),
+    color: color.black,
   },
   listDiscriptionTextStyle: {
     color: color.black,
@@ -333,6 +345,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: fontSize(14),
+    color: color.black,
   },
   listConditionStyle: {
     flexDirection: 'row',

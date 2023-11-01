@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(14),
     marginVertical: hp(1.5),
     marginHorizontal: wp(1),
+    color: color.black,
   },
   inputView: {
     borderRadius: wp(4),

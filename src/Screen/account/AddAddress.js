@@ -56,10 +56,10 @@ const AddAddress = ({navigation}) => {
         ) {
           await firestore()
             .collection('SavedUserAddress')
-            .doc(auth().currentUser.uid)
+            .doc(auth()?.currentUser?.uid)
             .set({
               SavedUserAddress: [
-                ...d.data().SavedUserAddress,
+                ...d?.data()?.SavedUserAddress,
                 {
                   Note: note,
                   Primary: checked,
@@ -70,9 +70,9 @@ const AddAddress = ({navigation}) => {
                 },
               ],
             });
-          navigation.navigate('SavedAddress');
+          navigation?.navigate('SavedAddress');
         } else {
-          alert('Address is already exits');
+          AlertConstant(strings.address_already_saved);
         }
       });
   };
@@ -84,7 +84,7 @@ const AddAddress = ({navigation}) => {
       .then(async item => {
         await firestore()
           .collection('SavedUserAddress')
-          .doc(auth().currentUser.uid)
+          .doc(auth()?.currentUser?.uid)
           .update({
             SavedUserAddress: item?.data()?.SavedUserAddress?.map(i => {
               if (i.ContactName == route?.params?.data?.data?.ContactName) {
@@ -101,15 +101,15 @@ const AddAddress = ({navigation}) => {
             }),
           });
       });
-    navigation.navigate('SavedAddress');
+    navigation?.navigate('SavedAddress');
   };
   return (
     <View style={styles.container}>
       <CommonHeader
         headerName={
-          route?.params?.data?.mode == 'Edit'
-            ? strings.changeAddress
-            : strings.addressDetail
+          route?.params?.mode == 'Edit'
+            ? strings?.changeAddress
+            : strings?.addressDetail
         }
         navigation1={() => {
           navigation.navigate('LocationSearch');
@@ -123,65 +123,63 @@ const AddAddress = ({navigation}) => {
       />
       <View style={styles.mainViewStyle}>
         <View style={styles.locationViewStyle}>
-          <Image source={Images.location} style={styles.locationIconStyle} />
+          <Image source={Images?.location} style={styles.locationIconStyle} />
           <Text>{userSelectedAddress?.display_name}</Text>
         </View>
-        <Text style={styles.textInputTitleStyle}>{strings.addressLabel}</Text>
+        <Text style={styles.textInputTitleStyle}>{strings?.addressLabel}</Text>
         <OnBoardingTextInput
           value={addressLabel}
           container={styles.textInputContainer}
           textInputPlaceholder={strings.addressLabel}
           onChangeText={addressLabel => setAddressLabel(addressLabel)}
         />
-        <Text style={styles.textInputTitleStyle}>{strings.note}</Text>
+        <Text style={styles.textInputTitleStyle}>{strings?.note}</Text>
         <OnBoardingTextInput
           value={note}
-          textInputPlaceholder={strings.note}
+          textInputPlaceholder={strings?.note}
           onChangeText={note => setNote(note)}
-          container={styles.textInputContainer}
+          container={styles?.textInputContainer}
         />
-        <Text style={styles.textInputTitleStyle}>{strings.contactName}</Text>
+        <Text style={styles.textInputTitleStyle}>{strings?.contactName}</Text>
         <OnBoardingTextInput
           value={contactName}
           container={styles.textInputContainer}
-          textInputPlaceholder={strings.contactName}
+          textInputPlaceholder={strings?.contactName}
           onChangeText={contactName => setContactName(contactName)}
         />
-        <Text style={styles.textInputTitleStyle}>{strings.ContactPhoneNo}</Text>
+        <Text style={styles.textInputTitleStyle}>
+          {strings?.ContactPhoneNo}
+        </Text>
         <DatePickerTextInput
           value={countryCode}
           keyboardType={'phone-pad'}
           textInputIcon={Images.downArrow}
           textInputStyle={styles.textInputStyle}
-          textInputPlaceholder={strings.ContactPhoneNo}
+          textInputPlaceholder={strings?.ContactPhoneNo}
           onPress={() => {
             setShow(true);
           }}
           onChangeText={countryCode => setCountryCode(countryCode)}
         />
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <View style={styles.checkButtonViewStyle}>
           <CheckButton
             check={checked}
             onPress={() => {
               setChecked(!checked);
             }}
           />
-          <Text style={styles.checkBoxStyle}>{strings.setPrimary}</Text>
+          <Text style={styles.checkBoxStyle}>{strings?.setPrimary}</Text>
         </View>
         <View style={styles.buttonViewStyle}>
           <OnBoardingSingleButton
             buttonText={
-              route?.params?.data?.mode == 'Edit'
-                ? strings.changeAddress
-                : strings.save
+              route?.params?.mode == 'Edit'
+                ? strings?.changeAddress
+                : strings?.save
             }
             buttonStyle={styles.buttonStyle}
             onPress={() => {
-              route?.params?.data?.mode == 'Edit'
+              route?.params?.mode == 'Edit'
                 ? changeAddress()
                 : addressDetails();
             }}
@@ -191,7 +189,7 @@ const AddAddress = ({navigation}) => {
       <CountryPicker
         show={show}
         pickerButtonOnPress={item => {
-          setCountryCode(item.flag + item.dial_code);
+          setCountryCode(item?.flag + item?.dial_code);
           setShow(false);
         }}
       />
@@ -249,7 +247,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     borderColor: color.grayLight,
   },
-  checkBoxStyle: {marginLeft: wp(2), color: color.black, fontWeight: '500'},
+  checkBoxStyle: {
+    marginLeft: wp(2),
+    color: color.black,
+    fontWeight: '500',
+  },
+  checkButtonViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
 
 export default AddAddress;

@@ -81,7 +81,8 @@ const PriceDetails = ({
         {DiscountData?.id && (
           <View style={styles.priceViewStyle}>
             <Text numberOfLines={1} style={styles.priceTextStyle}>
-              Discount{`(${DiscountData.discountPR}%)`}
+              {strings.discount}
+              {`(${DiscountData.discountPR}%)`}
             </Text>
             <Text style={styles.priceTextStyle}>-${discount}.00</Text>
           </View>
@@ -89,7 +90,7 @@ const PriceDetails = ({
         {ToggleSwitchBut1 && (
           <View style={styles.priceViewStyle}>
             <Text numberOfLines={1} style={styles.priceTextStyle}>
-              Points Used
+              {strings.points_used}
             </Text>
             <Text style={styles.priceTextStyle}>-${validPoint}.00</Text>
           </View>

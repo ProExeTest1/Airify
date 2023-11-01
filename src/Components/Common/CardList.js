@@ -5,6 +5,7 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {strings} from '../../helper/Strings';
 
 const CardList = ({setCartFlightData, item, index, tripType, searchFlight}) => {
   const searchFlightData = searchFlight
@@ -24,7 +25,7 @@ const CardList = ({setCartFlightData, item, index, tripType, searchFlight}) => {
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
         <Text style={styles.cardPrice}>{item?.price}</Text>
-        <Text style={styles.cardPriceTitle}>/pax</Text>
+        <Text style={styles.cardPriceTitle}>{strings.pax}</Text>
       </View>
       <View style={styles.cardDataBody}>
         <View style={styles.FlightsPlaseBody}>

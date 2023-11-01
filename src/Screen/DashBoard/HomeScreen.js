@@ -38,19 +38,18 @@ const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
 
-  const reduxReturnDate = useSelector(state => state.date.returnDate);
+  const reduxReturnDate = useSelector(state => state?.date?.returnDate);
 
-  const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
-
+  const reduxDepaturePlace = useSelector(state => state?.place?.depaturePlace);
   //Maintaining textInput value with redux data
   let depatureData = reduxDepaturePlace
-    ? reduxDepaturePlace.city + '(' + reduxDepaturePlace.airport + ')'
+    ? reduxDepaturePlace?.city + '(' + reduxDepaturePlace?.airport + ')'
     : null;
   const reduxDestinationPlace = useSelector(
-    state => state.place.destinationPlace,
+    state => state?.place?.destinationPlace,
   );
   let destinationData = reduxDestinationPlace
-    ? reduxDestinationPlace.city + '(' + reduxDestinationPlace.airport + ')'
+    ? reduxDestinationPlace?.city + '(' + reduxDestinationPlace?.airport + ')'
     : null;
   const ndate = new Date();
   const hours = ndate.getHours();
@@ -73,7 +72,12 @@ const HomeScreen = ({navigation}) => {
   };
 
   const toggleChange = () => {
-    setChnage(!change);
+    if (
+      reduxDepaturePlace?.city?.length > 0 &&
+      reduxDestinationPlace?.city?.length > 0
+    ) {
+      setChnage(!change);
+    }
   };
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -115,9 +119,7 @@ const HomeScreen = ({navigation}) => {
             );
             navigation.navigate('SearchFlights', {TripType: 'Round-Trip'});
           } else {
-            AlertConstant(
-              'Return date and departure date does not be same please change it!',
-            );
+            AlertConstant(strings.return_departure_not_same);
           }
         } else {
           dispatch(
@@ -133,10 +135,10 @@ const HomeScreen = ({navigation}) => {
           navigation.navigate('SearchFlights', {TripType: 'One-Way'});
         }
       } else {
-        AlertConstant('Destination Place and Departure Place does not be same');
+        AlertConstant(strings.destination_departure_not_same);
       }
     } else {
-      AlertConstant('Please Fill All Details');
+      AlertConstant(strings.fill_all_details);
     }
   };
 
@@ -150,7 +152,7 @@ const HomeScreen = ({navigation}) => {
       .collection('Users')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
+          if (documentSnapshot.id == auth()?.currentUser?.uid) {
             dispatch(UserDataAction(documentSnapshot.data()));
             setUserData(documentSnapshot.data());
             setLoader(false);
@@ -191,7 +193,7 @@ const HomeScreen = ({navigation}) => {
         <SafeAreaView style={styles.headerStyle}>
           <View style={styles.profilepicViewStyle}>
             {loader ? (
-              <Loader color={'blue'} />
+              <Loader color={color.white} />
             ) : (
               <Image
                 source={{uri: userData?.profileImageURL}}

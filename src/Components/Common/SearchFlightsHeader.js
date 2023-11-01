@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
   dropdownText: {
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
 });
 

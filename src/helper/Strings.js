@@ -1,4 +1,4 @@
-export const strings = {
+export const strings = Object.freeze({
   //OnBoarding Button Text
   OnBoardingButtonOne: 'Skip',
   OnBoardingButtonSecond: 'Continue',
@@ -118,8 +118,14 @@ export const strings = {
   SectionFour: 'SECTION 4 - MODIFICATIONS TO THE SERVICE AND JOB RATES',
   SectionFourText:
     'Job Rates posted are subject to change without notice. We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time. We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.',
+  //Permission alert
 
-  //
+  title: 'App Camera Permission',
+  alert_meassage: 'App needs access to your camera',
+  Ask_me_latter: 'Ask Me Later',
+  cancel: 'Cancel',
+
+  // HomeScreen
   passengerModalHeader: 'Number of Passengers',
   Adult: 'Adult',
   Child: 'Child',
@@ -140,6 +146,9 @@ export const strings = {
   one_way: 'One-Way',
   roundTrip: 'Round trip',
   classheader: 'Seat Class',
+
+  //Special Offer screen
+
   exclusive_offer: 'Exclusive 25% Off on Your Next Flight!',
   offeerDiscription:
     'Unlock a world of saving and adventure with Airify! For a limited time. we are thrilled to offer you an exclusive 25% discount on your next flight.',
@@ -150,6 +159,10 @@ export const strings = {
   PriceAlertHeader: 'Create Price Alert',
   PriceAlertDis: 'Never miss a deal! Get notified when flight prices drop.',
   PriceTarget: 'Price Targets',
+  text_copied_clipboard: 'Text copied to clipboard!',
+
+  // Search Flights
+
   DepartureTime: 'Departure Time',
   DirectFlight: 'Only Direct Flights',
   searchFlight: 'Search Flights',
@@ -159,6 +172,39 @@ export const strings = {
   priceAlerts: 'Price Alerts',
   filter: 'Filter',
   sort: 'Sort',
+  pax: '/pax',
+  departure: 'Departure',
+  return: 'Return',
+  internation_airport: 'International Airport',
+  EK_202: 'EK-202 ',
+  internation_airport: ' Internation Airport of',
+  price_range: 'Price Range',
+  no_of_stops: 'Number of Stops',
+  stop_duration: 'Stop Duration',
+  Airlines: 'Airlines',
+  Flight_Duration: 'Flight Duration',
+  Amenities: 'Amenities',
+  Arrival_Time: 'Arrival Time',
+  refund_reschedule: 'Refund & Reschedule',
+  Flight_Preferences: 'Flight Preferences',
+  Departure_Time: 'Departure Time',
+  Cabin_Class: 'Cabin Class',
+  Original: 'Original',
+  Flight_Details: 'Flight Details',
+  Flight: 'Flight',
+  Refund_Info: 'Refund Info',
+  Reschedule_info: 'Reschedule info',
+  Selected: 'Selected',
+  Occupied: 'Occupied',
+  Available: 'Available',
+  seat: 'Seat',
+  //Search Flight Alert
+
+  wrong_return_date: 'You selected wrong Return date',
+  return_departure_not_same: 'Return and Departure date cannot be same',
+
+  // User Account Flow
+
   logout: 'Logout',
   logoutText: 'Are you sure you want to logout ?',
   cancel: 'Cancel',
@@ -177,16 +223,14 @@ export const strings = {
   aboutAirify: 'About Airify',
   Version: 'Airify v10.7.5',
   helpCenter: 'Help Center',
-
+  expired: 'Expired',
   FAQ: 'FAQ',
   contactUs: 'Contact Us',
-
   search: 'Search',
   passengerList: 'Passenger List',
   no: 'No.',
   name: 'Name',
   newPassenger: 'Add New Passenger',
-
   firstName: 'First Name',
   lastName: 'Last Name',
   title: 'Title',
@@ -203,8 +247,9 @@ export const strings = {
   contactDetail: 'Contact Details',
   editPassenger: 'Edit Passenger',
   edit: 'Edit',
-
-  // wallet
+  details: 'Details',
+  address_already_saved: 'Address is already exits',
+  // User Wallet
 
   wallet: 'Wallet',
   yourBalance: 'Your balance',
@@ -229,8 +274,30 @@ export const strings = {
   tax: 'Tax',
   total_price: 'Total Price',
   fillInDetails: 'Fill In Details',
-
+  book: 'Book',
+  pay: 'Pay',
+  discount: 'Discount',
+  points_used: ' Points Used',
+  booking_id: 'BookingID',
+  payment_method: 'Payment Method',
+  status: 'Status',
+  paid: 'PAID',
+  transaction_id: 'Transacation ID',
+  reference_id: 'Reference ID',
+  show_eticket: 'Show E-Ticket',
+  reschedule_trip: 'Recshedule Trip',
+  cancel_booking: 'Cancel Booking',
+  completed: 'Completed',
+  canceled: 'Canceled',
+  show_your_id_barcode: ' Show your ID and this barcode at the check-in gate',
+  enjoy_travelling_world: 'Enjoy traveling around the world with us',
+  arify_weblink: 'www.airify.yourdomain',
+  use_your_point:
+    'Your next adventure lust cot even barer. Use your points for discounts on future flights!',
+  you_earned: 'Congratulation! You`ve Earned',
+  points: ' Points!',
   // Saved Address
+
   savedAddress: 'Saved Address',
   changeAddress: 'Change Address',
   addNewAddress: 'Add New Address',
@@ -254,14 +321,15 @@ export const strings = {
   discountVoucher: 'Discounts / Vouchers',
   ValidUntil: 'Valid Until',
   minTransaction: 'Min Transaction',
-
+  Claim_Discount: 'Claim Discount',
   airifyReward: 'Airify Rewards',
   getSpecialReward: 'Get Special Rewards!',
+  date_string: 'Dec 31,2023',
   getSpecialRewardSub:
     'Get special offers, & even free travel every \n time your friend joins via your referral code.',
   copyCode: 'Copy or share the referral code below.',
   shareCode: 'Share Referral Code',
-
+  price_string: '$1,000.00',
   airifyPoint: 'Airify Point',
   totalPoint: 'Total Airify Points',
   line: '100 points = $1.00. You can use these points as payment',
@@ -280,6 +348,22 @@ export const strings = {
     'You are obligated to present your e-boarding pass when you will enter the airplane flight.',
 
   eTicket: 'E-Ticket',
+  Payment_Method: 'Payment Method',
+  Enter_the_PIN_to_confirm_ticket_payment:
+    'Enter the PIN to confirm ticket payment.',
+  processing_payment: 'Processing Payment...',
+  booking_confirmed: ' Booking Confirmed!',
+  congrats: ' Congratulation! your flight ticket is Confirmed',
+  View_Transacation: '  View Transacation',
+  back_to_home: 'Back to Home',
+  My_Wallet: 'My Wallet',
+  you_have: 'You have',
+  you_get: '100 points equals $1. You will get',
+  point_after_booking: 'points after this booking',
+  PayPal: 'PayPal',
+  Google_Pay: 'Google Pay',
+  Apple_Pay: 'Apple Pay',
+  Visa_Pay: 'Visa Pay',
 
   //bookings screen
 
@@ -296,5 +380,61 @@ export const strings = {
   CancelSuccess: 'Booking Cancellation \n Successful!',
   cancelBookingSuccessText:
     'Your ficket bookina has been canceled \n as requested. A confirmation email \n win refund deles will be sene your \n registered email address. | hank you \n for choosing our service',
-  ok: 'Ok',
-};
+  ok: 'OK',
+
+  // Passenger Alerts
+  enter_first_name: 'Please Enter First Name',
+  enter_last_name: 'Please Enter last name',
+  select_title: 'Please select title',
+  enter_DOB: 'Please Enter Date of Birth',
+  select_country_code: 'Please select country code',
+  enter_phone_no: 'Please Enter Phone Number',
+  enter_email_address: 'Please Enter Email Address',
+  enter_identity_card_no: 'Please Enter Identity Card Number',
+  enter_identity_issued_country: 'Please Select Identity Card Issue Country',
+  enter_identity_issued_date: 'Please Select Identity Card Issue Date',
+  enter_identity_issued_expiry_date: 'Please Select Identity Card Expiry Date',
+  enter_passport_no: 'Please Enter Passport Number',
+  enter_passport_expiry_date: 'Please Select Passport Expiry Date',
+  enter_passport_issued_country: 'Please Select Passport Issue Country',
+  select_nationality: 'Please Select Nationality',
+  enter_driving_license: 'Please Enter Driving License Number',
+  enter_driving_license_issued_country:
+    'Please Select driving license issue country',
+  enter_driving_license_issued_date: 'Please Select driving license issue Date',
+  select_driving_license_expiry_date:
+    'Please Select driving license Expiry Date',
+  passenger_exist: 'Passenger is already exits',
+  image_uploaded: 'Image uploaded successfully',
+  image_uploaded1: 'Image uploaded',
+  address_deleted: 'Address Deleted Successfully',
+  select_reason: 'Please Select Reason',
+  choose_10days: 'Choose maximum 10 days from the today',
+  choose_date: 'Please choose date',
+  destination_departure_not_same:
+    'Destination Place and Departure Place does not be same',
+  fill_all_details: 'Please Fill All Details',
+  none_of_place_exist: 'None of this place exist',
+  enter_valid_email: 'Please Enter Email which are use in login',
+  pasword_reset_email_send: 'Password reset email has been sent successfully.',
+  please_enter_valid_email: 'Please Enter valid Email',
+  please_enter_valid_password: 'Please Enter Valid Password',
+  please_select_profile_image: 'Please Select Profile Image',
+  enter_valid_name: 'Please Enter Valid name',
+  PIN_is_not_match: 'PIN is not match',
+  add_passenger_first: 'Please first add passengers to click on plus icon',
+  add_passenger_on_click:
+    'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
+  please_select_payment_method: 'please select Payment Method',
+  not_valid_points: 'your points is not valid please increase your point',
+  please_topup_wallet: 'please TopUp your Wallet',
+  payment_alert:
+    'PayPal,Google Pay,Apple Pay and Visa pay not available at that time please pay with Wallet',
+  your_selected: 'your selected seat',
+  already_booked: 'is already booked',
+  please_select_seat: 'please select seat',
+  not_valid_voucher: 'this voucher not valid for you',
+  select_voucher: 'please select one voucher',
+  enter_valid_currency: 'please enter valid currency',
+  enter_amount: 'please enter valid amount',
+});

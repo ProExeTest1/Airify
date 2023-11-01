@@ -17,6 +17,7 @@ import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {expiredFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
+import {strings} from '../../helper/Strings';
 
 const ExpiredSavedAddress = ({onPress}) => {
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ const ExpiredSavedAddress = ({onPress}) => {
       .onSnapshot(querySnapshot => {
         let users;
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            users = documentSnapshot.data()?.savedFlights;
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            users = documentSnapshot?.data()?.savedFlights;
           }
         });
         let activeData = users?.filter(item => {
@@ -41,12 +42,12 @@ const ExpiredSavedAddress = ({onPress}) => {
             Date.now() >=
             new Date(
               moment(
-                `${item.date.split(',')[1]} ${Number(
-                  item?.departureTime.split(':')[0],
-                )}:${Number(item?.departureTime.split(':')[1])}:00`,
+                `${item?.date?.split(',')[1]} ${Number(
+                  item?.departureTime?.split(':')[0],
+                )}:${Number(item?.departureTime?.split(':')[1])}:00`,
                 'MMM DD YYYY HH:mm:ss',
-              ).format('YYYY-MM-DD HH:mm:ss'),
-            ).valueOf()
+              )?.format('YYYY-MM-DD HH:mm:ss'),
+            )?.valueOf()
           ) {
             return true;
           } else {
@@ -82,12 +83,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                   <Text style={styles.cardPrice}>{item?.price}</Text>
                   <Image
                     source={Images.filled_save}
-                    style={{
-                      width: hp(2.5),
-                      height: hp(2.5),
-                      resizeMode: 'contain',
-                      tintColor: color.commonBlue,
-                    }}
+                    style={styles.saveIconStyle}
                   />
                 </View>
                 <View style={styles.cardDataBody}>
@@ -96,7 +92,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                       {item?.departurePlace}
                     </Text>
                     <Text style={styles.FlightsPlaseNicName}>
-                      {item.departureTime}
+                      {item?.departureTime}
                     </Text>
                   </View>
                   <View style={styles.FlightsPlaseImgBody}>
@@ -105,7 +101,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                       source={Images.airplaneWhiteIcon}
                     />
                     <Text style={styles.FlightsPlaseImgText}>
-                      {item.totalHours}
+                      {item?.totalHours}
                     </Text>
                   </View>
                   <View
@@ -122,29 +118,15 @@ const ExpiredSavedAddress = ({onPress}) => {
                   <Text style={styles.FlightsPlaseName}>
                     {item?.departureShortForm}
                   </Text>
-                  <Text style={styles.FlightsPlaseImgText}>{item.stops}</Text>
+                  <Text style={styles.FlightsPlaseImgText}>{item?.stops}</Text>
                   <Text style={styles.FlightsPlaseName}>
                     {item?.destinationShortForm}
                   </Text>
                 </View>
-                <View
-                  style={[
-                    styles.cardBottemBody,
-                    {
-                      paddingTop: hp(2),
-                      borderTopWidth: 1,
-                      borderColor: color.grayLight,
-                    },
-                  ]}>
+                <View style={[styles.cardBottemBody, styles.cardBottemBody2]}>
                   <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
-                  <View
-                    style={{
-                      borderRadius: 4,
-                      paddingVertical: hp(1),
-                      paddingHorizontal: wp(2),
-                      backgroundColor: color.Grey,
-                    }}>
-                    <Text>Expired</Text>
+                  <View style={styles.expiredViewStyle}>
+                    <Text>{strings?.expired}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -152,19 +134,12 @@ const ExpiredSavedAddress = ({onPress}) => {
           }}
         />
       ) : (
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={styles.LottieViewStyle}>
           <LottieView
             source={require('../../helper/noDataFound.json')}
             autoPlay
             loop
-            style={{
-              height: hp(65),
-              width: wp(100),
-            }}
+            style={styles.lottiStyle}
           />
         </View>
       )}
@@ -249,6 +224,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: hp(2.5),
     justifyContent: 'space-between',
+  },
+  cardBottemBody2: {
+    paddingTop: hp(2),
+    borderTopWidth: 1,
+    alignItems: 'center',
+    borderColor: color.grayLight,
+  },
+  saveIconStyle: {
+    width: hp(2.5),
+    height: hp(2.5),
+    resizeMode: 'contain',
+    tintColor: color.commonBlue,
+  },
+  expiredViewStyle: {
+    borderRadius: 4,
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(2),
+    backgroundColor: color.Grey,
+  },
+  LottieViewStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lottiStyle: {
+    height: hp(65),
+    width: wp(100),
   },
 });
 

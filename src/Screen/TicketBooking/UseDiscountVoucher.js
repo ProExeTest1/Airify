@@ -24,7 +24,7 @@ const UseDiscountVoucher = ({navigation, route}) => {
   const type = route?.params?.type;
   const dispatch = useDispatch();
   const [DiscountData, setDiscountData] = useState(
-    useSelector(e => e.SelectSeatData.DiscountData),
+    useSelector(e => e?.SelectSeatData?.DiscountData),
   );
   const item = useSelector(state =>
     type == 'Reschedule'
@@ -42,7 +42,7 @@ const UseDiscountVoucher = ({navigation, route}) => {
     if (DiscountData?.id) {
       if (
         Number(
-          DiscountData?.MinTransaction.replace('$', '').replaceAll(',', ''),
+          DiscountData?.MinTransaction?.replace('$', '').replaceAll(',', ''),
         ) <
         ticketPrice * totalSeat
       ) {
@@ -53,11 +53,11 @@ const UseDiscountVoucher = ({navigation, route}) => {
           ? navigation.goBack()
           : navigation.navigate('PaymentConfirmation', {TripType: tripType});
       } else {
-        AlertConstant('this voucher not valid for you');
+        AlertConstant(strings.not_valid_voucher);
       }
     } else {
       setDiscountData({});
-      AlertConstant('please select one voucher');
+      AlertConstant(strings.select_voucher);
     }
   };
   return (
@@ -83,16 +83,24 @@ const UseDiscountVoucher = ({navigation, route}) => {
             return (
               <View style={styles.flatListInnerViewStyle}>
                 <Text style={styles.cartTitleTextStyle}>{item.header}</Text>
-                <Text numberOfLines={1}>{item.title}</Text>
+                <Text numberOfLines={1} style={styles.textStyle}>
+                  {item.title}
+                </Text>
                 <View style={{flexDirection: 'row', marginTop: hp(1)}}>
                   <View style={styles.cartView}>
                     <Image source={Images.clock} style={styles.timeIconStyle} />
                     <View>
-                      <Text style={{fontSize: fontSize(10)}}>
+                      <Text
+                        style={{fontSize: fontSize(10), color: color.black}}>
                         {strings.ValidUntil}
                       </Text>
-                      <Text style={{fontSize: fontSize(13), marginTop: 'auto'}}>
-                        {item.ValidUntil}
+                      <Text
+                        style={{
+                          fontSize: fontSize(13),
+                          marginTop: 'auto',
+                          color: color.black,
+                        }}>
+                        {item?.ValidUntil}
                       </Text>
                     </View>
                   </View>
@@ -102,11 +110,17 @@ const UseDiscountVoucher = ({navigation, route}) => {
                       style={styles.timeIconStyle}
                     />
                     <View>
-                      <Text style={{fontSize: fontSize(10)}}>
+                      <Text
+                        style={{fontSize: fontSize(10), color: color.black}}>
                         {strings.minTransaction}
                       </Text>
-                      <Text style={{fontSize: fontSize(13), marginTop: 'auto'}}>
-                        {item.MinTransaction}
+                      <Text
+                        style={{
+                          fontSize: fontSize(13),
+                          marginTop: 'auto',
+                          color: color.black,
+                        }}>
+                        {item?.MinTransaction}
                       </Text>
                     </View>
                   </View>
@@ -147,7 +161,7 @@ const UseDiscountVoucher = ({navigation, route}) => {
             CheckData();
           }}
           style={styles.okButton}>
-          <Text style={styles.okButtonText}>Ok</Text>
+          <Text style={styles.okButtonText}>{strings.ok}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -174,6 +188,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     fontWeight: '600',
     marginBottom: hp(1),
+    color: color.black,
   },
   cartView: {
     flexDirection: 'row',
@@ -212,7 +227,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: wp(6),
     paddingTop: hp(2),
-    paddingBottom: hp(4),
+    paddingBottom: hp(2),
     flexDirection: 'row',
   },
 
@@ -227,6 +242,9 @@ const styles = StyleSheet.create({
     fontSize: fontSize(18),
     fontWeight: '500',
     color: '#fff',
+  },
+  textStyle: {
+    color: color.black,
   },
 });
 

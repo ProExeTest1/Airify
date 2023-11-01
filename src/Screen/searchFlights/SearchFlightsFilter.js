@@ -29,6 +29,7 @@ import {
 } from '../../assets/DummyData/Data';
 import {useRoute} from '@react-navigation/native';
 import {RescheduleFilterData} from '../../redux/action/RescheduleAction';
+import {strings} from '../../helper/Strings';
 
 const SearchFlightsFilter = ({navigation}) => {
   const route = useRoute();
@@ -36,9 +37,9 @@ const SearchFlightsFilter = ({navigation}) => {
     temp = [];
     SearchFlightData?.map((item, index) => {
       if (index === 0) {
-        temp.push({airlineName: item.airlineName, logo: item.logo});
-      } else if (temp.every(i => i.airlineName !== item.airlineName)) {
-        temp.push({airlineName: item.airlineName, logo: item.logo});
+        temp?.push({airlineName: item?.airlineName, logo: item?.logo});
+      } else if (temp.every(i => i.airlineName !== item?.airlineName)) {
+        temp?.push({airlineName: item?.airlineName, logo: item?.logo});
       }
     });
     return temp;
@@ -137,7 +138,7 @@ const SearchFlightsFilter = ({navigation}) => {
     setAirlinesList([]);
   };
   const SelectAll = () => {
-    setAirlinesList(func().map(i => i.airlineName));
+    setAirlinesList(func().map(i => i?.airlineName));
   };
   const close = () => {
     dispatch(
@@ -199,7 +200,7 @@ const SearchFlightsFilter = ({navigation}) => {
           <View style={{paddingTop: hp(4)}}></View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Price Range</Text>
+              <Text style={styles.boxTitle}>{strings.price_range}</Text>
               <Text style={styles.boxVelue}>
                 {`$${priceTargets1[0]} - $${priceTargets1[1]}`}
               </Text>
@@ -214,7 +215,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Number of Stops</Text>
+              <Text style={styles.boxTitle}>{strings.no_of_stops}</Text>
             </View>
             <View style={styles.StopsButBody}>
               <FlatList
@@ -241,7 +242,7 @@ const SearchFlightsFilter = ({navigation}) => {
             {numberOfStopsData !== 'Direct' && (
               <>
                 <View style={styles.boxTitleBody}>
-                  <Text style={styles.boxTitle}>Stop Duration</Text>
+                  <Text style={styles.boxTitle}>{strings.stop_duration}</Text>
                   <Text style={styles.boxVelue}>
                     {`${priceTargets2[0]} - ${priceTargets2[1]} hours`}
                   </Text>
@@ -258,7 +259,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Airlines</Text>
+              <Text style={styles.boxTitle}>{strings.Airlines}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setAirlinesCondition(!AirlinesCondition);
@@ -309,7 +310,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Flight Duration</Text>
+              <Text style={styles.boxTitle}>{strings.Flight_Duration}</Text>
               <Text style={styles.boxVelue}>
                 {`${priceTargets3[0]}h - ${priceTargets3[1]}h`}
               </Text>
@@ -324,7 +325,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Amenities</Text>
+              <Text style={styles.boxTitle}>{strings.Amenities}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setAmenitiesCondition(!amenitiesCondition);
@@ -369,7 +370,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Arrival Time</Text>
+              <Text style={styles.boxTitle}>{strings.Arrival_Time}</Text>
             </View>
             <View style={{paddingTop: hp(2)}}>
               <GetTime
@@ -380,7 +381,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Departure Time</Text>
+              <Text style={styles.boxTitle}>{strings.Departure_Time}</Text>
             </View>
             <View style={{paddingTop: hp(2)}}>
               <GetTime
@@ -391,7 +392,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Refund & Reschedule</Text>
+              <Text style={styles.boxTitle}>{strings.refund_reschedule}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setRefundAndRescheduleCondition(
@@ -444,7 +445,7 @@ const SearchFlightsFilter = ({navigation}) => {
 
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Flight Preferences</Text>
+              <Text style={styles.boxTitle}>{strings.Flight_Preferences}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setFlightPreferencesCondition(!FlightPreferencesCondition);
@@ -494,7 +495,7 @@ const SearchFlightsFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Cabin Class</Text>
+              <Text style={styles.boxTitle}>{strings.Cabin_Class}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setCabinClassCondition(!CabinClassCondition);
@@ -582,9 +583,11 @@ const styles = StyleSheet.create({
   boxTitle: {
     fontWeight: 'bold',
     fontSize: fontSize(17),
+    color: color.black,
   },
   boxVelue: {
     fontSize: fontSize(18),
+    color: color.black,
   },
   StopsButBody: {
     flexDirection: 'row',
@@ -603,6 +606,7 @@ const styles = StyleSheet.create({
   StopsText: {
     fontWeight: '500',
     fontSize: fontSize(16),
+    color: color.black,
   },
   AirlinesText: {
     fontWeight: '500',
@@ -629,5 +633,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
 });

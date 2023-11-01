@@ -89,7 +89,7 @@ const WalletScreen = ({navigation}) => {
               onPress={() => navigation.navigate('TopUp')}
               style={styles.topUpBut}>
               <Image style={styles.topUpIcon} source={Images.topUpIcon} />
-              <Text>{strings.topUp}</Text>
+              <Text style={{color: color.black}}>{strings.topUp}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold',
     fontSize: fontSize(20),
+    color: color.black,
   },
   transactionHistoryViewAllBut: {
     flexDirection: 'row',
@@ -214,8 +215,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '600',
     fontSize: fontSize(18),
+    color: color.black,
   },
   priceText: {
     fontSize: fontSize(18),
+    color: color.black,
   },
 });

@@ -9,37 +9,38 @@ import {
   FlightDetailsData1,
 } from '../../assets/DummyData/FlightDetailsData';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {strings} from '../../helper/Strings';
 
 const FlightDetails = () => {
   const cardData = useSelector(
-    state => state.searchFlight.searchFlightCardData,
+    state => state?.searchFlight?.searchFlightCardData,
   );
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
   const searchFlightDateData = useSelector(e => e?.date?.depatureDate).split(
     ' ',
   );
-  const reduxDepaturePlace = useSelector(state => state.place.depaturePlace);
+  const reduxDepaturePlace = useSelector(state => state?.place?.depaturePlace);
   const reduxDestinationPlace = useSelector(
-    state => state.place.destinationPlace,
+    state => state?.place?.destinationPlace,
   );
   let depatureData =
-    reduxDepaturePlace.city + '(' + reduxDepaturePlace.airport + ')';
+    reduxDepaturePlace?.city + '(' + reduxDepaturePlace?.airport + ')';
   let destinationData =
-    reduxDestinationPlace.city + '(' + reduxDestinationPlace.airport + ')';
+    reduxDestinationPlace?.city + '(' + reduxDestinationPlace?.airport + ')';
   return (
     <View style={styles.mainViewStyle}>
       <View style={styles.firstViewStyle}>
         <View>
-          <Text style={styles.timeTextStyle}>{cardData.pickTime}</Text>
+          <Text style={styles.timeTextStyle}>{cardData?.pickTime}</Text>
           <Text style={styles.dateStyle}>
-            {searchFlightDateData[0].split(',')[1]} {searchFlightDateData[1]}
+            {searchFlightDateData[0]?.split(',')[1]} {searchFlightDateData[1]}
           </Text>
         </View>
-        <Text style={styles.dateStyle}>{cardData.totalHours}</Text>
+        <Text style={styles.dateStyle}>{cardData?.totalHours}</Text>
         <View>
-          <Text style={styles.timeTextStyle}>{cardData.lendTime}</Text>
+          <Text style={styles.timeTextStyle}>{cardData?.lendTime}</Text>
           <Text style={styles.dateStyle}>
-            {searchFlightDateData[0].split(',')[1]} {searchFlightDateData[1]}
+            {searchFlightDateData[0]?.split(',')[1]} {searchFlightDateData[1]}
           </Text>
         </View>
       </View>
@@ -50,12 +51,12 @@ const FlightDetails = () => {
           source={Images.planPrograce}
         />
       </View>
-      <View style={{flex: 1}}>
+      <View style={{flex: 3}}>
         <Text style={styles.cardHeaderText}>
-          {depatureData}, {reduxDepaturePlace.country}
+          {depatureData}, {reduxDepaturePlace?.country}
         </Text>
         <Text style={styles.dateStyle}>
-          {reduxDepaturePlace.capitalName} International Airport
+          {reduxDepaturePlace?.capitalName} {strings?.internation_airport}
         </Text>
         <View style={styles.secondInnerViewStyle}>
           <View style={styles.airlineNameStyle}>
@@ -69,7 +70,7 @@ const FlightDetails = () => {
               <Text style={styles.cardHeaderText}>{cardData?.airlineName}</Text>
             </View>
             <Text style={styles.classtextStyle}>
-              EK-202 {searchFlightData.class.split(' ')[0]}
+              {strings?.EK_202} {searchFlightData?.class?.split(' ')[0]}
             </Text>
           </View>
 
@@ -87,11 +88,11 @@ const FlightDetails = () => {
                       resizeMode="contain"
                       style={styles.flatlistIconStyle}
                     />
-                    <Text style={styles.flatlistTextStyle}>{item.text}</Text>
+                    <Text style={styles.flatlistTextStyle}>{item?.text}</Text>
                   </View>
                 );
               }}
-              keyExtractor={item => item.id}
+              keyExtractor={item => item?.id}
             />
           </View>
           <View style={styles.flatlistViewStyle}>
@@ -104,16 +105,16 @@ const FlightDetails = () => {
                 return (
                   <View style={styles.flatlist1InnerViewStyle}>
                     <Image
-                      source={item.image}
+                      source={item?.image}
                       resizeMode="contain"
                       style={styles.flatlistIconStyle}
                     />
                     {item.text == 'Airline' ? (
                       <Text style={styles.flatlistTextStyle}>
-                        {cardData.airlineName} {searchFlightData.passenger}
+                        {cardData?.airlineName} {searchFlightData?.passenger}
                       </Text>
                     ) : (
-                      <Text style={styles.flatlistTextStyle}>{item.text}</Text>
+                      <Text style={styles.flatlistTextStyle}>{item?.text}</Text>
                     )}
                   </View>
                 );
@@ -123,10 +124,10 @@ const FlightDetails = () => {
           </View>
         </View>
         <Text style={styles.cardHeaderText}>
-          {destinationData}, {reduxDestinationPlace.country}
+          {destinationData}, {reduxDestinationPlace?.country}
         </Text>
         <Text style={styles.dateStyle}>
-          {reduxDestinationPlace.capitalName} International Airport
+          {reduxDestinationPlace?.capitalName} {strings?.internation_airport}
         </Text>
       </View>
     </View>
@@ -153,22 +154,23 @@ const styles = StyleSheet.create({
     tintColor: '#383838',
   },
   flatlistViewStyle: {
-    alignItems: 'center',
+    // alignItems: 'center',
     borderColor: '#e2e2e2',
-    marginVertical: Platform.OS === 'ios' ? hp(0.9) : hp(0.5),
+    marginVertical: hp(0.9),
   },
   flatlistTextStyle: {
     color: '#383838',
     fontSize: fontSize(15),
-    marginHorizontal: wp(3),
+    marginLeft: wp(3),
+    flex: 1,
   },
   flatlist1InnerViewStyle: {
     flexDirection: 'row',
-    marginVertical: Platform.OS == 'ios' ? hp(1) : hp(0.7),
+    marginVertical: hp(0.7),
   },
   mainViewStyle: {
-    width: '92%',
-    height: '77%',
+    flex: 1,
+    marginBottom: hp(2),
     marginHorizontal: wp(4),
     borderRadius: 10,
     alignSelf: 'center',
@@ -196,12 +198,12 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 0.5,
     padding: hp(1.2),
-    marginVertical: Platform.OS === 'ios' ? hp(1) : hp(0.5),
+    marginVertical: hp(1),
   },
   airlineNameStyle: {
     borderColor: '#e2e2e2',
     borderBottomWidth: 0.5,
-    paddingVertical: Platform.OS === 'ios' ? hp(0.4) : hp(0),
+    paddingVertical: hp(0.4),
   },
   classtextStyle: {
     color: color.black,

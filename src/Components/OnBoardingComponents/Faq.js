@@ -32,7 +32,7 @@ const Faq = () => {
   const searchFaqQuestion = text => {
     if (text) {
       const abc = faqDummyData.filter(item => {
-        if (item.question.toLocaleLowerCase().match(text)) {
+        if (item?.question?.toLocaleLowerCase()?.match(text)) {
           return item;
         }
       });
@@ -42,7 +42,7 @@ const Faq = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{marginHorizontal: wp(2), paddingVertical: hp(1)}}>
+      <View style={styles.innerContainer}>
         <FlatList
           horizontal
           data={FaqData}
@@ -89,20 +89,13 @@ const Faq = () => {
       <View style={styles.flatListView}>
         <FlatList
           bounces={false}
-          data={searchText.length ? searchData : faqDummyData}
+          data={searchText?.length ? searchData : faqDummyData}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (
-              <View
-                style={{
-                  backgroundColor: color.white,
-                  marginVertical: hp(1),
-                  paddingHorizontal: wp(4),
-                  marginHorizontal: wp(4),
-                  paddingVertical: hp(2),
-                }}>
+              <View style={styles.flatlistInnerView}>
                 <View style={styles.viewStyle}>
-                  <Text style={styles.questionStyle}>{item.question}</Text>
+                  <Text style={styles.questionStyle}>{item?.question}</Text>
                   <TouchableOpacity
                     onPress={() => {
                       const d = faqDummyData.map(i => {
@@ -115,11 +108,11 @@ const Faq = () => {
                       setFaqDummyData(d);
                     }}>
                     <Image
-                      source={Images.downArrow}
+                      source={Images?.downArrow}
                       style={[
                         styles.iconStyle,
                         {
-                          transform: item.isOpen
+                          transform: item?.isOpen
                             ? [{rotate: '180deg'}]
                             : [{rotate: '0deg'}],
                         },
@@ -129,7 +122,7 @@ const Faq = () => {
                 </View>
                 {item.isOpen && (
                   <View style={styles.answerStyle}>
-                    <Text style={{color: color.black}}>{item.answer}</Text>
+                    <Text style={{color: color.black}}>{item?.answer}</Text>
                   </View>
                 )}
               </View>
@@ -146,6 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: color.Grey,
   },
+  innerContainer: {marginHorizontal: wp(2), paddingVertical: hp(1)},
   textStyle: {
     fontWeight: '500',
     fontSize: fontSize(16),
@@ -174,6 +168,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold',
     fontSize: fontSize(16),
+    color: color.black,
   },
   answerStyle: {
     marginTop: hp(2),
@@ -184,6 +179,16 @@ const styles = StyleSheet.create({
   flatListView: {
     marginTop: hp(2),
     marginBottom: hp(8),
+  },
+  textStyle1: {
+    color: color.black,
+  },
+  flatlistInnerView: {
+    backgroundColor: color.white,
+    marginVertical: hp(1),
+    paddingHorizontal: wp(4),
+    marginHorizontal: wp(4),
+    paddingVertical: hp(2),
   },
 });
 

@@ -363,14 +363,14 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
                           </Text>
                         </View>
                       )}
-                      <View style={{flex: 1}}>
+                      <View style={{flex: 1, marginLeft: wp(4)}}>
                         <Text style={styles.searNumberListTitleText}>
-                          {item.name}
+                          {item?.name}
                         </Text>
                       </View>
                       <View style={{width: wp(18), alignItems: 'center'}}>
                         <Text style={styles.searNumberListTitleText}>
-                          {item.seatNo}
+                          {item?.seatNo}
                         </Text>
                       </View>
                     </View>
@@ -567,6 +567,7 @@ const styles = StyleSheet.create({
   searNumberListTitleText: {
     fontSize: fontSize(17),
     fontWeight: '500',
+    color: color.black,
   },
   flatlistViewStyle: {
     flexDirection: 'row',

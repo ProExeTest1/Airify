@@ -48,14 +48,6 @@ const FlightDetailsScreen = ({navigation, route}) => {
         : e?.place?.searchFlightData
       : e?.searchFlight?.searchFlightReturnData,
   );
-  const ontoggleSwitch = () => {
-    if (ticketType === 'Departure') {
-      setTicketType('Return');
-    } else {
-      setTicketType('Departure');
-    }
-  };
-
   const searchFlightDateData = useSelector(e =>
     ticketType === 'Departure'
       ? navigationType === 'ReshceduleFilldetails'
@@ -79,17 +71,17 @@ const FlightDetailsScreen = ({navigation, route}) => {
     }, 3000);
   }, [press]);
   const getData = async () => {
-    const uid = auth().currentUser.uid;
+    const uid = auth()?.currentUser?.uid;
     await firestore()
       .collection('SavedFlights')
       .doc(uid)
       .get()
       .then(res => {
-        setSavedFlight(res._data.savedFlights);
+        setSavedFlight(res?._data?.savedFlights);
       });
   };
   const saveFlightDetails = async () => {
-    const uid = auth().currentUser.uid;
+    const uid = auth()?.currentUser?.uid;
     await firestore()
       .collection('SavedFlights')
       .doc(uid)
@@ -102,9 +94,9 @@ const FlightDetailsScreen = ({navigation, route}) => {
           }`,
           departurePlace: searchFlightData?.from,
           destinationPlace: searchFlightData?.to,
-          departureTime: item.pickTime,
-          landingTime: item.lendTime,
-          totalHours: item.totalHours,
+          departureTime: item?.pickTime,
+          landingTime: item?.lendTime,
+          totalHours: item?.totalHours,
           departureShortForm: searchFlightData?.fromShortform,
           destinationShortForm: searchFlightData?.toShortform,
           stops: item.stop,
@@ -120,12 +112,12 @@ const FlightDetailsScreen = ({navigation, route}) => {
           .doc(uid)
           .get()
           .then(res => {
-            setSavedFlight(res._data.savedFlights);
+            setSavedFlight(res?._data?.savedFlights);
           });
       });
   };
   const unsaveFlightDetails = async () => {
-    const uid = auth().currentUser.uid;
+    const uid = auth()?.currentUser?.uid;
     await firestore()
       .collection('SavedFlights')
       .doc(uid)
@@ -138,12 +130,12 @@ const FlightDetailsScreen = ({navigation, route}) => {
           }`,
           departurePlace: searchFlightData?.from,
           destinationPlace: searchFlightData?.to,
-          departureTime: item.pickTime,
-          landingTime: item.lendTime,
-          totalHours: item.totalHours,
+          departureTime: item?.pickTime,
+          landingTime: item?.lendTime,
+          totalHours: item?.totalHours,
           departureShortForm: searchFlightData?.fromShortform,
           destinationShortForm: searchFlightData?.toShortform,
-          stops: item.stop,
+          stops: item?.stop,
           flightPrice: item?.price,
           ticketType: ticketType,
         }),
@@ -156,7 +148,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
           .doc(uid)
           .get()
           .then(res => {
-            setSavedFlight(res._data.savedFlights);
+            setSavedFlight(res?._data?.savedFlights);
           });
       });
   };
@@ -166,9 +158,11 @@ const FlightDetailsScreen = ({navigation, route}) => {
         <SafeAreaView>
           <View style={styles.safeHeaderViewStyle}>
             <View style={styles.headerTextViewStyle}>
-              <Text style={styles.headerTextStyle}>Flight Details</Text>
+              <Text style={styles.headerTextStyle}>
+                {strings.Flight_Details}
+              </Text>
             </View>
-            <TouchableOpacity onPress={() => navigation.goBack('')}>
+            <TouchableOpacity onPress={() => navigation?.goBack('')}>
               <Image
                 source={Images.backIcon}
                 style={styles.backIconStyle}
@@ -180,14 +174,14 @@ const FlightDetailsScreen = ({navigation, route}) => {
                 onPress={() => {
                   savedFlight?.some(
                     a =>
-                      a.airlineName == item.airlineName &&
-                      a.landingTime == item.lendTime &&
-                      a.departurePlace == searchFlightData?.from &&
-                      a.destinationPlace == searchFlightData?.to &&
-                      a.departureTime == item.pickTime &&
-                      a.flightPrice == item.price &&
-                      a.stops == item.stop &&
-                      a.totalHours == item.totalHours,
+                      a?.airlineName == item?.airlineName &&
+                      a?.landingTime == item?.lendTime &&
+                      a?.departurePlace == searchFlightData?.from &&
+                      a?.destinationPlace == searchFlightData?.to &&
+                      a?.departureTime == item?.pickTime &&
+                      a?.flightPrice == item?.price &&
+                      a?.stops == item?.stop &&
+                      a?.totalHours == item?.totalHours,
                   ) === true
                     ? unsaveFlightDetails()
                     : saveFlightDetails();
@@ -196,17 +190,17 @@ const FlightDetailsScreen = ({navigation, route}) => {
                   source={
                     savedFlight?.some(
                       a =>
-                        a.airlineName == item.airlineName &&
-                        a.landingTime == item.lendTime &&
-                        a.departurePlace == searchFlightData?.from &&
-                        a.destinationPlace == searchFlightData?.to &&
-                        a.departureTime == item.pickTime &&
-                        a.flightPrice == item.price &&
-                        a.stops == item.stop &&
-                        a.totalHours == item.totalHours,
+                        a?.airlineName == item?.airlineName &&
+                        a?.landingTime == item?.lendTime &&
+                        a?.departurePlace == searchFlightData?.from &&
+                        a?.destinationPlace == searchFlightData?.to &&
+                        a?.departureTime == item?.pickTime &&
+                        a?.flightPrice == item?.price &&
+                        a?.stops == item?.stop &&
+                        a?.totalHours == item?.totalHours,
                     ) === true
-                      ? Images.filled_save
-                      : Images.saved
+                      ? Images?.filled_save
+                      : Images?.saved
                   }
                   style={styles.saveShareIconStyle}
                   resizeMode="contain"
@@ -214,7 +208,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  ShareConstant(SearchFlightData.airlineName);
+                  ShareConstant(SearchFlightData?.airlineName);
                 }}>
                 <Image
                   source={Images.shareIcon}
@@ -228,11 +222,15 @@ const FlightDetailsScreen = ({navigation, route}) => {
       </View>
       {tripType === 'Round-Trip' ? (
         <ReturnDepartureSwitch
-          onPress={ontoggleSwitch}
+          onPress1={() => setTicketType('Departure')}
+          onPress2={() => setTicketType('Return')}
           ticketType={ticketType}
         />
       ) : null}
-      <ScrollView bounces={false} style={styles.ScrollViewStyle}>
+      <ScrollView
+        bounces={false}
+        style={styles.ScrollViewStyle}
+        showsVerticalScrollIndicator={false}>
         <View style={{paddingHorizontal: wp(4), marginTop: hp(2), flex: 1}}>
           <FlightDetailsCard
             searchFlightData={searchFlightData}
@@ -249,15 +247,17 @@ const FlightDetailsScreen = ({navigation, route}) => {
               },
             ]}>
             <Image
-              source={Images.aeroPlane}
+              source={Images?.aeroPlane}
               style={styles.aeroPlaneImageStyle}
               resizeMode="contain"
             />
             <View style={styles.secondCardHeaderStyle}>
-              <Text style={styles.secondCardheaderTextStyle}>Original</Text>
+              <Text style={styles.secondCardheaderTextStyle}>
+                {strings.Original}
+              </Text>
               <Text style={styles.cardPrice}>
                 {item?.price}
-                <Text style={styles.cardPriceTitle}>/pax</Text>
+                <Text style={styles.cardPriceTitle}>{strings.pax}</Text>
               </Text>
             </View>
           </View>
@@ -271,7 +271,8 @@ const FlightDetailsScreen = ({navigation, route}) => {
       <View style={styles.thirdCardStyle}>
         <View>
           <Text style={styles.priceTextStyle}>
-            Total Price : {searchFlightData?.passenger?.split(' ')[0]} person(s)
+            {strings.total_price} : {searchFlightData?.passenger?.split(' ')[0]}{' '}
+            person(s)
           </Text>
           <Text style={styles.cardPrice}>
             $
@@ -309,7 +310,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
         <View style={styles.modalViewViewStyle}>
           <View style={styles.imageViewStyle}>
             <Image
-              source={Images.tickMark}
+              source={Images?.tickMark}
               style={styles.imageStyle}
               resizeMode="contain"
             />

@@ -17,9 +17,9 @@ const TransactionHistory = ({navigation}) => {
   const getTransactionHistory = async () => {
     await firestore()
       .collection('UserWallet')
-      .doc(auth().currentUser.uid)
+      .doc(auth()?.currentUser?.uid)
       .get()
-      .then(a => setTransactionHistory(a.data().transactionHistory));
+      .then(a => setTransactionHistory(a?.data().transactionHistory));
   };
   useEffect(() => {
     if (transactionHistory) {
@@ -40,7 +40,7 @@ const TransactionHistory = ({navigation}) => {
           Images1={Images.backIcon}
           headerName={strings.walletTopUp}
           navigation1={() => {
-            navigation.navigate('WalletScreen');
+            navigation?.navigate('WalletScreen');
           }}
         />
         <View style={{flex: 1, paddingHorizontal: wp(8)}}>

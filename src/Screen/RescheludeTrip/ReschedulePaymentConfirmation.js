@@ -48,24 +48,24 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
   const item = useSelector(state =>
     ticketType === 'Old Trip'
       ? state?.rescheduleFlightdata?.rescheduleCardData?.searchFlightCardData
-      : state?.rescheduleFlightdata.rescheduleSelectNewCard,
+      : state?.rescheduleFlightdata?.rescheduleSelectNewCard,
   );
   const oldTripData = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleCardData,
   );
   const newTripData = useSelector(
-    e => e?.rescheduleFlightdata.rescheduleSelectNewCard,
+    e => e?.rescheduleFlightdata?.rescheduleSelectNewCard,
   );
   console.log(oldTripData.type); //Departure//Return
   const searchFlightData = useSelector(e =>
     ticketType === 'Old Trip'
-      ? e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData
-      : e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData,
+      ? e?.rescheduleFlightdata?.rescheduleCardData?.searchFlightData
+      : e?.rescheduleFlightdata?.rescheduleCardData?.searchFlightData,
   );
 
   const searchFlightDateData = useSelector(e =>
     ticketType === 'Old Trip'
-      ? e?.rescheduleFlightdata?.rescheduleCardData?.searchFlightDateData.toString()
+      ? e?.rescheduleFlightdata?.rescheduleCardData?.searchFlightDateData?.toString()
       : e?.rescheduleFlightdata?.rescheduleDateData,
   ).split(',');
   const ticketPrice = parseInt(
@@ -76,7 +76,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
   const PaymentMethodData = useSelector(
     e => e?.rescheduleFlightdata?.ReschedulePaymentMethodData,
   );
-  const totalSeat = Number(searchFlightData?.passenger.split(' ')[0]);
+  const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
 
   const TotalPoint = Number(PointsData.TotalPoints);
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
@@ -263,7 +263,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
                     oldTripData?.totalPaymentList?.points?.pointsUse +
                       oldTripData?.totalPaymentList?.points?.havePoint,
                   )} Points`}</Text>
-                  <Text style={{marginTop: hp(1)}}>
+                  <Text style={{marginTop: hp(1), color: color.black}}>
                     {`100 points equals $1. You will get ${oldTripData?.totalPaymentList?.points?.getPoint} points after this booking`}
                   </Text>
                 </View>
@@ -413,12 +413,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   boxTitle: {
+    color: color.black,
     fontSize: fontSize(17),
     fontWeight: 'bold',
     flex: 1,
   },
   boxVelue: {
     fontSize: fontSize(18),
+    color: color.black,
   },
   StopsButBody: {
     // paddingVertical: hp(1.5),
@@ -480,6 +482,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: fontSize(18),
     fontWeight: '600',
+    color: color.black,
   },
   walletPraice: {
     fontSize: fontSize(18),

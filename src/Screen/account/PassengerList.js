@@ -63,10 +63,10 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
       />
       <View style={[styles.headerStyle, {backgroundColor: color.commonBlue}]}>
         <Text style={[styles.mainHeaderText, {color: color.white}]}>
-          {strings.no}
+          {strings?.no}
         </Text>
         <Text style={[styles.mainHeaderText, {color: color.white}]}>
-          {strings.name}
+          {strings?.name}
         </Text>
       </View>
       <View style={styles.flatListView}>
@@ -89,18 +89,18 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
                   <Text style={styles.mainHeaderText}>{index + 1} .</Text>
                   <Text
                     style={[styles.mainHeaderText, {paddingHorizontal: wp(7)}]}>
-                    {item.FirstName}
+                    {item?.FirstName}
                   </Text>
                 </View>
                 <TouchableOpacity
                   style={{marginRight: wp(6)}}
                   onPress={() => {
-                    navigation.navigate('NewPassenger', {
+                    navigation?.navigate('NewPassenger', {
                       passengerData: item,
                       mode: 'Edit',
                     });
                   }}>
-                  <Image source={Images.pencil} style={styles.EditIconStyle} />
+                  <Image source={Images?.pencil} style={styles.EditIconStyle} />
                 </TouchableOpacity>
               </View>
             );

@@ -14,6 +14,7 @@ import {
 } from '../../assets/DummyData/FlightDetailsData';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
+import {strings} from '../../helper/Strings';
 
 const FlightServices = ({DetailsNavigation}) => {
   return (
@@ -60,7 +61,7 @@ const FlightServices = ({DetailsNavigation}) => {
         <TouchableOpacity
           onPress={DetailsNavigation}
           style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={styles.detailsTextStyle}>Details</Text>
+          <Text style={styles.detailsTextStyle}>{strings.details}</Text>
           <Image
             source={Images.forward}
             style={styles.forwardStyle}

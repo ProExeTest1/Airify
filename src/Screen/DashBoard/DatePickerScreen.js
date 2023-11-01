@@ -1,7 +1,13 @@
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {CalendarList, LocaleConfig} from 'react-native-calendars';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {PickerHeaderBar} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -13,6 +19,7 @@ import {
   returnNormalDateAction,
 } from '../../redux/action/DateAction';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {strings} from '../../helper/Strings';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -79,7 +86,7 @@ const DatePickerScreen = ({navigation, route}) => {
   const date = new Date(selected).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
-  const dayname = date.split(',');
+  const dayname = date.split(' ');
   const month = new Date(selected).toLocaleDateString('en-IN', {
     month: 'short',
   });
@@ -89,20 +96,21 @@ const DatePickerScreen = ({navigation, route}) => {
   const returndate = new Date(returnDate).toLocaleDateString('en-IN', {
     weekday: 'short',
   });
-  const returndayname = returndate?.split(',');
+  const returndayname = returndate?.split(' ');
   const returnmonth = new Date(returnDate).toLocaleDateString('en-IN', {
     month: 'short',
   });
 
   const currentDate = new Date()
-    .toLocaleDateString('en-IN', {weekday: 'short'})
-    .split(',');
+    .toLocaleDateString('en-IN', {
+      weekday: 'short',
+    })
+    .split(' ');
 
   let newDate1 = new Date();
   const newDate = moment(newDate1).format('YYYY-MM-DD').split('-');
 
   const currentMonth = new Date().toLocaleDateString('en-IN', {month: 'short'});
-
   // When user press on Ok button it will navigate to home screen and store date data in redux
 
   const onOkPress = () => {
@@ -163,17 +171,17 @@ const DatePickerScreen = ({navigation, route}) => {
         dispatch(dateAction(choosenDate));
         navigation.navigate('TabNavigation');
       } else {
-        AlertConstant('Choose maximum 10 days from the today');
+        AlertConstant(strings.choose_10days);
       }
     } else {
-      AlertConstant('Please choose date');
+      AlertConstant(strings.choose_date);
     }
   };
   return (
     <View>
       <PickerHeaderBar
         headerName={'Select Date'}
-        navigation={() => navigation.goBack('')}
+        navigation={() => navigation?.goBack('')}
       />
       <View style={styles.currentDateStyle}>
         <View style={styles.dateMainViewStyle}>
@@ -181,18 +189,18 @@ const DatePickerScreen = ({navigation, route}) => {
             <Text style={styles.dateTextStyle}>
               {press && !returnPress
                 ? `${dayname[0]}, ${month} ${day} ${year}`
-                : `${currentDate[0]},${currentMonth} ${newDate[2]} ${newDate[0]}`}
+                : `${currentDate[0]} ${currentMonth} ${newDate[2]} ${newDate[0]}`}
             </Text>
           </View>
           <Text style={styles.returnDateTextStyle}>------</Text>
           <View
             style={[
               styles.ReturndateViewStyle,
-              {paddingHorizontal: returnPress && press ? wp(6) : wp(7)},
+              {paddingHorizontal: returnPress && press ? wp(3) : wp(7)},
             ]}>
             <Text style={styles.returnDateTextStyle}>
               {press && returnPress && returnday !== undefined
-                ? `${returndayname[0]}, ${returnmonth} ${returnday} ${returnyear}`
+                ? `${returndayname[0]} ${returnmonth} ${returnday} ${returnyear}`
                 : '+ Return Date'}
             </Text>
           </View>
@@ -230,11 +238,11 @@ const DatePickerScreen = ({navigation, route}) => {
           />
         </View>
       </View>
-      <View style={styles.bottomViewStyle}>
+      <SafeAreaView style={styles.bottomViewStyle}>
         <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
-          <Text style={styles.searchFontStyle}>OK</Text>
+          <Text style={styles.searchFontStyle}>{strings.ok}</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </View>
   );
 };
@@ -249,7 +257,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: color.commonBlue,
     justifyContent: 'center',
-    paddingHorizontal: wp(6),
+    paddingHorizontal: wp(3),
     paddingVertical: hp(1.8),
     marginVertical: hp(2.2),
   },
@@ -276,11 +284,8 @@ const styles = StyleSheet.create({
   searchButtonStyle: {
     alignItems: 'center',
     marginHorizontal: wp(5),
-    paddingVertical: hp(2),
-    height: hp(7),
-    width: wp(84),
+    paddingVertical: hp(2.2),
     borderRadius: 16,
-    alignSelf: 'center',
     backgroundColor: 'blue',
     marginVertical: hp(2.5),
     justifyContent: 'center',
@@ -299,8 +304,5 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: fontSize(16, 812),
     fontWeight: '500',
-  },
-  bottomViewStyle: {
-    height: hp(12.31),
   },
 });

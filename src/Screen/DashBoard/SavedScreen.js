@@ -72,7 +72,7 @@ const SavedScreen = ({navigation}) => {
         .then(async i => {
           await firestore()
             .collection('SavedFlights')
-            .doc(auth().currentUser.uid)
+            .doc(auth()?.currentUser?.uid)
             .update({
               savedFlights: i?.data()?.savedFlights?.filter(d => {
                 if (
@@ -111,24 +111,24 @@ const SavedScreen = ({navigation}) => {
     setModalVisible2(false);
   };
   const applySortdaata = () => {
-    const sortData = SearchFlightCardData.sort((a, b) => {
+    const sortData = SearchFlightCardData?.sort((a, b) => {
       let aData =
-        a.day === 1
-          ? Number(a.landingTime.replaceAll(':', '.'))
-          : Number(a.landingTime.replaceAll(':', '.')) + 24;
+        a?.day === 1
+          ? Number(a?.landingTime?.replaceAll(':', '.'))
+          : Number(a?.landingTime?.replaceAll(':', '.')) + 24;
       let bData =
-        b.day === 1
-          ? Number(b.landingTime.replaceAll(':', '.'))
-          : Number(b.landingTime.replaceAll(':', '.')) + 24;
+        b?.day === 1
+          ? Number(b?.landingTime?.replaceAll(':', '.'))
+          : Number(b?.landingTime?.replaceAll(':', '.')) + 24;
       if (selectedData?.label === 'Lowest Price') {
         return (
-          Number(a.flightPrice.slice(1).replaceAll(',', '')) -
-          Number(b.flightPrice.slice(1).replaceAll(',', ''))
+          Number(a?.flightPrice?.slice(1)?.replaceAll(',', '')) -
+          Number(b?.flightPrice?.slice(1)?.replaceAll(',', ''))
         );
       } else if (selectedData?.label === 'Direct Flights First') {
         return (
-          Number(a.stops === 'Direct' ? 0 : a.stops.slice(0, 1)) -
-          Number(b.stops === 'Direct' ? 0 : b.stops.slice(0, 1))
+          Number(a?.stops === 'Direct' ? 0 : a?.stops?.slice(0, 1)) -
+          Number(b?.stops === 'Direct' ? 0 : b?.stops?.slice(0, 1))
         );
       } else if (selectedData?.label === 'Earliest Departure') {
         return aData - bData;
@@ -136,18 +136,18 @@ const SavedScreen = ({navigation}) => {
         return bData - aData;
       } else if (selectedData?.label === 'Earliest Arrival') {
         return (
-          Number(a.departureTime.replaceAll(':', '.')) -
-          Number(b.departureTime.replaceAll(':', '.'))
+          Number(a?.departureTime?.replaceAll(':', '.')) -
+          Number(b?.departureTime?.replaceAll(':', '.'))
         );
       } else if (selectedData?.label === 'Latest Arrival') {
         return (
-          Number(b.departureTime.replaceAll(':', '.')) -
-          Number(a.departureTime.replaceAll(':', '.'))
+          Number(b?.departureTime?.replaceAll(':', '.')) -
+          Number(a?.departureTime?.replaceAll(':', '.'))
         );
       } else if (selectedData?.label === 'Shortest Duration') {
         return (
-          Number(a.totalHours.replaceAll('h ', '').slice(0, -1)) -
-          Number(b.totalHours.replaceAll('h ', '').slice(0, -1))
+          Number(a?.totalHours?.replaceAll('h ', '').slice(0, -1)) -
+          Number(b?.totalHours?.replaceAll('h ', '').slice(0, -1))
         );
       }
     });
@@ -158,42 +158,42 @@ const SavedScreen = ({navigation}) => {
     const filterData = SearchFlightCardData?.filter(item => {
       let priceRange =
         searchFlightFilterData?.priceRange[0] <
-          Number(item.flightPrice.slice(1).replaceAll(',', '')) &&
+          Number(item?.flightPrice?.slice(1)?.replaceAll(',', '')) &&
         searchFlightFilterData?.priceRange[1] >
-          Number(item.flightPrice.slice(1).replaceAll(',', ''));
+          Number(item?.flightPrice?.slice(1)?.replaceAll(',', ''));
 
       let numberOfStops =
         searchFlightFilterData?.numberOfStopsData === '2+ Stop'
-          ? Number(item.stops.slice(0, 1)) >= 2
-          : searchFlightFilterData?.numberOfStopsData === item.stops;
+          ? Number(item?.stops?.slice(0, 1)) >= 2
+          : searchFlightFilterData?.numberOfStopsData === item?.stops;
 
       let airlinesList =
-        searchFlightFilterData.airlinesList !== null
-          ? searchFlightFilterData.airlinesList.some(
-              i => i === item.airlineName,
+        searchFlightFilterData?.airlinesList !== null
+          ? searchFlightFilterData?.airlinesList?.some(
+              i => i === item?.airlineName,
             )
           : true;
 
-      let flightDurationTime = item.totalHours.slice(0, -1).split('h ');
+      let flightDurationTime = item?.totalHours?.slice(0, -1).split('h ');
       let flightDuration =
         searchFlightFilterData?.flightDuration[0] <=
           Number(flightDurationTime[0]) &&
         searchFlightFilterData?.flightDuration[1] >
           Number(flightDurationTime[0]);
 
-      let arrivalTimeList = item.landingTime.slice(0, 2);
-      let departureTimeList = item.departureTime.slice(0, 2);
+      let arrivalTimeList = item?.landingTime?.slice(0, 2);
+      let departureTimeList = item?.departureTime?.slice(0, 2);
 
       //ara
       let searchFlightFilterArrival =
         searchFlightFilterData?.arrivalTime?.time.split(' - ');
       let arrivalTime =
-        searchFlightFilterData.arrivalTime !== null
-          ? Number(searchFlightFilterArrival[0].slice(0, 2)) <=
+        searchFlightFilterData?.arrivalTime !== null
+          ? Number(searchFlightFilterArrival[0]?.slice(0, 2)) <=
               Number(arrivalTimeList) &&
-            Number(searchFlightFilterArrival[1].slice(0, 2)) == 0
+            Number(searchFlightFilterArrival[1]?.slice(0, 2)) == 0
             ? 24
-            : Number(searchFlightFilterArrival[1].slice(0, 2)) >
+            : Number(searchFlightFilterArrival[1]?.slice(0, 2)) >
               Number(arrivalTimeList)
           : true;
 
@@ -202,10 +202,10 @@ const SavedScreen = ({navigation}) => {
         searchFlightFilterData?.departureTime?.time.split(' - ');
 
       let departureTime =
-        searchFlightFilterData.departureTime !== null
-          ? Number(searchFlightFilterdeparture[0].slice(0, 2)) <=
+        searchFlightFilterData?.departureTime !== null
+          ? Number(searchFlightFilterdeparture[0]?.slice(0, 2)) <=
               Number(departureTimeList) &&
-            Number(searchFlightFilterdeparture[1].slice(0, 2)) >
+            Number(searchFlightFilterdeparture[1]?.slice(0, 2)) >
               Number(departureTimeList)
           : true;
 
@@ -251,19 +251,19 @@ const SavedScreen = ({navigation}) => {
       <CommonHeader
         onPress1={false}
         onPress2={false}
-        Images2={Images.search}
-        Images1={Images.planIcon}
-        Images2Color={color.white}
-        headerName={strings.savedFlight}
+        Images2={Images?.search}
+        Images1={Images?.planIcon}
+        Images2Color={color?.white}
+        headerName={strings?.savedFlight}
       />
-      <View style={styles.buttonViewStyle}>
+      <View style={styles?.buttonViewStyle}>
         <TouchableOpacity
           style={[
-            styles.buttonStyle,
+            styles?.buttonStyle,
             {
               backgroundColor: selectedOption
-                ? color.commonBlue
-                : color.lightGray2,
+                ? color?.commonBlue
+                : color?.lightGray2,
               borderRadius: wp(2),
             },
           ]}
@@ -272,19 +272,19 @@ const SavedScreen = ({navigation}) => {
           }}>
           <Text
             style={[
-              styles.buttonTextStyle,
-              {color: selectedOption ? color.white : color.black},
+              styles?.buttonTextStyle,
+              {color: selectedOption ? color?.white : color?.black},
             ]}>
-            {strings.active}
+            {strings?.active}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
-            styles.buttonStyle,
+            styles?.buttonStyle,
             {
               backgroundColor: selectedOption
-                ? color.lightGray2
-                : color.commonBlue,
+                ? color?.lightGray2
+                : color?.commonBlue,
               borderRadius: wp(2),
             },
           ]}
@@ -293,10 +293,10 @@ const SavedScreen = ({navigation}) => {
           }}>
           <Text
             style={[
-              styles.buttonTextStyle,
-              {color: !selectedOption ? color.white : color.black},
+              styles?.buttonTextStyle,
+              {color: !selectedOption ? color?.white : color?.black},
             ]}>
-            {strings.expiry}
+            {strings?.expiry}
           </Text>
         </TouchableOpacity>
       </View>
@@ -323,70 +323,75 @@ const SavedScreen = ({navigation}) => {
         onDismiss={closeModal}
         backdropOpacity={0.8}
         isVisible={modal}
-        style={styles.modalStyle}>
-        <View style={styles.modalViewStyle}>
-          <View style={styles.headerStyle}>
-            <Text style={styles.headerTextStyle}>{strings.removeAddress}</Text>
+        style={styles?.modalStyle}>
+        <View style={styles?.modalViewStyle}>
+          <View style={styles?.headerStyle}>
+            <Text style={styles?.headerTextStyle}>
+              {strings?.removeAddress}
+            </Text>
           </View>
           <View
             onPress={() => {
               onPress(item);
             }}
-            style={[styles.cardBody]}>
-            <View style={styles.cardHeader}>
+            style={[styles?.cardBody]}>
+            <View style={styles?.cardHeader}>
               <View
                 style={[
-                  styles.cardHeaderLogo,
+                  styles?.cardHeaderLogo,
                   {backgroundColor: savedItem?.logo},
                 ]}
               />
-              <Text style={styles.cardHeaderText}>
+              <Text style={styles?.cardHeaderText}>
                 {savedItem?.airlineName}
               </Text>
-              <Text style={styles.cardPrice}>{savedItem?.price}</Text>
+              <Text style={styles?.cardPrice}>{savedItem?.price}</Text>
               <Image
-                source={Images.filled_save}
+                source={Images?.filled_save}
                 style={{
                   height: hp(2.5),
                   width: hp(2.5),
                   resizeMode: 'contain',
-                  tintColor: color.commonBlue,
+                  tintColor: color?.commonBlue,
                 }}
               />
             </View>
-            <View style={styles.cardDataBody}>
-              <View style={styles.FlightsPlaseBody}>
-                <Text style={styles.FlightsPlaseName}>
+            <View style={styles?.cardDataBody}>
+              <View style={styles?.FlightsPlaseBody}>
+                <Text style={styles?.FlightsPlaseName}>
                   {savedItem?.departurePlace}
                 </Text>
-                <Text style={styles.FlightsPlaseNicName}>
+                <Text style={styles?.FlightsPlaseNicName}>
                   {savedItem?.departureTime}
                 </Text>
               </View>
-              <View style={styles.FlightsPlaseImgBody}>
+              <View style={styles?.FlightsPlaseImgBody}>
                 <Image
-                  style={styles.FlightsPlaseImg}
-                  source={Images.airplaneWhiteIcon}
+                  style={styles?.FlightsPlaseImg}
+                  source={Images?.airplaneWhiteIcon}
                 />
-                <Text style={styles.FlightsPlaseImgText}>
+                <Text style={styles?.FlightsPlaseImgText}>
                   {savedItem?.totalHours}
                 </Text>
               </View>
-              <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
-                <Text style={styles.FlightsPlaseName}>
+              <View
+                style={[styles?.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
+                <Text style={styles?.FlightsPlaseName}>
                   {savedItem?.destinationPlace}
                 </Text>
-                <Text style={styles.FlightsPlaseNicName}>
+                <Text style={styles?.FlightsPlaseNicName}>
                   {savedItem?.landingTime}
                 </Text>
               </View>
             </View>
-            <View style={styles.cardBottemBody}>
-              <Text style={styles.FlightsPlaseName}>
+            <View style={styles?.cardBottemBody}>
+              <Text style={styles?.FlightsPlaseName}>
                 {savedItem?.departureShortForm}
               </Text>
-              <Text style={styles.FlightsPlaseImgText}>{savedItem?.stops}</Text>
-              <Text style={styles.FlightsPlaseName}>
+              <Text style={styles?.FlightsPlaseImgText}>
+                {savedItem?.stops}
+              </Text>
+              <Text style={styles?.FlightsPlaseName}>
                 {savedItem?.destinationShortForm}
               </Text>
             </View>
@@ -404,7 +409,7 @@ const SavedScreen = ({navigation}) => {
               <Text style={[styles.cardPrice, {marginLeft: wp(30)}]}>
                 {savedItem?.flightPrice}
               </Text>
-              <Text style={styles.cardPriceTitle}>/pax</Text>
+              <Text style={styles.cardPriceTitle}>{strings.pax}</Text>
             </View>
           </View>
           <View
@@ -450,7 +455,7 @@ const SavedScreen = ({navigation}) => {
           onPress={() => setModalVisible2(true)}
           style={styles.sortImgBody}>
           <Image style={styles.sortImg} source={Images.sortIcon} />
-          <Text style={styles.sortText}>Sort</Text>
+          <Text style={styles.sortText}>{strings.sort}</Text>
         </TouchableOpacity>
         <View style={styles.sortLine}></View>
         <TouchableOpacity
@@ -481,7 +486,11 @@ const SavedScreen = ({navigation}) => {
                     selected={item.id === selectedData?.id}
                     onPress={() => setSelectedData(item)}
                     label={item.label}
-                    labelStyle={{fontSize: fontSize(18), fontWeight: '500'}}
+                    labelStyle={{
+                      fontSize: fontSize(18),
+                      fontWeight: '500',
+                      color: color.black,
+                    }}
                     color={color.commonBlue}
                   />
                 </View>
@@ -530,6 +539,7 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     fontWeight: '600',
     fontSize: fontSize(14),
+    color: color.black,
   },
   modalStyle: {
     margin: wp(0),
@@ -560,6 +570,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold',
     fontSize: fontSize(18),
+    color: color.black,
   },
   cardHeaderLogo: {
     width: wp(5.8),
@@ -597,7 +608,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(13),
   },
   FlightsPlaseNicName: {
-    color: '#000',
+    color: color.black,
     fontWeight: 'bold',
     marginTop: hp(1.5),
     fontSize: fontSize(21),
@@ -654,6 +665,7 @@ const styles = StyleSheet.create({
   sortText: {
     fontWeight: '500',
     fontSize: fontSize(20),
+    color: color.black,
   },
   sortImg: {
     width: wp(6),
@@ -675,6 +687,7 @@ const styles = StyleSheet.create({
   createAlertTitle: {
     fontWeight: '600',
     fontSize: fontSize(20),
+    color: color.black,
   },
   sortModalBody: {
     borderBottomWidth: 1,

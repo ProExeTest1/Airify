@@ -6,7 +6,7 @@ export const ShareConstant = async data => {
     await Share.share({
       title: 'Flight Ticket',
       message: data,
-      url: 'https://proexelancers.com/',
+      url: 'https://www.Google.com/',
     });
   } catch (error) {
     AlertConstant(error.message);

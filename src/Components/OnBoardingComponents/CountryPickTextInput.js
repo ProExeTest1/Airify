@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import {strings} from '../../helper/Strings';
@@ -26,37 +27,35 @@ const CountryPickTextInput = ({
   placeholderTextColor,
 }) => {
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        marginVertical: hp(1),
-      }}>
-      <TouchableOpacity
-        style={styles.viewStyle}
-        disabled={strings.Phone ? disabled : true}
-        onPress={onPress1}>
-        {placeholder === strings.Phone && (
-          <TouchableOpacity style={styles.InputViewStyle} onPress={onPress2}>
-            <Text>{countryCode}</Text>
-            <Image
-              source={Images.downArrow}
-              style={[styles.textInputIconStyle]}
+    <KeyboardAvoidingView>
+      <View style={styles.mainViewStyle}>
+        <TouchableOpacity
+          style={styles.viewStyle}
+          disabled={strings.Phone ? disabled : true}
+          onPress={onPress1}>
+          {placeholder === strings.Phone && (
+            <TouchableOpacity style={styles.InputViewStyle} onPress={onPress2}>
+              <Text>{countryCode}</Text>
+              <Image
+                source={Images.downArrow}
+                style={[styles.textInputIconStyle]}
+              />
+            </TouchableOpacity>
+          )}
+          <View style={styles.InputViewStyle}>
+            <TextInput
+              value={value}
+              editable={editable}
+              keyboardType="number-pad"
+              placeholder={placeholder}
+              onChangeText={onChangeText}
+              placeholderTextColor={placeholderTextColor}
+              style={[styles.textInputStyle, textInputStyle]}
             />
-          </TouchableOpacity>
-        )}
-        <View style={styles.InputViewStyle}>
-          <TextInput
-            value={value}
-            editable={editable}
-            keyboardType="number-pad"
-            placeholder={placeholder}
-            onChangeText={onChangeText}
-            placeholderTextColor={placeholderTextColor}
-            style={[styles.textInputStyle, textInputStyle]}
-          />
-        </View>
-      </TouchableOpacity>
-    </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -85,6 +84,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: wp(4),
     color: color.black,
+  },
+  mainViewStyle: {
+    alignItems: 'center',
+    marginVertical: hp(1),
   },
 });
 

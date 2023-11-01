@@ -38,6 +38,7 @@ import {
   RescheduleTotalPaymentListAction,
   rescheduleSelectNewCardData,
 } from '../../redux/action/RescheduleAction';
+import {AlertConstant} from '../../helper/AlertConstant';
 const ConfirmPin = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const [pinData, setPinData] = useState('');
@@ -88,24 +89,24 @@ const ConfirmPin = ({navigation, route}) => {
           .doc(auth().currentUser.uid)
           .update({
             wallet:
-              Number(UserWalletData.wallet) -
-              (totalPaymentList.return
-                ? totalPaymentList.return.totalPayment +
-                  totalPaymentList.departure.totalPayment
-                : totalPaymentList.departure.totalPayment),
+              Number(UserWalletData?.wallet) -
+              (totalPaymentList?.return
+                ? totalPaymentList?.return?.totalPayment +
+                  totalPaymentList?.departure?.totalPayment
+                : totalPaymentList?.departure?.totalPayment),
             transactionHistory: [
               {
                 title: strings.walletTopUp,
                 price: `-$${
-                  totalPaymentList.return
-                    ? totalPaymentList.return.totalPayment +
-                      totalPaymentList.departure.totalPayment
-                    : totalPaymentList.departure.totalPayment
+                  totalPaymentList?.return
+                    ? totalPaymentList?.return?.totalPayment +
+                      totalPaymentList?.departure?.totalPayment
+                    : totalPaymentList?.departure?.totalPayment
                 }`,
                 date: moment(new Date()).format('MMM D,YYYY'),
                 time: new Date().toLocaleTimeString('en-IN'),
               },
-              ...UserWalletData.transactionHistory,
+              ...UserWalletData?.transactionHistory,
             ],
           });
         if (tripType === 'Round-Trip') {
@@ -116,30 +117,30 @@ const ConfirmPin = ({navigation, route}) => {
               AirlineSeatBookData: SeatData.map(i => {
                 if (i.date == SelectDate?.date) {
                   return {
-                    date: i.date,
-                    day: i.day,
-                    flightData: i.flightData.map(e => {
+                    date: i?.date,
+                    day: i?.day,
+                    flightData: i?.flightData?.map(e => {
                       if (
-                        e.flightData.airlineName ==
+                        e?.flightData?.airlineName ==
                           searchFlightCardData?.airlineName &&
-                        e.flightData.lendTime ==
+                        e?.flightData?.lendTime ==
                           searchFlightCardData?.lendTime &&
-                        e.flightData.logo == searchFlightCardData?.logo &&
-                        e.flightData.pickTime ==
+                        e?.flightData?.logo == searchFlightCardData?.logo &&
+                        e?.flightData?.pickTime ==
                           searchFlightCardData?.pickTime &&
-                        e.flightData.price == searchFlightCardData?.price &&
-                        e.flightData.stop == searchFlightCardData?.stop &&
-                        e.flightData.stopDuration ==
+                        e?.flightData?.price == searchFlightCardData?.price &&
+                        e?.flightData?.stop == searchFlightCardData?.stop &&
+                        e?.flightData?.stopDuration ==
                           searchFlightCardData?.stopDuration &&
-                        e.flightData.totalHours ==
+                        e?.flightData?.totalHours ==
                           searchFlightCardData?.totalHours &&
-                        e.flightData.day == searchFlightCardData?.day
+                        e?.flightData?.day == searchFlightCardData?.day
                       ) {
                         return {
-                          flightData: e.flightData,
+                          flightData: e?.flightData,
                           selectSeat: [
                             ...e?.selectSeat,
-                            SelectReturnSeatData.map(a => a.seatNo),
+                            SelectReturnSeatData?.map(a => a.seatNo),
                           ].flat(),
                         };
                       }
@@ -149,31 +150,33 @@ const ConfirmPin = ({navigation, route}) => {
                 }
                 if (i.date == ReturnSelectedDate?.date) {
                   return {
-                    date: i.date,
-                    day: i.day,
-                    flightData: i.flightData.map(e => {
+                    date: i?.date,
+                    day: i?.day,
+                    flightData: i?.flightData.map(e => {
                       if (
-                        e.flightData.airlineName ==
+                        e?.flightData.airlineName ==
                           searchReturnFlightCardData?.airlineName &&
-                        e.flightData.lendTime ==
+                        e?.flightData.lendTime ==
                           searchReturnFlightCardData?.lendTime &&
-                        e.flightData.logo == searchReturnFlightCardData?.logo &&
-                        e.flightData.pickTime ==
+                        e?.flightData.logo ==
+                          searchReturnFlightCardData?.logo &&
+                        e?.flightData.pickTime ==
                           searchReturnFlightCardData?.pickTime &&
-                        e.flightData.price ==
+                        e?.flightData?.price ==
                           searchReturnFlightCardData?.price &&
-                        e.flightData.stop == searchReturnFlightCardData?.stop &&
-                        e.flightData.stopDuration ==
+                        e?.flightData?.stop ==
+                          searchReturnFlightCardData?.stop &&
+                        e?.flightData?.stopDuration ==
                           searchReturnFlightCardData?.stopDuration &&
-                        e.flightData.totalHours ==
+                        e?.flightData?.totalHours ==
                           searchReturnFlightCardData?.totalHours &&
-                        e.flightData.day == searchReturnFlightCardData?.day
+                        e?.flightData?.day == searchReturnFlightCardData?.day
                       ) {
                         return {
-                          flightData: e.flightData,
+                          flightData: e?.flightData,
                           selectSeat: [
                             ...e?.selectSeat,
-                            SelectReturnSeatData.map(a => a.seatNo),
+                            SelectReturnSeatData.map(a => a?.seatNo),
                           ].flat(),
                         };
                       }
@@ -185,26 +188,26 @@ const ConfirmPin = ({navigation, route}) => {
               }),
             });
 
-          totalPaymentList.points?.pointsUse != 0 &&
+          totalPaymentList?.points?.pointsUse != 0 &&
             (await firestore()
               .collection('Points')
               .doc(auth().currentUser.uid)
               .set({
                 TotalPoints:
-                  Number(UserPointData.TotalPoints) -
-                  (totalPaymentList.return.points.pointsUse +
-                    totalPaymentList?.departure.points.pointsUse),
+                  Number(UserPointData?.TotalPoints) -
+                  (totalPaymentList?.return?.points?.pointsUse +
+                    totalPaymentList?.departure?.points?.pointsUse),
                 PointsHistory: [
                   {
                     title: 'points',
                     price: `-${
-                      totalPaymentList.return.points.pointsUse +
-                      totalPaymentList?.departure.points.pointsUse
+                      totalPaymentList?.return?.points?.pointsUse +
+                      totalPaymentList?.departure?.points?.pointsUse
                     }`,
                     date: moment(new Date()).format('MMM D,YYYY'),
                     time: new Date().toLocaleTimeString('en-IN'),
                   },
-                  ...UserPointData.PointsHistory,
+                  ...UserPointData?.PointsHistory,
                 ],
               }));
 
@@ -222,13 +225,13 @@ const ConfirmPin = ({navigation, route}) => {
                     bookingID: randomBookingIDGenerator(9, 'BKG'),
                     searchFlightCardData,
                     contactDetails: {
-                      Email: userData.Email,
-                      Name: userData.Name,
-                      PhoneNumber: userData.PhoneNumber,
+                      Email: userData?.Email,
+                      Name: userData?.Name,
+                      PhoneNumber: userData?.PhoneNumber,
                     },
                     totalPaymentList: totalPaymentList?.departure,
                     SelectSeatData: SelectSeatData,
-                    paymentMethod: SelectPaymentMethod.type,
+                    paymentMethod: SelectPaymentMethod?.type,
                     transactionID: randomBookingIDGenerator(9, 'TRN'),
                     referenceID: randomBookingIDGenerator(9, 'REF'),
                     searchFlightData,
@@ -238,13 +241,13 @@ const ConfirmPin = ({navigation, route}) => {
                     bookingID: randomBookingIDGenerator(9, 'BKG'),
                     searchFlightCardData: searchReturnFlightCardData,
                     contactDetails: {
-                      Email: userData.Email,
-                      Name: userData.Name,
-                      PhoneNumber: userData.PhoneNumber,
+                      Email: userData?.Email,
+                      Name: userData?.Name,
+                      PhoneNumber: userData?.PhoneNumber,
                     },
                     totalPaymentList: totalPaymentList?.return,
                     SelectSeatData: SelectReturnSeatData,
-                    paymentMethod: SelectPaymentMethod.type,
+                    paymentMethod: SelectPaymentMethod?.type,
                     transactionID: randomBookingIDGenerator(9, 'TRN'),
                     referenceID: randomBookingIDGenerator(9, 'REF'),
                     searchFlightData: searchReturnFlightData,
@@ -280,23 +283,23 @@ const ConfirmPin = ({navigation, route}) => {
                     day: i.day,
                     flightData: i.flightData.map(e => {
                       if (
-                        e.flightData.airlineName ==
+                        e?.flightData?.airlineName ==
                           searchFlightCardData?.airlineName &&
-                        e.flightData.lendTime ==
+                        e?.flightData?.lendTime ==
                           searchFlightCardData?.lendTime &&
-                        e.flightData.logo == searchFlightCardData?.logo &&
-                        e.flightData.pickTime ==
+                        e?.flightData?.logo == searchFlightCardData?.logo &&
+                        e?.flightData?.pickTime ==
                           searchFlightCardData?.pickTime &&
-                        e.flightData.price == searchFlightCardData?.price &&
-                        e.flightData.stop == searchFlightCardData?.stop &&
-                        e.flightData.stopDuration ==
+                        e?.flightData?.price == searchFlightCardData?.price &&
+                        e?.flightData?.stop == searchFlightCardData?.stop &&
+                        e?.flightData?.stopDuration ==
                           searchFlightCardData?.stopDuration &&
-                        e.flightData.totalHours ==
+                        e?.flightData?.totalHours ==
                           searchFlightCardData?.totalHours &&
-                        e.flightData.day == searchFlightCardData?.day
+                        e?.flightData?.day == searchFlightCardData?.day
                       ) {
                         return {
-                          flightData: e.flightData,
+                          flightData: e?.flightData,
                           selectSeat: [
                             ...e?.selectSeat,
                             SelectSeatData.map(a => a.seatNo),
@@ -314,11 +317,11 @@ const ConfirmPin = ({navigation, route}) => {
           totalPaymentList.points?.pointsUse != 0 &&
             (await firestore()
               .collection('Points')
-              .doc(auth().currentUser.uid)
+              .doc(auth()?.currentUser?.uid)
               .set({
                 TotalPoints:
-                  Number(UserPointData.TotalPoints) -
-                  totalPaymentList?.departure.points.pointsUse,
+                  Number(UserPointData?.TotalPoints) -
+                  totalPaymentList?.departure?.points?.pointsUse,
                 PointsHistory: [
                   {
                     title: 'points',
@@ -344,13 +347,13 @@ const ConfirmPin = ({navigation, route}) => {
                     bookingID: randomBookingIDGenerator(9, 'BKG'),
                     searchFlightCardData,
                     contactDetails: {
-                      Email: userData.Email,
-                      Name: userData.Name,
-                      PhoneNumber: userData.PhoneNumber,
+                      Email: userData?.Email,
+                      Name: userData?.Name,
+                      PhoneNumber: userData?.PhoneNumber,
                     },
                     totalPaymentList: totalPaymentList?.departure,
                     SelectSeatData: SelectSeatData,
-                    paymentMethod: SelectPaymentMethod.type,
+                    paymentMethod: SelectPaymentMethod?.type,
                     transactionID: randomBookingIDGenerator(9, 'TRN'),
                     referenceID: randomBookingIDGenerator(9, 'REF'),
                     searchFlightData,
@@ -374,7 +377,7 @@ const ConfirmPin = ({navigation, route}) => {
         }
       } else {
         setcondti(false);
-        Alert.alert('PIN is not match');
+        AlertConstant(strings.PIN_is_not_match);
       }
     }
   };
@@ -540,8 +543,8 @@ const ConfirmPin = ({navigation, route}) => {
       .collection('Users')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setPinData(documentSnapshot.data().PIN);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setPinData(documentSnapshot?.data()?.PIN);
           }
         });
       });
@@ -552,8 +555,8 @@ const ConfirmPin = ({navigation, route}) => {
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setSaveTicketData(documentSnapshot.data().SaveTicket);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setSaveTicketData(documentSnapshot?.data()?.SaveTicket);
           }
         });
       });
@@ -563,8 +566,8 @@ const ConfirmPin = ({navigation, route}) => {
       .collection('UserWallet')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setUserWalletData(documentSnapshot.data());
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setUserWalletData(documentSnapshot?.data());
           }
         });
       });
@@ -574,8 +577,8 @@ const ConfirmPin = ({navigation, route}) => {
       .collection('Points')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setUserPointData(documentSnapshot.data());
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setUserPointData(documentSnapshot?.data());
           }
         });
       });
@@ -585,8 +588,8 @@ const ConfirmPin = ({navigation, route}) => {
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == 'JaTwXgqSHSESiR6CDzdy') {
-            SetSeatData(documentSnapshot.data().AirlineSeatBookData);
+          if (documentSnapshot?.id == 'JaTwXgqSHSESiR6CDzdy') {
+            SetSeatData(documentSnapshot?.data()?.AirlineSeatBookData);
           }
         });
       });
@@ -618,8 +621,9 @@ const ConfirmPin = ({navigation, route}) => {
             alignSelf: 'center',
             fontSize: fontSize(18),
             marginBottom: hp(3),
+            color: color.black,
           }}>
-          Enter the PIN to confirm ticket payment.
+          {strings.Enter_the_PIN_to_confirm_ticket_payment}
         </Text>
         <View style={styles.slide}>
           <OtpInputs
@@ -642,8 +646,9 @@ const ConfirmPin = ({navigation, route}) => {
                   marginTop: hp(5),
                   fontSize: fontSize(18),
                   fontWeight: '500',
+                  color: color.black,
                 }}>
-                Processing Payment...
+                {strings.processing_payment}
               </Text>
             </>
           ) : (
@@ -664,9 +669,9 @@ const ConfirmPin = ({navigation, route}) => {
                   color: color.commonBlue,
                   marginBottom: hp(3),
                 }}>
-                Booking Confirmed!
+                {strings.booking_confirmed}
               </Text>
-              <Text>Congratulation! your flight ticket is Confirmed</Text>
+              <Text style={styles.textStyle}>{strings.congrats}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible2(false);
@@ -690,7 +695,7 @@ const ConfirmPin = ({navigation, route}) => {
                     fontWeight: 'bold',
                     color: '#fff',
                   }}>
-                  View Transacation
+                  {strings.View_Transacation}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -716,7 +721,7 @@ const ConfirmPin = ({navigation, route}) => {
                     fontWeight: 'bold',
                     color: color.commonBlue,
                   }}>
-                  Back to Home
+                  {strings.back_to_home}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -740,6 +745,7 @@ const styles = StyleSheet.create({
     width: wp(14),
     borderRadius: 10,
     fontSize: fontSize(20),
+    color: color.black,
   },
   slide: {
     flexDirection: 'row',
@@ -766,5 +772,8 @@ const styles = StyleSheet.create({
     paddingVertical: hp(1),
     borderBottomWidth: 1,
     borderColor: '#e2e2e2',
+  },
+  textStyle: {
+    color: color.black,
   },
 });

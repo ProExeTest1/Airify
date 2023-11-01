@@ -92,20 +92,13 @@ const FillPassengerDetails = ({navigation, route}) => {
     passengers();
   }, []);
 
-  const ontoggleSwitch = () => {
-    if (ticketType === 'Departure') {
-      setTicketType('Return');
-    } else {
-      setTicketType('Departure');
-    }
-  };
   const onContinue = () => {
     if (tripType === 'Round-Trip' && ticketType === 'Departure') {
       if (
         passengerLength < newArr?.length &&
         !SelectSeat?.every(i => i?.seatNo)
       ) {
-        AlertConstant('Please first add passengers to click on plus icon');
+        AlertConstant(strings.add_passenger_first);
       } else {
         setTicketType('Return');
       }
@@ -113,7 +106,7 @@ const FillPassengerDetails = ({navigation, route}) => {
       if (SelectSeat.length > 0 && SelectSeat?.every(i => i?.seatNo != false)) {
         navigation?.navigate('PaymentConfirmation', {TripType: tripType});
       } else {
-        AlertConstant('Please first add passengers to click on plus icon');
+        AlertConstant('Please select passenger first');
       }
     }
   };
@@ -177,9 +170,9 @@ const FillPassengerDetails = ({navigation, route}) => {
       .collection('PassengerList')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setPassengerList(documentSnapshot.data()?.PassengerList);
-            setPassengerLength(documentSnapshot.data()?.PassengerList?.length);
+          if (documentSnapshot?.id == auth().currentUser?.uid) {
+            setPassengerList(documentSnapshot?.data()?.PassengerList);
+            setPassengerLength(documentSnapshot?.data()?.PassengerList?.length);
           }
         });
       });
@@ -215,7 +208,8 @@ const FillPassengerDetails = ({navigation, route}) => {
       <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
       {tripType === 'Round-Trip' ? (
         <ReturnDepartureSwitch
-          onPress={ontoggleSwitch}
+          onPress1={() => setTicketType('Departure')}
+          onPress2={() => setTicketType('Return')}
           ticketType={ticketType}
         />
       ) : null}
@@ -254,13 +248,13 @@ const FillPassengerDetails = ({navigation, route}) => {
             imageStyle={styles.cardheaderIconStyle}
           />
           <View style={styles.contactDetailsViewStyle}>
-            <Text style={styles.nameTextStyle}>{userData.Name}</Text>
+            <Text style={styles.nameTextStyle}>{userData?.Name}</Text>
             <View style={styles.emailViewStyle}>
               <Text numberOfLines={1} style={styles.emailStyle}>
-                {userData.Email}
+                {userData?.Email}
               </Text>
               <Text numberOfLines={1} style={styles.PhoneNumberStyle}>
-                {userData.PhoneNumber}
+                {userData?.PhoneNumber}
               </Text>
             </View>
           </View>
@@ -272,7 +266,7 @@ const FillPassengerDetails = ({navigation, route}) => {
             header={strings.passenger_details}
             imageStyle={styles.plusIconStyle}
             onPress={() => {
-              navigation.navigate('NewPassenger');
+              navigation?.navigate('NewPassenger', {From: 'Fill_Details'});
             }}
           />
           <View style={styles.passengerInputViewStyle}>
@@ -325,24 +319,18 @@ const FillPassengerDetails = ({navigation, route}) => {
                   if (ticketType === 'Departure') {
                     flatlistData?.every(i => i.name.length > 0)
                       ? navigation.navigate('SelectSeat', {TripType: tripType})
-                      : AlertConstant(
-                          'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
-                        );
+                      : AlertConstant(strings.add_passenger_on_click);
                   } else {
                     returnFlatlistData?.every(i => i.name.length > 0)
                       ? navigation.navigate('ReturnSelectSeat', {
                           TripType: tripType,
                         })
-                      : AlertConstant(
-                          'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
-                        );
+                      : AlertConstant(strings.add_passenger_on_click);
                   }
                 } else {
                   flatlistData?.every(i => i.name.length > 0)
                     ? navigation.navigate('SelectSeat', {TripType: tripType})
-                    : AlertConstant(
-                        'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
-                      );
+                    : AlertConstant(strings.add_passenger_on_click);
                 }
               }
             }}>
@@ -366,7 +354,9 @@ const FillPassengerDetails = ({navigation, route}) => {
                   flexDirection: 'row',
                 }}>
                 <View style={{width: wp(13), alignItems: 'center'}}>
-                  <Text style={styles.searNumberListTitleText}>No.</Text>
+                  <Text style={styles.searNumberListTitleText}>
+                    {strings.no}
+                  </Text>
                 </View>
                 <View style={{flex: 1}}>
                   <Text style={styles.searNumberListTitleText}>
@@ -374,7 +364,9 @@ const FillPassengerDetails = ({navigation, route}) => {
                   </Text>
                 </View>
                 <View style={{width: wp(18), alignItems: 'center'}}>
-                  <Text style={styles.searNumberListTitleText}>Seat</Text>
+                  <Text style={styles.searNumberListTitleText}>
+                    {strings.seat}
+                  </Text>
                 </View>
               </View>
             )}
@@ -394,7 +386,7 @@ const FillPassengerDetails = ({navigation, route}) => {
                         </Text>
                       </View>
                     )}
-                    <View style={{flex: 1}}>
+                    <View style={{flex: 1, marginLeft: wp(4)}}>
                       <Text style={styles.searNumberListTitleText}>
                         {item.name}
                       </Text>
@@ -591,5 +583,6 @@ const styles = StyleSheet.create({
   searNumberListTitleText: {
     fontSize: fontSize(17),
     fontWeight: '500',
+    color: color.black,
   },
 });

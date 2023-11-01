@@ -55,9 +55,9 @@ const SpecialOfferScreen = ({route, navigation}) => {
                 style={styles.clockimageStyle}
                 resizeMode="contain"
               />
-              <Text style={styles.textStyle1}>Valid until</Text>
+              <Text style={styles.textStyle1}>{strings.ValidUntil}</Text>
             </View>
-            <Text style={styles.validateTextStyle}>Dec 31,2023</Text>
+            <Text style={styles.validateTextStyle}>{strings.date_string}</Text>
           </View>
           <View style={styles.lineStyle}></View>
           <View>
@@ -67,9 +67,9 @@ const SpecialOfferScreen = ({route, navigation}) => {
                 source={Images.payments}
                 style={styles.clockimageStyle}
               />
-              <Text style={styles.textStyle1}>Min transaction</Text>
+              <Text style={styles.textStyle1}>{strings.minTransaction}</Text>
             </View>
-            <Text style={styles.validateTextStyle}>$1,000.00</Text>
+            <Text style={styles.validateTextStyle}>{strings.price_string}</Text>
           </View>
         </View>
         <Text style={styles.titleStyle}>{strings.T_and_D}</Text>
@@ -82,7 +82,9 @@ const SpecialOfferScreen = ({route, navigation}) => {
           <Text style={styles.textStyle}>{strings.T_and_D_line2}</Text>
         </View>
         <TouchableOpacity style={styles.claimDiscountButtonStyle}>
-          <Text style={styles.claimDiscountFontStyle}>Claim Discount</Text>
+          <Text style={styles.claimDiscountFontStyle}>
+            {strings.Claim_Discount}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'blue',
-    marginVertical: Platform.OS === 'ios' ? hp(4) : null,
+    marginVertical: Platform.OS === 'ios' ? hp(4) : hp(2),
   },
   claimDiscountFontStyle: {
     fontWeight: 'bold',

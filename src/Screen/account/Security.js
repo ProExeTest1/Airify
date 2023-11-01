@@ -57,8 +57,8 @@ const Security = ({navigation: {goBack}}) => {
           renderItem={({item}) => {
             return (
               <View style={styles.FlatListView}>
-                <Text style={styles.titleStyle}>{item.title}</Text>
-                {item.title == 'Device MAnagement' ? (
+                <Text style={styles.titleStyle}>{item?.title}</Text>
+                {item.title == 'Device Management' ? (
                   <TouchableOpacity>
                     <Image
                       resizeMode="contain"
@@ -93,7 +93,7 @@ const Security = ({navigation: {goBack}}) => {
         />
 
         <TouchableOpacity style={styles.buttonStyle}>
-          <Text style={styles.buttonTextStyle}>{strings.changePassword}</Text>
+          <Text style={styles.buttonTextStyle}>{strings?.changePassword}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
   flatListBodyViewStyle: {
     paddingHorizontal: wp(4),

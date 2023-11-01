@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {SelectpaymentMethodAction} from '../../redux/action/SelectSeatAction';
 import {ReschedulePaymentMethodAction} from '../../redux/action/RescheduleAction';
 import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const PaymentMethod = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -41,7 +42,10 @@ const PaymentMethod = ({navigation, route}) => {
     state => state?.searchFlight?.searchFlightReturnCardData,
   );
   const totalSeat = Number(searchFlightData.passenger.split(' ')[0]);
-  const ticketPrice = parseInt(item?.price.slice(1, 8).split(',').join(''), 10);
+  const ticketPrice = parseInt(
+    item?.price?.slice(1, 8)?.split(',')?.join(''),
+    10,
+  );
   const returbTicketPrice = parseInt(
     returnItem?.price?.slice(1, 8)?.split(',')?.join(''),
     10,
@@ -84,12 +88,12 @@ const PaymentMethod = ({navigation, route}) => {
 
         querySnapshot?.forEach(documentSnapshot => {
           users.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
+            ...documentSnapshot?.data(),
+            key: documentSnapshot?.id,
           });
         });
         users.filter(item => {
-          if (item.key == auth().currentUser.uid) {
+          if (item?.key == auth()?.currentUser?.uid) {
             setWalletData(item);
             return true;
           } else {
@@ -208,7 +212,7 @@ const PaymentMethod = ({navigation, route}) => {
             },
           ]}>
           <Image style={styles.PaymentMethodIcon} source={Images.wallet} />
-          <Text style={styles.PaymentMethodName}>My Wallet</Text>
+          <Text style={styles.PaymentMethodName}>{strings.My_Wallet}</Text>
           <View style={styles.myWalletBody}>
             <Text
               style={[
@@ -249,7 +253,7 @@ const PaymentMethod = ({navigation, route}) => {
             style={styles.PaymentMethodOtherIcon}
             source={Images.paypalIcon}
           />
-          <Text style={styles.PaymentMethodName}>PayPal</Text>
+          <Text style={styles.PaymentMethodName}>{strings.PayPal}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -275,7 +279,7 @@ const PaymentMethod = ({navigation, route}) => {
             },
           ]}>
           <Image style={styles.PaymentMethodOtherIcon} source={Images.google} />
-          <Text style={styles.PaymentMethodName}>Google Pay</Text>
+          <Text style={styles.PaymentMethodName}>{strings.Google_Pay}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -299,7 +303,7 @@ const PaymentMethod = ({navigation, route}) => {
             },
           ]}>
           <Image style={styles.PaymentMethodOtherIcon} source={Images.apple} />
-          <Text style={styles.PaymentMethodName}>Apple Pay</Text>
+          <Text style={styles.PaymentMethodName}>{strings.Apple_Pay}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -328,7 +332,7 @@ const PaymentMethod = ({navigation, route}) => {
             style={styles.PaymentMethodOtherIcon}
             source={Images.visaIcon}
           />
-          <Text style={styles.PaymentMethodName}>Visa Pay</Text>
+          <Text style={styles.PaymentMethodName}>{strings.Visa_Pay}</Text>
           <View style={styles.myWalletBody}>
             <Image
               style={[
@@ -348,9 +352,7 @@ const PaymentMethod = ({navigation, route}) => {
           onPress={() => {
             selectOpc.type === 'My Wallet'
               ? setDataFunction()
-              : Alert.alert(
-                  'PayPal,Google Pay,Apple Pay and Visa pay not available at that time please pay with Wallet',
-                );
+              : AlertConstant(strings.payment_alert);
           }}
           style={styles.okButton}>
           <Text style={styles.okButtonText}>{strings.payNow}</Text>
@@ -386,6 +388,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: fontSize(18),
     fontWeight: '600',
+    color: color.black,
   },
   myWalletBody: {
     flexDirection: 'row',

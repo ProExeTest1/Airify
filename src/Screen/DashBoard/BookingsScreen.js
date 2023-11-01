@@ -8,11 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Modal from 'react-native-modal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {strings} from '../../helper/Strings';
-import {CardList, CommonHeader, TicketList} from '../../components';
+import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -61,8 +60,9 @@ const BookingsScreen = ({navigation}) => {
                         i?.searchFlightCardData?.pickTime.split(':')[1],
                       )}:00`,
                       'MMM DD YYYY HH:mm:ss',
-                    ).utc('en-IN'),
-                    // .format('YYYY-MM-DD HH:mm:ss'),
+                    )
+                      .utc('en-IN')
+                      .format('YYYY-MM-DD HH:mm:ss'),
                   ).valueOf()
                 );
               }),
@@ -131,8 +131,9 @@ const BookingsScreen = ({navigation}) => {
                           i.searchFlightCardData?.pickTime.split(':')[1],
                         )}:00`,
                         'MMM DD YYYY HH:mm:ss',
-                      ).utc('en-IN'),
-                      // .format('YYYY-MM-DD HH:mm:ss'),
+                      )
+                        .utc('en-IN')
+                        .format('YYYY-MM-DD HH:mm:ss'),
                     ).valueOf()
                   );
                 }),
@@ -171,8 +172,9 @@ const BookingsScreen = ({navigation}) => {
                           i.searchFlightCardData?.pickTime.split(':')[1],
                         )}:00`,
                         'MMM DD YYYY HH:mm:ss',
-                      ).utc('en-IN'),
-                      // .format('YYYY-MM-DD HH:mm:ss'),
+                      )
+                        .utc('en-IN')
+                        .format('YYYY-MM-DD HH:mm:ss'),
                     ).valueOf()
                   );
                 }),
@@ -186,7 +188,7 @@ const BookingsScreen = ({navigation}) => {
                     selectedData == 'Completed' ? color.white : color.black,
                 },
               ]}>
-              Completed
+              {strings.completed}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -209,7 +211,7 @@ const BookingsScreen = ({navigation}) => {
                 styles.buttonTextStyle,
                 {color: selectedData == 'Canceled' ? color.white : color.black},
               ]}>
-              Canceled
+              {strings.canceled}
             </Text>
           </TouchableOpacity>
         </View>

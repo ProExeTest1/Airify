@@ -23,16 +23,16 @@ const ContactUS = () => {
           return (
             <TouchableOpacity style={styles.viewStyle}>
               <Image
-                source={item.image}
+                source={item?.image}
                 style={[
                   styles.iconStyle,
                   {
                     tintColor:
-                      item.title !== 'Facebook' ? color.commonBlue : null,
+                      item?.title !== 'Facebook' ? color.commonBlue : null,
                   },
                 ]}
               />
-              <Text style={styles.textStyle}>{item.title}</Text>
+              <Text style={styles.textStyle}>{item?.title}</Text>
             </TouchableOpacity>
           );
         }}
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     paddingStart: wp(4),
     fontSize: fontSize(16),
+    color: '#000',
   },
 });
 

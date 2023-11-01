@@ -43,6 +43,7 @@ const TransactionDetails = ({navigation, route}) => {
   const [ticketType, setTicketType] = useState('Departure');
   const [firebaseTicketData, setFirebaseTicketData] = useState({});
   const [TicketTypeData, setTicketTypeData] = useState({});
+
   const ticketId = useSelector(state => state?.showTicketData?.ticketId);
 
   const getTicketData = async () => {
@@ -62,21 +63,13 @@ const TransactionDetails = ({navigation, route}) => {
         });
       });
   };
+  console.log(firebaseTicketData?.bookingID, 'firebaseTicketData?.bookingID');
   useEffect(() => {
     getTicketData();
   }, []);
   const copyToClipboard = () => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');
-  };
-  const ontoggleSwitch = () => {
-    if (ticketType === 'Departure') {
-      setTicketType('Return');
-      setFirebaseTicketData(TicketTypeData.Return);
-    } else {
-      setTicketType('Departure');
-      setFirebaseTicketData(TicketTypeData.Departure);
-    }
   };
   return (
     <View style={{flex: 1}}>
@@ -99,7 +92,14 @@ const TransactionDetails = ({navigation, route}) => {
           />
           {tripType === 'Round-Trip' ? (
             <ReturnDepartureSwitch
-              onPress={ontoggleSwitch}
+              onPress1={() => {
+                setTicketType('Departure');
+                setFirebaseTicketData(TicketTypeData.Departure);
+              }}
+              onPress2={() => {
+                setTicketType('Return');
+                setFirebaseTicketData(TicketTypeData.Return);
+              }}
               ticketType={ticketType}
             />
           ) : null}
@@ -243,24 +243,26 @@ const TransactionDetails = ({navigation, route}) => {
 
               <View
                 style={[styles.TransactionDetailsStyle, {marginTop: hp(2)}]}>
-                <Text style={styles.labeltxtStyle}>Payment Method</Text>
+                <Text style={styles.labeltxtStyle}>
+                  {strings.payment_method}
+                </Text>
                 <Text style={styles.dataTextStyle}>
                   {firebaseTicketData?.paymentMethod}
                 </Text>
               </View>
               <View style={styles.TransactionDetailsStyle}>
-                <Text style={styles.labeltxtStyle}>Status</Text>
+                <Text style={styles.labeltxtStyle}>{strings.status}</Text>
                 <View
                   style={{
                     padding: hp(1),
                     backgroundColor: color.commonBlue,
                     borderRadius: 5,
                   }}>
-                  <Text style={{color: color.white}}>PAID</Text>
+                  <Text style={{color: color.white}}>{strings.paid}</Text>
                 </View>
               </View>
               <View style={styles.TransactionDetailsStyle}>
-                <Text style={styles.labeltxtStyle}>Booking ID</Text>
+                <Text style={styles.labeltxtStyle}>{strings.booking_id}</Text>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.dataTextStyle}>
@@ -274,7 +276,9 @@ const TransactionDetails = ({navigation, route}) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.TransactionDetailsStyle}>
-                <Text style={styles.labeltxtStyle}>Transacation ID</Text>
+                <Text style={styles.labeltxtStyle}>
+                  {strings.transaction_id}
+                </Text>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.dataTextStyle}>
@@ -289,7 +293,7 @@ const TransactionDetails = ({navigation, route}) => {
               </View>
               <View
                 style={[styles.TransactionDetailsStyle, {marginBottom: hp(2)}]}>
-                <Text style={styles.labeltxtStyle}>Reference ID</Text>
+                <Text style={styles.labeltxtStyle}>{strings.reference_id}</Text>
                 <TouchableOpacity
                   style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.dataTextStyle}>
@@ -342,7 +346,9 @@ const TransactionDetails = ({navigation, route}) => {
                           },
                         });
                       }}>
-                      <Text style={styles.buttonTextStyle}>Show E-Ticket</Text>
+                      <Text style={styles.buttonTextStyle}>
+                        {strings.show_eticket}
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 );
@@ -374,7 +380,7 @@ const TransactionDetails = ({navigation, route}) => {
               ]}>
               <Text
                 style={[styles.rescheduleTextStyle, {color: color.commonBlue}]}>
-                Recshedule Trip
+                {strings.reschedule_trip}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -383,7 +389,7 @@ const TransactionDetails = ({navigation, route}) => {
                 {borderColor: 'red', marginBottom: hp(4)},
               ]}>
               <Text style={[styles.rescheduleTextStyle, {color: 'red'}]}>
-                Cancel Booking
+                {strings.cancel_booking}
               </Text>
             </TouchableOpacity>
           </ScrollView>
