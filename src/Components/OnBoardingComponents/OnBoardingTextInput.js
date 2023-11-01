@@ -16,6 +16,7 @@ const OnBoardingTextInput = ({
   onPressCalender,
   textInputIconStyle,
   textInputPlaceholder,
+  contextMenuHidden,
 }) => {
   const [focus, setFocus] = useState(false);
 
@@ -40,6 +41,7 @@ const OnBoardingTextInput = ({
         placeholderTextColor={color.grey}
         placeholder={textInputPlaceholder}
         style={[styles.textInputStyle, textInputStyle]}
+        contextMenuHidden={contextMenuHidden}
       />
       {textInputPlaceholder == 'Password' ||
       textInputPlaceholder == 'Confirm New Password' ? (
