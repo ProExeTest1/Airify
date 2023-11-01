@@ -16,6 +16,7 @@ import OtpInputs from 'react-native-otp-inputs';
 import storage from '@react-native-firebase/storage';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
+import notifee, {EventType} from '@notifee/react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {CountryPicker} from 'react-native-country-codes-picker';
 
@@ -61,11 +62,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [selectedFlyWay, setSelectedFlyWay] = useState([]);
   const [selectedDineWay, setSelectedDineWay] = useState([]);
   const [selectedJourneyData, setSelectedJourneyData] = useState([]);
-
+  const [isvalid, setIsValid] = useState('');
+  const [referralData, setReferralData] = useState({});
   useEffect(() => {
     JourneyData();
     onPressAdd();
   }, []);
+
   const DineWayData = useSelector(
     response => response?.OnBoarding?.DineWayData,
   );
@@ -83,6 +86,98 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       });
   };
 
+  const referralCodeMatch = async referral => {
+    await firestore()
+      .collection('Users')
+      .get()
+      .then(i => {
+        i.docs?.map(d => {
+          if (d?.data().ReferralCode == referral) {
+            setIsValid(d?.data()?.uid);
+            setReferralData(d?.data());
+          } else {
+            setIsValid('');
+            setReferralData({});
+          }
+        });
+      });
+  };
+
+  // const BookingUpdateNotification = async () => {
+  //   await firestore()
+  //     .collection('Users')
+  //     .doc(referralData?.uid)
+  //     .get()
+  //     .then(i => {
+  //       let users = i.data()?.NotificationList?.map(i => {
+  //         return i;
+  //       });
+  //       users?.map(async e => {
+  //         if (e?.title == 'Referral Rewards') {
+  //           if (e?.isOn == true) {
+  //             // Request permissions (required for iOS)
+  //             await notifee.requestPermission();
+
+  //             // Create a channel (required for Android)
+  //             const channelId = await notifee.createChannel({
+  //               id: referralData?.uid,
+  //               name: 'Ticket Booking',
+  //             });
+
+  //             // Display a notification
+  //             await notifee.displayNotification({
+  //               title: 'Your Referral code Reward',
+  //               body: `Your Referral code use by ${'jenis'} and you earn ${'1000'} points.`,
+  //               android: {
+  //                 channelId,
+  //                 smallIcon: 'ic_notification',
+  //                 sound: 'default',
+  //                 pressAction: {
+  //                   id: 'default',
+  //                 },
+  //               },
+  //             });
+
+  //             notifee.onForegroundEvent(async ({type, detail}) => {
+  //               await firestore()
+  //                 .collection('NotificationHistory')
+  //                 .doc(auth().currentUser.uid)
+  //                 .get()
+  //                 .then(async i => {
+  //                   await firestore()
+  //                     .collection('NotificationHistory')
+  //                     .doc(auth().currentUser.uid)
+  //                     .update({
+  //                       NotificationHistory: [
+  //                         ...i?.data()?.NotificationHistory,
+  //                         {
+  //                           id: detail?.notification?.id,
+  //                           title: detail?.notification?.title,
+  //                           body: detail?.notification?.body,
+  //                           date: Date.now(),
+  //                           NotificationType: e?.title,
+  //                         },
+  //                       ],
+  //                     });
+  //                 });
+  //               switch (type) {
+  //                 case EventType.DISMISSED:
+  //                   console.log(
+  //                     'User dismissed notification',
+  //                     detail.notification,
+  //                   );
+  //                   break;
+  //                 case EventType.PRESS:
+  //                   navigation.navigate('AirifyPoint');
+  //                   break;
+  //               }
+  //             });
+  //           }
+  //         }
+  //       });
+  //     });
+  // };
+
   const validation = index => {
     if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
       AlertConstant('Please Enter Valid Email');
@@ -94,11 +189,17 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     ) {
       AlertConstant('Please Enter Valid Password');
       return;
+    } else if (referralCode.length > 0 && isvalid.length == 0) {
+      AlertConstant('Referral Code are not valid.');
+      return;
     } else if (!checked == true) {
       AlertConstant('Can You agree with terms & condition.');
       return;
     } else {
       swiperRef.current.scrollBy(1);
+      // if (referralCode.length > 0 && isvalid.length != 0) {
+      //   BookingUpdateNotification();
+      // }
     }
   };
 
@@ -236,6 +337,10 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           NotificationHistory: [],
         });
 
+      if (referralCode.length > 0 && isvalid.length != 0) {
+        BookingUpdateNotification();
+      }
+
       navigation.navigate('SignUpSuccess');
     } catch (error) {
       console.log(error);
@@ -329,8 +434,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               textInputPlaceholder={strings.ReferralCode}
               container={styles.textInputContainer}
               value={referralCode}
-              onChangeText={referralCode => setReferralCode(referralCode)}
+              onChangeText={referralCode => {
+                setReferralCode(referralCode);
+                referralCodeMatch(referralCode);
+              }}
               keyboardType={'numeric'}
+              contextMenuHidden={true}
             />
             <View style={styles.rememberLineStyle}>
               <View
