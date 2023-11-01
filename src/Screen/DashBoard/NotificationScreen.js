@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  FlatList,
   Image,
   Platform,
   SafeAreaView,
-  SectionList,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,14 +13,36 @@ import {
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {NotificationData} from '../../assets/DummyData/NotificationData';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import moment from 'moment';
+// import {NotificationData} from '../../assets/DummyData/NotificationData';
 
 const NotificationScreen = ({navigation}) => {
+  const [NotificationData, SetNotificationData] = useState([]);
+
+  console.log(NotificationData);
+  const passengers = async () => {
+    await firestore()
+      .collection('NotificationHistory')
+      .onSnapshot(querySnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
+          if (documentSnapshot.id == auth().currentUser.uid) {
+            SetNotificationData(
+              documentSnapshot
+                ?.data()
+                ?.NotificationHistory.sort((a, b) => b.date - a.date),
+            );
+          }
+        });
+      });
+  };
+  useEffect(() => {
+    passengers();
+  }, []);
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewStyle}>
-        <SafeAreaView style={styles.safeHeaderViewStyle}></SafeAreaView>
-
+      <SafeAreaView style={styles.safeHeaderViewStyle}>
         <View style={styles.headerinnerViewStyle}>
           <TouchableOpacity onPress={() => navigation.goBack('')}>
             <Image
@@ -43,47 +65,72 @@ const NotificationScreen = ({navigation}) => {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
       <View style={styles.sectionListStyle}>
-        <SectionList
+        <FlatList
           bounces={false}
-          sections={NotificationData}
+          data={NotificationData}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
-          renderItem={({item}) => {
+          renderItem={({item, index}) => {
             return (
-              <TouchableOpacity style={styles.listTouchStyle}>
-                {item.ticket ? (
-                  <View>
-                    <Image
-                      source={item.image}
-                      resizeMode="stretch"
-                      style={styles.listImageDiffStyle}
-                    />
+              <>
+                {new Date(NotificationData[index].date)
+                  .toLocaleString()
+                  .split(',')[0] !==
+                new Date(NotificationData[index - 1]?.date)
+                  .toLocaleString()
+                  .split(',')[0] ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginVertical: hp(1),
+                      paddingHorizontal: wp(5),
+                      alignItems: 'center',
+                    }}>
+                    <Text style={{color: '#929292', fontWeight: 'bold'}}>
+                      {moment(item.date).subtract('days').calendar()}
+                    </Text>
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderColor: color.darkGray,
+                        flex: 1,
+                        marginStart: wp(3),
+                      }}></View>
                   </View>
-                ) : (
+                ) : null}
+                <View style={styles.listTouchStyle}>
                   <View style={styles.listImageViewStyle}>
                     <Image
-                      source={item.image}
+                      source={
+                        item.NotificationType == 'Refunds and Cancellations'
+                          ? Images.wallet
+                          : item.NotificationType == 'Ticket Booking Updates'
+                          ? Images.booking
+                          : item.NotificationType == 'Ticket Booking Updates'
+                          ? Images.booking
+                          : Images.wallet
+                      }
                       resizeMode="contain"
                       style={styles.listImageStyle}
                     />
                   </View>
-                )}
-                <View style={styles.listTextViewStyle}>
-                  <Text style={styles.listTitleTextStyle}>{item.title}</Text>
-                  <Text style={styles.listDiscriptionTextStyle}>
-                    {item.discription}
-                  </Text>
+                  <View style={styles.listTextViewStyle}>
+                    <Text style={styles.listTitleTextStyle} numberOfLines={1}>
+                      {item.NotificationType}
+                    </Text>
+                    <Text
+                      style={styles.listDiscriptionTextStyle}
+                      numberOfLines={2}>
+                      {item.body}
+                    </Text>
+                    <Text>
+                      {new Date(item.date).toLocaleTimeString('en-IN')}
+                    </Text>
+                  </View>
                 </View>
-                <View>
-                  <Image
-                    resizeMode="contain"
-                    source={Images.forward}
-                    style={styles.forwardIconStyle}
-                  />
-                </View>
-              </TouchableOpacity>
+              </>
             );
           }}
           renderSectionHeader={({section: {time}}) => (
@@ -124,6 +171,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(22),
   },
   safeHeaderViewStyle: {
+    backgroundColor: color.commonBlue,
     paddingHorizontal: wp(7),
     paddingVertical: Platform.OS == 'android' ? hp(1) : hp(3),
   },
@@ -141,16 +189,13 @@ const styles = StyleSheet.create({
     paddingVertical: hp(1),
   },
   sectionListStyle: {
+    flex: 1,
     marginVertical: hp(2.4),
     backgroundColor: color.white,
   },
   listTouchStyle: {
-    width: '95%',
-    alignSelf: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: hp(2.4),
+    marginVertical: hp(1),
     paddingHorizontal: wp(5),
   },
   listImageDiffStyle: {
@@ -163,6 +208,10 @@ const styles = StyleSheet.create({
     padding: hp(1.7),
     borderRadius: 100,
     borderColor: color.grey,
+    width: hp(7),
+    height: hp(7),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   listImageStyle: {
     width: hp(3),
@@ -183,6 +232,7 @@ const styles = StyleSheet.create({
   listDiscriptionTextStyle: {
     color: color.black,
     flex: 1,
+    marginBottom: hp(0.5),
   },
   forwardIconStyle: {
     right: 20,

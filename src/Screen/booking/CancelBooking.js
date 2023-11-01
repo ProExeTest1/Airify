@@ -30,6 +30,7 @@ const CancelBooking = ({navigation}) => {
   const [UserWalletData, setUserWalletData] = useState({});
   const [BookingCancelData, setBookingCancelData] = useState([]);
   const [SaveTicketData, setSaveTicketData] = useState([]);
+  const [SeatData, SetSeatData] = useState([]);
 
   const [modal, setModal] = useState(false);
   const firebaseTicketData = useSelector(
@@ -78,6 +79,61 @@ const CancelBooking = ({navigation}) => {
               ...UserWalletData.transactionHistory,
             ],
           });
+
+        await firestore()
+          .collection('AirlineSeatBookData')
+          .doc('JaTwXgqSHSESiR6CDzdy')
+          .update({
+            AirlineSeatBookData: SeatData.map(i => {
+              if (
+                i.date ==
+                moment(
+                  firebaseTicketData.searchFlightDateData[1],
+                  'MMM DD YYYY',
+                ).format('D/M/YYYY')
+              ) {
+                return {
+                  date: i.date,
+                  day: i.day,
+                  flightData: i.flightData.map(e => {
+                    if (
+                      e.flightData.airlineName ==
+                        firebaseTicketData?.searchFlightCardData?.airlineName &&
+                      e.flightData.lendTime ==
+                        firebaseTicketData?.searchFlightCardData?.lendTime &&
+                      e.flightData.logo ==
+                        firebaseTicketData?.searchFlightCardData?.logo &&
+                      e.flightData.pickTime ==
+                        firebaseTicketData?.searchFlightCardData?.pickTime &&
+                      e.flightData.price ==
+                        firebaseTicketData?.searchFlightCardData?.price &&
+                      e.flightData.stop ==
+                        firebaseTicketData?.searchFlightCardData?.stop &&
+                      e.flightData.stopDuration ==
+                        firebaseTicketData?.searchFlightCardData
+                          ?.stopDuration &&
+                      e.flightData.totalHours ==
+                        firebaseTicketData?.searchFlightCardData?.totalHours &&
+                      e.flightData.day ==
+                        firebaseTicketData?.searchFlightCardData?.day
+                    ) {
+                      return {
+                        flightData: e.flightData,
+                        selectSeat: e?.selectSeat.filter(i =>
+                          firebaseTicketData?.SelectSeatData?.some(
+                            a => a.seatNo != i,
+                          ),
+                        ),
+                      };
+                    }
+                    return e;
+                  }),
+                };
+              }
+              return i;
+            }),
+          });
+
         await firestore()
           .collection('BookingCancel')
           .doc(auth().currentUser.uid)
@@ -156,11 +212,23 @@ const CancelBooking = ({navigation}) => {
         });
       });
   };
+  const getSeatData = async () => {
+    await firestore()
+      .collection('AirlineSeatBookData')
+      .onSnapshot(querySnapshot => {
+        querySnapshot?.forEach(documentSnapshot => {
+          if (documentSnapshot.id == 'JaTwXgqSHSESiR6CDzdy') {
+            SetSeatData(documentSnapshot.data().AirlineSeatBookData);
+          }
+        });
+      });
+  };
 
   useEffect(() => {
     getUserWalletData();
     getBookingCancelData();
     getSaveTicketData();
+    getSeatData();
   }, []);
 
   const BookingUpdateNotification = async () => {

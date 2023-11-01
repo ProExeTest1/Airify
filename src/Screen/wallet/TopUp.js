@@ -122,24 +122,17 @@ const TopUp = ({navigation}) => {
         .doc(auth().currentUser.uid)
         .update({
           wallet: Number(textInput1.split('.')[0]) + Number(myWallet),
-        })
-        .then(async () => {
-          await firestore()
-            .collection('UserWallet')
-            .doc(auth().currentUser.uid)
-            .update({
-              transactionHistory: [
-                {
-                  title: strings.walletTopUp,
-                  price: `+$${textInput1}`,
-                  date: moment(new Date()).format('MMM D,YYYY'),
-                  time: new Date().toLocaleTimeString('en-IN'),
-                },
-                ...transactionHistory,
-              ],
-            });
-          navigation.goBack();
+          transactionHistory: [
+            {
+              title: strings.walletTopUp,
+              price: `+$${textInput1}`,
+              date: moment(new Date()).format('MMM D,YYYY'),
+              time: new Date().toLocaleTimeString('en-IN'),
+            },
+            ...transactionHistory,
+          ],
         });
+      navigation.goBack();
     } else {
       Alert.alert('plsss enter valid ');
     }
