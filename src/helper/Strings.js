@@ -16,7 +16,7 @@ export const strings = Object.freeze({
   OnBoardingThirdSubText:
     'With Airify, you can secure your dream trip in just a few taps. Enjoy streamlined booking. real-time updates, & secure payment',
   // Welcome Screen Text
-  AppName: 'AiriFy',
+  AppName: 'Airify',
   subContent: "Let's dive in into your account !",
   signUpLine: "Don't have an account?",
   signUp: 'Sign up',

@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     color: color.black,
   },
   buttonStyle: {
-    marginVertical: hp(4),
+    paddingVertical: hp(2),
   },
   buttonViewStyle: {
     flex: 1,

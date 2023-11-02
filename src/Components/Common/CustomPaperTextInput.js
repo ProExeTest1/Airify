@@ -47,6 +47,7 @@ const CustomPaperTextInput = ({
           />
         }
         style={styles.textInputStyle}
+        numberOfLines={1}
         onChangeText={onChangeText}
       />
     </Pressable>
@@ -59,8 +60,9 @@ const styles = StyleSheet.create({
   textInputStyle: {
     height: hp(7.3),
     justifyContent: 'center',
-    fontSize: fontSize(18),
+    fontSize: fontSize(16),
     backgroundColor: color.white,
+    width: '100%',
   },
   iconStyle: {
     marginTop: hp(2.4),

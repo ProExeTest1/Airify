@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     borderWidth: 1,
+    borderColor: color.grayLight,
     marginVertical: hp(1),
     backgroundColor: 'white',
   },
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(5),
     flexDirection: 'row',
     marginVertical: hp(3),
+    alignItems: 'center',
   },
   filedImageStyle: {
     marginStart: wp(3),

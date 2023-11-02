@@ -22,6 +22,7 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import QRCode from 'react-native-qrcode-svg';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const AirifyReward = ({navigation: {goBack}}) => {
   const [promocode, setPromocode] = useState('');
@@ -99,16 +100,17 @@ const AirifyReward = ({navigation: {goBack}}) => {
         <Text style={{fontSize: fontSize(16), color: color?.black}}>
           {strings?.copyCode}
         </Text>
-        <View style={styles?.textView}>
+        <TouchableOpacity
+          onPress={() => copyToClipboard()}
+          style={styles?.textView}>
           <Text style={styles?.promocodeTextStyle}>{promocode}</Text>
-          <TouchableOpacity onPress={() => copyToClipboard()}>
-            <Image
-              resizeMode="contain"
-              source={Images?.copy}
-              style={styles?.copyImageStyle}
-            />
-          </TouchableOpacity>
-        </View>
+
+          <Image
+            resizeMode="contain"
+            source={Images?.copy}
+            style={styles?.copyImageStyle}
+          />
+        </TouchableOpacity>
         <View
           style={{
             borderTopWidth: 1,

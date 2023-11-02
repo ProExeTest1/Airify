@@ -162,7 +162,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
                 {strings.Flight_Details}
               </Text>
             </View>
-            <TouchableOpacity onPress={() => navigation?.goBack('')}>
+            <TouchableOpacity onPress={() => navigation?.goBack()}>
               <Image
                 source={Images.backIcon}
                 style={styles.backIconStyle}
@@ -274,6 +274,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
             {strings.total_price} : {searchFlightData?.passenger?.split(' ')[0]}{' '}
             person(s)
           </Text>
+          {console.log('item?.price', item?.price)}
           <Text style={styles.cardPrice}>
             $
             {parseInt(item?.price?.slice(1, 8).split(',').join(''), 10) *

@@ -24,6 +24,7 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {getDate} from '../../assets/DummyData/GetDate';
+import moment from 'moment';
 
 const SearchFlightsHeader = ({
   onShare,
@@ -82,7 +83,9 @@ const SearchFlightsHeader = ({
           <Text style={styles.FlightsPlaseNicName}>
             {searchFlightData?.fromShortform}
           </Text>
-          <Text style={styles.FlightsPlaseName}>{searchFlightData?.from}</Text>
+          <Text style={styles.FlightsPlaseName} numberOfLines={1}>
+            {searchFlightData?.from}
+          </Text>
         </View>
         <View style={styles.FlightsPlaseImgBody}>
           <Image
@@ -98,7 +101,9 @@ const SearchFlightsHeader = ({
           <Text style={styles.FlightsPlaseNicName}>
             {searchFlightData?.toShortform}
           </Text>
-          <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
+          <Text style={styles.FlightsPlaseName} numberOfLines={1}>
+            {searchFlightData?.to}
+          </Text>
         </View>
       </View>
       <View style={styles.dateListBody}>
@@ -137,7 +142,7 @@ const SearchFlightsHeader = ({
                         item?.date === SelectDate?.date ? '#295dff' : '#fff',
                     },
                   ]}>
-                  {item.date.split('/')[0]}
+                  {moment(item.date, 'D/M/YYYY').date()}
                 </Text>
                 <Text
                   style={{

@@ -54,15 +54,10 @@ const BookingTransactionDetails = ({navigation}) => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');
   };
-  console.log(
-    moment(firebaseTicketData.searchFlightDateData[1], 'MMM DD YYYY').format(
-      'D/M/YYYY',
-    ),
-    firebaseTicketData.searchFlightDateData[1],
-  );
+  console.log(firebaseTicketData);
   return (
     <View style={{flex: 1}}>
-      {firebaseTicketData?.bookingID && (
+      {firebaseTicketData && (
         <>
           <StatusBar barStyle={'light-content'} />
 

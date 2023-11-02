@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   Share,
+  Platform,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {
@@ -134,7 +135,11 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
           goBack();
         }}
         navigation2={() => {
-          navigation?.navigate('LocationSearch');
+          Platform.OS === 'ios'
+            ? navigation?.navigate('LocationSearch')
+            : AlertConstant(
+                'API Key are not found so this feature is not available in andriod',
+              );
         }}
       />
       <View style={styles.FlatListViewStyle}>

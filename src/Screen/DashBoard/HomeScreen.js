@@ -236,7 +236,11 @@ const HomeScreen = ({navigation}) => {
               label={'From'}
               marginHorizontal={wp(4)}
               onPress={() =>
-                navigation.navigate('PlacePicker', {data: 'Select Origin'})
+                change
+                  ? navigation.navigate('PlacePicker', {
+                      data: 'Select Destination',
+                    })
+                  : navigation.navigate('PlacePicker', {data: 'Select Origin'})
               }
               icon={Images.takeOff}
               value={
@@ -255,7 +259,11 @@ const HomeScreen = ({navigation}) => {
               marginVertical={hp(1)}
               marginHorizontal={wp(4)}
               onPress={() =>
-                navigation.navigate('PlacePicker', {data: 'Select Destination'})
+                change
+                  ? navigation.navigate('PlacePicker', {data: 'Select Origin'})
+                  : navigation.navigate('PlacePicker', {
+                      data: 'Select Destination',
+                    })
               }
               icon={Images.landing}
               value={

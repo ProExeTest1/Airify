@@ -27,6 +27,16 @@ import {
 } from '../../redux/action/SelectSeatAction';
 import moment from 'moment';
 import {showTicketActionData} from '../../redux/action/showTicketAction';
+import {
+  RescheduleCardData,
+  RescheduleDateData,
+  RescheduleFilterData,
+  RescheduleNormalDateData,
+  ReschedulePaymentMethodAction,
+  RescheduleSelectSeatData,
+  RescheduleTotalPaymentListAction,
+  rescheduleSelectNewCardData,
+} from '../../redux/action/RescheduleAction';
 
 const RescheduleConfirmPin = ({navigation, route}) => {
   const [pinData, setPinData] = useState('');
@@ -229,6 +239,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                           referenceID: randomBookingIDGenerator(9, 'REF'),
                           searchFlightData,
                           searchFlightDateData,
+                          id: item.id,
+                          type: 'Departure',
                         }
                       : item.Departure,
                   Return:
@@ -248,6 +260,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                           referenceID: randomBookingIDGenerator(9, 'REF'),
                           searchFlightData,
                           searchFlightDateData,
+                          id: item.id,
+                          type: 'Return',
                         }
                       : item.Return,
 
@@ -259,11 +273,15 @@ const RescheduleConfirmPin = ({navigation, route}) => {
           })
           .then(async () => {
             setTimeout(() => {
-              // dispatch(ReturnSelectSeatActionData([]));
-              dispatch(SelectSeatActionData([]));
-              dispatch(DiscountDataAction({}));
-              dispatch(SelectpaymentMethodAction({}));
-              setcondti2(false);
+              RescheduleCardData(),
+                rescheduleSelectNewCardData(),
+                RescheduleFilterData(),
+                RescheduleDateData(),
+                RescheduleNormalDateData(),
+                RescheduleSelectSeatData(),
+                RescheduleTotalPaymentListAction(),
+                ReschedulePaymentMethodAction(),
+                setcondti2(false);
             }, 2000);
           });
       } else {
@@ -417,6 +435,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                   navigation.navigate('Congratulation', {
                     header: 'TransactionDetails',
                     type: 'Reschedule',
+                    // tripType: 'One-way',
                   });
                 }}
                 style={{

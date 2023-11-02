@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FlatList,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -49,133 +50,141 @@ const CreatePriceAlert = ({
   const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
   return (
     <View style={styles.createAlertBody}>
-      <View style={styles.createAlertTitleBody}>
-        <Text style={styles.createAlertTitle}>{strings.PriceAlertHeader}</Text>
-      </View>
-      <View style={styles.createAlertNotifiBody}>
-        <Image style={styles.createAlertNotifiImg} source={Images.bell}></Image>
-        <Text style={styles.createAlertNotifiText}>
-          {strings.PriceAlertDis}
-        </Text>
-      </View>
-      <View style={styles.createAlertCardBody}>
-        <View style={styles.cardDataBody}>
-          <View style={styles.FlightsPlaseBody}>
+      <ScrollView>
+        <View style={styles.createAlertTitleBody}>
+          <Text style={styles.createAlertTitle}>
+            {strings.PriceAlertHeader}
+          </Text>
+        </View>
+        <View style={styles.createAlertNotifiBody}>
+          <Image
+            style={styles.createAlertNotifiImg}
+            source={Images.bell}></Image>
+          <Text style={styles.createAlertNotifiText}>
+            {strings.PriceAlertDis}
+          </Text>
+        </View>
+        <View style={styles.createAlertCardBody}>
+          <View style={styles.cardDataBody}>
+            <View style={styles.FlightsPlaseBody}>
+              <Text style={styles.FlightsPlaseName}>
+                {searchFlightData?.from}
+              </Text>
+              <Text style={styles.FlightsPlaseNicName}>
+                {' '}
+                {searchFlightData?.fromShortform}
+              </Text>
+            </View>
+            <View style={styles.FlightsPlaseImgBody}>
+              <Image
+                style={styles.FlightsPlaseImg}
+                source={Images.airplaneGreIcon}
+              />
+              <Text style={styles.FlightsPlaseImgText}>
+                {`${`${new Date()}`.slice(
+                  3,
+                  10,
+                )}, ${new Date().getFullYear()} - ${`${new Date(
+                  Date.now() + 86400000 * 45,
+                )}`.slice(3, 10)}, ${new Date(
+                  Date.now() + 86400000 * 45,
+                ).getFullYear()}`}
+              </Text>
+            </View>
+            <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
+              <Text style={styles.FlightsPlaseName}>
+                {searchFlightData?.to}
+              </Text>
+              <Text style={styles.FlightsPlaseNicName}>
+                {' '}
+                {searchFlightData?.toShortform}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.cardBottemBody}>
             <Text style={styles.FlightsPlaseName}>
-              {searchFlightData?.from}
+              {reduxDepaturePlace?.country}
             </Text>
-            <Text style={styles.FlightsPlaseNicName}>
-              {' '}
-              {searchFlightData?.fromShortform}
-            </Text>
-          </View>
-          <View style={styles.FlightsPlaseImgBody}>
-            <Image
-              style={styles.FlightsPlaseImg}
-              source={Images.airplaneGreIcon}
-            />
             <Text style={styles.FlightsPlaseImgText}>
-              {`${`${new Date()}`.slice(
-                3,
-                10,
-              )}, ${new Date().getFullYear()} - ${`${new Date(
-                Date.now() + 86400000 * 45,
-              )}`.slice(3, 10)}, ${new Date(
-                Date.now() + 86400000 * 45,
-              ).getFullYear()}`}
+              {totalSeat} {strings.pax.slice(1)} - {searchFlightData?.class}
             </Text>
-          </View>
-          <View style={[styles.FlightsPlaseBody, {alignItems: 'flex-end'}]}>
-            <Text style={styles.FlightsPlaseName}>{searchFlightData?.to}</Text>
-            <Text style={styles.FlightsPlaseNicName}>
-              {' '}
-              {searchFlightData?.toShortform}
+            <Text style={styles.FlightsPlaseName}>
+              {reduxDestinationPlace?.country}
             </Text>
           </View>
         </View>
-        <View style={styles.cardBottemBody}>
-          <Text style={styles.FlightsPlaseName}>
-            {reduxDepaturePlace?.country}
-          </Text>
-          <Text style={styles.FlightsPlaseImgText}>
-            {totalSeat} {strings.pax.slice(1)} - {searchFlightData?.class}
-          </Text>
-          <Text style={styles.FlightsPlaseName}>
-            {reduxDestinationPlace?.country}
-          </Text>
+        <View style={styles.PriceTargetsBody}>
+          <Image style={styles.PriceTargetsImg} source={Images?.dollarIcon} />
+          <Text style={styles.PriceTargetsTitle}>{strings?.PriceTarget}</Text>
+          <Text
+            style={
+              styles.PriceTargetsText
+            }>{`$${priceTargets[0]} - $${priceTargets[1]}`}</Text>
         </View>
-      </View>
-      <View style={styles.PriceTargetsBody}>
-        <Image style={styles.PriceTargetsImg} source={Images?.dollarIcon} />
-        <Text style={styles.PriceTargetsTitle}>{strings?.PriceTarget}</Text>
-        <Text
-          style={
-            styles.PriceTargetsText
-          }>{`$${priceTargets[0]} - $${priceTargets[1]}`}</Text>
-      </View>
-      <MultiSliderComponets
-        min={700}
-        max={2000}
-        values={priceTargets}
-        sliderLength={wp(88)}
-        onValuesChangeFinish={a => setPriceTargets(a)}
-      />
-      <View style={styles.PriceTargetsBody}>
-        <Image style={styles.PriceTargetsImg} source={Images?.timeIcon} />
-        <Text style={styles.PriceTargetsTitle}>{strings?.DepartureTime}</Text>
-        <ToggleSwitch
-          isOn={ToggleSwitchBut1}
-          size="medium"
-          onColor={color.commonBlue}
-          onToggle={isOn => setToggleSwitchBut1(isOn)}
+        <MultiSliderComponets
+          min={700}
+          max={2000}
+          values={priceTargets}
+          sliderLength={wp(88)}
+          onValuesChangeFinish={a => setPriceTargets(a)}
         />
-      </View>
-      {ToggleSwitchBut1 && (
-        <FlatList
-          data={TimeData}
-          bounces={false}
-          numColumns={2}
-          renderItem={({item, index}) => (
-            <TouchableOpacity
-              onPress={() => {
-                item.time === departureTime?.time
-                  ? setDepartureTime({})
-                  : setDepartureTime(item);
-              }}
-              style={[
-                styles.departureTimeBody,
-                {
-                  marginEnd: index % 2 === 0 ? wp(3) : 0,
-                  borderColor:
-                    item.time === departureTime?.time
-                      ? color.commonBlue
-                      : '#e4e4e4',
-                },
-              ]}>
-              <Text style={styles.departureTitleStyle}>{item?.title}</Text>
-              <Text style={styles.departureTimeTextStyle}>{item?.time}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      )}
-      <View style={styles.PriceTargetsBody}>
-        <Image style={styles.PriceTargetsImg} source={Images?.flightIcon} />
-        <Text style={styles.PriceTargetsTitle}>{strings?.DirectFlight}</Text>
-        <ToggleSwitch
-          size="medium"
-          isOn={ToggleSwitchBut2}
-          onColor={color.commonBlue}
-          onToggle={isOn => setToggleSwitchBut2(isOn)}
-        />
-      </View>
-      <View style={styles.buttonStyle}>
-        <OnBoardingTwoButton
-          onPress2={addAlert}
-          onPress1={closeModal}
-          buttonTextOne={'Cancel'}
-          buttonTextTwo={'Create'}
-        />
-      </View>
+        <View style={styles.PriceTargetsBody}>
+          <Image style={styles.PriceTargetsImg} source={Images?.timeIcon} />
+          <Text style={styles.PriceTargetsTitle}>{strings?.DepartureTime}</Text>
+          <ToggleSwitch
+            isOn={ToggleSwitchBut1}
+            size="medium"
+            onColor={color.commonBlue}
+            onToggle={isOn => setToggleSwitchBut1(isOn)}
+          />
+        </View>
+        {ToggleSwitchBut1 && (
+          <FlatList
+            data={TimeData}
+            bounces={false}
+            numColumns={2}
+            renderItem={({item, index}) => (
+              <TouchableOpacity
+                onPress={() => {
+                  item.time === departureTime?.time
+                    ? setDepartureTime({})
+                    : setDepartureTime(item);
+                }}
+                style={[
+                  styles.departureTimeBody,
+                  {
+                    marginEnd: index % 2 === 0 ? wp(3) : 0,
+                    borderColor:
+                      item.time === departureTime?.time
+                        ? color.commonBlue
+                        : '#e4e4e4',
+                  },
+                ]}>
+                <Text style={styles.departureTitleStyle}>{item?.title}</Text>
+                <Text style={styles.departureTimeTextStyle}>{item?.time}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        )}
+        <View style={styles.PriceTargetsBody}>
+          <Image style={styles.PriceTargetsImg} source={Images?.flightIcon} />
+          <Text style={styles.PriceTargetsTitle}>{strings?.DirectFlight}</Text>
+          <ToggleSwitch
+            size="medium"
+            isOn={ToggleSwitchBut2}
+            onColor={color.commonBlue}
+            onToggle={isOn => setToggleSwitchBut2(isOn)}
+          />
+        </View>
+        <View style={styles.buttonStyle}>
+          <OnBoardingTwoButton
+            onPress2={addAlert}
+            onPress1={closeModal}
+            buttonTextOne={'Cancel'}
+            buttonTextTwo={'Create'}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -205,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize(11),
   },
   FlightsPlaseNicName: {
-    color: '#000',
+    color: color.black,
     fontWeight: 'bold',
     marginTop: hp(1.5),
     fontSize: fontSize(21),
@@ -237,6 +246,7 @@ const styles = StyleSheet.create({
   createAlertTitle: {
     fontWeight: '600',
     fontSize: fontSize(20),
+    color: color.black,
   },
   createAlertNotifiBody: {
     flexDirection: 'row',
@@ -252,6 +262,7 @@ const styles = StyleSheet.create({
     width: wp(78),
     fontWeight: '500',
     fontSize: fontSize(17),
+    color: color.black,
   },
   createAlertCardBody: {
     borderWidth: 1,
@@ -275,9 +286,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
     fontSize: fontSize(18),
+    color: color.black,
   },
   PriceTargetsText: {
     fontSize: fontSize(20),
+    color: color.black,
   },
   departureTimeBody: {
     flex: 1,

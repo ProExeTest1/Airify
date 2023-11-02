@@ -65,6 +65,7 @@ const CommonHeader = ({
 const styles = StyleSheet.create({
   headerViewStyle: {
     backgroundColor: color.commonBlue,
+    zIndex: 1,
   },
   cancelButtonStyle: {
     width: hp(3),

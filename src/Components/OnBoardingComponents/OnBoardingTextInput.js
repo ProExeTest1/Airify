@@ -29,13 +29,16 @@ const OnBoardingTextInput = ({
 
   return (
     <TouchableOpacity
+      activeOpacity={0.3}
       onPress={onPress}
       disabled={onPress ? false : true}
       style={[styles.container, container]}>
-      <Image
-        source={textInputIcon}
-        style={[styles.textInputIconStyle, textInputIconStyle]}
-      />
+      {textInputIcon && (
+        <Image
+          source={textInputIcon}
+          style={[styles.textInputIconStyle, textInputIconStyle]}
+        />
+      )}
       <TextInput
         value={value}
         autoCorrect={false}
@@ -82,7 +85,8 @@ const OnBoardingTextInput = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: hp(6.5),
+    // height: hp(6.5),
+    paddingVertical: hp(2.2),
     width: wp(90),
     borderRadius: wp(2),
     paddingStart: wp(2),

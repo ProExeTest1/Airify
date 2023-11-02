@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import {hp, wp} from '../../helper/Constant';
+import {color} from '../../helper/ColorConstant';
 
 const OnBoardingSingleButton = ({
   onPress,
@@ -37,12 +38,14 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    borderColor: color.grey,
   },
   buttonStyle: {
     width: wp(80),
-    height: hp(5),
     marginRight: wp(2),
     borderRadius: wp(2),
+    paddingVertical: hp(1.2),
+
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: 'blue',

@@ -18,6 +18,7 @@ import moment from 'moment';
 
 const Congratulation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
+  console.log(tripType);
   const type = route?.params?.type;
   const header = route?.params?.header;
   console.log(header, 'header212121');

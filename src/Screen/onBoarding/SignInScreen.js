@@ -127,9 +127,9 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
         <View style={styles.rememberLineStyle}>
           <View
             style={{
+              flex: 1,
               flexDirection: 'row',
               alignItems: 'center',
-              marginHorizontal: wp(6),
             }}>
             <CheckButton
               check={checked}
@@ -137,11 +137,11 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
                 setChecked(!checked);
               }}
             />
-            <Text style={{marginLeft: wp(6), color: color.black}}>
+            <Text style={{marginLeft: wp(4), color: color.black, flex: 1}}>
               {strings.RememberMe}
             </Text>
           </View>
-          <View style={{marginLeft: wp(12)}}>
+          <View style={{marginRight: wp(3)}}>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('ResetPassword');
@@ -228,8 +228,9 @@ const styles = StyleSheet.create({
     color: color.black,
   },
   rememberLineStyle: {
-    marginTop: hp(2),
     flexDirection: 'row',
+    paddingVertical: hp(1),
+    marginHorizontal: wp(2),
   },
   forgotPasswordStyle: {
     color: 'blue',

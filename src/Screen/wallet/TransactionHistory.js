@@ -87,8 +87,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '600',
     fontSize: fontSize(18),
+    color: color.black,
   },
   priceText: {
     fontSize: fontSize(18),
+    color: color.black,
   },
 });

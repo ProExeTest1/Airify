@@ -46,6 +46,8 @@ const TransactionDetails = ({navigation, route}) => {
 
   const ticketId = useSelector(state => state?.showTicketData?.ticketId);
 
+  console.log(firebaseTicketData, TicketTypeData);
+
   const getTicketData = async () => {
     await firestore()
       .collection('SaveTicket')
@@ -357,6 +359,21 @@ const TransactionDetails = ({navigation, route}) => {
 
             <TouchableOpacity
               onPress={() => {
+                // dispatch(RescheduleCardData(firebaseTicketData));
+                // dispatch(
+                //   RescheduleNormalDateData({
+                //     date: moment(
+                //       firebaseTicketData.searchFlightDateData[1],
+                //       'MMM DD YYYY',
+                //     ).format('D/M/YYYY'),
+                //     day: firebaseTicketData?.searchFlightDateData[0],
+                //   }),
+                // );
+                // dispatch(
+                //   RescheduleDateData(
+                //     `${firebaseTicketData?.searchFlightDateData[0]} ,${firebaseTicketData.searchFlightDateData[1]}`,
+                //   ),
+                // );
                 dispatch(RescheduleCardData(firebaseTicketData));
                 dispatch(
                   RescheduleNormalDateData({
@@ -372,6 +389,7 @@ const TransactionDetails = ({navigation, route}) => {
                     `${firebaseTicketData?.searchFlightDateData[0]} ,${firebaseTicketData.searchFlightDateData[1]}`,
                   ),
                 );
+                dispatch(RescheduleCardData(firebaseTicketData));
                 navigation?.navigate('RescheduleSearchFlight');
               }}
               style={[

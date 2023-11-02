@@ -35,12 +35,12 @@ const BookingsScreen = ({navigation}) => {
           if (documentSnapshot.id == auth().currentUser.uid) {
             let DepartureData = documentSnapshot?.data()?.SaveTicket.map(i => {
               if (i?.Departure) {
-                return {...i?.Departure, type: 'Departure', id: i?.id};
+                return i?.Departure;
               }
             });
             let ReturnData = documentSnapshot.data()?.SaveTicket.map(i => {
               if (i?.Return) {
-                return {...i?.Return, type: 'Return', id: i?.id};
+                return i?.Return;
               }
               return undefined;
             });

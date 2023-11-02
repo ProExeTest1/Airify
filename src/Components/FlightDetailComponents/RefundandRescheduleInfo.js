@@ -21,6 +21,7 @@ const RefundandRescheduleInfo = ({sectionData, header}) => {
       <SectionList
         sections={sectionData}
         bounces={false}
+        showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         stickySectionHeadersEnabled={false}
         renderItem={({item}) => {

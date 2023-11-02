@@ -48,7 +48,7 @@ const OnBoardingModuleHeader = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: wp(4),
+    paddingHorizontal: wp(4),
     paddingBottom: hp(3),
     backgroundColor: 'blue',
     paddingTop: Platform.OS === 'ios' ? hp(8) : hp(2),

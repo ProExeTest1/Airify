@@ -14,7 +14,11 @@ import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {PickerHeaderBar, SwiperFlatlistComponent} from '../../components';
+import {
+  CommonHeader,
+  PickerHeaderBar,
+  SwiperFlatlistComponent,
+} from '../../components';
 import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
 
 const SpecialOfferScreen = ({route, navigation}) => {
@@ -27,26 +31,40 @@ const SpecialOfferScreen = ({route, navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <PickerHeaderBar
+      <CommonHeader
+        navigation1={() => {
+          navigation.goBack();
+        }}
+        onPress1={true}
+        onPress2={false}
+        Images2={null}
+        Images1={Images?.backIcon}
+        Images2Color={false}
+        Images1Color={color?.white}
+        headerName={headerData}
+      />
+      {/* <PickerHeaderBar
         headerName={headerData}
         navigation={() => navigation.goBack()}
-      />
+      /> */}
       <View style={styles.innerContainer}>
         <SwiperFlatlistComponent showPagination={true} />
         <Text style={styles.titleStyle}>{strings.exclusive_offer}</Text>
         <Text style={[styles.textStyle, {marginVertical: hp(1.2)}]}>
           {strings.offeerDiscription}
         </Text>
-        <View style={styles.promocodeViewStyle}>
+        <TouchableOpacity
+          onPress={() => copyToClipboard()}
+          style={styles.promocodeViewStyle}>
           <Text style={styles.promocodeTextStyle}>{promocode}</Text>
-          <TouchableOpacity onPress={() => copyToClipboard()}>
+          <View>
             <Image
               source={Images.copy}
               style={styles.copyImageStyle}
               resizeMode="contain"
             />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
         <View style={styles.validateViewStyle}>
           <View>
             <View style={styles.commonViewStyle}>

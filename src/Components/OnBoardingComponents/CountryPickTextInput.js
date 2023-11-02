@@ -47,6 +47,7 @@ const CountryPickTextInput = ({
               value={value}
               editable={editable}
               keyboardType="number-pad"
+              maxLength={10}
               placeholder={placeholder}
               onChangeText={onChangeText}
               placeholderTextColor={placeholderTextColor}

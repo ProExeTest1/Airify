@@ -47,9 +47,9 @@ const pointHistory = ({navigation: {goBack}}) => {
                   <Text style={styles.mainTextStyle}>{item?.price}</Text>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text>{item?.date} </Text>
+                  <Text style={{color: color.black}}>{item?.date} </Text>
                   <View style={styles.dotStyle} />
-                  <Text> {item?.time}</Text>
+                  <Text style={{color: color.black}}> {item?.time}</Text>
                 </View>
               </View>
             );
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
   },
   mainTextStyle: {
     fontWeight: 'bold',
+    color: color.black,
   },
   plusIconStyle: {
     width: hp(2.5),

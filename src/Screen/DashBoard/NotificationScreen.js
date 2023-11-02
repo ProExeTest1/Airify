@@ -81,7 +81,7 @@ const NotificationScreen = ({navigation}) => {
                       alignItems: 'center',
                     }}>
                     <Text style={{color: '#929292', fontWeight: 'bold'}}>
-                      {moment(item.date).subtract('days').calendar()}
+                      {moment(item.date).subtract('day').calendar()}
                     </Text>
                     <View
                       style={{

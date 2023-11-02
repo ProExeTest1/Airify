@@ -55,7 +55,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [checked, setChecked] = useState(false);
   const promocode = randomPromoCodeGenerator(6);
   const [journeyData, setJourneyData] = useState([]);
-  const [countryCode, setCountryCode] = useState('');
+  const [countryCode, setCountryCode] = useState('🇮🇳');
   const [datePicker, setDatePicker] = useState(false);
   const [referralCode, setReferralCode] = useState('');
   const [pickerResponse, setPickerResponse] = useState('');
@@ -69,6 +69,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     onPressAdd();
   }, []);
 
+  console.log(countryCode);
   const DineWayData = useSelector(
     response => response?.OnBoarding?.DineWayData,
   );
@@ -390,6 +391,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             ? strings.PinText
             : null
         }
+        width={index == 0 ? '' : 16.67 * index}
       />
       <Swiper
         ref={swiperRef}
@@ -408,63 +410,64 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           bottom: 0,
         }}>
         <View style={styles.slide}>
-          <ScrollView bounces={false} style={{marginTop: hp(2), flex: 1}}>
-            <Text style={styles.textInputTitleStyle}>{strings.EmailText}</Text>
-            <OnBoardingTextInput
-              textInputIcon={Images.Email}
-              textInputPlaceholder={strings.EmailText}
-              container={styles.textInputContainer}
-              value={Email}
-              onChangeText={email => setEmail(email)}
-              keyboardType={'email-address'}
-            />
-            <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
-            <OnBoardingTextInput
-              textInputIcon={Images.password}
-              textInputPlaceholder={strings.Password}
-              container={styles.textInputContainer}
-              value={Password}
-              onChangeText={password => setPassword(password)}
-              keyboardType={'default'}
-            />
-            <Text style={styles.textInputTitleStyle}>
-              {strings.ReferralCode}
-            </Text>
-            <OnBoardingTextInput
-              textInputPlaceholder={strings.ReferralCode}
-              container={styles.textInputContainer}
-              value={referralCode}
-              onChangeText={referralCode => {
-                setReferralCode(referralCode);
-                referralCodeMatch(referralCode);
-              }}
-              keyboardType={'numeric'}
-              contextMenuHidden={true}
-            />
-            <View style={styles.rememberLineStyle}>
-              <View
-                style={{
-                  marginHorizontal: wp(6),
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <CheckButton
-                  check={checked}
-                  onPress={() => {
-                    setChecked(!checked);
-                  }}
-                />
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{marginLeft: wp(4), color: color.black}}>
-                    {strings.TermsCondition1}
-                  </Text>
-                  <Text style={{color: color.commonBlue}}>
-                    {strings.TextTerm}
-                  </Text>
-                </View>
+          <Text style={[styles.textInputTitleStyle, {marginTop: hp(2)}]}>
+            {strings.EmailText}
+          </Text>
+          <OnBoardingTextInput
+            textInputIcon={Images.Email}
+            textInputPlaceholder={strings.EmailText}
+            container={styles.textInputContainer}
+            value={Email}
+            onChangeText={email => setEmail(email)}
+            keyboardType={'email-address'}
+          />
+          <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
+          <OnBoardingTextInput
+            textInputIcon={Images.password}
+            textInputPlaceholder={strings.Password}
+            container={styles.textInputContainer}
+            value={Password}
+            onChangeText={password => setPassword(password)}
+            keyboardType={'default'}
+          />
+          <Text style={styles.textInputTitleStyle}>{strings.ReferralCode}</Text>
+          <OnBoardingTextInput
+            textInputPlaceholder={strings.ReferralCode}
+            container={styles.textInputContainer}
+            value={referralCode}
+            onChangeText={referralCode => {
+              setReferralCode(referralCode);
+              referralCodeMatch(referralCode);
+            }}
+            keyboardType={'numeric'}
+            contextMenuHidden={true}
+          />
+          <View style={styles.rememberLineStyle}>
+            <View
+              style={{
+                marginEnd: wp(6),
+                marginStart: wp(2),
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <CheckButton
+                check={checked}
+                onPress={() => {
+                  setChecked(!checked);
+                }}
+              />
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{marginLeft: wp(4), color: color.black}}>
+                  {strings.TermsCondition1}
+                </Text>
+                <Text style={{color: color.commonBlue}}>
+                  {strings.TextTerm}
+                </Text>
               </View>
             </View>
-            <View style={styles.signUpStyle}>
+          </View>
+          <View style={styles.signUpStyle}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={{color: 'black'}}>{strings.signInLine}</Text>
               <TouchableOpacity
                 style={{marginLeft: wp(1)}}
@@ -473,7 +476,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                 }}>
                 <Text
                   style={{
-                    color: 'blue',
+                    color: color.commonBlue,
                     fontSize: fontSize(14),
                     fontWeight: '400',
                   }}>
@@ -481,7 +484,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                 </Text>
               </TouchableOpacity>
             </View>
-          </ScrollView>
+          </View>
         </View>
         <View style={styles.slide}>
           <View style={{marginTop: hp(2)}}>
@@ -567,9 +570,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                       source={{uri: item.image}}
                       style={styles.flatListIconStyle}
                     />
-                    <Text style={{width: wp(25)}} numberOfLines={1}>
-                      {item.name}
-                    </Text>
+                    <Text>{item.name}</Text>
                   </TouchableOpacity>
                 );
               }}
@@ -581,7 +582,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           <View
             style={{
               marginTop: hp(2),
-              paddingHorizontal: wp(2),
+              paddingHorizontal: wp(6),
             }}>
             <FlatList
               bounces={false}
@@ -615,9 +616,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                       source={{uri: item.strCategoryThumb}}
                       style={styles.flatListIconStyle}
                     />
-                    <Text style={{width: wp(25)}} numberOfLines={1}>
-                      {item.strCategory}
-                    </Text>
+                    <Text>{item.strCategory}</Text>
                   </TouchableOpacity>
                 );
               }}
@@ -788,26 +787,23 @@ const styles = StyleSheet.create({
     color: color.black,
   },
   rememberLineStyle: {
-    marginTop: hp(1),
+    paddingBottom: hp(2),
     flexDirection: 'row',
-    alignItems: 'center',
   },
   forgotPasswordStyle: {
     color: 'blue',
   },
   signUpStyle: {
     flex: 1,
-    marginTop: hp(2),
-    paddingTop: hp(4),
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    flexDirection: 'row',
     borderColor: '#ECEFEF',
     marginHorizontal: wp(6),
-    justifyContent: 'center',
+    paddingTop: hp(2),
+    alignItems: 'center',
   },
   buttonStyle: {
-    height: hp(6),
+    paddingVertical: hp(2),
     marginVertical: hp(3),
   },
   lineStyle: {
