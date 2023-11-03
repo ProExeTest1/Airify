@@ -570,7 +570,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                       source={{uri: item.image}}
                       style={styles.flatListIconStyle}
                     />
-                    <Text>{item.name}</Text>
+                    <Text style={{color: color.black}}>{item.name}</Text>
                   </TouchableOpacity>
                 );
               }}
@@ -616,7 +616,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                       source={{uri: item.strCategoryThumb}}
                       style={styles.flatListIconStyle}
                     />
-                    <Text>{item.strCategory}</Text>
+                    <Text style={{color: color.black}}>{item.strCategory}</Text>
                   </TouchableOpacity>
                 );
               }}

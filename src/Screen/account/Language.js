@@ -26,11 +26,12 @@ const Language = ({navigation: {goBack}}) => {
   }, []);
 
   const data = () => {
+    console.log(languageDummyJson);
     const det = languageDummyJson?.data?.countries?.map(i =>
       i?.languages.map(e => {
         return {
           emoji: i?.emoji,
-          language: e?.name,
+          language: `${e?.name} (${i?.name.slice(0, 3)})`,
         };
       }),
     );
@@ -75,13 +76,14 @@ const Language = ({navigation: {goBack}}) => {
           extraData={selectedLanguage}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
+            console.log(item);
             return (
               <TouchableOpacity
                 style={[
                   styles.flatListStyle,
                   {
                     borderColor:
-                      selectedLanguage?.emoji == item?.emoji
+                      selectedLanguage?.language == item?.language
                         ? color.commonBlue
                         : color.white,
                   },
@@ -100,7 +102,7 @@ const Language = ({navigation: {goBack}}) => {
                     {item?.language}
                   </Text>
                 </View>
-                {selectedLanguage?.emoji == item?.emoji && (
+                {selectedLanguage?.language == item?.language && (
                   <Image
                     source={Images.checkIcon}
                     style={{

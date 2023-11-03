@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 import {hp, wp} from '../../helper/Constant';
@@ -71,7 +72,7 @@ const OnBoardingTextInput = ({
       ) : null}
       {textInputPlaceholder == 'Date of Birth' ? (
         <TouchableOpacity
-          style={{alignItems: 'flex-end', marginRight: wp(2)}}
+          style={{alignItems: 'flex-end', marginRight: wp(4)}}
           onPress={() => {
             onPressCalender();
             setFocus(false);
@@ -86,7 +87,7 @@ const OnBoardingTextInput = ({
 const styles = StyleSheet.create({
   container: {
     // height: hp(6.5),
-    paddingVertical: hp(2.2),
+    paddingVertical: Platform.OS === 'ios' ? hp(2.2) : hp(0.5),
     width: wp(90),
     borderRadius: wp(2),
     paddingStart: wp(2),
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   },
   imageTouchStyle: {
     alignItems: 'flex-end',
-    marginRight: wp(2),
+    paddingHorizontal: wp(4),
   },
 });
 

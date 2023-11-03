@@ -7,7 +7,7 @@ import {Images} from '../../helper/IconConstant';
 const CheckButton = ({check, onPress, mainStyle}) => {
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => onPress()}
       style={[
         styles.container,
         {

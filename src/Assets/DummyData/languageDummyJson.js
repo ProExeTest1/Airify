@@ -8,6 +8,7 @@ export const languageDummyJson = {
             name: 'Catalan',
           },
         ],
+        name: 'Andorra',
       },
       {
         emoji: '🇦🇪',
@@ -16,6 +17,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'United Arab Emirates',
       },
       {
         emoji: '🇦🇫',
@@ -30,6 +32,7 @@ export const languageDummyJson = {
             name: 'Turkmen',
           },
         ],
+        name: 'Afghanistan',
       },
       {
         emoji: '🇦🇬',
@@ -38,6 +41,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Antigua and Barbuda',
       },
       {
         emoji: '🇦🇮',
@@ -46,6 +50,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Anguilla',
       },
       {
         emoji: '🇦🇱',
@@ -54,6 +59,7 @@ export const languageDummyJson = {
             name: 'Albanian',
           },
         ],
+        name: 'Albania',
       },
       {
         emoji: '🇦🇲',
@@ -65,6 +71,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Armenia',
       },
       {
         emoji: '🇦🇴',
@@ -73,10 +80,12 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'Angola',
       },
       {
         emoji: '🇦🇶',
         languages: [],
+        name: 'Antarctica',
       },
       {
         emoji: '🇦🇷',
@@ -88,6 +97,7 @@ export const languageDummyJson = {
             name: 'Guarani',
           },
         ],
+        name: 'Argentina',
       },
       {
         emoji: '🇦🇸',
@@ -99,6 +109,7 @@ export const languageDummyJson = {
             name: 'Samoan',
           },
         ],
+        name: 'American Samoa',
       },
       {
         emoji: '🇦🇹',
@@ -107,6 +118,7 @@ export const languageDummyJson = {
             name: 'German',
           },
         ],
+        name: 'Austria',
       },
       {
         emoji: '🇦🇺',
@@ -115,6 +127,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Australia',
       },
       {
         emoji: '🇦🇼',
@@ -126,6 +139,7 @@ export const languageDummyJson = {
             name: 'Panjabi / Punjabi',
           },
         ],
+        name: 'Aruba',
       },
       {
         emoji: '🇦🇽',
@@ -134,6 +148,7 @@ export const languageDummyJson = {
             name: 'Swedish',
           },
         ],
+        name: 'Åland',
       },
       {
         emoji: '🇦🇿',
@@ -142,6 +157,7 @@ export const languageDummyJson = {
             name: 'Azerbaijani',
           },
         ],
+        name: 'Azerbaijan',
       },
       {
         emoji: '🇧🇦',
@@ -156,6 +172,7 @@ export const languageDummyJson = {
             name: 'Serbian',
           },
         ],
+        name: 'Bosnia and Herzegovina',
       },
       {
         emoji: '🇧🇧',
@@ -164,6 +181,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Barbados',
       },
       {
         emoji: '🇧🇩',
@@ -172,6 +190,7 @@ export const languageDummyJson = {
             name: 'Bengali',
           },
         ],
+        name: 'Bangladesh',
       },
       {
         emoji: '🇧🇪',
@@ -186,6 +205,7 @@ export const languageDummyJson = {
             name: 'German',
           },
         ],
+        name: 'Belgium',
       },
       {
         emoji: '🇧🇫',
@@ -197,6 +217,7 @@ export const languageDummyJson = {
             name: 'Peul',
           },
         ],
+        name: 'Burkina Faso',
       },
       {
         emoji: '🇧🇬',
@@ -205,6 +226,7 @@ export const languageDummyJson = {
             name: 'Bulgarian',
           },
         ],
+        name: 'Bulgaria',
       },
       {
         emoji: '🇧🇭',
@@ -213,6 +235,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Bahrain',
       },
       {
         emoji: '🇧🇮',
@@ -224,6 +247,7 @@ export const languageDummyJson = {
             name: 'Kirundi',
           },
         ],
+        name: 'Burundi',
       },
       {
         emoji: '🇧🇯',
@@ -232,6 +256,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Benin',
       },
       {
         emoji: '🇧🇱',
@@ -240,6 +265,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Saint Barthélemy',
       },
       {
         emoji: '🇧🇲',
@@ -248,6 +274,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Bermuda',
       },
       {
         emoji: '🇧🇳',
@@ -256,6 +283,7 @@ export const languageDummyJson = {
             name: 'Malay',
           },
         ],
+        name: 'Brunei',
       },
       {
         emoji: '🇧🇴',
@@ -270,6 +298,7 @@ export const languageDummyJson = {
             name: 'Quechua',
           },
         ],
+        name: 'Bolivia',
       },
       {
         emoji: '🇧🇶',
@@ -278,6 +307,7 @@ export const languageDummyJson = {
             name: 'Dutch',
           },
         ],
+        name: 'Bonaire',
       },
       {
         emoji: '🇧🇷',
@@ -286,6 +316,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'Brazil',
       },
       {
         emoji: '🇧🇸',
@@ -294,6 +325,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Bahamas',
       },
       {
         emoji: '🇧🇹',
@@ -302,6 +334,7 @@ export const languageDummyJson = {
             name: 'Dzongkha',
           },
         ],
+        name: 'Bhutan',
       },
       {
         emoji: '🇧🇻',
@@ -316,6 +349,7 @@ export const languageDummyJson = {
             name: 'Norwegian Nynorsk',
           },
         ],
+        name: 'Bouvet Island',
       },
       {
         emoji: '🇧🇼',
@@ -327,6 +361,7 @@ export const languageDummyJson = {
             name: 'Tswana',
           },
         ],
+        name: 'Botswana',
       },
       {
         emoji: '🇧🇾',
@@ -338,6 +373,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Belarus',
       },
       {
         emoji: '🇧🇿',
@@ -349,6 +385,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Belize',
       },
       {
         emoji: '🇨🇦',
@@ -360,6 +397,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Canada',
       },
       {
         emoji: '🇨🇨',
@@ -368,6 +406,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Cocos [Keeling] Islands',
       },
       {
         emoji: '🇨🇩',
@@ -388,6 +427,7 @@ export const languageDummyJson = {
             name: 'Luba-Katanga',
           },
         ],
+        name: 'Democratic Republic of the Congo',
       },
       {
         emoji: '🇨🇫',
@@ -399,6 +439,7 @@ export const languageDummyJson = {
             name: 'Sango',
           },
         ],
+        name: 'Central African Republic',
       },
       {
         emoji: '🇨🇬',
@@ -410,6 +451,7 @@ export const languageDummyJson = {
             name: 'Lingala',
           },
         ],
+        name: 'Republic of the Congo',
       },
       {
         emoji: '🇨🇭',
@@ -424,6 +466,7 @@ export const languageDummyJson = {
             name: 'Italian',
           },
         ],
+        name: 'Switzerland',
       },
       {
         emoji: '🇨🇮',
@@ -432,6 +475,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Ivory Coast',
       },
       {
         emoji: '🇨🇰',
@@ -440,6 +484,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Cook Islands',
       },
       {
         emoji: '🇨🇱',
@@ -448,6 +493,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Chile',
       },
       {
         emoji: '🇨🇲',
@@ -459,6 +505,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Cameroon',
       },
       {
         emoji: '🇨🇳',
@@ -467,6 +514,7 @@ export const languageDummyJson = {
             name: 'Chinese',
           },
         ],
+        name: 'China',
       },
       {
         emoji: '🇨🇴',
@@ -475,6 +523,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Colombia',
       },
       {
         emoji: '🇨🇷',
@@ -483,6 +532,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Costa Rica',
       },
       {
         emoji: '🇨🇺',
@@ -491,6 +541,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Cuba',
       },
       {
         emoji: '🇨🇻',
@@ -499,6 +550,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'Cape Verde',
       },
       {
         emoji: '🇨🇼',
@@ -513,6 +565,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Curacao',
       },
       {
         emoji: '🇨🇽',
@@ -521,6 +574,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Christmas Island',
       },
       {
         emoji: '🇨🇾',
@@ -535,6 +589,7 @@ export const languageDummyJson = {
             name: 'Armenian',
           },
         ],
+        name: 'Cyprus',
       },
       {
         emoji: '🇨🇿',
@@ -546,6 +601,7 @@ export const languageDummyJson = {
             name: 'Slovak',
           },
         ],
+        name: 'Czech Republic',
       },
       {
         emoji: '🇩🇪',
@@ -554,6 +610,7 @@ export const languageDummyJson = {
             name: 'German',
           },
         ],
+        name: 'Germany',
       },
       {
         emoji: '🇩🇯',
@@ -565,6 +622,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Djibouti',
       },
       {
         emoji: '🇩🇰',
@@ -573,6 +631,7 @@ export const languageDummyJson = {
             name: 'Danish',
           },
         ],
+        name: 'Denmark',
       },
       {
         emoji: '🇩🇲',
@@ -581,6 +640,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Dominica',
       },
       {
         emoji: '🇩🇴',
@@ -589,6 +649,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Dominican Republic',
       },
       {
         emoji: '🇩🇿',
@@ -597,6 +658,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Algeria',
       },
       {
         emoji: '🇪🇨',
@@ -605,6 +667,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Ecuador',
       },
       {
         emoji: '🇪🇪',
@@ -613,6 +676,7 @@ export const languageDummyJson = {
             name: 'Estonian',
           },
         ],
+        name: 'Estonia',
       },
       {
         emoji: '🇪🇬',
@@ -621,6 +685,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Egypt',
       },
       {
         emoji: '🇪🇭',
@@ -629,6 +694,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Western Sahara',
       },
       {
         emoji: '🇪🇷',
@@ -643,6 +709,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Eritrea',
       },
       {
         emoji: '🇪🇸',
@@ -663,6 +730,7 @@ export const languageDummyJson = {
             name: 'Occitan',
           },
         ],
+        name: 'Spain',
       },
       {
         emoji: '🇪🇹',
@@ -671,6 +739,7 @@ export const languageDummyJson = {
             name: 'Amharic',
           },
         ],
+        name: 'Ethiopia',
       },
       {
         emoji: '🇫🇮',
@@ -682,6 +751,7 @@ export const languageDummyJson = {
             name: 'Swedish',
           },
         ],
+        name: 'Finland',
       },
       {
         emoji: '🇫🇯',
@@ -699,6 +769,7 @@ export const languageDummyJson = {
             name: 'Urdu',
           },
         ],
+        name: 'Fiji',
       },
       {
         emoji: '🇫🇰',
@@ -707,6 +778,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Falkland Islands',
       },
       {
         emoji: '🇫🇲',
@@ -715,6 +787,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Micronesia',
       },
       {
         emoji: '🇫🇴',
@@ -723,6 +796,7 @@ export const languageDummyJson = {
             name: 'Faroese',
           },
         ],
+        name: 'Faroe Islands',
       },
       {
         emoji: '🇫🇷',
@@ -731,6 +805,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'France',
       },
       {
         emoji: '🇬🇦',
@@ -739,6 +814,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Gabon',
       },
       {
         emoji: '🇬🇧',
@@ -747,6 +823,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'United Kingdom',
       },
       {
         emoji: '🇬🇩',
@@ -755,6 +832,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Grenada',
       },
       {
         emoji: '🇬🇪',
@@ -763,6 +841,7 @@ export const languageDummyJson = {
             name: 'Georgian',
           },
         ],
+        name: 'Georgia',
       },
       {
         emoji: '🇬🇫',
@@ -771,6 +850,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'French Guiana',
       },
       {
         emoji: '🇬🇬',
@@ -782,6 +862,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Guernsey',
       },
       {
         emoji: '🇬🇭',
@@ -790,6 +871,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Ghana',
       },
       {
         emoji: '🇬🇮',
@@ -798,6 +880,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Gibraltar',
       },
       {
         emoji: '🇬🇱',
@@ -806,6 +889,7 @@ export const languageDummyJson = {
             name: 'Greenlandic',
           },
         ],
+        name: 'Greenland',
       },
       {
         emoji: '🇬🇲',
@@ -814,6 +898,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Gambia',
       },
       {
         emoji: '🇬🇳',
@@ -825,6 +910,7 @@ export const languageDummyJson = {
             name: 'Peul',
           },
         ],
+        name: 'Guinea',
       },
       {
         emoji: '🇬🇵',
@@ -833,6 +919,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Guadeloupe',
       },
       {
         emoji: '🇬🇶',
@@ -844,6 +931,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Equatorial Guinea',
       },
       {
         emoji: '🇬🇷',
@@ -852,6 +940,7 @@ export const languageDummyJson = {
             name: 'Greek',
           },
         ],
+        name: 'Greece',
       },
       {
         emoji: '🇬🇸',
@@ -860,6 +949,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'South Georgia and the South Sandwich Islands',
       },
       {
         emoji: '🇬🇹',
@@ -868,6 +958,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Guatemala',
       },
       {
         emoji: '🇬🇺',
@@ -882,6 +973,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Guam',
       },
       {
         emoji: '🇬🇼',
@@ -890,6 +982,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'Guinea-Bissau',
       },
       {
         emoji: '🇬🇾',
@@ -898,6 +991,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Guyana',
       },
       {
         emoji: '🇭🇰',
@@ -909,6 +1003,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Hong Kong',
       },
       {
         emoji: '🇭🇲',
@@ -917,6 +1012,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Heard Island and McDonald Islands',
       },
       {
         emoji: '🇭🇳',
@@ -925,6 +1021,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Honduras',
       },
       {
         emoji: '🇭🇷',
@@ -933,6 +1030,7 @@ export const languageDummyJson = {
             name: 'Croatian',
           },
         ],
+        name: 'Croatia',
       },
       {
         emoji: '🇭🇹',
@@ -944,6 +1042,7 @@ export const languageDummyJson = {
             name: 'Haitian',
           },
         ],
+        name: 'Haiti',
       },
       {
         emoji: '🇭🇺',
@@ -952,6 +1051,7 @@ export const languageDummyJson = {
             name: 'Hungarian',
           },
         ],
+        name: 'Hungary',
       },
       {
         emoji: '🇮🇩',
@@ -960,6 +1060,7 @@ export const languageDummyJson = {
             name: 'Indonesian',
           },
         ],
+        name: 'Indonesia',
       },
       {
         emoji: '🇮🇪',
@@ -971,6 +1072,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Ireland',
       },
       {
         emoji: '🇮🇱',
@@ -982,6 +1084,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Israel',
       },
       {
         emoji: '🇮🇲',
@@ -993,6 +1096,7 @@ export const languageDummyJson = {
             name: 'Manx',
           },
         ],
+        name: 'Isle of Man',
       },
       {
         emoji: '🇮🇳',
@@ -1004,6 +1108,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'India',
       },
       {
         emoji: '🇮🇴',
@@ -1012,6 +1117,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'British Indian Ocean Territory',
       },
       {
         emoji: '🇮🇶',
@@ -1023,6 +1129,7 @@ export const languageDummyJson = {
             name: 'Kurdish',
           },
         ],
+        name: 'Iraq',
       },
       {
         emoji: '🇮🇷',
@@ -1031,6 +1138,7 @@ export const languageDummyJson = {
             name: 'Persian',
           },
         ],
+        name: 'Iran',
       },
       {
         emoji: '🇮🇸',
@@ -1039,6 +1147,7 @@ export const languageDummyJson = {
             name: 'Icelandic',
           },
         ],
+        name: 'Iceland',
       },
       {
         emoji: '🇮🇹',
@@ -1047,6 +1156,7 @@ export const languageDummyJson = {
             name: 'Italian',
           },
         ],
+        name: 'Italy',
       },
       {
         emoji: '🇯🇪',
@@ -1058,6 +1168,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Jersey',
       },
       {
         emoji: '🇯🇲',
@@ -1066,6 +1177,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Jamaica',
       },
       {
         emoji: '🇯🇴',
@@ -1074,6 +1186,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Jordan',
       },
       {
         emoji: '🇯🇵',
@@ -1082,6 +1195,7 @@ export const languageDummyJson = {
             name: 'Japanese',
           },
         ],
+        name: 'Japan',
       },
       {
         emoji: '🇰🇪',
@@ -1093,6 +1207,7 @@ export const languageDummyJson = {
             name: 'Swahili',
           },
         ],
+        name: 'Kenya',
       },
       {
         emoji: '🇰🇬',
@@ -1104,6 +1219,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Kyrgyzstan',
       },
       {
         emoji: '🇰🇭',
@@ -1112,6 +1228,7 @@ export const languageDummyJson = {
             name: 'Cambodian',
           },
         ],
+        name: 'Cambodia',
       },
       {
         emoji: '🇰🇮',
@@ -1120,6 +1237,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Kiribati',
       },
       {
         emoji: '🇰🇲',
@@ -1131,6 +1249,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Comoros',
       },
       {
         emoji: '🇰🇳',
@@ -1139,6 +1258,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Saint Kitts and Nevis',
       },
       {
         emoji: '🇰🇵',
@@ -1147,6 +1267,7 @@ export const languageDummyJson = {
             name: 'Korean',
           },
         ],
+        name: 'North Korea',
       },
       {
         emoji: '🇰🇷',
@@ -1155,6 +1276,7 @@ export const languageDummyJson = {
             name: 'Korean',
           },
         ],
+        name: 'South Korea',
       },
       {
         emoji: '🇰🇼',
@@ -1163,6 +1285,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Kuwait',
       },
       {
         emoji: '🇰🇾',
@@ -1171,6 +1294,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Cayman Islands',
       },
       {
         emoji: '🇰🇿',
@@ -1182,6 +1306,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Kazakhstan',
       },
       {
         emoji: '🇱🇦',
@@ -1190,6 +1315,7 @@ export const languageDummyJson = {
             name: 'Laotian',
           },
         ],
+        name: 'Laos',
       },
       {
         emoji: '🇱🇧',
@@ -1201,6 +1327,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Lebanon',
       },
       {
         emoji: '🇱🇨',
@@ -1209,6 +1336,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Saint Lucia',
       },
       {
         emoji: '🇱🇮',
@@ -1217,6 +1345,7 @@ export const languageDummyJson = {
             name: 'German',
           },
         ],
+        name: 'Liechtenstein',
       },
       {
         emoji: '🇱🇰',
@@ -1228,6 +1357,7 @@ export const languageDummyJson = {
             name: 'Tamil',
           },
         ],
+        name: 'Sri Lanka',
       },
       {
         emoji: '🇱🇷',
@@ -1236,6 +1366,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Liberia',
       },
       {
         emoji: '🇱🇸',
@@ -1247,6 +1378,7 @@ export const languageDummyJson = {
             name: 'Southern Sotho',
           },
         ],
+        name: 'Lesotho',
       },
       {
         emoji: '🇱🇹',
@@ -1255,6 +1387,7 @@ export const languageDummyJson = {
             name: 'Lithuanian',
           },
         ],
+        name: 'Lithuania',
       },
       {
         emoji: '🇱🇺',
@@ -1269,6 +1402,7 @@ export const languageDummyJson = {
             name: 'Luxembourgish',
           },
         ],
+        name: 'Luxembourg',
       },
       {
         emoji: '🇱🇻',
@@ -1277,6 +1411,7 @@ export const languageDummyJson = {
             name: 'Latvian',
           },
         ],
+        name: 'Latvia',
       },
       {
         emoji: '🇱🇾',
@@ -1285,6 +1420,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Libya',
       },
       {
         emoji: '🇲🇦',
@@ -1293,6 +1429,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Morocco',
       },
       {
         emoji: '🇲🇨',
@@ -1301,6 +1438,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Monaco',
       },
       {
         emoji: '🇲🇩',
@@ -1309,6 +1447,7 @@ export const languageDummyJson = {
             name: 'Romanian',
           },
         ],
+        name: 'Moldova',
       },
       {
         emoji: '🇲🇪',
@@ -1326,6 +1465,7 @@ export const languageDummyJson = {
             name: 'Croatian',
           },
         ],
+        name: 'Montenegro',
       },
       {
         emoji: '🇲🇫',
@@ -1340,6 +1480,7 @@ export const languageDummyJson = {
             name: 'Dutch',
           },
         ],
+        name: 'Saint Martin',
       },
       {
         emoji: '🇲🇬',
@@ -1351,6 +1492,7 @@ export const languageDummyJson = {
             name: 'Malagasy',
           },
         ],
+        name: 'Madagascar',
       },
       {
         emoji: '🇲🇭',
@@ -1362,6 +1504,7 @@ export const languageDummyJson = {
             name: 'Marshallese',
           },
         ],
+        name: 'Marshall Islands',
       },
       {
         emoji: '🇲🇰',
@@ -1370,6 +1513,7 @@ export const languageDummyJson = {
             name: 'Macedonian',
           },
         ],
+        name: 'North Macedonia',
       },
       {
         emoji: '🇲🇱',
@@ -1378,6 +1522,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Mali',
       },
       {
         emoji: '🇲🇲',
@@ -1386,6 +1531,7 @@ export const languageDummyJson = {
             name: 'Burmese',
           },
         ],
+        name: 'Myanmar [Burma]',
       },
       {
         emoji: '🇲🇳',
@@ -1394,6 +1540,7 @@ export const languageDummyJson = {
             name: 'Mongolian',
           },
         ],
+        name: 'Mongolia',
       },
       {
         emoji: '🇲🇴',
@@ -1405,6 +1552,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'Macao',
       },
       {
         emoji: '🇲🇵',
@@ -1416,6 +1564,7 @@ export const languageDummyJson = {
             name: 'Chamorro',
           },
         ],
+        name: 'Northern Mariana Islands',
       },
       {
         emoji: '🇲🇶',
@@ -1424,6 +1573,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Martinique',
       },
       {
         emoji: '🇲🇷',
@@ -1432,6 +1582,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Mauritania',
       },
       {
         emoji: '🇲🇸',
@@ -1440,6 +1591,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Montserrat',
       },
       {
         emoji: '🇲🇹',
@@ -1451,6 +1603,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Malta',
       },
       {
         emoji: '🇲🇺',
@@ -1459,6 +1612,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Mauritius',
       },
       {
         emoji: '🇲🇻',
@@ -1467,6 +1621,7 @@ export const languageDummyJson = {
             name: 'Divehi',
           },
         ],
+        name: 'Maldives',
       },
       {
         emoji: '🇲🇼',
@@ -1478,6 +1633,7 @@ export const languageDummyJson = {
             name: 'Chichewa',
           },
         ],
+        name: 'Malawi',
       },
       {
         emoji: '🇲🇽',
@@ -1486,6 +1642,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Mexico',
       },
       {
         emoji: '🇲🇾',
@@ -1494,6 +1651,7 @@ export const languageDummyJson = {
             name: 'Malay',
           },
         ],
+        name: 'Malaysia',
       },
       {
         emoji: '🇲🇿',
@@ -1502,6 +1660,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'Mozambique',
       },
       {
         emoji: '🇳🇦',
@@ -1513,6 +1672,7 @@ export const languageDummyJson = {
             name: 'Afrikaans',
           },
         ],
+        name: 'Namibia',
       },
       {
         emoji: '🇳🇨',
@@ -1521,6 +1681,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'New Caledonia',
       },
       {
         emoji: '🇳🇪',
@@ -1529,6 +1690,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Niger',
       },
       {
         emoji: '🇳🇫',
@@ -1537,6 +1699,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Norfolk Island',
       },
       {
         emoji: '🇳🇬',
@@ -1545,6 +1708,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Nigeria',
       },
       {
         emoji: '🇳🇮',
@@ -1553,6 +1717,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Nicaragua',
       },
       {
         emoji: '🇳🇱',
@@ -1561,6 +1726,7 @@ export const languageDummyJson = {
             name: 'Dutch',
           },
         ],
+        name: 'Netherlands',
       },
       {
         emoji: '🇳🇴',
@@ -1575,6 +1741,7 @@ export const languageDummyJson = {
             name: 'Norwegian Nynorsk',
           },
         ],
+        name: 'Norway',
       },
       {
         emoji: '🇳🇵',
@@ -1583,6 +1750,7 @@ export const languageDummyJson = {
             name: 'Nepali',
           },
         ],
+        name: 'Nepal',
       },
       {
         emoji: '🇳🇷',
@@ -1594,6 +1762,7 @@ export const languageDummyJson = {
             name: 'Nauruan',
           },
         ],
+        name: 'Nauru',
       },
       {
         emoji: '🇳🇺',
@@ -1602,6 +1771,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Niue',
       },
       {
         emoji: '🇳🇿',
@@ -1613,6 +1783,7 @@ export const languageDummyJson = {
             name: 'Maori',
           },
         ],
+        name: 'New Zealand',
       },
       {
         emoji: '🇴🇲',
@@ -1621,6 +1792,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Oman',
       },
       {
         emoji: '🇵🇦',
@@ -1629,6 +1801,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Panama',
       },
       {
         emoji: '🇵🇪',
@@ -1637,6 +1810,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Peru',
       },
       {
         emoji: '🇵🇫',
@@ -1645,6 +1819,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'French Polynesia',
       },
       {
         emoji: '🇵🇬',
@@ -1653,6 +1828,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Papua New Guinea',
       },
       {
         emoji: '🇵🇭',
@@ -1661,6 +1837,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Philippines',
       },
       {
         emoji: '🇵🇰',
@@ -1672,6 +1849,7 @@ export const languageDummyJson = {
             name: 'Urdu',
           },
         ],
+        name: 'Pakistan',
       },
       {
         emoji: '🇵🇱',
@@ -1680,6 +1858,7 @@ export const languageDummyJson = {
             name: 'Polish',
           },
         ],
+        name: 'Poland',
       },
       {
         emoji: '🇵🇲',
@@ -1688,6 +1867,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Saint Pierre and Miquelon',
       },
       {
         emoji: '🇵🇳',
@@ -1696,6 +1876,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Pitcairn Islands',
       },
       {
         emoji: '🇵🇷',
@@ -1707,6 +1888,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Puerto Rico',
       },
       {
         emoji: '🇵🇸',
@@ -1715,6 +1897,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Palestine',
       },
       {
         emoji: '🇵🇹',
@@ -1723,6 +1906,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'Portugal',
       },
       {
         emoji: '🇵🇼',
@@ -1731,6 +1915,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Palau',
       },
       {
         emoji: '🇵🇾',
@@ -1742,6 +1927,7 @@ export const languageDummyJson = {
             name: 'Guarani',
           },
         ],
+        name: 'Paraguay',
       },
       {
         emoji: '🇶🇦',
@@ -1750,6 +1936,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Qatar',
       },
       {
         emoji: '🇷🇪',
@@ -1758,6 +1945,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Réunion',
       },
       {
         emoji: '🇷🇴',
@@ -1766,6 +1954,7 @@ export const languageDummyJson = {
             name: 'Romanian',
           },
         ],
+        name: 'Romania',
       },
       {
         emoji: '🇷🇸',
@@ -1774,6 +1963,7 @@ export const languageDummyJson = {
             name: 'Serbian',
           },
         ],
+        name: 'Serbia',
       },
       {
         emoji: '🇷🇺',
@@ -1782,6 +1972,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Russia',
       },
       {
         emoji: '🇷🇼',
@@ -1796,6 +1987,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Rwanda',
       },
       {
         emoji: '🇸🇦',
@@ -1804,6 +1996,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Saudi Arabia',
       },
       {
         emoji: '🇸🇧',
@@ -1812,6 +2005,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Solomon Islands',
       },
       {
         emoji: '🇸🇨',
@@ -1823,6 +2017,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Seychelles',
       },
       {
         emoji: '🇸🇩',
@@ -1834,6 +2029,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Sudan',
       },
       {
         emoji: '🇸🇪',
@@ -1842,6 +2038,7 @@ export const languageDummyJson = {
             name: 'Swedish',
           },
         ],
+        name: 'Sweden',
       },
       {
         emoji: '🇸🇬',
@@ -1859,6 +2056,7 @@ export const languageDummyJson = {
             name: 'Chinese',
           },
         ],
+        name: 'Singapore',
       },
       {
         emoji: '🇸🇭',
@@ -1867,6 +2065,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Saint Helena',
       },
       {
         emoji: '🇸🇮',
@@ -1875,6 +2074,7 @@ export const languageDummyJson = {
             name: 'Slovenian',
           },
         ],
+        name: 'Slovenia',
       },
       {
         emoji: '🇸🇯',
@@ -1883,6 +2083,7 @@ export const languageDummyJson = {
             name: 'Norwegian',
           },
         ],
+        name: 'Svalbard and Jan Mayen',
       },
       {
         emoji: '🇸🇰',
@@ -1891,6 +2092,7 @@ export const languageDummyJson = {
             name: 'Slovak',
           },
         ],
+        name: 'Slovakia',
       },
       {
         emoji: '🇸🇱',
@@ -1899,6 +2101,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Sierra Leone',
       },
       {
         emoji: '🇸🇲',
@@ -1907,6 +2110,7 @@ export const languageDummyJson = {
             name: 'Italian',
           },
         ],
+        name: 'San Marino',
       },
       {
         emoji: '🇸🇳',
@@ -1915,6 +2119,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Senegal',
       },
       {
         emoji: '🇸🇴',
@@ -1926,6 +2131,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Somalia',
       },
       {
         emoji: '🇸🇷',
@@ -1934,6 +2140,7 @@ export const languageDummyJson = {
             name: 'Dutch',
           },
         ],
+        name: 'Suriname',
       },
       {
         emoji: '🇸🇸',
@@ -1942,6 +2149,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'South Sudan',
       },
       {
         emoji: '🇸🇹',
@@ -1950,6 +2158,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'São Tomé and Príncipe',
       },
       {
         emoji: '🇸🇻',
@@ -1958,6 +2167,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'El Salvador',
       },
       {
         emoji: '🇸🇽',
@@ -1969,6 +2179,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Sint Maarten',
       },
       {
         emoji: '🇸🇾',
@@ -1977,6 +2188,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Syria',
       },
       {
         emoji: '🇸🇿',
@@ -1988,6 +2200,7 @@ export const languageDummyJson = {
             name: 'Swati',
           },
         ],
+        name: 'Swaziland',
       },
       {
         emoji: '🇹🇨',
@@ -1996,6 +2209,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Turks and Caicos Islands',
       },
       {
         emoji: '🇹🇩',
@@ -2007,6 +2221,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Chad',
       },
       {
         emoji: '🇹🇫',
@@ -2015,6 +2230,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'French Southern Territories',
       },
       {
         emoji: '🇹🇬',
@@ -2023,6 +2239,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Togo',
       },
       {
         emoji: '🇹🇭',
@@ -2031,6 +2248,7 @@ export const languageDummyJson = {
             name: 'Thai',
           },
         ],
+        name: 'Thailand',
       },
       {
         emoji: '🇹🇯',
@@ -2042,6 +2260,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Tajikistan',
       },
       {
         emoji: '🇹🇰',
@@ -2050,6 +2269,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Tokelau',
       },
       {
         emoji: '🇹🇱',
@@ -2058,6 +2278,7 @@ export const languageDummyJson = {
             name: 'Portuguese',
           },
         ],
+        name: 'East Timor',
       },
       {
         emoji: '🇹🇲',
@@ -2069,6 +2290,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Turkmenistan',
       },
       {
         emoji: '🇹🇳',
@@ -2077,6 +2299,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Tunisia',
       },
       {
         emoji: '🇹🇴',
@@ -2088,6 +2311,7 @@ export const languageDummyJson = {
             name: 'Tonga',
           },
         ],
+        name: 'Tonga',
       },
       {
         emoji: '🇹🇷',
@@ -2096,6 +2320,7 @@ export const languageDummyJson = {
             name: 'Turkish',
           },
         ],
+        name: 'Turkey',
       },
       {
         emoji: '🇹🇹',
@@ -2104,6 +2329,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Trinidad and Tobago',
       },
       {
         emoji: '🇹🇻',
@@ -2112,6 +2338,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Tuvalu',
       },
       {
         emoji: '🇹🇼',
@@ -2120,6 +2347,7 @@ export const languageDummyJson = {
             name: 'Chinese',
           },
         ],
+        name: 'Taiwan',
       },
       {
         emoji: '🇹🇿',
@@ -2131,6 +2359,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Tanzania',
       },
       {
         emoji: '🇺🇦',
@@ -2139,6 +2368,7 @@ export const languageDummyJson = {
             name: 'Ukrainian',
           },
         ],
+        name: 'Ukraine',
       },
       {
         emoji: '🇺🇬',
@@ -2150,6 +2380,7 @@ export const languageDummyJson = {
             name: 'Swahili',
           },
         ],
+        name: 'Uganda',
       },
       {
         emoji: '🇺🇲',
@@ -2158,6 +2389,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'U.S. Minor Outlying Islands',
       },
       {
         emoji: '🇺🇸',
@@ -2166,6 +2398,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'United States',
       },
       {
         emoji: '🇺🇾',
@@ -2174,6 +2407,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Uruguay',
       },
       {
         emoji: '🇺🇿',
@@ -2185,6 +2419,7 @@ export const languageDummyJson = {
             name: 'Russian',
           },
         ],
+        name: 'Uzbekistan',
       },
       {
         emoji: '🇻🇦',
@@ -2196,6 +2431,7 @@ export const languageDummyJson = {
             name: 'Latin',
           },
         ],
+        name: 'Vatican City',
       },
       {
         emoji: '🇻🇨',
@@ -2204,6 +2440,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Saint Vincent and the Grenadines',
       },
       {
         emoji: '🇻🇪',
@@ -2212,6 +2449,7 @@ export const languageDummyJson = {
             name: 'Spanish',
           },
         ],
+        name: 'Venezuela',
       },
       {
         emoji: '🇻🇬',
@@ -2220,6 +2458,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'British Virgin Islands',
       },
       {
         emoji: '🇻🇮',
@@ -2228,6 +2467,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'U.S. Virgin Islands',
       },
       {
         emoji: '🇻🇳',
@@ -2236,6 +2476,7 @@ export const languageDummyJson = {
             name: 'Vietnamese',
           },
         ],
+        name: 'Vietnam',
       },
       {
         emoji: '🇻🇺',
@@ -2250,6 +2491,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Vanuatu',
       },
       {
         emoji: '🇼🇫',
@@ -2258,6 +2500,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Wallis and Futuna',
       },
       {
         emoji: '🇼🇸',
@@ -2269,6 +2512,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Samoa',
       },
       {
         emoji: '🇽🇰',
@@ -2280,6 +2524,7 @@ export const languageDummyJson = {
             name: 'Serbian',
           },
         ],
+        name: 'Kosovo',
       },
       {
         emoji: '🇾🇪',
@@ -2288,6 +2533,7 @@ export const languageDummyJson = {
             name: 'Arabic',
           },
         ],
+        name: 'Yemen',
       },
       {
         emoji: '🇾🇹',
@@ -2296,6 +2542,7 @@ export const languageDummyJson = {
             name: 'French',
           },
         ],
+        name: 'Mayotte',
       },
       {
         emoji: '🇿🇦',
@@ -2331,6 +2578,7 @@ export const languageDummyJson = {
             name: 'Zulu',
           },
         ],
+        name: 'South Africa',
       },
       {
         emoji: '🇿🇲',
@@ -2339,6 +2587,7 @@ export const languageDummyJson = {
             name: 'English',
           },
         ],
+        name: 'Zambia',
       },
       {
         emoji: '🇿🇼',
@@ -2353,6 +2602,7 @@ export const languageDummyJson = {
             name: 'North Ndebele',
           },
         ],
+        name: 'Zimbabwe',
       },
     ],
   },
