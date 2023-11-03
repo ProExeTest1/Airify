@@ -9,6 +9,7 @@ import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import LottieView from 'lottie-react-native';
 
 const TransactionHistory = ({navigation}) => {
   const isFocused = useIsFocused();
@@ -29,41 +30,56 @@ const TransactionHistory = ({navigation}) => {
 
   return (
     <View style={{flex: 1}}>
-      <View style={styles.TopUpBody}>
-        <CommonHeader
-          Images2={null}
-          onPress1={true}
-          onPress2={false}
-          Images2Color={null}
-          Images1Color={'#fff'}
-          navigation2={() => {}}
-          Images1={Images.backIcon}
-          headerName={strings.walletTopUp}
-          navigation1={() => {
-            navigation?.navigate('WalletScreen');
-          }}
-        />
-        <View style={{flex: 1, paddingHorizontal: wp(8)}}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={transactionHistory}
-            bounces={false}
-            renderItem={({item, index}) => (
-              <View style={styles.FlatListBody}>
-                <View style={styles.headerBody}>
-                  <Text numberOfLines={1} style={styles.headerText}>
-                    {item.title}
-                  </Text>
-                  <Text style={styles.priceText}>{item.price}</Text>
-                </View>
-                <Text style={{color: color.darkLight}}>
-                  {item.date} - {item.time}
-                </Text>
-              </View>
-            )}
+      {transactionHistory.length == 0 ? (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <LottieView
+            source={require('../../helper/noDataFound.json')}
+            autoPlay
+            loop
+            style={styles.lottiStyle}
           />
         </View>
-      </View>
+      ) : (
+        <View style={styles.TopUpBody}>
+          <CommonHeader
+            Images2={null}
+            onPress1={true}
+            onPress2={false}
+            Images2Color={null}
+            Images1Color={'#fff'}
+            navigation2={() => {}}
+            Images1={Images.backIcon}
+            headerName={strings.walletTopUp}
+            navigation1={() => {
+              navigation?.navigate('WalletScreen');
+            }}
+          />
+          <View style={{flex: 1, paddingHorizontal: wp(8)}}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={transactionHistory}
+              bounces={false}
+              renderItem={({item, index}) => (
+                <View style={styles.FlatListBody}>
+                  <View style={styles.headerBody}>
+                    <Text numberOfLines={1} style={styles.headerText}>
+                      {item.title}
+                    </Text>
+                    <Text style={styles.priceText}>{item.price}</Text>
+                  </View>
+                  <Text style={{color: color.darkLight}}>
+                    {item.date} - {item.time}
+                  </Text>
+                </View>
+              )}
+            />
+          </View>
+        </View>
+      )}
     </View>
   );
 };

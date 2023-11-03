@@ -69,7 +69,6 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     onPressAdd();
   }, []);
 
-  console.log(countryCode);
   const DineWayData = useSelector(
     response => response?.OnBoarding?.DineWayData,
   );
@@ -180,9 +179,11 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   // };
 
   const validation = index => {
-    if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
+    if (!Email.trim()) {
       AlertConstant(strings.please_enter_valid_email);
       return;
+    } else if (!Email?.trim()?.match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
+      AlertConstant('Please Enter Valid Email');
     } else if (
       !Password.trim().match(
         /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
@@ -208,11 +209,11 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     if (!pickerResponse.trim()) {
       AlertConstant(strings.please_select_profile_image);
       return;
-    } else if (!phoneNo.trim()) {
-      AlertConstant(strings.enter_phone_no);
-      return;
     } else if (!name.trim().match('[a-zA-Z ]{3,30}')) {
       AlertConstant(strings.enter_valid_name);
+      return;
+    } else if (!phoneNo.trim()) {
+      AlertConstant(strings.enter_phone_no);
       return;
     } else if (!date.trim()) {
       AlertConstant(strings.enter_DOB);
@@ -221,7 +222,6 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       swiperRef.current.scrollBy(1);
     }
   };
-
   const handleSignUp = async () => {
     try {
       const isUserCreate = await auth().createUserWithEmailAndPassword(
@@ -284,7 +284,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .collection('SavedFlights')
         .doc(isUserCreate.user.uid)
         .set({
-          SavedFlights: [],
+          savedFlights: [],
         });
 
       //------------------------------------------------>  Points data
@@ -561,10 +561,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         ? setSelectedJourneyData(
                             selectedJourneyData.filter(e => e !== item.name),
                           )
-                        : setSelectedJourneyData([
+                        : selectedJourneyData.length < 10
+                        ? setSelectedJourneyData([
                             ...selectedJourneyData,
                             item?.name,
-                          ]);
+                          ])
+                        : null;
                     }}>
                     <Image
                       source={{uri: item.image}}
@@ -607,10 +609,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         ? setSelectedDineWay(
                             selectedDineWay.filter(e => e !== item.strCategory),
                           )
-                        : setSelectedDineWay([
+                        : selectedDineWay.length < 5
+                        ? setSelectedDineWay([
                             ...selectedDineWay,
                             item?.strCategory,
-                          ]);
+                          ])
+                        : null;
                     }}>
                     <Image
                       source={{uri: item.strCategoryThumb}}
@@ -645,7 +649,9 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         ? setSelectedFlyWay(
                             selectedFlyWay.filter(e => e !== item.name),
                           )
-                        : setSelectedFlyWay([...selectedFlyWay, item?.name]);
+                        : selectedFlyWay.length < 8
+                        ? setSelectedFlyWay([...selectedFlyWay, item?.name])
+                        : null;
                     }}>
                     <Image
                       source={{uri: item.logo}}
@@ -655,7 +661,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         resizeMode: 'contain',
                       }}
                     />
-                    <Text style={{marginLeft: wp(4), flex: 1}}>
+                    <Text
+                      style={{marginLeft: wp(4), flex: 1, color: color.black}}>
                       {item.name}
                     </Text>
                     {selectedFlyWay.some(i => i == item.name) && (
@@ -762,6 +769,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           setDate(moment(date).format('DD MMM YYYY'));
           setDatePicker(false);
         }}
+        maximumDate={new Date()}
+        minimumDate={new Date('1950-01-01')}
         onCancel={() => {
           setDatePicker(false);
         }}
@@ -769,7 +778,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       <CountryPicker
         show={show}
         pickerButtonOnPress={item => {
-          setShow(false);
+          setShow();
           setCountryCode(item.flag);
         }}
       />

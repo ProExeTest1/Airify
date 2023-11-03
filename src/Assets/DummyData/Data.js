@@ -114,12 +114,12 @@ export const SecurityData = [
   {
     id: 1,
     title: 'Remember me',
-    isOn: false,
+    isOn: true,
   },
   {
     id: 2,
     title: 'PIN ID',
-    isOn: false,
+    isOn: true,
   },
   {
     id: 3,

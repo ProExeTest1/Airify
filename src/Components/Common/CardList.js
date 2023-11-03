@@ -7,7 +7,7 @@ import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
 
-const CardList = ({setCartFlightData, item, index, tripType, searchFlight}) => {
+const CardList = ({setCartFlightData, item, index, tripType, searchFlight,searchFilght}) => {
   const searchFlightData = searchFlight
     ? searchFlight
     : useSelector(e =>
@@ -20,7 +20,7 @@ const CardList = ({setCartFlightData, item, index, tripType, searchFlight}) => {
       onPress={() => {
         setCartFlightData(item);
       }}
-      style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
+      style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0, marginBottom: index == searchFilght?.length - 1 ? hp(15) : hp(2)}]}>
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderRadius: 10,
-    marginBottom: hp(2),
     paddingHorizontal: wp(4),
     borderColor: color.grayLight,
     backgroundColor: color.white,

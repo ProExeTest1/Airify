@@ -37,16 +37,18 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
   const [address, setAddress] = useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const [passport, setPassport] = useState('');
-  const [countryName, setCountryName] = useState('');
-  const [countryCode, setCountryCode] = useState('');
+  const [countryName, setCountryName] = useState('India');
+  const [countryCode, setCountryCode] = useState('🇮🇳');
   const [datePicker, setDatePicker] = useState(false);
   const [selectedData, setSelectedData] = useState({});
   const [pickerResponse, setPickerResponse] = useState('');
   const [showCountryName, setShowCountryName] = useState(false);
 
+  console.log('object :>> ', countryName
+  ,countryCode);
   useEffect(() => {
-    // update();
-  });
+    getUserData();
+  },[]);
 
   const update = async () => {
     console.log('Email :>> ', Email);
@@ -56,7 +58,22 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
       console.log('error :>> ', error);
     }
   };
-
+  const getUserData = async () => {
+    const user = await firestore()
+      .collection('Users')
+      .doc(auth().currentUser.uid)
+      .get()
+      .then(i => {
+          setPickerResponse(i.data().profileImageURL ? i.data().profileImageURL : pickerResponse)
+          setName(i.data().Name ? i.data().Name : name)
+          setEmail(i.data().Email ? i.data().Email : Email)
+          setPhoneNo(i.data().PhoneNumber ? i.data().PhoneNumber : phoneNo)
+          setDate(i.data().BirthDate ? i.data().BirthDate : date)
+          setSelectedData(i.data().profileImageURL ? i.data().profileImageURL : '')
+          setCountryName('India')
+          setCountryCode('🇮🇳')
+      });
+  };
   const handleSignUp = async () => {
     try {
       const uploadStorage = pickerResponse;

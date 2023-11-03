@@ -43,23 +43,12 @@ const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
       mediaType: 'photo',
       includeBase64: false,
     };
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        title: strings.title,
-        message: strings.alert_meassage,
-        buttonNeutral: strings.Ask_me_latter,
-        buttonNegative: strings.cancel,
-        buttonPositive: strings.ok,
-      },
-    );
-
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    if ('granted' === PermissionsAndroid.RESULTS.GRANTED) {
       launchCamera(options, res => {
-        setModalVisible(false);
-        setPickerResponse(res?.assets[0].uri);
+        res?.assets[0].uri && setPickerResponse(res?.assets[0].uri);
       });
     }
+    closeModal();
   }, []);
 
   const uri = pickerResponse?.assets && pickerResponse.assets[0].uri;

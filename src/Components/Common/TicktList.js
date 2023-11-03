@@ -84,24 +84,24 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
       }
     }
   };
-
+const searchFilght = SearchFlightCard?.filter(i => {
+  if (
+    `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
+    SelectDate?.date
+  ) {
+    return (
+      i.pickTime >
+      `${new Date(Date.now() + 3600000 * 3).getHours()}:${new Date(
+        Date.now() + 3600000 * 3,
+      ).getMinutes()}`
+    );
+  }
+  return i;
+})
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
-        data={SearchFlightCard?.filter(i => {
-          if (
-            `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
-            SelectDate?.date
-          ) {
-            return (
-              i.pickTime >
-              `${new Date(Date.now() + 3600000 * 3).getHours()}:${new Date(
-                Date.now() + 3600000 * 3,
-              ).getMinutes()}`
-            );
-          }
-          return i;
-        })}
+        data={searchFilght}
         bounces={false}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}) => {
@@ -111,6 +111,7 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
               index={index}
               setCartFlightData={setCartFlightData}
               tripType={tripType}
+              searchFilght={searchFilght}
             />
           );
         }}

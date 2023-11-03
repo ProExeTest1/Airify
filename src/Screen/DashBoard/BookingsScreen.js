@@ -21,6 +21,7 @@ import {bookingTransactionData} from '../../redux/action/BookingAction';
 import LottieView from 'lottie-react-native';
 
 const BookingsScreen = ({navigation}) => {
+  console.log('new Date() :>> ', new Date());
   const [selectedData, setSelectedData] = useState('Active');
   const [activeData, setActiveData] = useState([]);
   const [AllData, setAllData] = useState([]);
@@ -50,6 +51,7 @@ const BookingsScreen = ({navigation}) => {
             setSelectedData('Active');
             setActiveData(
               allData?.filter(i => {
+                console.log('i :>> ', i);
                 return (
                   Date.now() <=
                   new Date(

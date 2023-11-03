@@ -122,7 +122,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
       .collection('SavedFlights')
       .doc(uid)
       .update({
-        savedFlights: firestore.FieldValue.arrayRemove({
+        SavedFlights: firestore.FieldValue.arrayRemove({
           airlineName: item?.airlineName,
           logo: item?.logo,
           date: `${searchFlightDateData[0].slice(0, 3)},${

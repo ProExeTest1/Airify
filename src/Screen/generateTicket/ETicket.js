@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Alert, Image} from 'react-native';
+import {View, Text, StyleSheet, Alert, Image, ScrollView} from 'react-native';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
@@ -276,7 +276,7 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
           goBack();
         }}
       />
-      <View style={styles.bodyView}>
+      <ScrollView style={styles.bodyView} bounces={false}>
         <View style={styles.ticketMainView}>
           <View style={{alignItems: 'center'}}>
             <Barcode
@@ -403,7 +403,7 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
           source={Images.ticketWave}
           style={{width: wp(88), height: hp(2)}}
         />
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -422,7 +422,6 @@ const styles = StyleSheet.create({
     paddingBottom: hp(4),
   },
   ticketMainView: {
-    flex: 1,
     backgroundColor: color.white,
     borderTopLeftRadius: wp(3),
     borderTopRightRadius: wp(3),
