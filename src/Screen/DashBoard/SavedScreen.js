@@ -146,8 +146,8 @@ const SavedScreen = ({navigation}) => {
         );
       } else if (selectedData?.label === 'Shortest Duration') {
         return (
-          Number(a?.totalHours?.replaceAll('h ', '').slice(0, -1)) -
-          Number(b?.totalHours?.replaceAll('h ', '').slice(0, -1))
+          Number(a?.totalHours?.replaceAll('h ', '')?.slice(0, -1)) -
+          Number(b?.totalHours?.replaceAll('h ', '')?.slice(0, -1))
         );
       }
     });
@@ -174,7 +174,7 @@ const SavedScreen = ({navigation}) => {
             )
           : true;
 
-      let flightDurationTime = item?.totalHours?.slice(0, -1).split('h ');
+      let flightDurationTime = item?.totalHours?.slice(0, -1)?.split('h ');
       let flightDuration =
         searchFlightFilterData?.flightDuration[0] <=
           Number(flightDurationTime[0]) &&
@@ -186,7 +186,7 @@ const SavedScreen = ({navigation}) => {
 
       //ara
       let searchFlightFilterArrival =
-        searchFlightFilterData?.arrivalTime?.time.split(' - ');
+        searchFlightFilterData?.arrivalTime?.time?.split(' - ');
       let arrivalTime =
         searchFlightFilterData?.arrivalTime !== null
           ? Number(searchFlightFilterArrival[0]?.slice(0, 2)) <=
@@ -251,9 +251,7 @@ const SavedScreen = ({navigation}) => {
       <CommonHeader
         onPress1={false}
         onPress2={false}
-        Images2={Images?.search}
         Images1={Images?.planIcon}
-        Images2Color={color?.white}
         headerName={strings?.savedFlight}
       />
       <View style={styles?.buttonViewStyle}>

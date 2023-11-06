@@ -41,7 +41,6 @@ const Security = ({navigation: {goBack}}) => {
         Images2={null}
         onPress1={true}
         onPress2={false}
-        navigation2={() => {}}
         Images1={Images.backIcon}
         Images1Color={color.white}
         headerName={strings.security}

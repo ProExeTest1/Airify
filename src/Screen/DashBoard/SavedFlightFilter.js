@@ -43,7 +43,7 @@ const SavedFlightFilter = ({navigation}) => {
     SearchFlightData?.map((item, index) => {
       if (index === 0) {
         temp?.push({airlineName: item?.airlineName, logo: item.logo});
-      } else if (temp.every(i => i?.airlineName !== item.airlineName)) {
+      } else if (temp?.every(i => i?.airlineName !== item.airlineName)) {
         temp?.push({airlineName: item?.airlineName, logo: item.logo});
       }
     });

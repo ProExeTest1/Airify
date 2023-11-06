@@ -71,9 +71,6 @@ const WalletScreen = ({navigation}) => {
       <CommonHeader
         onPress1={false}
         onPress2={false}
-        navigation2={() => {}}
-        navigation1={() => {}}
-        Images2={Images.search}
         Images1={Images.planIcon}
         headerName={strings.wallet}
       />

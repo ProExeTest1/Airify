@@ -99,7 +99,6 @@ const BookingsScreen = ({navigation}) => {
       <CommonHeader
         onPress1={false}
         onPress2={false}
-        Images2={Images.search}
         Images1={Images.planIcon}
         Images2Color={color.white}
         headerName={strings.bookings}

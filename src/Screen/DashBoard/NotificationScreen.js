@@ -49,10 +49,11 @@ const NotificationScreen = ({navigation}) => {
           navigation.goBack();
         }}
         navigation2={() => {
+          console.log('hello');
           navigation.navigate('Notification');
         }}
         onPress1={true}
-        onPress2={false}
+        onPress2={true}
         Images1={Images.backIcon}
         Images2={Images.setting}
         cancelButtonStyle1={styles.plusIconStyle}
@@ -67,12 +68,12 @@ const NotificationScreen = ({navigation}) => {
           renderItem={({item, index}) => {
             return (
               <>
-                {new Date(NotificationData[index].date)
-                  .toLocaleString()
-                  .split(',')[0] !==
+                {new Date(NotificationData[index]?.date)
+                  ?.toLocaleString()
+                  ?.split(',')[0] !==
                 new Date(NotificationData[index - 1]?.date)
-                  .toLocaleString()
-                  .split(',')[0] ? (
+                  ?.toLocaleString()
+                  ?.split(',')[0] ? (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -81,7 +82,7 @@ const NotificationScreen = ({navigation}) => {
                       alignItems: 'center',
                     }}>
                     <Text style={{color: '#929292', fontWeight: 'bold'}}>
-                      {moment(item.date).subtract('day').calendar()}
+                      {moment(item.date)?.subtract('day')?.calendar()}
                     </Text>
                     <View
                       style={{
@@ -96,13 +97,13 @@ const NotificationScreen = ({navigation}) => {
                   <View style={styles.listImageViewStyle}>
                     <Image
                       source={
-                        item.NotificationType == 'Refunds and Cancellations'
-                          ? Images.wallet
+                        item?.NotificationType == 'Refunds and Cancellations'
+                          ? Images?.wallet
                           : item.NotificationType == 'Ticket Booking Updates'
-                          ? Images.booking
-                          : item.NotificationType == 'Ticket Booking Updates'
-                          ? Images.booking
-                          : Images.wallet
+                          ? Images?.booking
+                          : item?.NotificationType == 'Ticket Booking Updates'
+                          ? Images?.booking
+                          : Images?.wallet
                       }
                       resizeMode="contain"
                       style={styles.listImageStyle}
@@ -110,15 +111,15 @@ const NotificationScreen = ({navigation}) => {
                   </View>
                   <View style={styles.listTextViewStyle}>
                     <Text style={styles.listTitleTextStyle} numberOfLines={1}>
-                      {item.NotificationType}
+                      {item?.NotificationType}
                     </Text>
                     <Text
                       style={styles.listDiscriptionTextStyle}
                       numberOfLines={2}>
-                      {item.body}
+                      {item?.body}
                     </Text>
                     <Text>
-                      {new Date(item.date).toLocaleTimeString('en-IN')}
+                      {new Date(item?.date)?.toLocaleTimeString('en-IN')}
                     </Text>
                   </View>
                 </View>

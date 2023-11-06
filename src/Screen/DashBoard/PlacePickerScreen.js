@@ -1,5 +1,5 @@
-import {useDispatch} from 'react-redux';
-import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -26,11 +26,33 @@ const PlacePickerScreen = ({navigation, route}) => {
   const [search, setSearch] = useState([]);
   const [apiData, setApidata] = useState([]);
   const [searchEnable, setSearchEnable] = useState(false);
-
+  const DestinationPlace = useSelector(state => state?.place?.destinationPlace);
+  const DepaturePlace = useSelector(state => state?.place?.depaturePlace);
+  console.log(DestinationPlace, 'hello');
+  // console.log(DepaturePlace, 'hello');
   useEffect(() => {
     fetch('https://restcountries.com/v3.1/all?fields=name,capital')
       .then(response => response.json())
-      .then(data => setApidata(data));
+      .then(data => {
+        const filtereddData = data.filter(item => {
+          if (
+            DestinationPlace?.countryfullName &&
+            DepaturePlace?.countryfullName
+          ) {
+            return (
+              item?.name?.common !== DepaturePlace?.countryfullName &&
+              item?.name?.common !== DestinationPlace?.countryfullName
+            );
+          } else if (DepaturePlace?.countryfullName) {
+            return item?.name?.common !== DepaturePlace?.countryfullName;
+          } else if (DestinationPlace?.countryfullName) {
+            return item?.name?.common !== DestinationPlace?.countryfullName;
+          } else {
+            return data;
+          }
+        });
+        setApidata(filtereddData);
+      });
   }, []);
 
   // For filter data according to the search

@@ -148,7 +148,7 @@ const HomeScreen = ({navigation}) => {
     //   .doc(auth().currentUser.uid)
     //   .get();
 
-    const subscriber = firestore()
+    await firestore()
       .collection('Users')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
