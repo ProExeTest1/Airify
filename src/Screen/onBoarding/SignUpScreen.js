@@ -376,111 +376,117 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     }
   };
   const handleSignUp = async () => {
-    try {
-      const isUserCreate = await auth()?.createUserWithEmailAndPassword(
-        Email,
-        Password,
-      );
-      const filename = Date.now();
+    await auth()
+      ?.createUserWithEmailAndPassword(Email, Password)
+      .then(async isUserCreate => {
+        const filename = Date.now();
 
-      const DeviceUniqueId = await DeviceInfo?.getUniqueId();
+        const DeviceUniqueId = await DeviceInfo?.getUniqueId();
 
-      await firestore()?.collection('Users').doc(isUserCreate?.user?.uid)?.set({
-        Name: false,
-        Email: Email,
-        Password: Password,
-        profileImageURL: false,
-        id: filename,
-        uid: isUserCreate?.user?.uid,
-        referralCode: referralCode,
-        PIN: false,
-        PhoneNumber: false,
-        BirthDate: false,
-        JourneyData: false,
-        DineWay: false,
-        FlyData: false,
-        NotificationList: NotificationData,
-        SecurityData: SecurityData,
-        DeviceId: DeviceUniqueId,
-        ReferralCode: promocode,
+        await firestore()
+          ?.collection('Users')
+          .doc(isUserCreate?.user?.uid)
+          ?.set({
+            Name: false,
+            Email: Email,
+            Password: Password,
+            profileImageURL: false,
+            id: filename,
+            uid: isUserCreate?.user?.uid,
+            referralCode: referralCode,
+            PIN: false,
+            PhoneNumber: false,
+            BirthDate: false,
+            JourneyData: false,
+            DineWay: false,
+            FlyData: false,
+            NotificationList: NotificationData,
+            SecurityData: SecurityData,
+            DeviceId: DeviceUniqueId,
+            ReferralCode: promocode,
+          });
+
+        //------------------------------------------------>  UserWallet data
+
+        await firestore()
+          .collection('UserWallet')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            wallet: 0,
+            transactionHistory: [],
+          });
+
+        //------------------------------------------------>  SaveFlight data
+
+        await firestore()
+          .collection('SavedFlights')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            savedFlights: [],
+          });
+
+        //------------------------------------------------>  Points data
+
+        await firestore()
+          .collection('Points')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            TotalPoints: 0,
+            PointsHistory: [],
+          });
+
+        //------------------------------------------------>  Passenger List data
+
+        await firestore()
+          .collection('PassengerList')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            PassengerList: [],
+          });
+
+        //------------------------------------------------>  SaveTicket data
+
+        await firestore()
+          .collection('SaveTicket')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            SaveTicket: [],
+          });
+
+        //------------------------------------------------>  SavedUserAddress data
+
+        await firestore()
+          .collection('SavedUserAddress')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            SavedUserAddress: [],
+          });
+
+        //------------------------------------------------>  BookingCancel data
+
+        await firestore()
+          .collection('BookingCancel')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            BookingCancel: [],
+          });
+
+        //-------------------------------------------------> Notification History Data
+        await firestore()
+          .collection('NotificationHistory')
+          .doc(isUserCreate?.user?.uid)
+          .set({
+            NotificationHistory: [],
+          })
+          .then(() => {
+            setModalVisible2(false);
+            swiperRef?.current?.scrollBy(1);
+          });
+      })
+      .catch(() => {
+        setModalVisible2(false);
+        AlertConstant('Your email is already register');
       });
-
-      //------------------------------------------------>  UserWallet data
-
-      await firestore()
-        .collection('UserWallet')
-        .doc(isUserCreate?.user?.uid)
-        .set({
-          wallet: 0,
-          transactionHistory: [],
-        });
-
-      //------------------------------------------------>  SaveFlight data
-
-      await firestore()
-        .collection('SavedFlights')
-        .doc(isUserCreate?.user?.uid)
-        .set({
-          savedFlights: [],
-        });
-
-      //------------------------------------------------>  Points data
-
-      await firestore().collection('Points').doc(isUserCreate?.user?.uid).set({
-        TotalPoints: 0,
-        PointsHistory: [],
-      });
-
-      //------------------------------------------------>  Passenger List data
-
-      await firestore()
-        .collection('PassengerList')
-        .doc(isUserCreate?.user?.uid)
-        .set({
-          PassengerList: [],
-        });
-
-      //------------------------------------------------>  SaveTicket data
-
-      await firestore()
-        .collection('SaveTicket')
-        .doc(isUserCreate?.user?.uid)
-        .set({
-          SaveTicket: [],
-        });
-
-      //------------------------------------------------>  SavedUserAddress data
-
-      await firestore()
-        .collection('SavedUserAddress')
-        .doc(isUserCreate?.user?.uid)
-        .set({
-          SavedUserAddress: [],
-        });
-
-      //------------------------------------------------>  BookingCancel data
-
-      await firestore()
-        .collection('BookingCancel')
-        .doc(isUserCreate?.user?.uid)
-        .set({
-          BookingCancel: [],
-        });
-
-      //-------------------------------------------------> Notification History Data
-      await firestore()
-        .collection('NotificationHistory')
-        .doc(isUserCreate?.user?.uid)
-        .set({
-          NotificationHistory: [],
-        })
-        .then(() => {
-          setModalVisible2(false);
-          swiperRef?.current?.scrollBy(1);
-        });
-    } catch (error) {
-      console.log(error);
-    }
   };
   return (
     <View style={styles.container}>

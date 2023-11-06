@@ -100,20 +100,20 @@ const HomeScreen = ({navigation}) => {
           if (reduxReturnDate !== reduxDepatureDate) {
             dispatch(
               SearchFlightReturnAction({
-                from: reduxDestinationPlace.city,
-                fromShortform: reduxDestinationPlace.airport,
-                to: reduxDepaturePlace.city,
-                toShortform: reduxDepaturePlace.airport,
+                from: reduxDestinationPlace?.city,
+                fromShortform: reduxDestinationPlace?.airport,
+                to: reduxDepaturePlace?.city,
+                toShortform: reduxDepaturePlace?.airport,
                 passenger: seat,
                 class: passengerClass,
               }),
             );
             dispatch(
               SearchFlightAction({
-                from: reduxDepaturePlace.city,
-                fromShortform: reduxDepaturePlace.airport,
-                to: reduxDestinationPlace.city,
-                toShortform: reduxDestinationPlace.airport,
+                from: reduxDepaturePlace?.city,
+                fromShortform: reduxDepaturePlace?.airport,
+                to: reduxDestinationPlace?.city,
+                toShortform: reduxDestinationPlace?.airport,
                 passenger: seat,
                 class: passengerClass,
               }),
@@ -126,9 +126,9 @@ const HomeScreen = ({navigation}) => {
           dispatch(
             SearchFlightAction({
               from: reduxDepaturePlace.city,
-              fromShortform: reduxDepaturePlace.airport,
-              to: reduxDestinationPlace.city,
-              toShortform: reduxDestinationPlace.airport,
+              fromShortform: reduxDepaturePlace?.airport,
+              to: reduxDestinationPlace?.city,
+              toShortform: reduxDestinationPlace?.airport,
               passenger: seat,
               class: passengerClass,
             }),
@@ -153,33 +153,33 @@ const HomeScreen = ({navigation}) => {
       .collection('Users')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth()?.currentUser?.uid) {
-            dispatch(UserDataAction(documentSnapshot.data()));
-            const userData = documentSnapshot.data();
-            const jsonValue = JSON.stringify(auth()?.currentUser?.uid);
-            AsyncStorage.setItem('User_UID', jsonValue);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setUserData(documentSnapshot?.data());
+            dispatch(UserDataAction(documentSnapshot?.data()));
+            const userData = documentSnapshot?.data();
+            const jsonValue = JSON?.stringify(auth()?.currentUser?.uid);
+            AsyncStorage?.setItem('User_UID', jsonValue);
             if (
-              !userData.Name &&
-              !userData.profileImageURL &&
-              !userData.PhoneNumber &&
-              !userData.BirthDate
+              !userData?.Name &&
+              !userData?.profileImageURL &&
+              !userData?.PhoneNumber &&
+              !userData?.BirthDate
             ) {
-              auth().signOut();
-              navigation.navigate('SignUpScreen', {index: 1});
+              auth()?.signOut();
+              navigation?.navigate('SignUpScreen', {index: 1});
             } else if (!userData.JourneyData) {
-              auth().signOut();
-              navigation.navigate('SignUpScreen', {index: 2});
-            } else if (!userData.DineWay) {
-              auth().signOut();
-              navigation.navigate('SignUpScreen', {index: 3});
-            } else if (!userData.FlyData) {
-              auth().signOut();
-              navigation.navigate('SignUpScreen', {index: 4});
-            } else if (!userData.PIN) {
-              auth().signOut();
-              navigation.navigate('SignUpScreen', {index: 6});
+              auth()?.signOut();
+              navigation?.navigate('SignUpScreen', {index: 2});
+            } else if (!userData?.DineWay) {
+              auth()?.signOut();
+              navigation?.navigate('SignUpScreen', {index: 3});
+            } else if (!userData?.FlyData) {
+              auth()?.signOut();
+              navigation?.navigate('SignUpScreen', {index: 4});
+            } else if (!userData?.PIN) {
+              auth()?.signOut();
+              navigation?.navigate('SignUpScreen', {index: 6});
             }
-            setUserData(documentSnapshot.data());
             setLoader(false);
           }
         });
@@ -221,7 +221,11 @@ const HomeScreen = ({navigation}) => {
               <Loader color={color.white} />
             ) : (
               <Image
-                source={{uri: userData?.profileImageURL}}
+                source={{
+                  uri: userData?.profileImageURL
+                    ? userData?.profileImageURL
+                    : '',
+                }}
                 style={styles.profilePicStyle}
                 resizeMode="stretch"
                 loadingIndicatorSource={Images.Email}
