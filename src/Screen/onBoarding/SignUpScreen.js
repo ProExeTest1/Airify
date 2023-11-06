@@ -110,7 +110,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       .get()
       .then(i => {
         i.docs?.map(d => {
-          if (d?.data().ReferralCode == referral) {
+          if (d?.data()?.ReferralCode == referral) {
             setIsValid(d?.data()?.uid);
             setReferralData(d?.data());
           } else {
@@ -197,7 +197,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   // };
 
   const validation = index => {
-    if (!Email.trim()) {
+    if (!Email?.trim()) {
       AlertConstant(strings.please_enter_valid_email);
       return;
     } else if (!Email?.trim()?.match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
@@ -209,7 +209,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     ) {
       AlertConstant(strings.please_enter_valid_password);
       return;
-    } else if (referralCode.length > 0 && isvalid.length == 0) {
+    } else if (referralCode?.length > 0 && isvalid?.length == 0) {
       AlertConstant('Referral Code are not valid.');
       return;
     } else if (!checked == true) {
@@ -225,16 +225,16 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   };
 
   const validation2 = index => {
-    if (!pickerResponse.trim()) {
+    if (!pickerResponse?.trim()) {
       AlertConstant(strings.please_select_profile_image);
       return;
-    } else if (!name.trim().match('[a-zA-Z ]{3,30}')) {
+    } else if (!name?.trim()?.match('[a-zA-Z ]{3,30}')) {
       AlertConstant(strings.enter_valid_name);
       return;
-    } else if (!phoneNo.trim()) {
+    } else if (!phoneNo?.trim()) {
       AlertConstant(strings.enter_phone_no);
       return;
-    } else if (!date.trim()) {
+    } else if (!date?.trim()) {
       AlertConstant(strings.enter_DOB);
       return;
     } else {
@@ -252,31 +252,31 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   };
 
   const handleSignUp2 = async () => {
-    const jsonValue = await AsyncStorage.getItem('User_UID');
-    const RememberMeValue = JSON.parse(jsonValue);
+    const jsonValue = await AsyncStorage?.getItem('User_UID');
+    const RememberMeValue = JSON?.parse(jsonValue);
     try {
       if (index == 1) {
         const uploadStorage = pickerResponse;
         const filename = Date.now();
         const task = storage()
-          .ref(`/Profile/${RememberMeValue}/${filename}`)
-          .putFile(uploadStorage);
+          ?.ref(`/Profile/${RememberMeValue}/${filename}`)
+          ?.putFile(uploadStorage);
         try {
           await task;
         } catch (error) {
           console.log(error);
         }
         await storage()
-          .ref(`/Profile/${RememberMeValue}/${filename}`)
-          .getDownloadURL()
-          .catch(err => {
+          ?.ref(`/Profile/${RememberMeValue}/${filename}`)
+          ?.getDownloadURL()
+          ?.catch(err => {
             console.log('error in download', err);
           })
           .then(async url => {
             await firestore()
-              .collection('Users')
-              .doc(RememberMeValue)
-              .update({
+              ?.collection('Users')
+              ?.doc(RememberMeValue)
+              ?.update({
                 Name: name,
                 profileImageURL: url,
                 PhoneNumber: phoneNo,
@@ -291,27 +291,27 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       {
         index == 2 &&
           (await firestore()
-            .collection('Users')
-            .doc(RememberMeValue)
-            .update({
+            ?.collection('Users')
+            ?.doc(RememberMeValue)
+            ?.update({
               JourneyData: selectedJourneyData,
             })
             .then(() => {
               setModalVisible2(false);
-              swiperRef.current.scrollBy(1);
+              swiperRef?.current?.scrollBy(1);
             }));
       }
       {
         index == 3 &&
           (await firestore()
-            .collection('Users')
-            .doc(RememberMeValue)
-            .update({
+            ?.collection('Users')
+            ?.doc(RememberMeValue)
+            ?.update({
               DineWay: selectedDineWay,
             })
             .then(() => {
               setModalVisible2(false);
-              swiperRef.current.scrollBy(1);
+              swiperRef?.current?.scrollBy(1);
             }));
       }
       {
@@ -324,7 +324,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             })
             .then(() => {
               setModalVisible2(false);
-              swiperRef.current.scrollBy(1);
+              swiperRef?.current?.scrollBy(1);
             }));
       }
       {
@@ -339,7 +339,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             })
             .then(() => {
               setModalVisible2(false);
-              swiperRef.current.scrollBy(1);
+              swiperRef?.current?.scrollBy(1);
             }));
       }
       {
@@ -363,7 +363,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     )
                     .then(() => {
                       setModalVisible2(false);
-                      navigation.navigate('TabNavigation');
+                      navigation?.navigate('TabNavigation');
                     });
                 });
             })
@@ -377,21 +377,21 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   };
   const handleSignUp = async () => {
     try {
-      const isUserCreate = await auth().createUserWithEmailAndPassword(
+      const isUserCreate = await auth()?.createUserWithEmailAndPassword(
         Email,
         Password,
       );
       const filename = Date.now();
 
-      const DeviceUniqueId = await DeviceInfo.getUniqueId();
+      const DeviceUniqueId = await DeviceInfo?.getUniqueId();
 
-      await firestore().collection('Users').doc(isUserCreate.user.uid).set({
+      await firestore()?.collection('Users').doc(isUserCreate?.user?.uid)?.set({
         Name: false,
         Email: Email,
         Password: Password,
         profileImageURL: false,
         id: filename,
-        uid: isUserCreate.user.uid,
+        uid: isUserCreate?.user?.uid,
         referralCode: referralCode,
         PIN: false,
         PhoneNumber: false,
@@ -399,7 +399,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         JourneyData: false,
         DineWay: false,
         FlyData: false,
-        NotificationList: false,
+        NotificationList: NotificationData,
         SecurityData: SecurityData,
         DeviceId: DeviceUniqueId,
         ReferralCode: promocode,
@@ -409,7 +409,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
       await firestore()
         .collection('UserWallet')
-        .doc(isUserCreate.user.uid)
+        .doc(isUserCreate?.user?.uid)
         .set({
           wallet: 0,
           transactionHistory: [],
@@ -419,14 +419,14 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
       await firestore()
         .collection('SavedFlights')
-        .doc(isUserCreate.user.uid)
+        .doc(isUserCreate?.user?.uid)
         .set({
           savedFlights: [],
         });
 
       //------------------------------------------------>  Points data
 
-      await firestore().collection('Points').doc(isUserCreate.user.uid).set({
+      await firestore().collection('Points').doc(isUserCreate?.user?.uid).set({
         TotalPoints: 0,
         PointsHistory: [],
       });
@@ -435,7 +435,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
       await firestore()
         .collection('PassengerList')
-        .doc(isUserCreate.user.uid)
+        .doc(isUserCreate?.user?.uid)
         .set({
           PassengerList: [],
         });
@@ -444,7 +444,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
       await firestore()
         .collection('SaveTicket')
-        .doc(isUserCreate.user.uid)
+        .doc(isUserCreate?.user?.uid)
         .set({
           SaveTicket: [],
         });
@@ -453,7 +453,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
       await firestore()
         .collection('SavedUserAddress')
-        .doc(isUserCreate.user.uid)
+        .doc(isUserCreate?.user?.uid)
         .set({
           SavedUserAddress: [],
         });
@@ -462,7 +462,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
 
       await firestore()
         .collection('BookingCancel')
-        .doc(isUserCreate.user.uid)
+        .doc(isUserCreate?.user?.uid)
         .set({
           BookingCancel: [],
         });
@@ -470,9 +470,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       //-------------------------------------------------> Notification History Data
       await firestore()
         .collection('NotificationHistory')
-        .doc(isUserCreate.user.uid)
+        .doc(isUserCreate?.user?.uid)
         .set({
           NotificationHistory: [],
+        })
+        .then(() => {
+          setModalVisible2(false);
+          swiperRef?.current?.scrollBy(1);
         });
     } catch (error) {
       console.log(error);
@@ -490,7 +494,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               ? null
               : index < indexRoute + 1
               ? null
-              : swiperRef.current.scrollBy(-1);
+              : swiperRef?.current?.scrollBy(-1);
           }
         }}
         MainText={
@@ -683,19 +687,19 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     style={[
                       styles.flatListViewStyle,
                       {
-                        borderColor: selectedJourneyData.some(
-                          i => i == item.name,
+                        borderColor: selectedJourneyData?.some(
+                          i => i == item?.name,
                         )
                           ? 'blue'
                           : '#EEEEEE',
                       },
                     ]}
                     onPress={() => {
-                      selectedJourneyData.some(i => i == item.name)
+                      selectedJourneyData?.some(i => i == item?.name)
                         ? setSelectedJourneyData(
-                            selectedJourneyData.filter(e => e !== item.name),
+                            selectedJourneyData?.filter(e => e !== item?.name),
                           )
-                        : selectedJourneyData.length < 10
+                        : selectedJourneyData?.length < 10
                         ? setSelectedJourneyData([
                             ...selectedJourneyData,
                             item?.name,
@@ -703,10 +707,10 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         : null;
                     }}>
                     <Image
-                      source={{uri: item.image}}
+                      source={{uri: item?.image}}
                       style={styles.flatListIconStyle}
                     />
-                    <Text style={{color: color.black}}>{item.name}</Text>
+                    <Text style={{color: color.black}}>{item?.name}</Text>
                   </TouchableOpacity>
                 );
               })}
@@ -768,19 +772,21 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     style={[
                       styles.flatListViewStyle,
                       {
-                        borderColor: selectedDineWay.some(
-                          i => i == item.strCategory,
+                        borderColor: selectedDineWay?.some(
+                          i => i == item?.strCategory,
                         )
                           ? 'blue'
                           : '#EEEEEE',
                       },
                     ]}
                     onPress={() => {
-                      selectedDineWay.some(i => i == item.strCategory)
+                      selectedDineWay?.some(i => i == item?.strCategory)
                         ? setSelectedDineWay(
-                            selectedDineWay.filter(e => e !== item.strCategory),
+                            selectedDineWay?.filter(
+                              e => e !== item?.strCategory,
+                            ),
                           )
-                        : selectedDineWay.length < 5
+                        : selectedDineWay?.length < 5
                         ? setSelectedDineWay([
                             ...selectedDineWay,
                             item?.strCategory,
@@ -788,10 +794,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         : null;
                     }}>
                     <Image
-                      source={{uri: item.strCategoryThumb}}
+                      source={{uri: item?.strCategoryThumb}}
                       style={styles.flatListIconStyle}
                     />
-                    <Text style={{color: color.black}}>{item.strCategory}</Text>
+                    <Text style={{color: color.black}}>
+                      {item?.strCategory}
+                    </Text>
                   </TouchableOpacity>
                 );
               })}
@@ -809,22 +817,22 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     style={[
                       styles.flyWayStyle,
                       {
-                        borderColor: selectedFlyWay.some(i => i == item.name)
+                        borderColor: selectedFlyWay?.some(i => i == item?.name)
                           ? 'blue'
                           : '#EEEEEE',
                       },
                     ]}
                     onPress={() => {
-                      selectedFlyWay.some(i => i == item.name)
+                      selectedFlyWay?.some(i => i == item?.name)
                         ? setSelectedFlyWay(
-                            selectedFlyWay.filter(e => e !== item.name),
+                            selectedFlyWay?.filter(e => e !== item?.name),
                           )
-                        : selectedFlyWay.length < 8
+                        : selectedFlyWay?.length < 8
                         ? setSelectedFlyWay([...selectedFlyWay, item?.name])
                         : null;
                     }}>
                     <Image
-                      source={{uri: item.logo}}
+                      source={{uri: item?.logo}}
                       style={{
                         height: hp(4),
                         width: hp(4),
@@ -835,7 +843,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                       style={{marginLeft: wp(4), flex: 1, color: color.black}}>
                       {item.name}
                     </Text>
-                    {selectedFlyWay.some(i => i == item.name) && (
+                    {selectedFlyWay?.some(i => i == item?.name) && (
                       <View style={{paddingStart: 'auto'}}>
                         <Image
                           source={Images.checkIcon}
@@ -852,7 +860,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                   ''
                 );
               }}
-              keyExtractor={item => item.name}
+              keyExtractor={item => item?.name}
             />
           </View>
         </View>
@@ -937,7 +945,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         mode="date"
         isVisible={datePicker}
         onConfirm={date => {
-          setDate(moment(date).format('DD MMM YYYY'));
+          setDate(moment(date)?.format('DD MMM YYYY'));
           setDatePicker(false);
         }}
         maximumDate={new Date()}
@@ -950,7 +958,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         show={show}
         pickerButtonOnPress={item => {
           setShow();
-          setCountryCode(item.flag);
+          setCountryCode(item?.flag);
         }}
       />
       <Modal isVisible={modalVisible2} backdropColor="#000000">
