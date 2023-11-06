@@ -26,7 +26,6 @@ import {AlertConstant} from '../../helper/AlertConstant';
 
 const AirifyReward = ({navigation: {goBack}}) => {
   const [promocode, setPromocode] = useState('');
-  console.log(promocode, 'promocode');
   const copyToClipboard = () => {
     Clipboard?.setString(promocode);
     AlertConstant(strings?.text_copied_clipboard);

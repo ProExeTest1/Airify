@@ -22,8 +22,6 @@ import LottieView from 'lottie-react-native';
 
 const NotificationScreen = ({navigation}) => {
   const [NotificationData, SetNotificationData] = useState([]);
-
-  console.log(NotificationData);
   const passengers = async () => {
     await firestore()
       .collection('NotificationHistory')

@@ -57,7 +57,6 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
   const newTripData = useSelector(
     e => e?.rescheduleFlightdata.rescheduleSelectNewCard,
   );
-  // console.log(Number(newTripData.price.replace(',', '').slice(1)));
   const searchFlightData = useSelector(e =>
     ticketType === 'Old Trip'
       ? e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData
@@ -77,7 +76,6 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
     10,
   );
 
-  console.log(SelectSeat);
   let newArr = Array?.from({length: totalSeat}, (_, index) => ({
     id: index + 1,
     name: '',

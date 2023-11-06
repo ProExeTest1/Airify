@@ -76,7 +76,6 @@ const Language = ({navigation: {goBack}}) => {
           extraData={selectedLanguage}
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
-            console.log(item);
             return (
               <TouchableOpacity
                 style={[

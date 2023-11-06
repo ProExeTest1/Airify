@@ -44,14 +44,11 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
   const [pickerResponse, setPickerResponse] = useState('');
   const [showCountryName, setShowCountryName] = useState(false);
 
-  console.log('object :>> ', countryName
-  ,countryCode);
   useEffect(() => {
     getUserData();
-  },[]);
+  }, []);
 
   const update = async () => {
-    console.log('Email :>> ', Email);
     try {
       await firebase.auth().currentUser.updateEmail(Email);
     } catch (error) {
@@ -64,14 +61,18 @@ const PersonalInfo = ({navigation: {goBack}, navigation}) => {
       .doc(auth().currentUser.uid)
       .get()
       .then(i => {
-          setPickerResponse(i.data().profileImageURL ? i.data().profileImageURL : pickerResponse)
-          setName(i.data().Name ? i.data().Name : name)
-          setEmail(i.data().Email ? i.data().Email : Email)
-          setPhoneNo(i.data().PhoneNumber ? i.data().PhoneNumber : phoneNo)
-          setDate(i.data().BirthDate ? i.data().BirthDate : date)
-          setSelectedData(i.data().profileImageURL ? i.data().profileImageURL : '')
-          setCountryName('India')
-          setCountryCode('🇮🇳')
+        setPickerResponse(
+          i.data().profileImageURL ? i.data().profileImageURL : pickerResponse,
+        );
+        setName(i.data().Name ? i.data().Name : name);
+        setEmail(i.data().Email ? i.data().Email : Email);
+        setPhoneNo(i.data().PhoneNumber ? i.data().PhoneNumber : phoneNo);
+        setDate(i.data().BirthDate ? i.data().BirthDate : date);
+        setSelectedData(
+          i.data().profileImageURL ? i.data().profileImageURL : '',
+        );
+        setCountryName('India');
+        setCountryCode('🇮🇳');
       });
   };
   const handleSignUp = async () => {
