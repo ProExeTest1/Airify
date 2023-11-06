@@ -102,8 +102,6 @@ const PaymentMethod = ({navigation, route}) => {
         });
       });
   };
-
-  console.log('dataForTurnary', dataForTurnary);
   useEffect(() => {
     getFirebaseData();
   }, []);

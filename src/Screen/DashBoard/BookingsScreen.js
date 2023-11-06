@@ -50,6 +50,7 @@ const BookingsScreen = ({navigation}) => {
             setSelectedData('Active');
             setActiveData(
               allData?.filter(i => {
+                console.log('i :>> ', i);
                 return (
                   Date.now() <=
                   new Date(

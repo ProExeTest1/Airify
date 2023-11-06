@@ -45,7 +45,8 @@ const OnBoardingTextInput = ({
         autoCorrect={false}
         onPressIn={onPress}
         autoCapitalize="none"
-        secureTextEntry={focus}
+        secureTextEntry={textInputPlaceholder == 'Password' ||
+        textInputPlaceholder == 'Confirm New Password' ? !focus : false}
         onChangeText={onChangeText}
         keyboardType={keyboardType}
         editable={onPress ? false : true}
@@ -66,7 +67,7 @@ const OnBoardingTextInput = ({
           }}>
           <Image
             style={styles.hidePasswordStyle}
-            source={focus ? Images.HidePassword : Images.ViewPassword}
+            source={!focus ? Images.HidePassword : Images.ViewPassword}
           />
         </TouchableOpacity>
       ) : null}

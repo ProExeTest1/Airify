@@ -54,7 +54,6 @@ const BookingTransactionDetails = ({navigation}) => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');
   };
-  console.log(firebaseTicketData);
   return (
     <View style={{flex: 1}}>
       {firebaseTicketData && (

@@ -67,15 +67,12 @@ const RescheduleConfirmPin = ({navigation, route}) => {
   const searchFlightData = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleCardData.searchFlightData,
   );
-
-  console.log(searchFlightCardData);
   const searchFlightDateData = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleDateData,
   ).split(',');
   const SelectDate = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleNormalDateData,
   );
-  console.log(SelectDate);
   const dispatch = useDispatch();
 
   const checkPin = async pin => {

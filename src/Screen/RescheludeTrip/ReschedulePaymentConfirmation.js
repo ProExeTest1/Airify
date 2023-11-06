@@ -56,7 +56,6 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
   const newTripData = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleSelectNewCard,
   );
-  console.log(oldTripData.type); //Departure//Return
   const searchFlightData = useSelector(e =>
     ticketType === 'Old Trip'
       ? e?.rescheduleFlightdata?.rescheduleCardData?.searchFlightData

@@ -29,6 +29,7 @@ import firestore from '@react-native-firebase/firestore';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {UserDataAction} from '../../redux/action/UserDataAction';
 import {SearchFlightReturnAction} from '../../redux/action/SearchFlightAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
   const theme = useColorScheme();
@@ -148,12 +149,36 @@ const HomeScreen = ({navigation}) => {
     //   .doc(auth().currentUser.uid)
     //   .get();
 
-    await firestore()
+    firestore()
       .collection('Users')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
           if (documentSnapshot.id == auth()?.currentUser?.uid) {
             dispatch(UserDataAction(documentSnapshot.data()));
+            const userData = documentSnapshot.data();
+            const jsonValue = JSON.stringify(auth()?.currentUser?.uid);
+            AsyncStorage.setItem('User_UID', jsonValue);
+            if (
+              !userData.Name &&
+              !userData.profileImageURL &&
+              !userData.PhoneNumber &&
+              !userData.BirthDate
+            ) {
+              auth().signOut();
+              navigation.navigate('SignUpScreen', {index: 1});
+            } else if (!userData.JourneyData) {
+              auth().signOut();
+              navigation.navigate('SignUpScreen', {index: 2});
+            } else if (!userData.DineWay) {
+              auth().signOut();
+              navigation.navigate('SignUpScreen', {index: 3});
+            } else if (!userData.FlyData) {
+              auth().signOut();
+              navigation.navigate('SignUpScreen', {index: 4});
+            } else if (!userData.PIN) {
+              auth().signOut();
+              navigation.navigate('SignUpScreen', {index: 6});
+            }
             setUserData(documentSnapshot.data());
             setLoader(false);
           }

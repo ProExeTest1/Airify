@@ -7,6 +7,7 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useRoute} from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 
 const pointHistory = ({navigation: {goBack}}) => {
   const pointDummy = useRoute();
@@ -24,38 +25,53 @@ const pointHistory = ({navigation: {goBack}}) => {
           goBack();
         }}
       />
-      <View style={styles.bodyView}>
-        <View style={styles.flatListHeader}>
-          <Text style={{fontSize: fontSize(20), fontWeight: 'bold'}}>
-            {strings?.pointHistory}
-          </Text>
+      {pointDummy?.params?.header.length === 0 ? (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <LottieView
+            source={require('../../helper/noDataFound.json')}
+            autoPlay
+            loop
+            style={styles.lottiStyle}
+          />
         </View>
-        <FlatList
-          bounces={false}
-          data={pointDummy?.params?.header}
-          showsVerticalScrollIndicator={false}
-          ListFooterComponent={() => <View style={{marginBottom: hp(15)}} />}
-          renderItem={({item}) => {
-            return (
-              <View style={styles.flatListView}>
-                <View style={styles.flatListSubView}>
-                  <Text style={styles.mainTextStyle}>
-                    {item.price.slice(0, 1) == '+'
-                      ? 'You earn points'
-                      : 'You use points'}
-                  </Text>
-                  <Text style={styles.mainTextStyle}>{item?.price}</Text>
+      ) : (
+        <View style={styles.bodyView}>
+          <View style={styles.flatListHeader}>
+            <Text style={{fontSize: fontSize(20), fontWeight: 'bold'}}>
+              {strings?.pointHistory}
+            </Text>
+          </View>
+          <FlatList
+            bounces={false}
+            data={pointDummy?.params?.header}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={() => <View style={{marginBottom: hp(15)}} />}
+            renderItem={({item}) => {
+              return (
+                <View style={styles.flatListView}>
+                  <View style={styles.flatListSubView}>
+                    <Text style={styles.mainTextStyle}>
+                      {item.price.slice(0, 1) == '+'
+                        ? 'You earn points'
+                        : 'You use points'}
+                    </Text>
+                    <Text style={styles.mainTextStyle}>{item?.price}</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={{color: color.black}}>{item?.date} </Text>
+                    <View style={styles.dotStyle} />
+                    <Text style={{color: color.black}}> {item?.time}</Text>
+                  </View>
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={{color: color.black}}>{item?.date} </Text>
-                  <View style={styles.dotStyle} />
-                  <Text style={{color: color.black}}> {item?.time}</Text>
-                </View>
-              </View>
-            );
-          }}
-        />
-      </View>
+              );
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };

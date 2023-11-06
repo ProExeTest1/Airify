@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import moment from 'moment';
+import Modal from 'react-native-modal';
 import Swiper from 'react-native-swiper';
 import auth from '@react-native-firebase/auth';
 import OtpInputs from 'react-native-otp-inputs';
@@ -40,8 +41,12 @@ import {
 } from '../../components';
 import DeviceInfo from 'react-native-device-info';
 import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
+import {useRoute} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ActivityIndicator} from 'react-native-paper';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
+  const indexRoute = useRoute()?.params?.index;
   const swiperRef = useRef();
   const dispatch = useDispatch();
   const [pin, setPin] = useState('');
@@ -50,6 +55,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [index, setIndex] = useState(0);
   const [Email, setEmail] = useState('');
   const [show, setShow] = useState(false);
+
   const [phoneNo, setPhoneNo] = useState('');
   const [Password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
@@ -60,6 +66,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const [referralCode, setReferralCode] = useState('');
   const [pickerResponse, setPickerResponse] = useState('');
   const [selectedFlyWay, setSelectedFlyWay] = useState([]);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [selectedDineWay, setSelectedDineWay] = useState([]);
   const [selectedJourneyData, setSelectedJourneyData] = useState([]);
   const [isvalid, setIsValid] = useState('');
@@ -67,9 +74,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   useEffect(() => {
     JourneyData();
     onPressAdd();
+    // setModalVisible2(false);
   }, []);
 
-  console.log(countryCode);
+  useEffect(() => {
+    setIndex(indexRoute ? indexRoute : 0);
+  }, [indexRoute]);
   const DineWayData = useSelector(
     response => response?.OnBoarding?.DineWayData,
   );
@@ -77,6 +87,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     dispatch(DineWay());
   };
 
+  useEffect(() => {
+    indexRoute
+      ? AlertConstant(
+          'Please fill all details after you will enter the application!',
+        )
+      : null;
+  }, []);
   const JourneyData = async () => {
     const journeyData = await firestore()
       .collection('countryData')
@@ -105,10 +122,10 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   };
 
   // const BookingUpdateNotification = async () => {
-  //   await firestore()
-  //     .collection('Users')
-  //     .doc(referralData?.uid)
-  //     .get()
+  // await firestore()
+  //   .collection('Users')
+  //   .doc(referralData?.uid)
+  //   .get()
   //     .then(i => {
   //       let users = i.data()?.NotificationList?.map(i => {
   //         return i;
@@ -180,9 +197,11 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   // };
 
   const validation = index => {
-    if (!Email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
+    if (!Email.trim()) {
       AlertConstant(strings.please_enter_valid_email);
       return;
+    } else if (!Email?.trim()?.match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
+      AlertConstant('Please Enter Valid Email');
     } else if (
       !Password.trim().match(
         /^(?=.*[0-9])(?=.*[!@#$%^&*.])[a-zA-Z0-9!@#$%^&*.]{8,16}$/,
@@ -197,7 +216,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       AlertConstant('Can You agree with terms & condition.');
       return;
     } else {
-      swiperRef.current.scrollBy(1);
+      handleSignUp();
+      setModalVisible2(true);
       // if (referralCode.length > 0 && isvalid.length != 0) {
       //   BookingUpdateNotification();
       // }
@@ -208,61 +228,178 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
     if (!pickerResponse.trim()) {
       AlertConstant(strings.please_select_profile_image);
       return;
-    } else if (!phoneNo.trim()) {
-      AlertConstant(strings.enter_phone_no);
-      return;
     } else if (!name.trim().match('[a-zA-Z ]{3,30}')) {
       AlertConstant(strings.enter_valid_name);
+      return;
+    } else if (!phoneNo.trim()) {
+      AlertConstant(strings.enter_phone_no);
       return;
     } else if (!date.trim()) {
       AlertConstant(strings.enter_DOB);
       return;
     } else {
-      swiperRef.current.scrollBy(1);
+      handleSignUp2();
+      setModalVisible2(true);
+    }
+  };
+  const validation3 = index => {
+    if (pin.length !== 4) {
+      AlertConstant('please set your pin');
+      return;
+    } else {
+      handleSignUp2();
     }
   };
 
+  const handleSignUp2 = async () => {
+    const jsonValue = await AsyncStorage.getItem('User_UID');
+    const RememberMeValue = JSON.parse(jsonValue);
+    try {
+      if (index == 1) {
+        const uploadStorage = pickerResponse;
+        const filename = Date.now();
+        const task = storage()
+          .ref(`/Profile/${RememberMeValue}/${filename}`)
+          .putFile(uploadStorage);
+        try {
+          await task;
+        } catch (error) {
+          console.log(error);
+        }
+        await storage()
+          .ref(`/Profile/${RememberMeValue}/${filename}`)
+          .getDownloadURL()
+          .catch(err => {
+            console.log('error in download', err);
+          })
+          .then(async url => {
+            await firestore()
+              .collection('Users')
+              .doc(RememberMeValue)
+              .update({
+                Name: name,
+                profileImageURL: url,
+                PhoneNumber: phoneNo,
+                BirthDate: date,
+              })
+              .then(() => {
+                setModalVisible2(false);
+                swiperRef.current.scrollBy(1);
+              });
+          });
+      }
+      {
+        index == 2 &&
+          (await firestore()
+            .collection('Users')
+            .doc(RememberMeValue)
+            .update({
+              JourneyData: selectedJourneyData,
+            })
+            .then(() => {
+              setModalVisible2(false);
+              swiperRef.current.scrollBy(1);
+            }));
+      }
+      {
+        index == 3 &&
+          (await firestore()
+            .collection('Users')
+            .doc(RememberMeValue)
+            .update({
+              DineWay: selectedDineWay,
+            })
+            .then(() => {
+              setModalVisible2(false);
+              swiperRef.current.scrollBy(1);
+            }));
+      }
+      {
+        index == 4 &&
+          (await firestore()
+            .collection('Users')
+            .doc(RememberMeValue)
+            .update({
+              FlyData: selectedFlyWay,
+            })
+            .then(() => {
+              setModalVisible2(false);
+              swiperRef.current.scrollBy(1);
+            }));
+      }
+      {
+        index == 5 &&
+          (await firestore()
+            .collection('Users')
+            .doc(RememberMeValue)
+            .update({
+              DineWay: selectedDineWay,
+              JourneyData: selectedJourneyData,
+              FlyData: selectedFlyWay,
+            })
+            .then(() => {
+              setModalVisible2(false);
+              swiperRef.current.scrollBy(1);
+            }));
+      }
+      {
+        index == 6 &&
+          (await firestore()
+            .collection('Users')
+            .doc(RememberMeValue)
+            .update({
+              PIN: pin,
+            })
+            .then(async () => {
+              await firestore()
+                .collection('Users')
+                .doc(RememberMeValue)
+                .get()
+                .then(async LoginUserData => {
+                  await auth()
+                    .signInWithEmailAndPassword(
+                      LoginUserData?.data()?.Email,
+                      LoginUserData?.data()?.Password,
+                    )
+                    .then(() => {
+                      setModalVisible2(false);
+                      navigation.navigate('TabNavigation');
+                    });
+                });
+            })
+            .then(() => {
+              setModalVisible2(false);
+            }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleSignUp = async () => {
     try {
       const isUserCreate = await auth().createUserWithEmailAndPassword(
         Email,
         Password,
       );
-      const uploadStorage = pickerResponse;
       const filename = Date.now();
-      const task = storage()
-        .ref(`/Profile/${isUserCreate.user.uid}/${filename}`)
-        .putFile(uploadStorage);
-      try {
-        await task;
-        Alert.alert('Congrats!', "You're successfully register");
-      } catch (error) {
-        console.log(error);
-      }
-      const url = await storage()
-        .ref(`/Profile/${isUserCreate.user.uid}/${filename}`)
-        .getDownloadURL()
-        .catch(err => {
-          console.log('error in download', err);
-        });
 
       const DeviceUniqueId = await DeviceInfo.getUniqueId();
 
       await firestore().collection('Users').doc(isUserCreate.user.uid).set({
-        Name: name,
+        Name: false,
         Email: Email,
         Password: Password,
-        profileImageURL: url,
+        profileImageURL: false,
         id: filename,
         uid: isUserCreate.user.uid,
         referralCode: referralCode,
-        PIN: pin,
-        PhoneNumber: phoneNo,
-        BirthDate: date,
-        JourneyData: selectedJourneyData,
-        DineWay: selectedDineWay,
-        FlyData: selectedFlyWay,
-        NotificationList: NotificationData,
+        PIN: false,
+        PhoneNumber: false,
+        BirthDate: false,
+        JourneyData: false,
+        DineWay: false,
+        FlyData: false,
+        NotificationList: false,
         SecurityData: SecurityData,
         DeviceId: DeviceUniqueId,
         ReferralCode: promocode,
@@ -284,7 +421,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .collection('SavedFlights')
         .doc(isUserCreate.user.uid)
         .set({
-          SavedFlights: [],
+          savedFlights: [],
         });
 
       //------------------------------------------------>  Points data
@@ -337,24 +474,23 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         .set({
           NotificationHistory: [],
         });
-
-      if (referralCode.length > 0 && isvalid.length != 0) {
-        BookingUpdateNotification();
-      }
-
-      navigation.navigate('SignUpSuccess');
     } catch (error) {
       console.log(error);
     }
-    setPickerResponse(null);
   };
   return (
     <View style={styles.container}>
       <OnBoardingModuleHeader
-        backImage={Images.backIcon}
+        backImage={index == 1 ? null : Images.backIcon}
         onPress={() => {
           {
-            index == 0 ? goBack() : swiperRef.current.scrollBy(-1);
+            index == 0
+              ? goBack()
+              : index == 1
+              ? null
+              : index < indexRoute + 1
+              ? null
+              : swiperRef.current.scrollBy(-1);
           }
         }}
         MainText={
@@ -533,12 +669,48 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           </View>
         </View>
         <View style={styles.slide}>
-          <View
-            style={{
-              marginTop: hp(2),
-              paddingHorizontal: wp(2),
-            }}>
-            <FlatList
+          <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+            <View
+              style={{
+                marginTop: hp(2),
+                paddingHorizontal: wp(2),
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+              }}>
+              {journeyData?.data?.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    style={[
+                      styles.flatListViewStyle,
+                      {
+                        borderColor: selectedJourneyData.some(
+                          i => i == item.name,
+                        )
+                          ? 'blue'
+                          : '#EEEEEE',
+                      },
+                    ]}
+                    onPress={() => {
+                      selectedJourneyData.some(i => i == item.name)
+                        ? setSelectedJourneyData(
+                            selectedJourneyData.filter(e => e !== item.name),
+                          )
+                        : selectedJourneyData.length < 10
+                        ? setSelectedJourneyData([
+                            ...selectedJourneyData,
+                            item?.name,
+                          ])
+                        : null;
+                    }}>
+                    <Image
+                      source={{uri: item.image}}
+                      style={styles.flatListIconStyle}
+                    />
+                    <Text style={{color: color.black}}>{item.name}</Text>
+                  </TouchableOpacity>
+                );
+              })}
+              {/* <FlatList
               bounces={false}
               showsVerticalScrollIndicator={false}
               numColumns={2}
@@ -561,10 +733,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         ? setSelectedJourneyData(
                             selectedJourneyData.filter(e => e !== item.name),
                           )
-                        : setSelectedJourneyData([
+                        : selectedJourneyData.length < 10
+                        ? setSelectedJourneyData([
                             ...selectedJourneyData,
                             item?.name,
-                          ]);
+                          ])
+                        : null;
                     }}>
                     <Image
                       source={{uri: item.image}}
@@ -575,21 +749,20 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                 );
               }}
               keyExtractor={item => item.name}
-            />
-          </View>
+            /> */}
+            </View>
+          </ScrollView>
         </View>
         <View style={styles.slide}>
-          <View
-            style={{
-              marginTop: hp(2),
-              paddingHorizontal: wp(6),
-            }}>
-            <FlatList
-              bounces={false}
-              showsVerticalScrollIndicator={false}
-              numColumns={2}
-              data={DineWayData?.categories}
-              renderItem={({item}) => {
+          <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+            <View
+              style={{
+                marginTop: hp(2),
+                paddingHorizontal: wp(2),
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+              }}>
+              {DineWayData?.categories?.map(item => {
                 return (
                   <TouchableOpacity
                     style={[
@@ -607,10 +780,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         ? setSelectedDineWay(
                             selectedDineWay.filter(e => e !== item.strCategory),
                           )
-                        : setSelectedDineWay([
+                        : selectedDineWay.length < 5
+                        ? setSelectedDineWay([
                             ...selectedDineWay,
                             item?.strCategory,
-                          ]);
+                          ])
+                        : null;
                     }}>
                     <Image
                       source={{uri: item.strCategoryThumb}}
@@ -619,10 +794,9 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                     <Text style={{color: color.black}}>{item.strCategory}</Text>
                   </TouchableOpacity>
                 );
-              }}
-              keyExtractor={item => item.idCategory}
-            />
-          </View>
+              })}
+            </View>
+          </ScrollView>
         </View>
         <View style={styles.slide}>
           <View style={{marginTop: hp(2), marginVertical: hp(2)}}>
@@ -645,7 +819,9 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         ? setSelectedFlyWay(
                             selectedFlyWay.filter(e => e !== item.name),
                           )
-                        : setSelectedFlyWay([...selectedFlyWay, item?.name]);
+                        : selectedFlyWay.length < 8
+                        ? setSelectedFlyWay([...selectedFlyWay, item?.name])
+                        : null;
                     }}>
                     <Image
                       source={{uri: item.logo}}
@@ -655,7 +831,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         resizeMode: 'contain',
                       }}
                     />
-                    <Text style={{marginLeft: wp(4), flex: 1}}>
+                    <Text
+                      style={{marginLeft: wp(4), flex: 1, color: color.black}}>
                       {item.name}
                     </Text>
                     {selectedFlyWay.some(i => i == item.name) && (
@@ -731,10 +908,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             onPress={() => {
               {
                 index == 6
-                  ? handleSignUp()
+                  ? validation3(index)
                   : index == 0
                   ? validation(index)
-                  : validation2(index);
+                  : index == 1
+                  ? validation2(index)
+                  : handleSignUp2();
               }
             }}
           />
@@ -745,12 +924,11 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             TwoButtonStyle={{height: hp(6), marginBottom: hp(5)}}
             twoButtonStyle={{height: hp(6), marginBottom: hp(5)}}
             onPress1={() => {
-              index == 2
-                ? swiperRef.current.scrollBy(6)
-                : swiperRef.current.scrollBy(1);
+              setIndex(5);
+              handleSignUp2();
             }}
             onPress2={() => {
-              swiperRef.current.scrollBy(1);
+              handleSignUp2();
             }}
           />
         )}
@@ -762,6 +940,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           setDate(moment(date).format('DD MMM YYYY'));
           setDatePicker(false);
         }}
+        maximumDate={new Date()}
+        minimumDate={new Date('1950-01-01')}
         onCancel={() => {
           setDatePicker(false);
         }}
@@ -769,10 +949,15 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       <CountryPicker
         show={show}
         pickerButtonOnPress={item => {
-          setShow(false);
+          setShow();
           setCountryCode(item.flag);
         }}
       />
+      <Modal isVisible={modalVisible2} backdropColor="#000000">
+        <View style={styles.createAlertBody}>
+          <ActivityIndicator size="large" color={color.white} />
+        </View>
+      </Modal>
     </View>
   );
 };

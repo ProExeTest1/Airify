@@ -55,7 +55,6 @@ const FlightDetailsScreen = ({navigation, route}) => {
         : e?.date?.depatureDate
       : e?.date?.returnDate,
   ).split(',');
-  console.log(searchFlightDateData);
   const SelectDate = useSelector(e =>
     ticketType === 'Departure'
       ? e?.date?.normalDate
@@ -122,7 +121,7 @@ const FlightDetailsScreen = ({navigation, route}) => {
       .collection('SavedFlights')
       .doc(uid)
       .update({
-        savedFlights: firestore.FieldValue.arrayRemove({
+        SavedFlights: firestore.FieldValue.arrayRemove({
           airlineName: item?.airlineName,
           logo: item?.logo,
           date: `${searchFlightDateData[0].slice(0, 3)},${
@@ -274,7 +273,6 @@ const FlightDetailsScreen = ({navigation, route}) => {
             {strings.total_price} : {searchFlightData?.passenger?.split(' ')[0]}{' '}
             person(s)
           </Text>
-          {console.log('item?.price', item?.price)}
           <Text style={styles.cardPrice}>
             $
             {parseInt(item?.price?.slice(1, 8).split(',').join(''), 10) *

@@ -46,11 +46,10 @@ const CreatePriceAlert = ({
       ? e?.searchFlight?.searchFlightReturnData
       : e?.place?.searchFlightData,
   );
-  console.log(searchFlightData, 'totalSeat');
   const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
   return (
     <View style={styles.createAlertBody}>
-      <ScrollView>
+      <ScrollView style={{marginHorizontal: wp(6)}}>
         <View style={styles.createAlertTitleBody}>
           <Text style={styles.createAlertTitle}>
             {strings.PriceAlertHeader}
@@ -121,13 +120,15 @@ const CreatePriceAlert = ({
               styles.PriceTargetsText
             }>{`$${priceTargets[0]} - $${priceTargets[1]}`}</Text>
         </View>
-        <MultiSliderComponets
-          min={700}
-          max={2000}
-          values={priceTargets}
-          sliderLength={wp(88)}
-          onValuesChangeFinish={a => setPriceTargets(a)}
-        />
+        <View style={{alignItems: 'center'}}>
+          <MultiSliderComponets
+            min={700}
+            max={2000}
+            values={priceTargets}
+            sliderLength={wp(80)}
+            onValuesChangeFinish={a => setPriceTargets(a)}
+          />
+        </View>
         <View style={styles.PriceTargetsBody}>
           <Image style={styles.PriceTargetsImg} source={Images?.timeIcon} />
           <Text style={styles.PriceTargetsTitle}>{strings?.DepartureTime}</Text>
@@ -234,7 +235,6 @@ const styles = StyleSheet.create({
     paddingVertical: wp(6),
     backgroundColor: '#fff',
     borderTopEndRadius: 20,
-    paddingHorizontal: wp(6),
     borderTopStartRadius: 20,
   },
   createAlertTitleBody: {

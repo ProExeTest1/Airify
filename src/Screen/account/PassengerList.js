@@ -14,6 +14,7 @@ import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import LottieView from 'lottie-react-native';
 const PassengerList = ({navigation: {goBack}, navigation}) => {
   const [passengerList, setPassengerList] = useState([]);
 
@@ -61,52 +62,77 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
           navigation.navigate('NewPassenger');
         }}
       />
-      <View style={[styles.headerStyle, {backgroundColor: color.commonBlue}]}>
-        <Text style={[styles.mainHeaderText, {color: color.white}]}>
-          {strings?.no}
-        </Text>
-        <Text style={[styles.mainHeaderText, {color: color.white}]}>
-          {strings?.name}
-        </Text>
-      </View>
-      <View style={styles.flatListView}>
-        <FlatList
-          bounces={false}
-          data={passengerList}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item, index}) => {
-            return (
-              <View
-                style={[
-                  styles.headerStyle,
-                  {
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    backgroundColor: index % 2 == 0 ? color.white : color.grey1,
-                  },
-                ]}>
-                <View style={styles.textStyle}>
-                  <Text style={styles.mainHeaderText}>{index + 1} .</Text>
-                  <Text
-                    style={[styles.mainHeaderText, {paddingHorizontal: wp(7)}]}>
-                    {item?.FirstName}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={{marginRight: wp(6)}}
-                  onPress={() => {
-                    navigation?.navigate('NewPassenger', {
-                      passengerData: item,
-                      mode: 'Edit',
-                    });
-                  }}>
-                  <Image source={Images?.pencil} style={styles.EditIconStyle} />
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-        />
-      </View>
+      {passengerList.length === 0 ? (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <LottieView
+            source={require('../../helper/noDataFound.json')}
+            autoPlay
+            loop
+            style={styles.lottiStyle}
+          />
+        </View>
+      ) : (
+        <>
+          <View
+            style={[styles.headerStyle, {backgroundColor: color.commonBlue}]}>
+            <Text style={[styles.mainHeaderText, {color: color.white}]}>
+              {strings?.no}
+            </Text>
+            <Text style={[styles.mainHeaderText, {color: color.white}]}>
+              {strings?.name}
+            </Text>
+          </View>
+          <View style={styles.flatListView}>
+            <FlatList
+              bounces={false}
+              data={passengerList}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item, index}) => {
+                return (
+                  <View
+                    style={[
+                      styles.headerStyle,
+                      {
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backgroundColor:
+                          index % 2 == 0 ? color.white : color.grey1,
+                      },
+                    ]}>
+                    <View style={styles.textStyle}>
+                      <Text style={styles.mainHeaderText}>{index + 1} .</Text>
+                      <Text
+                        style={[
+                          styles.mainHeaderText,
+                          {paddingHorizontal: wp(7)},
+                        ]}>
+                        {item?.FirstName}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      style={{marginRight: wp(6)}}
+                      onPress={() => {
+                        navigation?.navigate('NewPassenger', {
+                          passengerData: item,
+                          mode: 'Edit',
+                        });
+                      }}>
+                      <Image
+                        source={Images?.pencil}
+                        style={styles.EditIconStyle}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                );
+              }}
+            />
+          </View>
+        </>
+      )}
     </View>
   );
 };

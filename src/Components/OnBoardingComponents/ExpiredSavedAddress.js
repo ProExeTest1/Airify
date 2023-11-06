@@ -71,7 +71,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                 onPress={() => {
                   onPress(item);
                 }}
-                style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>
+                style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0,marginBottom: index == expireAddressData?.length - 1 ? hp(15) : hp(2)}]}>
                 <View style={styles.cardHeader}>
                   <View
                     style={[

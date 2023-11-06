@@ -23,11 +23,9 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
     reduxDepatureDate.split(',')[1],
     'MMM D YYYY',
   ).format('D/M/YYYY');
-  console.log(reduxReturnDate);
   let returnDate = moment(reduxReturnDate.split(',')[1], 'MMM D YYYY').format(
     'D/M/YYYY',
   );
-  console.log(departureDate, returnDate, 'reduxDepatureDate < reduxReturnDate');
   const setCartFlightData = item => {
     if (tripType1 === 'Round-Trip') {
       if (reduxDepatureDate !== reduxReturnDate) {
@@ -84,24 +82,23 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
       }
     }
   };
-
+  const searchFilght = SearchFlightCard?.filter(i => {
+    if (
+      `${new Date().toLocaleString('en-IN').split(',')[0]}` == SelectDate?.date
+    ) {
+      return (
+        i.pickTime >
+        `${new Date(Date.now() + 3600000 * 3).getHours()}:${new Date(
+          Date.now() + 3600000 * 3,
+        ).getMinutes()}`
+      );
+    }
+    return i;
+  });
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
-        data={SearchFlightCard?.filter(i => {
-          if (
-            `${new Date().toLocaleString('en-IN').split(',')[0]}` ==
-            SelectDate?.date
-          ) {
-            return (
-              i.pickTime >
-              `${new Date(Date.now() + 3600000 * 3).getHours()}:${new Date(
-                Date.now() + 3600000 * 3,
-              ).getMinutes()}`
-            );
-          }
-          return i;
-        })}
+        data={searchFilght}
         bounces={false}
         showsVerticalScrollIndicator={false}
         renderItem={({item, index}) => {
@@ -111,6 +108,7 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
               index={index}
               setCartFlightData={setCartFlightData}
               tripType={tripType}
+              searchFilght={searchFilght}
             />
           );
         }}

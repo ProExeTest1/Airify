@@ -18,21 +18,20 @@ import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
+import LottieView from 'lottie-react-native';
 
 const NotificationScreen = ({navigation}) => {
   const [NotificationData, SetNotificationData] = useState([]);
-
-  console.log(NotificationData);
   const passengers = async () => {
     await firestore()
       .collection('NotificationHistory')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
             SetNotificationData(
               documentSnapshot
                 ?.data()
-                ?.NotificationHistory.sort((a, b) => b.date - a.date),
+                ?.NotificationHistory?.sort((a, b) => b.date - a.date),
             );
           }
         });
@@ -59,83 +58,98 @@ const NotificationScreen = ({navigation}) => {
         cancelButtonStyle1={styles.plusIconStyle}
         Images1Color={color.white}
       />
-      <View style={styles.sectionListStyle}>
-        <FlatList
-          bounces={false}
-          data={NotificationData}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item, index}) => {
-            return (
-              <>
-                {new Date(NotificationData[index]?.date)
-                  ?.toLocaleString()
-                  ?.split(',')[0] !==
-                new Date(NotificationData[index - 1]?.date)
-                  ?.toLocaleString()
-                  ?.split(',')[0] ? (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginVertical: hp(1),
-                      paddingHorizontal: wp(5),
-                      alignItems: 'center',
-                    }}>
-                    <Text style={{color: '#929292', fontWeight: 'bold'}}>
-                      {moment(item.date)?.subtract('day')?.calendar()}
-                    </Text>
+      {NotificationData.length === 0 ? (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <LottieView
+            source={require('../../helper/noDataFound.json')}
+            autoPlay
+            loop
+            style={styles.lottiStyle}
+          />
+        </View>
+      ) : (
+        <View style={styles.sectionListStyle}>
+          <FlatList
+            bounces={false}
+            data={NotificationData}
+            keyExtractor={item => item?.id}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item, index}) => {
+              return (
+                <>
+                  {new Date(NotificationData[index]?.date)
+                    ?.toLocaleString()
+                    ?.split(',')[0] !==
+                  new Date(NotificationData[index - 1]?.date)
+                    ?.toLocaleString()
+                    ?.split(',')[0] ? (
                     <View
                       style={{
-                        borderWidth: 1,
-                        borderColor: color.darkGray,
-                        flex: 1,
-                        marginStart: wp(3),
-                      }}></View>
+                        flexDirection: 'row',
+                        marginVertical: hp(1),
+                        paddingHorizontal: wp(5),
+                        alignItems: 'center',
+                      }}>
+                      <Text style={{color: '#929292', fontWeight: 'bold'}}>
+                        {moment(item.date).subtract('day').calendar()}
+                      </Text>
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          borderColor: color.darkGray,
+                          flex: 1,
+                          marginStart: wp(3),
+                        }}></View>
+                    </View>
+                  ) : null}
+                  <View style={styles.listTouchStyle}>
+                    <View style={styles.listImageViewStyle}>
+                      <Image
+                        source={
+                          item?.NotificationType == 'Refunds and Cancellations'
+                            ? Images.wallet
+                            : item.NotificationType == 'Ticket Booking Updates'
+                            ? Images.booking
+                            : item.NotificationType == 'Ticket Booking Updates'
+                            ? Images.booking
+                            : Images.wallet
+                        }
+                        resizeMode="contain"
+                        style={styles.listImageStyle}
+                      />
+                    </View>
+                    <View style={styles.listTextViewStyle}>
+                      <Text style={styles.listTitleTextStyle} numberOfLines={1}>
+                        {item?.NotificationType}
+                      </Text>
+                      <Text
+                        style={styles.listDiscriptionTextStyle}
+                        numberOfLines={2}>
+                        {item?.body}
+                      </Text>
+                      <Text>
+                        {new Date(item?.date).toLocaleTimeString('en-IN')}
+                      </Text>
+                    </View>
                   </View>
-                ) : null}
-                <View style={styles.listTouchStyle}>
-                  <View style={styles.listImageViewStyle}>
-                    <Image
-                      source={
-                        item?.NotificationType == 'Refunds and Cancellations'
-                          ? Images?.wallet
-                          : item.NotificationType == 'Ticket Booking Updates'
-                          ? Images?.booking
-                          : item?.NotificationType == 'Ticket Booking Updates'
-                          ? Images?.booking
-                          : Images?.wallet
-                      }
-                      resizeMode="contain"
-                      style={styles.listImageStyle}
-                    />
-                  </View>
-                  <View style={styles.listTextViewStyle}>
-                    <Text style={styles.listTitleTextStyle} numberOfLines={1}>
-                      {item?.NotificationType}
-                    </Text>
-                    <Text
-                      style={styles.listDiscriptionTextStyle}
-                      numberOfLines={2}>
-                      {item?.body}
-                    </Text>
-                    <Text>
-                      {new Date(item?.date)?.toLocaleTimeString('en-IN')}
-                    </Text>
-                  </View>
+                </>
+              );
+            }}
+            renderSectionHeader={({section: {time}}) => (
+              <View style={styles.listHeaderViewStyle}>
+                <Text style={styles.header}>{time}</Text>
+                <View style={styles.listHeaderLineStyle}>
+                  {/* <Text>hello</Text> */}
                 </View>
-              </>
-            );
-          }}
-          renderSectionHeader={({section: {time}}) => (
-            <View style={styles.listHeaderViewStyle}>
-              <Text style={styles.header}>{time}</Text>
-              <View style={styles.listHeaderLineStyle}>
-                {/* <Text>hello</Text> */}
               </View>
-            </View>
-          )}
-        />
-      </View>
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 };

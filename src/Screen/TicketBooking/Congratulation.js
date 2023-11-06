@@ -18,17 +18,14 @@ import moment from 'moment';
 
 const Congratulation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
-  console.log(tripType);
   const type = route?.params?.type;
   const header = route?.params?.header;
-  console.log(header, 'header212121');
   const totalPaymentList = useSelector(e =>
     type == 'Reschedule'
       ? e?.rescheduleFlightdata?.RescheduletotalPaymentList
       : e?.SelectSeatData?.totalPaymentList,
   );
 
-  console.log(totalPaymentList);
   const [UserPointData, setUserPointData] = useState({});
 
   const getUserPointData = async () => {

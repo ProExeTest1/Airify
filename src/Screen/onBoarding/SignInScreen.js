@@ -70,29 +70,61 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
   };
   const handleLogin = async () => {
     try {
-      const isUserLogin = await auth().signInWithEmailAndPassword(
-        Email,
-        Password,
-      );
-      await firestore()
-        .collection('Users')
-        .doc(auth().currentUser.uid)
-        .update({
-          DeviceId: await DeviceInfo.getUniqueId(),
-          Password: Password,
+      await auth()
+        .signInWithEmailAndPassword(Email, Password)
+        .then(async uid => {
+          await firestore()
+            .collection('Users')
+            .doc(uid.user.uid)
+            .update({
+              DeviceId: await DeviceInfo.getUniqueId(),
+              Password: Password,
+            })
+            .then(async id => {
+              await firestore()
+                .collection('Users')
+                .doc(uid.user.uid)
+                .get()
+                .then(async Data => {
+                  const userData = Data.data();
+                  const jsonValue = JSON.stringify(uid.user.uid);
+                  AsyncStorage.setItem('User_UID', jsonValue);
+                  if (
+                    !userData.Name &&
+                    !userData.profileImageURL &&
+                    !userData.PhoneNumber &&
+                    !userData.BirthDate
+                  ) {
+                    auth().signOut();
+                    navigation.navigate('SignUpScreen', {index: 1});
+                  } else if (!userData.JourneyData) {
+                    auth().signOut();
+                    navigation.navigate('SignUpScreen', {index: 2});
+                  } else if (!userData.DineWay) {
+                    auth().signOut();
+                    navigation.navigate('SignUpScreen', {index: 3});
+                  } else if (!userData.FlyData) {
+                    auth().signOut();
+                    navigation.navigate('SignUpScreen', {index: 4});
+                  } else if (!userData.PIN) {
+                    auth().signOut();
+                    navigation.navigate('SignUpScreen', {index: 6});
+                  } else {
+                    if (checked == true) {
+                      let value = {Email, Password};
+                      const jsonValue = JSON.stringify(value);
+                      await AsyncStorage.setItem('remember-key', jsonValue);
+                    }
+                    openModal();
+                    setTimeout(() => {
+                      closeModal();
+                      navigation.navigate('TabNavigation');
+                    }, 2000);
+                  }
+                });
+            });
         });
-      if (checked == true) {
-        let value = {Email, Password};
-        const jsonValue = JSON.stringify(value);
-        await AsyncStorage.setItem('remember-key', jsonValue);
-      }
-      openModal();
-      setTimeout(() => {
-        closeModal();
-        navigation.navigate('TabNavigation');
-      }, 2000);
     } catch (error) {
-      // console.log(error.message);
       AlertConstant('Please Enter Valid Credetials');
     }
   };
