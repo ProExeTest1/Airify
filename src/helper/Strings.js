@@ -384,7 +384,9 @@ export const strings = Object.freeze({
 
   // Passenger Alerts
   enter_first_name: 'Please Enter First Name',
+  enter_first_name_valid: 'Please enter valid First Name',
   enter_last_name: 'Please Enter last name',
+  enter_last_name_valid: 'Please Enter valid Last name',
   select_title: 'Please select title',
   enter_DOB: 'Please Enter Date of Birth',
   select_country_code: 'Please select country code',
@@ -418,7 +420,8 @@ export const strings = Object.freeze({
   enter_valid_email: 'Please Enter Email which are use in login',
   pasword_reset_email_send: 'Password reset email has been sent successfully.',
   please_enter_valid_email: 'Please Enter Email',
-  please_enter_valid_password: 'Please Enter Strong Password which contain 8 to 16 character with special characters & number',
+  please_enter_valid_password:
+    'Please Enter Strong Password which contain 8 to 16 character with special characters & number',
   please_select_profile_image: 'Please Select Profile Image',
   enter_valid_name: 'Please Enter Valid name',
   PIN_is_not_match: 'PIN is not match',

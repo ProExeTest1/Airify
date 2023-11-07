@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {PickerHeaderBar} from '../../components';
+import {CommonHeader, PickerHeaderBar} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
@@ -20,6 +20,7 @@ import {
 } from '../../redux/action/DateAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -179,9 +180,20 @@ const DatePickerScreen = ({navigation, route}) => {
   };
   return (
     <View>
-      <PickerHeaderBar
+      {/* <PickerHeaderBar
         headerName={'Select Date'}
         navigation={() => navigation?.goBack('')}
+      /> */}
+      <CommonHeader
+        onPress1={true}
+        onPress2={false}
+        Images1={Images?.cancel}
+        headerName={'Select Date'}
+        cancelButtonStyle1={{height: hp(2.5), marginTop: hp(0.3)}}
+        Images1Color={color.white}
+        navigation1={() => {
+          navigation.goBack();
+        }}
       />
       <View style={styles.currentDateStyle}>
         <View style={styles.dateMainViewStyle}>
@@ -238,11 +250,9 @@ const DatePickerScreen = ({navigation, route}) => {
           />
         </View>
       </View>
-      <SafeAreaView style={styles.bottomViewStyle}>
-        <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
-          <Text style={styles.searchFontStyle}>{strings.ok}</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
+        <Text style={styles.searchFontStyle}>{strings.ok}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -287,7 +297,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2.2),
     borderRadius: 16,
     backgroundColor: 'blue',
-    marginVertical: hp(2.5),
+    marginVertical: hp(2.2),
     justifyContent: 'center',
   },
   searchFontStyle: {

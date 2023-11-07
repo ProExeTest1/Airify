@@ -58,11 +58,12 @@ const NotificationScreen = ({navigation}) => {
         cancelButtonStyle1={styles.plusIconStyle}
         Images1Color={color.white}
       />
-      {NotificationData.length === 0 ? (
+      {NotificationData?.length === 0 ? (
         <View
           style={{
             alignItems: 'center',
             justifyContent: 'center',
+            flex: 1,
           }}>
           <LottieView
             source={require('../../helper/noDataFound.json')}
@@ -159,7 +160,6 @@ export default NotificationScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: color.white,
   },
   sectionListStyle: {
     flex: 1,
@@ -222,5 +222,9 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(3),
     borderColor: color.grey,
     flex: 1,
+  },
+  lottiStyle: {
+    height: hp(100),
+    width: hp(50),
   },
 });

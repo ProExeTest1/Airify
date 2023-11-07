@@ -57,10 +57,18 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
 
   const addNewPassengerList = () => {
     if (!firstName.trim().match('[a-zA-Z ]{3,30}')) {
-      AlertConstant(strings.enter_first_name);
+      AlertConstant(
+        firstName.length === 0
+          ? strings.enter_first_name
+          : strings.enter_first_name_valid,
+      );
       return;
     } else if (!lastName.trim().match('[a-zA-Z ]{3,30}')) {
-      AlertConstant(strings.enter_last_name);
+      AlertConstant(
+        lastName.length === 0
+          ? strings.enter_last_name
+          : strings.enter_last_name_valid,
+      );
       return;
     } else if (!selectedTitle.trim()) {
       AlertConstant(strings.select_title);
@@ -344,7 +352,10 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             onChangeText={email => setEmail(email)}
           />
           <View style={styles.subContainerView}>
-            <Text style={styles.lineText}>{strings?.identityCard}</Text>
+            <Text
+              style={
+                styles.lineText
+              }>{`${strings?.identityCard} (optional)`}</Text>
             <View style={styles.line} />
           </View>
           <TextInputPassenger
@@ -480,7 +491,10 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             />
           </View>
           <View style={styles.subContainerView}>
-            <Text style={styles.lineText}>{strings?.driLicense}</Text>
+            <Text
+              style={
+                styles.lineText
+              }>{`${strings?.driLicense} (optional)`}</Text>
             <View style={styles.line} />
           </View>
           <TextInputPassenger
@@ -646,5 +660,3 @@ const styles = StyleSheet.create({
   },
   subContainerView: {flexDirection: 'row'},
 });
-
-

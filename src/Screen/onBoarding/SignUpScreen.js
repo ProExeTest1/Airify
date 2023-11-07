@@ -258,34 +258,36 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       if (index == 1) {
         const uploadStorage = pickerResponse;
         const filename = Date.now();
-        const task = storage()
-          ?.ref(`/Profile/${RememberMeValue}/${filename}`)
-          ?.putFile(uploadStorage);
-        try {
-          await task;
-        } catch (error) {
-          console.log(error);
-        }
+        console.log(uploadStorage, '-=-==-==>>>>>>>>>.');
         await storage()
           ?.ref(`/Profile/${RememberMeValue}/${filename}`)
-          ?.getDownloadURL()
-          ?.catch(err => {
-            console.log('error in download', err);
-          })
-          .then(async url => {
-            await firestore()
-              ?.collection('Users')
-              ?.doc(RememberMeValue)
-              ?.update({
-                Name: name,
-                profileImageURL: url,
-                PhoneNumber: phoneNo,
-                BirthDate: date,
-              })
-              .then(() => {
-                setModalVisible2(false);
-                swiperRef.current.scrollBy(1);
+          ?.putFile(uploadStorage)
+          .then(async () => {
+            await storage()
+              ?.ref(`/Profile/${RememberMeValue}/${filename}`)
+              ?.getDownloadURL()
+
+              .then(async url => {
+                // setModalVisible2(false);
+                console.log(url, '=-=-=-');
+                await firestore()
+                  ?.collection('Users')
+                  ?.doc(RememberMeValue)
+                  ?.update({
+                    Name: name,
+                    profileImageURL: url,
+                    PhoneNumber: phoneNo,
+                    BirthDate: date,
+                  })
+                  .then(() => {
+                    setModalVisible2(false);
+                    swiperRef.current.scrollBy(1);
+                  });
               });
+          })
+          ?.catch(err => {
+            setModalVisible2(false);
+            AlertConstant('Please close the application and try again');
           });
       }
       {
@@ -479,8 +481,11 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             NotificationHistory: [],
           })
           .then(() => {
-            setModalVisible2(false);
-            swiperRef?.current?.scrollBy(1);
+            const jsonValue = JSON?.stringify(auth()?.currentUser?.uid);
+            AsyncStorage?.setItem('User_UID', jsonValue).then(() => {
+              setModalVisible2(false);
+              swiperRef?.current?.scrollBy(1);
+            });
           });
       })
       .catch(() => {

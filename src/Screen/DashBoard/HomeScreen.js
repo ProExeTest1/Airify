@@ -144,46 +144,49 @@ const HomeScreen = ({navigation}) => {
   };
 
   const UserData = async () => {
-    // const journeyData = await firestore()
-    //   .collection('Users')
-    //   .doc(auth().currentUser.uid)
-    //   .get();
-
-    firestore()
+    await firestore()
       .collection('Users')
-      .onSnapshot(querySnapshot => {
-        querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
-            setUserData(documentSnapshot?.data());
-            dispatch(UserDataAction(documentSnapshot?.data()));
-            const userData = documentSnapshot?.data();
-            const jsonValue = JSON?.stringify(auth()?.currentUser?.uid);
-            AsyncStorage?.setItem('User_UID', jsonValue);
-            if (
-              !userData?.Name &&
-              !userData?.profileImageURL &&
-              !userData?.PhoneNumber &&
-              !userData?.BirthDate
-            ) {
-              auth()?.signOut();
-              navigation?.navigate('SignUpScreen', {index: 1});
-            } else if (!userData.JourneyData) {
-              auth()?.signOut();
-              navigation?.navigate('SignUpScreen', {index: 2});
-            } else if (!userData?.DineWay) {
-              auth()?.signOut();
-              navigation?.navigate('SignUpScreen', {index: 3});
-            } else if (!userData?.FlyData) {
-              auth()?.signOut();
-              navigation?.navigate('SignUpScreen', {index: 4});
-            } else if (!userData?.PIN) {
-              auth()?.signOut();
-              navigation?.navigate('SignUpScreen', {index: 6});
-            }
-            setLoader(false);
-          }
-        });
+      .doc(auth()?.currentUser?.uid)
+      .get()
+      .then(documentSnapshot => {
+        setUserData(documentSnapshot?.data());
+        dispatch(UserDataAction(documentSnapshot?.data()));
+        const userData = documentSnapshot?.data();
+        const jsonValue = JSON?.stringify(auth()?.currentUser?.uid);
+        AsyncStorage?.setItem('User_UID', jsonValue);
+        if (
+          !userData?.Name &&
+          !userData?.profileImageURL &&
+          !userData?.PhoneNumber &&
+          !userData?.BirthDate
+        ) {
+          auth()?.signOut();
+          navigation?.navigate('SignUpScreen', {index: 1});
+        } else if (!userData.JourneyData) {
+          auth()?.signOut();
+          navigation?.navigate('SignUpScreen', {index: 2});
+        } else if (!userData?.DineWay) {
+          auth()?.signOut();
+          navigation?.navigate('SignUpScreen', {index: 3});
+        } else if (!userData?.FlyData) {
+          auth()?.signOut();
+          navigation?.navigate('SignUpScreen', {index: 4});
+        } else if (!userData?.PIN) {
+          auth()?.signOut();
+          navigation?.navigate('SignUpScreen', {index: 6});
+        }
+        setLoader(false);
       });
+
+    // firestore()
+    //   .collection('Users')
+    //   .onSnapshot(querySnapshot => {
+    //     querySnapshot?.forEach(documentSnapshot => {
+    //       if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+
+    //       }
+    //     });
+    //   });
   };
 
   const TripOption = ({tripType}) => {
@@ -228,7 +231,7 @@ const HomeScreen = ({navigation}) => {
                 }}
                 style={styles.profilePicStyle}
                 resizeMode="stretch"
-                loadingIndicatorSource={Images.Email}
+                loadingIndicatorSource={Images?.Email}
               />
             )}
             <View style={styles.headertextStyle}>
@@ -241,7 +244,7 @@ const HomeScreen = ({navigation}) => {
                   ? strings.evening
                   : strings.Night}
               </Text>
-              <Text style={styles.userNameStyle}>{userData.Name}</Text>
+              <Text style={styles.userNameStyle}>{userData?.Name}</Text>
             </View>
           </View>
           <TouchableOpacity

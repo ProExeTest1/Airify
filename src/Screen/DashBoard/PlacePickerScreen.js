@@ -13,7 +13,7 @@ import {
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {PickerHeaderBar, SearchBar} from '../../components';
+import {CommonHeader, PickerHeaderBar, SearchBar} from '../../components';
 import {
   depaturePlaceAction,
   destinationPlaceAction,
@@ -133,9 +133,20 @@ const PlacePickerScreen = ({navigation, route}) => {
   };
   return (
     <View style={styles.container}>
-      <PickerHeaderBar
+      {/* <PickerHeaderBar
         headerName={headerData}
         navigation={() => navigation.goBack('')}
+      /> */}
+      <CommonHeader
+        onPress1={true}
+        onPress2={false}
+        Images1={Images?.cancel}
+        headerName={headerData}
+        cancelButtonStyle1={{height: hp(2.5), marginTop: hp(0.3)}}
+        Images1Color={color.white}
+        navigation1={() => {
+          navigation.goBack();
+        }}
       />
       <SearchBar
         placeholder={'Search...'}

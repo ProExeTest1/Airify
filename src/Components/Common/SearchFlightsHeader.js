@@ -172,8 +172,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   BackImg: {
-    width: wp(8),
-    height: wp(8),
+    width: hp(3),
+    height: hp(3),
     tintColor: color.white,
   },
   headerTitleBody: {

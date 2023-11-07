@@ -62,11 +62,12 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
           navigation.navigate('NewPassenger');
         }}
       />
-      {passengerList.length === 0 ? (
+      {passengerList?.length === 0 ? (
         <View
           style={{
             alignItems: 'center',
             justifyContent: 'center',
+            flex: 1,
           }}>
           <LottieView
             source={require('../../helper/noDataFound.json')}
@@ -76,7 +77,7 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
           />
         </View>
       ) : (
-        <>
+        <View style={{flex: 1, backgroundColor: color.white}}>
           <View
             style={[styles.headerStyle, {backgroundColor: color.commonBlue}]}>
             <Text style={[styles.mainHeaderText, {color: color.white}]}>
@@ -131,7 +132,7 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
               }}
             />
           </View>
-        </>
+        </View>
       )}
     </View>
   );
@@ -140,7 +141,6 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: color.white,
   },
   plusIconStyle: {
     width: hp(2.5),
@@ -171,6 +171,10 @@ const styles = StyleSheet.create({
   },
   flatListView: {
     flex: 1,
+  },
+  lottiStyle: {
+    height: hp(100),
+    width: hp(50),
   },
 });
 

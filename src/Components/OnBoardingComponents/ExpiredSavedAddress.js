@@ -71,7 +71,14 @@ const ExpiredSavedAddress = ({onPress}) => {
                 onPress={() => {
                   onPress(item);
                 }}
-                style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0,marginBottom: index == expireAddressData?.length - 1 ? hp(15) : hp(2)}]}>
+                style={[
+                  styles.cardBody,
+                  {
+                    marginTop: index === 0 ? hp(3) : 0,
+                    marginBottom:
+                      index == expireAddressData?.length - 1 ? hp(15) : hp(2),
+                  },
+                ]}>
                 <View style={styles.cardHeader}>
                   <View
                     style={[
@@ -172,6 +179,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold',
     fontSize: fontSize(18),
+    color: color.black,
   },
   cardHeaderLogo: {
     width: wp(5.8),
