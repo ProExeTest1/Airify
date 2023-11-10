@@ -14,18 +14,22 @@ import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 
-const CountryPickTextInput = ({
-  value,
-  onPress1,
-  onPress2,
-  disabled,
-  editable,
-  countryCode,
-  placeholder,
-  onChangeText,
-  textInputStyle,
-  placeholderTextColor,
-}) => {
+const CountryPickTextInput = (
+  {
+    value,
+    onPress1,
+    onPress2,
+    disabled,
+    editable,
+    countryCode,
+    placeholder,
+    onChangeText,
+    textInputStyle,
+    placeholderTextColor,
+    onSubmitEditing,
+  },
+  ref,
+) => {
   return (
     <KeyboardAvoidingView>
       <View style={styles.mainViewStyle}>
@@ -45,7 +49,9 @@ const CountryPickTextInput = ({
           <View style={styles.InputViewStyle}>
             <TextInput
               value={value}
+              ref={ref}
               editable={editable}
+              onSubmitEditing={onSubmitEditing}
               keyboardType="number-pad"
               maxLength={10}
               placeholder={placeholder}
@@ -92,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CountryPickTextInput;
+export default React.forwardRef(CountryPickTextInput);

@@ -93,13 +93,6 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
   useEffect(() => {
     passengers();
   }, []);
-  const ontoggleSwitch = () => {
-    if (ticketType === 'Old Trip') {
-      setTicketType('New Trip');
-    } else {
-      setTicketType('Old Trip');
-    }
-  };
   const onContinue = () => {
     if (ticketType === 'Old Trip') {
       setTicketType('New Trip');
@@ -182,7 +175,11 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
       />
 
       <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
-      <RescheduleSwitch onPress={ontoggleSwitch} ticketType={ticketType} />
+      <RescheduleSwitch
+        onPress1={() => setTicketType('Old Trip')}
+        onPress2={() => setTicketType('New Trip')}
+        ticketType={ticketType}
+      />
       <ScrollView
         bounces={false}
         style={[

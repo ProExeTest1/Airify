@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   sectionListStyle: {
     flex: 1,
-    marginVertical: hp(2.4),
+    // marginVertical: hp(2.4),
     backgroundColor: color.white,
   },
   listTouchStyle: {

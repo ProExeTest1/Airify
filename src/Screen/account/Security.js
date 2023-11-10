@@ -16,6 +16,7 @@ import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const Security = ({navigation: {goBack}}) => {
   const [securityData, setSecurityData] = useState([]);
@@ -91,7 +92,11 @@ const Security = ({navigation: {goBack}}) => {
           }}
         />
 
-        <TouchableOpacity style={styles.buttonStyle}>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => {
+            AlertConstant('This feature was not available at this time');
+          }}>
           <Text style={styles.buttonTextStyle}>{strings?.changePassword}</Text>
         </TouchableOpacity>
       </View>

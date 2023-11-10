@@ -48,7 +48,7 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
   const [drivingLicenseExpiryDate, setDrivingLicenseExpiryDate] = useState('');
   const [drivingLicenseIssueCountry, setDrivingLicenseIssueCountry] =
     useState('');
-
+  const [validation, setValidation] = useState('');
   useEffect(() => {
     if (mode == 'Edit') {
       EditData();
@@ -79,46 +79,68 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
     } else if (!countryCode.trim()) {
       AlertConstant(strings.select_country_code);
       return;
-    } else if (!phoneNo.trim().match('[0-9]{10}')) {
-      AlertConstant(strings.enter_phone_no);
+    } else if (phoneNo.length > 0 && !phoneNo.trim().match('[0-9]{10}')) {
+      AlertConstant('Enter valid Phone No.');
       return;
-    } else if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
-      AlertConstant(strings.enter_email_address);
+    } else if (
+      email.length > 0 &&
+      !email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')
+    ) {
+      AlertConstant('Enter valid Email address');
       return;
-    } else if (!identityCardNo.trim().match('[0-9]')) {
-      AlertConstant(strings.enter_identity_card_no);
+    } else if (email.length === 0 && phoneNo.length === 0) {
+      setValidation('Contact Details');
+      AlertConstant('Please fill any of one conatct detail');
+    } else if (
+      identityCardNo.length > 0 &&
+      !identityCardNo.trim().match('[0-9]')
+    ) {
+      AlertConstant('Please enter valid identity card number');
       return;
-    } else if (!identityCardIssueCountry.trim()) {
+    } else if (identityCardNo.length > 0 && !identityCardIssueCountry.trim()) {
       AlertConstant(strings.enter_identity_issued_country);
       return;
-    } else if (!identityCardIssueDate.trim()) {
+    } else if (identityCardNo.length > 0 && !identityCardIssueDate.trim()) {
       AlertConstant(strings.enter_identity_issued_date);
       return;
-    } else if (!identityCardExpiryDate.trim()) {
+    } else if (identityCardNo.length > 0 && !identityCardExpiryDate.trim()) {
       AlertConstant(strings.enter_identity_issued_expiry_date);
       return;
     } else if (!passportNo.trim().match('[A-PR-WY-Z][1-9]\\d\\s?\\d{4}[1-9]')) {
+      setValidation('Passport');
       AlertConstant(strings.enter_passport_no);
       return;
     } else if (!passportIssueCountry.trim()) {
+      setValidation('Passport');
       AlertConstant(strings.enter_passport_issued_country);
       return;
     } else if (!passportExpiryDate.trim()) {
+      setValidation('Passport');
       AlertConstant(strings.enter_passport_expiry_date);
       return;
     } else if (!nationality.trim()) {
+      setValidation('Passport');
       AlertConstant(strings.select_nationality);
       return;
-    } else if (!drivingLicenseNo.trim().match('[A-Za-z][0-9/W/]{2,20}')) {
+    } else if (
+      drivingLicenseNo.length > 0 &&
+      !drivingLicenseNo.trim().match('[A-Za-z][0-9/W/]{2,20}')
+    ) {
       AlertConstant(strings.enter_driving_license);
       return;
-    } else if (!drivingLicenseIssueCountry.trim()) {
+    } else if (
+      drivingLicenseNo.length > 0 &&
+      !drivingLicenseIssueCountry.trim()
+    ) {
       AlertConstant(strings.enter_driving_license_issued_country);
       return;
-    } else if (!drivingLicenseIssueDate.trim()) {
+    } else if (drivingLicenseNo.length > 0 && !drivingLicenseIssueDate.trim()) {
       AlertConstant(strings.enter_driving_license_issued_date);
       return;
-    } else if (!drivingLicenseExpiryDate.trim()) {
+    } else if (
+      drivingLicenseNo.length > 0 &&
+      !drivingLicenseExpiryDate.trim()
+    ) {
       AlertConstant(strings.select_driving_license_expiry_date);
       return;
     } else {
@@ -153,16 +175,30 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
                   CountryCode: countryCode,
                   Nationality: nationality,
                   PassportNumber: passportNo,
-                  IdentityCardNumber: identityCardNo,
+                  IdentityCardNumber:
+                    identityCardNo > 0 ? identityCardNo : false,
                   PassportExpiryDate: passportExpiryDate,
-                  DrivingLicenseNumber: drivingLicenseNo,
+                  DrivingLicenseNumber:
+                    drivingLicenseNo.length > 0 ? drivingLicenseNo : false,
                   PassportIssueCountry: passportIssueCountry,
-                  IdentityCardIssueDate: identityCardIssueDate,
-                  IdentityCardExpiryDate: identityCardExpiryDate,
-                  DrivingLicenseIssueDate: drivingLicenseIssueDate,
-                  IdentityCardIssueCountry: identityCardIssueCountry,
-                  DrivingLicenseExpiryDate: drivingLicenseExpiryDate,
-                  DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
+                  IdentityCardIssueDate:
+                    identityCardNo > 0 ? identityCardIssueDate : false,
+                  IdentityCardExpiryDate:
+                    identityCardNo > 0 ? identityCardExpiryDate : false,
+                  DrivingLicenseIssueDate:
+                    drivingLicenseNo.length > 0
+                      ? drivingLicenseIssueDate
+                      : false,
+                  IdentityCardIssueCountry:
+                    identityCardNo > 0 ? identityCardIssueCountry : false,
+                  DrivingLicenseExpiryDate:
+                    drivingLicenseNo.length > 0
+                      ? drivingLicenseExpiryDate
+                      : false,
+                  DrivingLicenseIssueCountry:
+                    drivingLicenseNo.length > 0
+                      ? drivingLicenseIssueCountry
+                      : false,
                 },
               ],
             });
@@ -220,25 +256,39 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
               if (i.uniqID == route?.params?.passengerData?.uniqID) {
                 return {
                   Email: email,
-                  uniqID: i.uniqID,
+                  uniqID: uuid.v4(),
                   LastName: lastName,
                   FirstName: firstName,
                   Title: selectedTitle,
                   BirthDate: birthDate,
                   PhoneNumber: phoneNo,
-                  Nationality: nationality,
                   CountryCode: countryCode,
+                  Nationality: nationality,
                   PassportNumber: passportNo,
-                  IdentityCardNumber: identityCardNo,
-                  DrivingLicenseNumber: drivingLicenseNo,
+                  IdentityCardNumber:
+                    identityCardNo > 0 ? identityCardNo : false,
                   PassportExpiryDate: passportExpiryDate,
+                  DrivingLicenseNumber:
+                    drivingLicenseNo.length > 0 ? drivingLicenseNo : false,
                   PassportIssueCountry: passportIssueCountry,
-                  IdentityCardIssueDate: identityCardIssueDate,
-                  IdentityCardExpiryDate: identityCardExpiryDate,
-                  DrivingLicenseIssueDate: drivingLicenseIssueDate,
-                  IdentityCardIssueCountry: identityCardIssueCountry,
-                  DrivingLicenseExpiryDate: drivingLicenseExpiryDate,
-                  DrivingLicenseIssueCountry: drivingLicenseIssueCountry,
+                  IdentityCardIssueDate:
+                    identityCardNo > 0 ? identityCardIssueDate : false,
+                  IdentityCardExpiryDate:
+                    identityCardNo > 0 ? identityCardExpiryDate : false,
+                  DrivingLicenseIssueDate:
+                    drivingLicenseNo.length > 0
+                      ? drivingLicenseIssueDate
+                      : false,
+                  IdentityCardIssueCountry:
+                    identityCardNo > 0 ? identityCardIssueCountry : false,
+                  DrivingLicenseExpiryDate:
+                    drivingLicenseNo.length > 0
+                      ? drivingLicenseExpiryDate
+                      : false,
+                  DrivingLicenseIssueCountry:
+                    drivingLicenseNo.length > 0
+                      ? drivingLicenseIssueCountry
+                      : false,
                 };
               }
               return i;
@@ -276,9 +326,11 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
               placeholder={strings?.firstName}
               TextInputLabel={strings?.firstName}
               onChangeText={firstName => setFirstName(firstName)}
+              onSubmitEditing={() => lastNameRef?.focus()}
             />
             <TextInputPassenger
               value={lastName}
+              ref={input => (lastNameRef = input)}
               placeholder={strings?.lastName}
               TextInputLabel={strings?.lastName}
               onChangeText={lastName => setLastName(lastName)}
@@ -314,8 +366,22 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
           </View>
 
           <View style={styles.subContainerView}>
-            <Text style={styles.lineText}>{strings?.contactDetail}</Text>
-            <View style={styles.line} />
+            <Text
+              style={[
+                styles.lineText,
+                {color: validation === 'Contact Details' ? 'red' : color.black},
+              ]}>
+              {strings?.contactDetail}
+            </Text>
+            <View
+              style={[
+                styles.line,
+                {
+                  borderColor:
+                    validation === 'Contact Details' ? 'red' : color.Grey,
+                },
+              ]}
+            />
           </View>
           <View style={{flexDirection: 'row', flex: 1}}>
             <TextInputPassenger
@@ -336,6 +402,8 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             />
             <TextInputPassenger
               value={phoneNo}
+              inputMode={'numeric'}
+              onSubmitEditing={() => emailRef?.focus()}
               placeholder={strings?.Phone}
               passengerTextInputStyle={1.4}
               TextInputLabel={strings?.Phone}
@@ -345,7 +413,9 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
           </View>
           <TextInputPassenger
             value={email}
+            ref={input => (emailRef = input)}
             autoCapitalize={'none'}
+            inputMode={'email'}
             textInputIcon={Images.Email}
             placeholder={strings?.EmailText}
             TextInputLabel={strings?.EmailText}
@@ -423,8 +493,19 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
             />
           </View>
           <View style={styles.subContainerView}>
-            <Text style={styles.lineText}>{strings?.passPort}</Text>
-            <View style={styles.line} />
+            <Text
+              style={[
+                styles.lineText,
+                {color: validation === 'Passport' ? 'red' : color.black},
+              ]}>
+              {strings?.passPort}
+            </Text>
+            <View
+              style={[
+                styles.line,
+                {borderColor: validation === 'Passport' ? 'red' : color.Grey},
+              ]}
+            />
           </View>
           <TextInputPassenger
             value={passportNo}

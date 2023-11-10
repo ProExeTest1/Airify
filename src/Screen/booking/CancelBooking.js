@@ -72,7 +72,7 @@ const CancelBooking = ({navigation}) => {
               firebaseTicketData?.totalPaymentList?.totalPayment,
             transactionHistory: [
               {
-                title: 'cancel Booking',
+                title: 'Cancel Booking',
                 price: `+$${firebaseTicketData?.totalPaymentList?.totalPayment}`,
                 date: moment(new Date()).format('MMM D,YYYY'),
                 time: new Date().toLocaleTimeString('en-IN'),
@@ -89,40 +89,40 @@ const CancelBooking = ({navigation}) => {
               if (
                 i.date ==
                 moment(
-                  firebaseTicketData.searchFlightDateData[1],
+                  firebaseTicketData?.searchFlightDateData[1],
                   'MMM DD YYYY',
                 ).format('D/M/YYYY')
               ) {
                 return {
                   date: i.date,
                   day: i.day,
-                  flightData: i.flightData.map(e => {
+                  flightData: i?.flightData?.map(e => {
                     if (
-                      e.flightData.airlineName ==
+                      e?.flightData?.airlineName ==
                         firebaseTicketData?.searchFlightCardData?.airlineName &&
-                      e.flightData.lendTime ==
+                      e?.flightData?.lendTime ==
                         firebaseTicketData?.searchFlightCardData?.lendTime &&
-                      e.flightData.logo ==
+                      e?.flightData?.logo ==
                         firebaseTicketData?.searchFlightCardData?.logo &&
-                      e.flightData.pickTime ==
+                      e?.flightData?.pickTime ==
                         firebaseTicketData?.searchFlightCardData?.pickTime &&
-                      e.flightData.price ==
+                      e?.flightData?.price ==
                         firebaseTicketData?.searchFlightCardData?.price &&
-                      e.flightData.stop ==
+                      e?.flightData?.stop ==
                         firebaseTicketData?.searchFlightCardData?.stop &&
-                      e.flightData.stopDuration ==
+                      e?.flightData?.stopDuration ==
                         firebaseTicketData?.searchFlightCardData
                           ?.stopDuration &&
-                      e.flightData.totalHours ==
+                      e?.flightData?.totalHours ==
                         firebaseTicketData?.searchFlightCardData?.totalHours &&
-                      e.flightData.day ==
+                      e?.flightData?.day ==
                         firebaseTicketData?.searchFlightCardData?.day
                     ) {
                       return {
                         flightData: e.flightData,
-                        selectSeat: e?.selectSeat.filter(i =>
+                        selectSeat: e?.selectSeat?.filter(i =>
                           firebaseTicketData?.SelectSeatData?.some(
-                            a => a.seatNo != i,
+                            a => a?.seatNo != i,
                           ),
                         ),
                       };
@@ -158,13 +158,13 @@ const CancelBooking = ({navigation}) => {
                   return {
                     id: item.id,
                     Departure: false,
-                    Return: item.Return,
+                    Return: item?.Return,
                   };
                 }
-                if (firebaseTicketData.type == 'Return') {
+                if (firebaseTicketData?.type == 'Return') {
                   return {
-                    id: item.id,
-                    Departure: item.Departure,
+                    id: item?.id,
+                    Departure: item?.Departure,
                     Return: false,
                   };
                 }
@@ -196,8 +196,8 @@ const CancelBooking = ({navigation}) => {
       .collection('BookingCancel')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setBookingCancelData(documentSnapshot.data().BookingCancel);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setBookingCancelData(documentSnapshot?.data()?.BookingCancel);
           }
         });
       });
@@ -207,8 +207,8 @@ const CancelBooking = ({navigation}) => {
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setSaveTicketData(documentSnapshot.data().SaveTicket);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setSaveTicketData(documentSnapshot?.data()?.SaveTicket);
           }
         });
       });
@@ -218,8 +218,8 @@ const CancelBooking = ({navigation}) => {
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == 'JaTwXgqSHSESiR6CDzdy') {
-            SetSeatData(documentSnapshot.data().AirlineSeatBookData);
+          if (documentSnapshot?.id == 'JaTwXgqSHSESiR6CDzdy') {
+            SetSeatData(documentSnapshot?.data()?.AirlineSeatBookData);
           }
         });
       });
@@ -248,13 +248,13 @@ const CancelBooking = ({navigation}) => {
               await notifee.requestPermission();
 
               // Create a channel (required for Android)
-              const channelId = await notifee.createChannel({
+              const channelId = await notifee?.createChannel({
                 id: auth().currentUser?.uid,
                 name: 'Ticket Booking',
               });
 
               // Display a notification
-              await notifee.displayNotification({
+              await notifee?.displayNotification({
                 title: 'Your Ticket Cancel Successfully',
                 body: `${firebaseTicketData?.totalPaymentList?.totalPayment} rupees refund in few minutes.`,
                 android: {
@@ -270,12 +270,12 @@ const CancelBooking = ({navigation}) => {
               notifee.onForegroundEvent(async ({type, detail}) => {
                 await firestore()
                   .collection('NotificationHistory')
-                  .doc(auth().currentUser.uid)
+                  .doc(auth()?.currentUser?.uid)
                   .get()
                   .then(async i => {
                     await firestore()
                       .collection('NotificationHistory')
-                      .doc(auth().currentUser.uid)
+                      .doc(auth()?.currentUser?.uid)
                       .update({
                         NotificationHistory: [
                           ...i?.data()?.NotificationHistory,
@@ -293,11 +293,11 @@ const CancelBooking = ({navigation}) => {
                   case EventType.DISMISSED:
                     console.log(
                       'User dismissed notification',
-                      detail.notification,
+                      detail?.notification,
                     );
                     break;
                   case EventType.PRESS:
-                    navigation.navigate('WalletScreen');
+                    navigation?.navigate('WalletScreen');
                     break;
                 }
               });

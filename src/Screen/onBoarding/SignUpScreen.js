@@ -8,6 +8,7 @@ import {
   Image,
   ScrollView,
   Alert,
+  TextInput,
 } from 'react-native';
 import moment from 'moment';
 import Modal from 'react-native-modal';
@@ -44,6 +45,7 @@ import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
 import {useRoute} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator} from 'react-native-paper';
+import {log} from 'console';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const indexRoute = useRoute()?.params?.index;
@@ -571,20 +573,24 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
             value={Email}
             onChangeText={email => setEmail(email)}
             keyboardType={'email-address'}
+            onSubmitEditing={() => passwordRef?.focus()}
           />
           <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
           <OnBoardingTextInput
             textInputIcon={Images.password}
+            ref={input => (passwordRef = input)}
             textInputPlaceholder={strings.Password}
             container={styles.textInputContainer}
             value={Password}
             onChangeText={password => setPassword(password)}
+            onSubmitEditing={() => referralRef?.focus()}
             keyboardType={'default'}
           />
           <Text style={styles.textInputTitleStyle}>{strings.ReferralCode}</Text>
           <OnBoardingTextInput
             textInputPlaceholder={strings.ReferralCode}
             container={styles.textInputContainer}
+            ref={input => (referralRef = input)}
             value={referralCode}
             onChangeText={referralCode => {
               setReferralCode(referralCode);
@@ -655,10 +661,12 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
               value={name}
               onChangeText={name => setName(name)}
               keyboardType={'default'}
+              onSubmitEditing={() => phoneNoRef?.focus()}
             />
             <Text style={styles.textInputTitleStyle}>{strings.Phone}</Text>
             <CountryPickTextInput
               value={phoneNo}
+              ref={input => (phoneNoRef = input)}
               onChangeText={phoneNo => setPhoneNo(phoneNo)}
               placeholder={strings.Phone}
               disabled={true}
@@ -715,7 +723,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                             ...selectedJourneyData,
                             item?.name,
                           ])
-                        : null;
+                        : AlertConstant('You can select maximum 10 countries');
                     }}>
                     <Image
                       source={{uri: item?.image}}
@@ -802,7 +810,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                             ...selectedDineWay,
                             item?.strCategory,
                           ])
-                        : null;
+                        : AlertConstant('You can select maximum 5 dishes');
                     }}>
                     <Image
                       source={{uri: item?.strCategoryThumb}}
@@ -840,7 +848,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                           )
                         : selectedFlyWay?.length < 8
                         ? setSelectedFlyWay([...selectedFlyWay, item?.name])
-                        : null;
+                        : AlertConstant('You can select maximum 10 airlines ');
                     }}>
                     <Image
                       source={{uri: item?.logo}}

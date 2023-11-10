@@ -3,11 +3,11 @@ import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 
-const RescheduleSwitch = ({onPress, ticketType}) => {
+const RescheduleSwitch = ({onPress1, onPress2, ticketType}) => {
   return (
     <View style={styles.optionViewStyle}>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onPress1}
         style={[
           styles.optionTouchStyle,
           {
@@ -23,7 +23,7 @@ const RescheduleSwitch = ({onPress, ticketType}) => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onPress2}
         style={[
           styles.optionTouchStyle,
           {

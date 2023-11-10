@@ -13,19 +13,23 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const OnBoardingTextInput = ({
-  value,
-  onPress,
-  container,
-  onChangeText,
-  keyboardType,
-  textInputIcon,
-  textInputStyle,
-  onPressCalender,
-  textInputIconStyle,
-  textInputPlaceholder,
-  contextMenuHidden,
-}) => {
+const OnBoardingTextInput = (
+  {
+    value,
+    onPress,
+    container,
+    onChangeText,
+    keyboardType,
+    textInputIcon,
+    textInputStyle,
+    onPressCalender,
+    textInputIconStyle,
+    textInputPlaceholder,
+    contextMenuHidden,
+    onSubmitEditing,
+  },
+  ref,
+) => {
   const [focus, setFocus] = useState(false);
 
   return (
@@ -42,11 +46,17 @@ const OnBoardingTextInput = ({
       )}
       <TextInput
         value={value}
+        ref={ref}
+        onSubmitEditing={onSubmitEditing}
         autoCorrect={false}
         onPressIn={onPress}
         autoCapitalize="none"
-        secureTextEntry={textInputPlaceholder == 'Password' ||
-        textInputPlaceholder == 'Confirm New Password' ? !focus : false}
+        secureTextEntry={
+          textInputPlaceholder == 'Password' ||
+          textInputPlaceholder == 'Confirm New Password'
+            ? !focus
+            : false
+        }
         onChangeText={onChangeText}
         keyboardType={keyboardType}
         editable={onPress ? false : true}
@@ -127,4 +137,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OnBoardingTextInput;
+export default React.forwardRef(OnBoardingTextInput);

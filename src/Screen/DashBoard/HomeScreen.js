@@ -389,7 +389,9 @@ const HomeScreen = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <SwiperFlatlistComponent />
+          <View style={{marginBottom: hp(2)}}>
+            <SwiperFlatlistComponent />
+          </View>
         </View>
       </ScrollView>
       <PassengerPickerModal
@@ -403,7 +405,6 @@ const HomeScreen = ({navigation}) => {
         setTwoYearBelowChild={setTwoYearBelowChild}
         onCancel={() => {
           toggleModal();
-          setSeat(null);
         }}
       />
       <ClassPickerModal
@@ -412,7 +413,6 @@ const HomeScreen = ({navigation}) => {
         setClass={setPassengerClass}
         onCancel={() => {
           toggleClassModal();
-          setPassengerClass(null);
         }}
       />
     </View>

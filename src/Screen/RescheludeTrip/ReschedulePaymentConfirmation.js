@@ -81,14 +81,6 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
   const validPoint = ToggleSwitchBut1 ? Math.floor(TotalPoint / 100) : 0;
   const havePonts = ToggleSwitchBut1 ? TotalPoint % 100 : TotalPoint;
 
-  const ontoggleSwitch = () => {
-    if (ticketType === 'Old Trip') {
-      setTicketType('New Trip');
-    } else {
-      setTicketType('Old Trip');
-    }
-  };
-
   const getFirebaseData = async () => {
     await firestore()
       .collection('Points')
@@ -203,7 +195,11 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
         Images2={null}
       />
       <TicktBookingProgressBar progress={2}></TicktBookingProgressBar>
-      <RescheduleSwitch onPress={ontoggleSwitch} ticketType={ticketType} />
+      <RescheduleSwitch
+        onPress1={() => setTicketType('Old Trip')}
+        onPress2={() => setTicketType('New Trip')}
+        ticketType={ticketType}
+      />
 
       <View style={styles.ScrollBody}>
         <ScrollView bounces={false} showsVerticalScrollIndicator={false}>

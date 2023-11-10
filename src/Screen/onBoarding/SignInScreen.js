@@ -147,11 +147,13 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           keyboardType={'email-address'}
           onChangeText={email => setEmail(email)}
           textInputPlaceholder={strings.EmailText}
+          onSubmitEditing={() => passwordRef?.focus()}
         />
         <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
         <OnBoardingTextInput
           value={Password}
           keyboardType={'default'}
+          ref={input => (passwordRef = input)}
           textInputIcon={Images.password}
           textInputPlaceholder={strings.Password}
           onChangeText={password => setPassword(password)}

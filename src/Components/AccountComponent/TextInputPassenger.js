@@ -13,22 +13,27 @@ import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 
-const TextInputPassenger = ({
-  value,
-  onPress,
-  editable,
-  disabled,
-  placeholder,
-  onChangeText,
-  calenderIcon,
-  textInputIcon,
-  TextInputLabel,
-  onPressCalender,
-  textInputLabelStyle,
-  onPressCountryPicker,
-  passengerTextInputStyle,
-  autoCapitalize,
-}) => {
+const TextInputPassenger = (
+  {
+    value,
+    onPress,
+    editable,
+    disabled,
+    placeholder,
+    onChangeText,
+    calenderIcon,
+    textInputIcon,
+    TextInputLabel,
+    onPressCalender,
+    textInputLabelStyle,
+    onPressCountryPicker,
+    passengerTextInputStyle,
+    autoCapitalize,
+    onSubmitEditing,
+    inputMode,
+  },
+  ref,
+) => {
   const [focus, setFocus] = useState(false);
 
   return (
@@ -59,7 +64,11 @@ const TextInputPassenger = ({
           editable={editable}
           placeholder={placeholder}
           value={value}
-          numberOfLines={1}
+          ref={ref}
+          inputMode={inputMode}
+          onSubmitEditing={onSubmitEditing}
+          numberOfLi
+          nes={1}
           autoCapitalize={autoCapitalize}
           maxLength={placeholder == strings.Phone ? 10 : 100}
           onChangeText={onChangeText}
@@ -84,7 +93,7 @@ const TextInputPassenger = ({
   );
 };
 
-export default TextInputPassenger;
+export default React.forwardRef(TextInputPassenger);
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: wp(3),

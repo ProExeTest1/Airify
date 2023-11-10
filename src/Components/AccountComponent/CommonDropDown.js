@@ -31,6 +31,7 @@ const CommonDropDown = ({
           ]}
           buttonTextStyle={[styles.buttonText, buttonText]}
         />
+
         <Image source={Images.downArrow} style={styles.imageStyle} />
       </TouchableOpacity>
     </View>
