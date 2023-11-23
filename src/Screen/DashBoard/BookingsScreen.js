@@ -25,6 +25,7 @@ const BookingsScreen = ({navigation}) => {
   const [activeData, setActiveData] = useState([]);
   const [AllData, setAllData] = useState([]);
   const [canceledData, setCanceledData] = useState([]);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const dispatch = useDispatch();
   const getBookingsData = async () => {

@@ -20,7 +20,6 @@ import {
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
@@ -29,6 +28,7 @@ import {AlertConstant} from '../../helper/AlertConstant';
 
 const SavedAddress = ({navigation: {goBack}, navigation}) => {
   const [addressData, setAddressData] = useState([]);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   useEffect(() => {
     SavedAddress();
   }, []);

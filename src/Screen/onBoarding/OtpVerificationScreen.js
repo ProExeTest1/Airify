@@ -6,8 +6,10 @@ import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {OnBoardingModuleHeader, OnBoardingSingleButton} from '../../components';
+import {useSelector} from 'react-redux';
 
 const OtpVerificationScreen = ({navigation: {goBack}, navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <View style={{flex: 0.27, backgroundColor: 'blue'}}>

@@ -9,7 +9,6 @@ import {
 import React, {useEffect, useState} from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import {CommonHeader, OnBoardingTwoButton} from '../../components';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -47,6 +46,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
   const [UserWalletData, setUserWalletData] = useState({});
   const [UserPointData, setUserPointData] = useState({});
   const [SeatData, SetSeatData] = useState([]);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const oldTripData = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleCardData,
@@ -283,7 +283,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
           });
       } else {
         setcondti(false);
-        Alert.alert('PIN is not match');
+        Alert.alert(strings?.pin_not_match);
       }
     }
   };
@@ -372,7 +372,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
             marginBottom: hp(3),
             color: color.black,
           }}>
-          Enter the PIN to confirm ticket payment.
+          {strings?.Enter_the_PIN_to_confirm_ticket_payment}
         </Text>
         <View style={styles.slide}>
           <OtpInputs
@@ -400,7 +400,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                   fontWeight: '500',
                   color: color.black,
                 }}>
-                Processing Payment...
+                {strings?.processing_payment}
               </Text>
             </>
           ) : (
@@ -421,11 +421,9 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                   color: color.commonBlue,
                   marginBottom: hp(3),
                 }}>
-                Booking Confirmed!
+                {strings?.booking_confirmed}
               </Text>
-              <Text style={{color: color.black}}>
-                Congratulation! your flight ticket is Confirmed
-              </Text>
+              <Text style={{color: color.black}}>{strings?.congrats}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible2(false);
@@ -449,7 +447,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                     fontWeight: 'bold',
                     color: '#fff',
                   }}>
-                  View Transacation
+                  {strings?.View_Transacation}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -473,7 +471,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                     fontWeight: 'bold',
                     color: color.commonBlue,
                   }}>
-                  Back to Home
+                  {strings?.back_to_home}
                 </Text>
               </TouchableOpacity>
             </View>

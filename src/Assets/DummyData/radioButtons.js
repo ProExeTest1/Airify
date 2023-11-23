@@ -28,7 +28,36 @@ export const radioButtons = [
     label: 'Shortest Duration',
   },
 ];
-
+export const FrenchradioButtons = [
+  {
+    id: '1',
+    label: 'Prix le plus bas',
+  },
+  {
+    id: '2',
+    label: 'Vols directs en premier',
+  },
+  {
+    id: '3',
+    label: 'Départ le plus tôt',
+  },
+  {
+    id: '4',
+    label: 'Départ le plus tard',
+  },
+  {
+    id: '5',
+    label: 'Arrivée la plus tôt',
+  },
+  {
+    id: '6',
+    label: 'Arrivée la plus tard',
+  },
+  {
+    id: '7',
+    label: 'Durée la plus courte',
+  },
+];
 export const genderRatioButton = [
   {
     id: '1',
@@ -43,7 +72,20 @@ export const genderRatioButton = [
     label: 'Other',
   },
 ];
-
+export const FrenchgenderRadioButton = [
+  {
+    id: '1',
+    label: 'Mâle',
+  },
+  {
+    id: '2',
+    label: 'Femelle',
+  },
+  {
+    id: '3',
+    label: 'Autre',
+  },
+];
 export const cancelBookingRadio = [
   {
     id: '1',
@@ -76,5 +118,39 @@ export const cancelBookingRadio = [
   {
     id: '8',
     label: 'Others',
+  },
+];
+export const FrenchcancelBookingRadio = [
+  {
+    id: '1',
+    label: 'Urgence médicale',
+  },
+  {
+    id: '2',
+    label: 'Changement de plans de voyage',
+  },
+  {
+    id: '3',
+    label: 'Urgence familiale',
+  },
+  {
+    id: '4',
+    label: 'Annulation du vol par la compagnie aérienne',
+  },
+  {
+    id: '5',
+    label: 'Restrictions de voyage gouvernementales',
+  },
+  {
+    id: '6',
+    label: 'Réservation en double',
+  },
+  {
+    id: '7',
+    label: 'Décès du passager',
+  },
+  {
+    id: '8',
+    label: 'Autres',
   },
 ];

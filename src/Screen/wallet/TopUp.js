@@ -19,13 +19,14 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {useSelector} from 'react-redux';
 
 const TopUp = ({navigation}) => {
   const [userData, setUserData] = useState({});
   const [textInput1, setTextInput1] = useState('');
   const [myWallet, setMyWallet] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const UserData = async () => {
     const journeyData = await firestore()
       .collection('Users')

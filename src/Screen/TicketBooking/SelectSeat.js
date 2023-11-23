@@ -26,6 +26,8 @@ import {RescheduleSelectSeatData} from '../../redux/action/RescheduleAction';
 const SelectSeat = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const type = route?.params?.type; //Reschedule
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const searchFlightCardData = useSelector(state =>
     type == 'Reschedule'
       ? state?.rescheduleFlightdata.rescheduleSelectNewCard
@@ -144,7 +146,7 @@ const SelectSeat = ({navigation, route}) => {
       <CommonHeader
         headerName={
           tripType === 'Round-Trip'
-            ? `${strings.selectSeat} (Departure)`
+            ? `${strings.selectSeat} (${strings?.departure})`
             : strings.selectSeat
         }
         navigation1={() => {

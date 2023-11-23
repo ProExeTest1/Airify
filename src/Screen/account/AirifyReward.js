@@ -23,8 +23,10 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import QRCode from 'react-native-qrcode-svg';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {useSelector, useDispatch} from 'react-redux';
 
 const AirifyReward = ({navigation: {goBack}}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [promocode, setPromocode] = useState('');
   const copyToClipboard = () => {
     Clipboard?.setString(promocode);

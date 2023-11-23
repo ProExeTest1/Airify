@@ -31,6 +31,7 @@ const CreatePriceAlert = ({
   setToggleSwitchBut2,
   tripType,
 }) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const reduxDestinationPlace = useSelector(state =>
     tripType == 'Round-Trip'
       ? state?.place?.depaturePlace

@@ -44,6 +44,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
   const [WalletData, setWalletData] = useState({});
   const [ticketType, setTicketType] = useState('Old Trip');
   const [PointsData, setPointsData] = useState({});
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const item = useSelector(state =>
     ticketType === 'Old Trip'
@@ -175,7 +176,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
       );
       navigation?.navigate('RescheduleConfirmPin');
     } else {
-      AlertConstant('please select Payment Method');
+      AlertConstant(strings?.please_select_payment_method);
     }
   };
   useEffect(() => {
@@ -229,7 +230,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
               }>
               <View style={[styles.boxTitleBody, {alignItems: 'center'}]}>
                 <Image style={styles.boxIcon} source={Images?.payment}></Image>
-                <Text style={styles.boxTitle}>Payment Method</Text>
+                <Text style={styles.boxTitle}>{strings?.Payment_Method}</Text>
                 <Image style={styles.skipIcon} source={Images?.forward}></Image>
               </View>
               <View style={styles.StopsButBody}></View>
@@ -242,7 +243,9 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
                       style={styles.PaymentMethodIcon}
                       source={Images.wallet}
                     />
-                    <Text style={styles.PaymentMethodName}>My Wallet</Text>
+                    <Text style={styles.PaymentMethodName}>
+                      {strings?.My_Wallet}
+                    </Text>
                     {ticketType !== 'Old Trip' && (
                       <Text style={styles.walletPraice}>
                         ${WalletData?.wallet}
@@ -258,12 +261,16 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
               <View style={styles.boxTitleBody}>
                 <Image style={styles.boxIcon} source={Images.coinsIcon}></Image>
                 <View style={[styles.boxTitle, {paddingEnd: wp(5)}]}>
-                  <Text style={styles.boxTitle}>{`You Have ${Math.round(
+                  <Text style={styles.boxTitle}>{`${
+                    strings?.you_have
+                  } ${Math.round(
                     oldTripData?.totalPaymentList?.points?.pointsUse +
                       oldTripData?.totalPaymentList?.points?.havePoint,
                   )} Points`}</Text>
                   <Text style={{marginTop: hp(1), color: color.black}}>
-                    {`100 points equals $1. You will get ${oldTripData?.totalPaymentList?.points?.getPoint} points after this booking`}
+                    {strings?.you_get}{' '}
+                    {oldTripData?.totalPaymentList?.points?.getPoint}{' '}
+                    {strings?.point_after_booking}
                   </Text>
                 </View>
                 <View>
@@ -280,9 +287,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
                         ? null
                         : Number(PointsData?.TotalPoints) > 100
                         ? setToggleSwitchBut1(isOn)
-                        : Alert.alert(
-                            'your points is not valid please increase your point',
-                          );
+                        : AlertConstant(strings?.not_valid_points);
                     }}
                   />
                 </View>
@@ -306,7 +311,9 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
                     <Image
                       style={styles.boxIcon}
                       source={Images?.discount}></Image>
-                    <Text style={styles.boxTitle}>Dicouts / Voucher</Text>
+                    <Text style={styles.boxTitle}>
+                      {strings?.discountVoucher}{' '}
+                    </Text>
                     <Image
                       style={styles.skipIcon}
                       source={Images?.forward}></Image>

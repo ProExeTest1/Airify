@@ -25,7 +25,6 @@ import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
-import {strings} from '../../helper/Strings';
 import moment from 'moment';
 import {AlertConstant} from '../../helper/AlertConstant';
 
@@ -44,6 +43,7 @@ const SearchFlights = ({navigation, route}) => {
   const [selectedData, setSelectedData] = useState({});
 
   const dispatch = useDispatch();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const searchFlightFilterData = useSelector(
     e => e?.searchFlight?.searchFlightFilterData,
@@ -239,7 +239,7 @@ const SearchFlights = ({navigation, route}) => {
   const applydata = () => {
     setSearchFlightCardData(SearchFlightData);
     dispatch(SearchFlightFilterData({}));
-    Alert.alert('Filter data not match');
+    Alert.alert(strings?.filter_data_not_match);
   };
 
   return (
@@ -343,8 +343,8 @@ const SearchFlights = ({navigation, route}) => {
               borderColor: '#e2e2e2',
             }}>
             <OnBoardingTwoButton
-              buttonTextOne={'Cancel'}
-              buttonTextTwo={'Apply'}
+              buttonTextOne={strings?.cancel}
+              buttonTextTwo={strings?.Apply}
               onPress1={closeModal2}
               onPress2={applySortdaata}
             />

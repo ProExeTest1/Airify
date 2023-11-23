@@ -43,6 +43,8 @@ const FillPassengerDetails = ({navigation, route}) => {
   const [passengerList, setPassengerList] = useState([]);
   const [flatlistIndex, setFlatlistIndex] = useState();
   const DropdownButton = useRef();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const item = useSelector(state =>
     ticketType === 'Departure'
       ? state?.searchFlight?.searchFlightCardData
@@ -94,20 +96,17 @@ const FillPassengerDetails = ({navigation, route}) => {
 
   const onContinue = () => {
     if (tripType === 'Round-Trip' && ticketType === 'Departure') {
-      if (
-        passengerLength < newArr?.length &&
-        !SelectSeat?.every(i => i?.seatNo)
-      ) {
-        AlertConstant(strings.add_passenger_first);
-      } else {
-        setTicketType('Return');
-      }
+      flatlistData?.every(i => i.name.length > 0)
+        ? SelectSeat.length > 0 && SelectSeat?.every(i => i?.seatNo != false)
+          ? setTicketType('Return')
+          : AlertConstant(strings?.please_select_seat)
+        : AlertConstant(strings?.select_passenger_first);
     } else {
-      if (SelectSeat.length > 0 && SelectSeat?.every(i => i?.seatNo != false)) {
-        navigation?.navigate('PaymentConfirmation', {TripType: tripType});
-      } else {
-        AlertConstant('Please select passenger first');
-      }
+      flatlistData?.every(i => i.name.length > 0)
+        ? SelectSeat.length > 0 && SelectSeat?.every(i => i?.seatNo != false)
+          ? navigation?.navigate('PaymentConfirmation', {TripType: tripType})
+          : AlertConstant(strings?.please_select_seat)
+        : AlertConstant(strings?.select_passenger_first);
     }
   };
   const toggleDropDown = index => {
@@ -208,8 +207,17 @@ const FillPassengerDetails = ({navigation, route}) => {
       <TicktBookingProgressBar progress={1}></TicktBookingProgressBar>
       {tripType === 'Round-Trip' ? (
         <ReturnDepartureSwitch
-          onPress1={() => setTicketType('Departure')}
-          onPress2={() => setTicketType('Return')}
+          onPress1={() => {
+            setTicketType('Departure');
+          }}
+          onPress2={() =>
+            flatlistData?.every(i => i.name.length > 0)
+              ? SelectSeat.length > 0 &&
+                SelectSeat?.every(i => i?.seatNo != false)
+                ? setTicketType('Return')
+                : AlertConstant(strings.add_passenger_on_click)
+              : AlertConstant(strings.add_passenger_on_click)
+          }
           ticketType={ticketType}
         />
       ) : null}
@@ -314,24 +322,22 @@ const FillPassengerDetails = ({navigation, route}) => {
         <View style={styles.cardBody}>
           <TouchableOpacity
             onPress={() => {
-              {
-                if (tripType === 'Round-Trip') {
-                  if (ticketType === 'Departure') {
-                    flatlistData?.every(i => i.name.length > 0)
-                      ? navigation.navigate('SelectSeat', {TripType: tripType})
-                      : AlertConstant(strings.add_passenger_on_click);
-                  } else {
-                    returnFlatlistData?.every(i => i.name.length > 0)
-                      ? navigation.navigate('ReturnSelectSeat', {
-                          TripType: tripType,
-                        })
-                      : AlertConstant(strings.add_passenger_on_click);
-                  }
-                } else {
+              if (tripType === 'Round-Trip') {
+                if (ticketType === 'Departure') {
                   flatlistData?.every(i => i.name.length > 0)
                     ? navigation.navigate('SelectSeat', {TripType: tripType})
                     : AlertConstant(strings.add_passenger_on_click);
+                } else {
+                  returnFlatlistData?.every(i => i.name.length > 0)
+                    ? navigation.navigate('ReturnSelectSeat', {
+                        TripType: tripType,
+                      })
+                    : AlertConstant(strings.add_passenger_on_click);
                 }
+              } else {
+                flatlistData?.every(i => i.name.length > 0)
+                  ? navigation.navigate('SelectSeat', {TripType: tripType})
+                  : AlertConstant(strings.add_passenger_on_click);
               }
             }}>
             <CardHeader

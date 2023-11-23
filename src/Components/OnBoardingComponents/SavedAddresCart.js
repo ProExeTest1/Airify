@@ -9,6 +9,7 @@ import {strings} from '../../helper/Strings';
 
 const SavedAddressCart = () => {
   const searchFlightData = useSelector(e => e?.place?.searchFlightData);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <TouchableOpacity
       style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0}]}>

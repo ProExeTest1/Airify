@@ -20,6 +20,8 @@ const Congratulation = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
   const type = route?.params?.type;
   const header = route?.params?.header;
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const totalPaymentList = useSelector(e =>
     type == 'Reschedule'
       ? e?.rescheduleFlightdata?.RescheduletotalPaymentList

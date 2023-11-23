@@ -11,9 +11,10 @@ import {
   OnBoardingTextInput,
 } from '../../components';
 
+import {useSelector} from 'react-redux';
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const validation = () => {
     if (!email.trim().match('[a-z0-9]+@[a-z]+.[a-z]{2,3}')) {
       AlertConstant(strings.enter_valid_email);

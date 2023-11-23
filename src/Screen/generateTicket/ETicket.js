@@ -14,6 +14,8 @@ import {AlertConstant} from '../../helper/AlertConstant';
 const ETicket = ({navigation: {goBack}, navigation}) => {
   const [getImage, setGetImage] = useState({});
   const FlightData = useRoute()?.params?.header;
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   useEffect(() => {
     handleSignUp();
   }, []);

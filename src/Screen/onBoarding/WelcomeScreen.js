@@ -6,8 +6,10 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {OnBoardingText, OnBoardingSingleButton} from '../../components';
+import {useSelector} from 'react-redux';
 
 const WelcomeScreen = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <Image

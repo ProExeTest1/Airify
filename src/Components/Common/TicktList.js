@@ -17,6 +17,7 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const reduxReturnDate = useSelector(state => state.date.returnDate);
   let departureDate = moment(

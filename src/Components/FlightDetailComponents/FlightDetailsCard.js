@@ -12,6 +12,7 @@ const FlightDetailsCard = ({
   searchFlightData,
   searchFlightDateData,
 }) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.cardBody}>
       <View style={styles.cardHeader}>

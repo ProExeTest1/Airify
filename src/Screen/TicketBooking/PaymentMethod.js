@@ -28,6 +28,8 @@ const PaymentMethod = ({navigation, route}) => {
   const dispatch = useDispatch();
   const [WalletData, setWalletData] = useState({});
   const [selectOpc, setSelectOpc] = useState({});
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const item = useSelector(state =>
     typeReschedule === 'Reschedule'
       ? state?.rescheduleFlightdata?.rescheduleCardData?.searchFlightCardData
@@ -129,8 +131,8 @@ const PaymentMethod = ({navigation, route}) => {
 
               // Display a notification
               await notifee.displayNotification({
-                title: 'Wallet Popup',
-                body: `You have no enough balance in your popup.`,
+                title: strings?.wallet_popup,
+                body: strings?.balance_low,
                 android: {
                   channelId,
                   smallIcon: 'ic_notification',

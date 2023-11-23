@@ -8,7 +8,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  useColorScheme,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
@@ -22,7 +21,6 @@ import {
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {useSelector, useDispatch} from 'react-redux';
-import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -32,11 +30,11 @@ import {SearchFlightReturnAction} from '../../redux/action/SearchFlightAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
-  const theme = useColorScheme();
   useEffect(() => {
     UserData();
   }, []);
   const dispatch = useDispatch();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const reduxDepatureDate = useSelector(state => state?.date?.depatureDate);
 
   const reduxReturnDate = useSelector(state => state?.date?.returnDate);
@@ -54,9 +52,10 @@ const HomeScreen = ({navigation}) => {
     : null;
   const ndate = new Date();
   const hours = ndate.getHours();
+  console.log(strings?.one_way);
   const [seat, setSeat] = useState();
   const [passengerClass, setPassengerClass] = useState('');
-  const [press, setPress] = useState('One-way');
+  const [press, setPress] = useState(strings?.one_way);
   const [loader, setLoader] = useState(true);
   const [change, setChnage] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -65,13 +64,15 @@ const HomeScreen = ({navigation}) => {
   const [child, setChild] = useState(0);
   const [twoYearBelowChild, setTwoYearBelowChild] = useState(0);
   const [userData, setUserData] = useState({});
+  useEffect(() => {
+    setPress(strings?.one_way);
+  }, [strings]);
   const seatcount = () => {
     setSeat(adult + child + twoYearBelowChild + ' ' + 'seat');
     setAdult(1);
     setChild(null);
     setTwoYearBelowChild(null);
   };
-
   const toggleChange = () => {
     if (
       reduxDepaturePlace?.city?.length > 0 &&
@@ -96,7 +97,7 @@ const HomeScreen = ({navigation}) => {
       reduxDepatureDate
     ) {
       if (depatureData !== destinationData) {
-        if (reduxReturnDate && press === 'Round-trip') {
+        if (reduxReturnDate && press === strings?.roundTrip) {
           if (reduxReturnDate !== reduxDepatureDate) {
             dispatch(
               SearchFlightReturnAction({
@@ -191,7 +192,9 @@ const HomeScreen = ({navigation}) => {
       <TouchableOpacity
         style={[
           styles.optionTouchStyle,
-          tripType == 'One-way' ? {marginEnd: wp(3.5)} : {marginStart: wp(3.5)},
+          tripType == strings?.one_way
+            ? {marginEnd: wp(3.5)}
+            : {marginStart: wp(3.5)},
           {
             backgroundColor:
               press === tripType ? color.commonBlue : color.white,
@@ -256,20 +259,22 @@ const HomeScreen = ({navigation}) => {
         </SafeAreaView>
         <View style={styles.seatBookingMainViewStyle}>
           <View style={styles.optionStyle}>
-            <TripOption tripType={'One-way'} />
-            <TripOption tripType={'Round-trip'} />
+            <TripOption tripType={strings?.one_way} />
+            <TripOption tripType={strings?.roundTrip} />
           </View>
           <View>
             <CustomPaperTextInput
               marginVertical={hp(1)}
-              label={'From'}
+              label={strings?.from}
               marginHorizontal={wp(4)}
               onPress={() =>
                 change
                   ? navigation.navigate('PlacePicker', {
-                      data: 'Select Destination',
+                      data: strings?.select_destination,
                     })
-                  : navigation.navigate('PlacePicker', {data: 'Select Origin'})
+                  : navigation.navigate('PlacePicker', {
+                      data: strings?.select_origin,
+                    })
               }
               icon={Images.takeOff}
               value={
@@ -284,14 +289,14 @@ const HomeScreen = ({navigation}) => {
               }
             />
             <CustomPaperTextInput
-              label={'To'}
+              label={strings?.to}
               marginVertical={hp(1)}
               marginHorizontal={wp(4)}
               onPress={() =>
                 change
-                  ? navigation.navigate('PlacePicker', {data: 'Select Origin'})
+                  ? navigation.navigate('PlacePicker', {data: select_origin})
                   : navigation.navigate('PlacePicker', {
-                      data: 'Select Destination',
+                      data: strings?.select_destination,
                     })
               }
               icon={Images.landing}
@@ -317,21 +322,21 @@ const HomeScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
           <CustomPaperTextInput
-            placeholder={'Depature Date'}
+            placeholder={strings?.departure_date}
             marginVertical={hp(1)}
             marginHorizontal={wp(4)}
-            label={'Depature Date'}
+            label={strings?.departure_date}
             disabled={true}
             icon={Images.calendar}
             value={reduxDepatureDate ? reduxDepatureDate : null}
             onPress={() => navigation.navigate('DatePicker')}
           />
-          {press === 'Round-trip' ? (
+          {press === strings?.roundTrip ? (
             <CustomPaperTextInput
-              placeholder={'Return Date'}
+              placeholder={strings?.return_date}
               marginVertical={hp(1)}
               marginHorizontal={wp(4)}
-              label={'Return Date'}
+              label={strings?.return_date}
               icon={Images.calendar}
               onPress={() =>
                 navigation.navigate('DatePicker', {return: 'returnDate'})
@@ -341,16 +346,16 @@ const HomeScreen = ({navigation}) => {
           ) : null}
           <View style={styles.customInputStyle}>
             <CustomPaperTextInput
-              placeholder={'Seat'}
-              label={'Passenger'}
+              placeholder={strings?.seat}
+              label={strings?.Passenger}
               width={'45%'}
               icon={Images.passenger}
               onPress={toggleModal}
               value={seat}
             />
             <CustomPaperTextInput
-              placeholder={'Class'}
-              label={'Class'}
+              placeholder={strings?.Class}
+              label={strings?.Class}
               width={'50%'}
               icon={Images.seat}
               onPress={toggleClassModal}
@@ -362,7 +367,7 @@ const HomeScreen = ({navigation}) => {
               SearchFlightsBut();
             }}
             style={styles.searchButtonStyle}>
-            <Text style={styles.searchFontStyle}>Search Flights</Text>
+            <Text style={styles.searchFontStyle}>{strings?.searchFlight}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.offerStyle}>
@@ -373,7 +378,9 @@ const HomeScreen = ({navigation}) => {
             <TouchableOpacity
               style={styles.profilepicViewStyle}
               onPress={() =>
-                navigation.navigate('SpecialOffer', {header: 'Special Offer'})
+                navigation.navigate('SpecialOffer', {
+                  header: strings?.specialoffer,
+                })
               }>
               <Text
                 style={{color: color.commonBlue, marginHorizontal: wp(2.6)}}>

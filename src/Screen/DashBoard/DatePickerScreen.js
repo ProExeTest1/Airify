@@ -68,6 +68,8 @@ LocaleConfig.defaultLocale = 'fr';
 const DatePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const reduxDepatureDate = useSelector(state => state?.date?.normalDate);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const [day, setDay] = useState();
   const [year, setYear] = useState();
   const returndata = route?.params?.return;
@@ -154,7 +156,7 @@ const DatePickerScreen = ({navigation, route}) => {
           dispatch(returnNormalDateAction(choosenDate));
           navigation.navigate('TabNavigation');
         } else {
-          AlertConstant('Invalid Return Date');
+          AlertConstant(strings?.invalid_return_date);
         }
       } else if (flag === 1) {
         const date = new Date(selected).toLocaleDateString('en-IN', {

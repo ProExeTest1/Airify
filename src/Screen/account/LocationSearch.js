@@ -2,16 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {useRoute} from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
 import {View, Text, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {addressData} from '../../redux/action/AddressAction';
 import {CommonHeader, OnBoardingSingleButton} from '../../components';
+import {useSelector, useDispatch} from 'react-redux';
 
 const LocationSearch = ({navigation: {goBack}, navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [lat, setLat] = useState(lat ? lat : 37.78825);
   const [lng, setLng] = useState(lng ? lng : -122.4324);
 

@@ -8,7 +8,6 @@ import {
   Image,
 } from 'react-native';
 import moment from 'moment';
-import {useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -18,11 +17,12 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {expiredFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
 import {strings} from '../../helper/Strings';
+import {useSelector, useDispatch} from 'react-redux';
 
 const ExpiredSavedAddress = ({onPress}) => {
   const dispatch = useDispatch();
   const [expireAddressData, setExpireAddressData] = useState([]);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   useEffect(() => {
     ExpireAddressData();
   }, []);
@@ -71,7 +71,14 @@ const ExpiredSavedAddress = ({onPress}) => {
                 onPress={() => {
                   onPress(item);
                 }}
-                style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0,marginBottom: index == expireAddressData?.length - 1 ? hp(15) : hp(2)}]}>
+                style={[
+                  styles.cardBody,
+                  {
+                    marginTop: index === 0 ? hp(3) : 0,
+                    marginBottom:
+                      index == expireAddressData?.length - 1 ? hp(15) : hp(2),
+                  },
+                ]}>
                 <View style={styles.cardHeader}>
                   <View
                     style={[

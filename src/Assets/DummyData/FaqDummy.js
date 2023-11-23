@@ -77,3 +77,86 @@ export const FaqDummy = [
     isOpen: false,
   },
 ];
+export const FrenchFaqDummy = [
+  {
+    id: 1,
+    question:
+      "Comment puis-je réserver un vol via l'application de la compagnie aérienne ?",
+    answer:
+      "Pour réserver un vol via notre application, il vous suffit d'ouvrir l'application, de saisir vos informations de voyage, y compris la ville de départ, la destination, les dates de voyage et le nombre de passagers. Parcourez les vols disponibles, sélectionnez votre option préférée et procédez au paiement pour confirmer votre réservation.",
+    isOpen: false,
+  },
+  {
+    id: 2,
+    question: 'Quels documents dois-je emporter en voyage ?',
+    answer:
+      "Vous devrez emporter une pièce d'identité avec photo délivrée par le gouvernement (comme un passeport ou un permis de conduire) et votre billet d'avion. Si vous voyagez à l'international, assurez-vous d'avoir les visas nécessaires et d'autres documents requis pour le pays de destination.",
+    isOpen: false,
+  },
+  {
+    id: 3,
+    question: "Puis-je m'enregistrer en ligne via l'application ?",
+    answer:
+      "Oui, vous pouvez vous enregistrer en ligne via notre application. Connectez-vous simplement à votre compte, sélectionnez votre vol à venir et suivez les instructions pour effectuer l'enregistrement en ligne. Assurez-vous de télécharger votre carte d'embarquement ou de l'avoir accessible sur votre téléphone pour un embarquement facile à l'aéroport.",
+    isOpen: false,
+  },
+  {
+    id: 4,
+    question: 'Quelle est la franchise de bagages pour mon vol ?',
+    answer:
+      "La franchise de bagages varie en fonction de votre type de billet et de votre destination. Vous pouvez trouver des informations détaillées sur votre franchise de bagages dans la section 'Mes réservations' de l'application. Il est important de respecter les limites de poids et de taille spécifiées pour éviter des frais supplémentaires.",
+    isOpen: false,
+  },
+  {
+    id: 5,
+    question:
+      'Comment puis-je apporter des modifications à ma réservation de vol ?',
+    answer:
+      "Si vous devez apporter des modifications à votre réservation de vol, telles que changer les dates de voyage ou les noms des passagers, vous pouvez le faire via la section 'Mes réservations' de l'application. Veuillez noter que des frais et une disponibilité peuvent s'appliquer, il est donc conseillé de consulter notre politique de modification avant de procéder à des modifications.",
+    isOpen: false,
+  },
+  {
+    id: 6,
+    question: 'Que faire si mon vol est retardé ou annulé ?',
+    answer:
+      "En cas de retard ou d'annulation de vol, notre compagnie aérienne vous informera via l'application et/ou par e-mail. Vous pouvez vérifier l'état mis à jour du vol dans la section 'Mes réservations'. Si votre vol est annulé, des options de ré réservation ou de remboursement vous seront fournies, en fonction des circonstances.",
+    isOpen: false,
+  },
+  {
+    id: 7,
+    question: 'Y a-t-il du Wi-Fi disponible sur les vols ?',
+    answer:
+      "Oui, nous proposons des services Wi-Fi sur de nombreux de nos vols. Vous pouvez vérifier la disponibilité du Wi-Fi pour votre vol spécifique lors du processus de réservation ou en contactant notre service client. Gardez à l'esprit que le Wi-Fi peut ne pas être disponible sur tous les avions ou toutes les routes.",
+    isOpen: false,
+  },
+  {
+    id: 8,
+    question: 'Quelles commodités sont fournies sur les vols long-courriers ?',
+    answer:
+      "Sur les vols long-courriers, nous fournissons des repas gratuits, des boissons, des couvertures et des options de divertissement. Certains avions sont équipés d'écrans personnels pour chaque passager, vous permettant de profiter de films, d'émissions de télévision et de jeux. Consultez les détails de votre vol pour connaître les commodités spécifiques disponibles.",
+    isOpen: false,
+  },
+  {
+    id: 9,
+    question:
+      'Puis-je demander des repas spéciaux pour mes préférences alimentaires ?',
+    answer:
+      'Oui, nous proposons une variété de repas spéciaux pour répondre à différentes préférences alimentaires et restrictions. Vous pouvez demander des repas spéciaux, tels que végétariens, végétaliens, casher ou sans gluten, lors du processus de réservation ou en contactant notre service client au moins 24 heures avant votre départ prévu.',
+    isOpen: false,
+  },
+  {
+    id: 10,
+    question: 'Que faire si je perds mes bagages ?',
+    answer:
+      "Si vos bagages sont perdus ou retardés, veuillez le signaler immédiatement à notre bureau des services bagages à l'aéroport. Notre personnel vous aidera à remplir un rapport. Vous pouvez également suivre l'état de vos bagages perdus en ligne via notre site Web ou l'application. Nous ferons tout notre possible pour localiser et vous retourner vos bagages dès que possible.",
+    isOpen: false,
+  },
+  {
+    id: 11,
+    question:
+      'Puis-je accumuler des miles de voyageur fréquent pour mes vols ?',
+    answer:
+      "Oui, vous pouvez accumuler des miles de voyageur fréquent pour les vols éligibles avec notre compagnie aérienne. Assurez-vous de fournir votre numéro de voyageur fréquent lors du processus de réservation ou lors de l'enregistrement. Les miles accumulés peuvent être utilisés pour des vols futurs, des surclassements de siège et d'autres avantages de voyage. Rejoignez notre programme de voyageur fréquent pour commencer à gagner des récompenses dès aujourd'hui.",
+    isOpen: false,
+  },
+];

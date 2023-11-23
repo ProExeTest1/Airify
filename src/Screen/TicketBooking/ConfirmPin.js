@@ -49,6 +49,7 @@ const ConfirmPin = ({navigation, route}) => {
   const [UserWalletData, setUserWalletData] = useState({});
   const [UserPointData, setUserPointData] = useState({});
   const [SeatData, SetSeatData] = useState([]);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const searchFlightCardData = useSelector(
     state => state.searchFlight.searchFlightCardData,
@@ -412,8 +413,8 @@ const ConfirmPin = ({navigation, route}) => {
 
               // Display a notification
               await notifee.displayNotification({
-                title: 'Your Ticket Book Successfully',
-                body: `${searchFlightData?.to} to ${searchFlightData?.from} ticket is book of class ${searchFlightData?.class}`,
+                title: strings?.ticket_notification,
+                body: `${searchFlightData?.to} to ${searchFlightData?.from} ${strings?.tikcet_class_notification} ${searchFlightData?.class}`,
                 android: {
                   channelId,
                   smallIcon: 'ic_notification',
@@ -484,13 +485,15 @@ const ConfirmPin = ({navigation, route}) => {
               });
               // Display a notification
               await notifee.displayNotification({
-                title: 'Payment Successfully',
-                body: `Hii ${userData?.Name}, You debited $${
+                title: strings?.payment_notifcation,
+                body: `${strings?.hii} ${userData?.Name}, ${
+                  strings?.you_debited
+                } $${
                   totalPaymentList.return
                     ? totalPaymentList.return.totalPayment +
                       totalPaymentList.departure.totalPayment
                     : totalPaymentList.departure.totalPayment
-                } by wallet. Clear Balance is $${
+                } ${strings?.clear_balance} $${
                   Number(UserWalletData.wallet) -
                   (totalPaymentList.return
                     ? totalPaymentList.return.totalPayment +

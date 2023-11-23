@@ -13,6 +13,7 @@ import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
+import {useSelector} from 'react-redux';
 
 const CountryPickTextInput = ({
   value,
@@ -26,6 +27,7 @@ const CountryPickTextInput = ({
   textInputStyle,
   placeholderTextColor,
 }) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <KeyboardAvoidingView>
       <View style={styles.mainViewStyle}>

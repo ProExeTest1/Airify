@@ -16,9 +16,11 @@ import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {useSelector, useDispatch} from 'react-redux';
 
 const Security = ({navigation: {goBack}}) => {
   const [securityData, setSecurityData] = useState([]);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   useEffect(() => {
     SecurityData();

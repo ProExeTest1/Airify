@@ -33,6 +33,8 @@ const FlightDetailsScreen = ({navigation, route}) => {
   const [press, setPress] = useState(false);
   const [value, setValue] = useState();
   const [ticketType, setTicketType] = useState('Departure');
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const item = useSelector(state =>
     ticketType === 'Departure'
       ? navigationType === 'ReshceduleFilldetails'

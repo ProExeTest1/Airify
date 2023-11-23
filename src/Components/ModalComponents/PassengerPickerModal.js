@@ -8,6 +8,7 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';
+import {useSelector} from 'react-redux';
 
 const PassengerPickerModal = ({
   onCancel,
@@ -20,7 +21,7 @@ const PassengerPickerModal = ({
   const [item1, setItem1] = useState(0);
   const [item2, setItem2] = useState(0);
   const [item3, setItem3] = useState(0);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View>
       <Modal isVisible={isModalVisible} style={styles.modalStyle}>

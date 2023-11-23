@@ -15,11 +15,14 @@ import ToggleSwitch from 'toggle-switch-react-native';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {SettingData} from '../../assets/DummyData/SettingData';
+import {
+  FrenchSettingData,
+  SettingData,
+} from '../../assets/DummyData/SettingData';
+import {useSelector} from 'react-redux';
 import {
   CommonHeader,
   OnBoardingTwoButton,
@@ -28,11 +31,12 @@ import {
 } from '../../components';
 
 const AccountScreen = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [modal, setModal] = useState(false);
   const [userData, setUserData] = useState({});
   const [toggleSwitchBut, setToggleSwitchBut] = useState();
   const [selectedLanguage, setSelectedLanguage] = useState();
-
+  console.log(selectedLanguage, 'item?.screen');
   useEffect(() => {
     getData();
     UserData();
@@ -43,12 +47,11 @@ const AccountScreen = ({navigation}) => {
       const jsonValue = await AsyncStorage.getItem('DarkMode');
       setToggleSwitchBut(JSON.parse(jsonValue));
       const languageData = await AsyncStorage.getItem('selected_Language');
-      setSelectedLanguage(JSON.parse(languageData));
+      setSelectedLanguage(languageData);
     } catch (e) {
       console.log('getData error :>> ', e);
     }
   };
-
   const DarkModeAsyncStorage = async isOn => {
     try {
       await AsyncStorage.setItem('DarkMode', JSON.stringify(isOn));
@@ -112,7 +115,7 @@ const AccountScreen = ({navigation}) => {
         </View>
         <View style={styles.sectionListStyle}>
           <SectionList
-            sections={SettingData}
+            sections={strings?.translate ? FrenchSettingData : SettingData}
             keyExtractor={item => item.id}
             showsVerticalScrollIndicator={true}
             renderItem={({item}) => {
@@ -121,7 +124,7 @@ const AccountScreen = ({navigation}) => {
                   style={styles.listTouchStyle}
                   disabled={item.title == 'Dark Mode' ? true : false}
                   onPress={() => {
-                    item.title !== 'Logout'
+                    item?.screen !== 'Logout'
                       ? navigation.navigate(item.screen)
                       : openModal();
                   }}>
@@ -132,14 +135,14 @@ const AccountScreen = ({navigation}) => {
                         styles.listImageDiffStyle,
                         {
                           tintColor:
-                            item.title == 'Logout' ? color.red : color.black,
+                            item?.screen == 'Logout' ? color.red : color.black,
                         },
                       ]}
                       resizeMode="stretch"
                     />
                   </View>
                   <View style={styles.listTextViewStyle}>
-                    {item.title == 'Language' ? (
+                    {item?.screen == 'Language' ? (
                       <View style={styles.listConditionStyle}>
                         <Text style={styles.listTitleTextStyle}>
                           {item.title}
@@ -149,10 +152,10 @@ const AccountScreen = ({navigation}) => {
                             styles.listTitleTextStyle,
                             {color: color.commonBlue},
                           ]}>
-                          {selectedLanguage?.language}
+                          {strings?.selected_language}
                         </Text>
                       </View>
-                    ) : item.title == 'Dark Mode' ? (
+                    ) : item?.screen == 'Dark Mode' ? (
                       <Text style={styles.listTitleTextStyle}>
                         {item.title}
                       </Text>
@@ -162,7 +165,9 @@ const AccountScreen = ({navigation}) => {
                           styles.listTitleTextStyle,
                           {
                             color:
-                              item.title == 'Logout' ? color.red : color.black,
+                              item?.screen == 'Logout'
+                                ? color.red
+                                : color.black,
                           },
                         ]}>
                         {item.title}
@@ -170,13 +175,14 @@ const AccountScreen = ({navigation}) => {
                     )}
                   </View>
                   <View>
-                    {item.title !== 'Logout' && item.title !== 'Dark Mode' ? (
+                    {item?.screen !== 'Logout' &&
+                    item?.screen !== 'Dark Mode' ? (
                       <Image
                         source={Images.forward}
                         style={styles.forwardIconStyle}
                         resizeMode="contain"
                       />
-                    ) : item.title == 'Dark Mode' ? (
+                    ) : item?.screen == 'Dark Mode' ? (
                       <View style={{right: 20}}>
                         <ToggleSwitch
                           size="medium"

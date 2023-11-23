@@ -7,7 +7,16 @@ import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
 
-const CardList = ({setCartFlightData, item, index, tripType, searchFlight,searchFilght}) => {
+const CardList = ({
+  setCartFlightData,
+  item,
+  index,
+  tripType,
+  searchFlight,
+  searchFilght,
+}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const searchFlightData = searchFlight
     ? searchFlight
     : useSelector(e =>
@@ -20,7 +29,13 @@ const CardList = ({setCartFlightData, item, index, tripType, searchFlight,search
       onPress={() => {
         setCartFlightData(item);
       }}
-      style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0, marginBottom: index == searchFilght?.length - 1 ? hp(15) : hp(2)}]}>
+      style={[
+        styles.cardBody,
+        {
+          marginTop: index === 0 ? hp(3) : 0,
+          marginBottom: index == searchFilght?.length - 1 ? hp(15) : hp(2),
+        },
+      ]}>
       <View style={styles.cardHeader}>
         <View style={[styles.cardHeaderLogo, {backgroundColor: item?.logo}]} />
         <Text style={styles.cardHeaderText}>{item?.airlineName}</Text>

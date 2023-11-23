@@ -15,8 +15,6 @@ import {RadioButton} from 'react-native-radio-buttons-group';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {CountryPicker} from 'react-native-country-codes-picker';
 import firestore, {firebase} from '@react-native-firebase/firestore';
-
-import {strings} from '../../helper/Strings';
 import {
   CommonHeader,
   ImagePickerData,
@@ -28,8 +26,10 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {genderRatioButton} from '../../assets/DummyData/radioButtons';
+import {useSelector, useDispatch} from 'react-redux';
 
 const PersonalInfo = ({navigation: {goBack}, navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [Email, setEmail] = useState('');

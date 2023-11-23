@@ -9,14 +9,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {strings} from '../../helper/Strings';
+import {useSelector, useDispatch} from 'react-redux';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {aboutAirifyData} from '../../assets/DummyData/Data';
+import {
+  FrenchaboutAirifyData,
+  aboutAirifyData,
+} from '../../assets/DummyData/Data';
 
 const AboutAirify = ({navigation: {goBack}}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -38,7 +42,7 @@ const AboutAirify = ({navigation: {goBack}}) => {
       <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <FlatList
           bounces={false}
-          data={aboutAirifyData}
+          data={strings?.translate ? FrenchaboutAirifyData : aboutAirifyData}
           renderItem={({item}) => {
             return (
               <TouchableOpacity style={styles.flatListView}>

@@ -17,7 +17,6 @@ import {
   PriceDetails,
   ReturnDepartureSwitch,
 } from '../../components';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {useDispatch, useSelector} from 'react-redux';
@@ -45,6 +44,7 @@ const TransactionDetails = ({navigation, route}) => {
   const [TicketTypeData, setTicketTypeData] = useState({});
 
   const ticketId = useSelector(state => state?.showTicketData?.ticketId);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   console.log(firebaseTicketData, TicketTypeData);
 
@@ -65,7 +65,7 @@ const TransactionDetails = ({navigation, route}) => {
         });
       });
   };
-  console.log(firebaseTicketData?.bookingID, 'firebaseTicketData?.bookingID');
+
   useEffect(() => {
     getTicketData();
   }, []);
@@ -80,7 +80,7 @@ const TransactionDetails = ({navigation, route}) => {
           <StatusBar barStyle={'light-content'} />
 
           <CommonHeader
-            headerName={'Transaction Details'}
+            headerName={strings?.transation_details}
             navigation1={() => {
               navigation?.navigate('TabNavigation');
               dispatch(SearchFlightReturnAction({}));
@@ -121,7 +121,9 @@ const TransactionDetails = ({navigation, route}) => {
                 marginVertical: hp(1),
                 marginTop: hp(3),
               }}>
-              <Text style={styles.seatNumberListTitleText1}>Booking ID:</Text>
+              <Text style={styles.seatNumberListTitleText1}>
+                {strings?.booking_id}:
+              </Text>
               <TouchableOpacity
                 onPress={copyToClipboard}
                 style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -240,7 +242,7 @@ const TransactionDetails = ({navigation, route}) => {
             <View style={styles.cardBody}>
               <CardHeader
                 FirstImage={Images?.copy}
-                header={'Transaction Detail'}
+                header={strings?.transation_details}
               />
 
               <View
@@ -318,8 +320,8 @@ const TransactionDetails = ({navigation, route}) => {
                       FirstImage={Images.account}
                       header={
                         firebaseTicketData?.SelectSeatData?.length > 1
-                          ? `Passenger(${index + 1})`
-                          : 'Passenger(s)'
+                          ? `${strings?.Passenger}(${index + 1})`
+                          : `${strings?.Passenger}(s)`
                       }
                     />
                     <View style={styles.passengerViewStyle}>

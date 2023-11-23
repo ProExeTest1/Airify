@@ -18,7 +18,6 @@ import {
   PriceDetails,
   TextData,
 } from '../../components';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {useDispatch, useSelector} from 'react-redux';
@@ -36,6 +35,7 @@ import {
 import moment from 'moment';
 
 const BookingTransactionDetails = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [modal, setModal] = useState(false);
   const route = useRoute();
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ const BookingTransactionDetails = ({navigation}) => {
           <StatusBar barStyle={'light-content'} />
 
           <CommonHeader
-            headerName={'Transaction Details'}
+            headerName={strings?.transation_details}
             navigation1={() => {
               navigation.goBack();
             }}
@@ -204,7 +204,7 @@ const BookingTransactionDetails = ({navigation}) => {
             <View style={styles.cardBody}>
               <CardHeader
                 FirstImage={Images?.copy}
-                header={'Transaction Detail'}
+                header={strings?.transation_details}
               />
 
               <View
@@ -282,8 +282,8 @@ const BookingTransactionDetails = ({navigation}) => {
                       FirstImage={Images.account}
                       header={
                         firebaseTicketData?.SelectSeatData?.length > 1
-                          ? `Passenger(${index + 1})`
-                          : 'Passenger(s)'
+                          ? `${strings?.Passenger}(${index + 1})`
+                          : `${strings?.Passenger}Passenger(s)`
                       }
                     />
                     <View style={styles.passengerViewStyle}>

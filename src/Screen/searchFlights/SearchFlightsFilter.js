@@ -29,7 +29,6 @@ import {
 } from '../../assets/DummyData/Data';
 import {useRoute} from '@react-navigation/native';
 import {RescheduleFilterData} from '../../redux/action/RescheduleAction';
-import {strings} from '../../helper/Strings';
 
 const SearchFlightsFilter = ({navigation}) => {
   const route = useRoute();
@@ -44,6 +43,8 @@ const SearchFlightsFilter = ({navigation}) => {
     });
     return temp;
   };
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const searchFlightFilterData = useSelector(
     e => e?.searchFlight?.searchFlightFilterData,
   );

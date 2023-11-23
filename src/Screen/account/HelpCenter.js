@@ -5,9 +5,11 @@ import {CommonHeader, ContactUs, Faq} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {useSelector, useDispatch} from 'react-redux';
 
 const HelpCenter = ({navigation: {goBack}}) => {
   const [selectedOption, setSelectedOption] = useState(true);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <CommonHeader

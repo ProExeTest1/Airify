@@ -53,111 +53,133 @@ import RescheduleConfirmPin from '../screen/RescheludeTrip/RescheduleConfirmPin'
 import ReschedulePaymentConfirmation from '../screen/RescheludeTrip/ReschedulePaymentConfirmation';
 import RescheduleSearchFlight from '../screen/RescheludeTrip/RescheduleSearchFlight';
 import RescheduleFillPassengerDetails from '../screen/RescheludeTrip/RescheduleFillPassengerDetails';
+import {languageChangeAction} from '../redux/action/LanguageChangeAction';
+import {useDispatch, useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   const user = auth()?.currentUser?.uid;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log('iuseeffect caleed');
+    const languageData = async () => {
+      await AsyncStorage?.getItem('selected_Language')
+        .then(i => {
+          dispatch(languageChangeAction(i));
+        })
+        .catch(() => {
+          dispatch(languageChangeAction('English'));
+        });
+    };
+    languageData();
+  }, [dispatch]);
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false, gestureEnabled: false}}
-        initialRouteName={user ? 'TabNavigation' : 'WelcomeScreen'}>
-        <Stack.Screen name="SelectSeat" component={SelectSeat} />
-        <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
-        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-        <Stack.Screen name="SignInScreen" component={SignInScreen} />
-        <Stack.Screen name="ResetPassword" component={ResetPassword} />
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-        <Stack.Screen name="SignUpSuccess" component={SignUpSuccess} />
-        <Stack.Screen name="TabNavigation" component={TabNavigation} />
-        <Stack.Screen
-          name="SearchFlightsFilter"
-          component={SearchFlightsFilter}
-        />
-        <Stack.Screen name="DatePicker" component={DatePickerScreen} />
-        <Stack.Screen name="PlacePicker" component={PlacePickerScreen} />
-        <Stack.Screen name="SearchFlights" component={SearchFlights} />
-        <Stack.Screen
-          name="NotificationScreen"
-          component={NotificationScreen}
-        />
-        <Stack.Screen name="SpecialOffer" component={SpecialOfferScreen} />
-        <Stack.Screen name="FlightDetails" component={FlightDetailsScreen} />
-        <Stack.Screen
-          name="FlightPackageDetails"
-          component={FlightPackageDetailsScreen}
-        />
-        <Stack.Screen name="PersonalInfo" component={PersonalInfo} />
-        <Stack.Screen name="Notification" component={Notification} />
-        <Stack.Screen name="Security" component={Security} />
-        <Stack.Screen name="Language" component={Language} />
-        <Stack.Screen name="HelpCenter" component={HelpCenter} />
-        <Stack.Screen name="AboutAirify" component={AboutAirify} />
-        <Stack.Screen name="PassengerList" component={PassengerList} />
-        <Stack.Screen name="NewPassenger" component={NewPassenger} />
+    <>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{headerShown: false, gestureEnabled: false}}
+          initialRouteName={user ? 'TabNavigation' : 'WelcomeScreen'}>
+          <Stack.Screen name="SelectSeat" component={SelectSeat} />
+          <Stack.Screen name="OnBoardingFirst" component={OnBoardingFirst} />
+          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+          <Stack.Screen name="SignInScreen" component={SignInScreen} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+          <Stack.Screen name="SignUpSuccess" component={SignUpSuccess} />
+          <Stack.Screen name="TabNavigation" component={TabNavigation} />
+          <Stack.Screen
+            name="SearchFlightsFilter"
+            component={SearchFlightsFilter}
+          />
+          <Stack.Screen name="DatePicker" component={DatePickerScreen} />
+          <Stack.Screen name="PlacePicker" component={PlacePickerScreen} />
+          <Stack.Screen name="SearchFlights" component={SearchFlights} />
+          <Stack.Screen
+            name="NotificationScreen"
+            component={NotificationScreen}
+          />
+          <Stack.Screen name="SpecialOffer" component={SpecialOfferScreen} />
+          <Stack.Screen name="FlightDetails" component={FlightDetailsScreen} />
+          <Stack.Screen
+            name="FlightPackageDetails"
+            component={FlightPackageDetailsScreen}
+          />
+          <Stack.Screen name="PersonalInfo" component={PersonalInfo} />
+          <Stack.Screen name="Notification" component={Notification} />
+          <Stack.Screen name="Security" component={Security} />
+          <Stack.Screen name="Language" component={Language} />
+          <Stack.Screen name="HelpCenter" component={HelpCenter} />
+          <Stack.Screen name="AboutAirify" component={AboutAirify} />
+          <Stack.Screen name="PassengerList" component={PassengerList} />
+          <Stack.Screen name="NewPassenger" component={NewPassenger} />
 
-        <Stack.Screen name="TopUp" component={TopUp} />
-        <Stack.Screen
-          name="FillPassengerDetails"
-          component={FillPassengerDetails}
-        />
-        <Stack.Screen
-          name="ReturnSearchFlight"
-          component={ReturnSearchFlights}
-        />
-        <Stack.Screen
-          name="TransactionHistory"
-          component={TransactionHistory}
-        />
-        <Stack.Screen
-          name="PaymentConfirmation"
-          component={PaymentConfirmation}
-        />
-        <Stack.Screen name="SavedAddress" component={SavedAddress} />
-        <Stack.Screen name="LocationSearch" component={LocationSearch} />
-        <Stack.Screen name="AddAddress" component={AddAddress} />
-        <Stack.Screen name="DiscountVoucher" component={DiscountVoucher} />
-        <Stack.Screen name="AirifyReward" component={AirifyReward} />
-        <Stack.Screen name="AirifyPoint" component={AirifyPoint} />
-        <Stack.Screen name="pointHistory" component={pointHistory} />
-        <Stack.Screen name="SavedFlightFilter" component={SavedFlightFilter} />
-        <Stack.Screen
-          name="UseDiscountVoucher"
-          component={UseDiscountVoucher}
-        />
-        <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+          <Stack.Screen name="TopUp" component={TopUp} />
+          <Stack.Screen
+            name="FillPassengerDetails"
+            component={FillPassengerDetails}
+          />
+          <Stack.Screen
+            name="ReturnSearchFlight"
+            component={ReturnSearchFlights}
+          />
+          <Stack.Screen
+            name="TransactionHistory"
+            component={TransactionHistory}
+          />
+          <Stack.Screen
+            name="PaymentConfirmation"
+            component={PaymentConfirmation}
+          />
+          <Stack.Screen name="SavedAddress" component={SavedAddress} />
+          <Stack.Screen name="LocationSearch" component={LocationSearch} />
+          <Stack.Screen name="AddAddress" component={AddAddress} />
+          <Stack.Screen name="DiscountVoucher" component={DiscountVoucher} />
+          <Stack.Screen name="AirifyReward" component={AirifyReward} />
+          <Stack.Screen name="AirifyPoint" component={AirifyPoint} />
+          <Stack.Screen name="pointHistory" component={pointHistory} />
+          <Stack.Screen
+            name="SavedFlightFilter"
+            component={SavedFlightFilter}
+          />
+          <Stack.Screen
+            name="UseDiscountVoucher"
+            component={UseDiscountVoucher}
+          />
+          <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
 
-        <Stack.Screen name="ReturnSelectSeat" component={ReturnSelectSeats} />
-        <Stack.Screen name="ConfirmPin" component={ConfirmPin} />
-        <Stack.Screen
-          name="TransactionDetails"
-          component={TransactionDetails}
-        />
-        <Stack.Screen name="Congratulation" component={Congratulation} />
-        <Stack.Screen name="ETicket" component={ETicket} />
-        <Stack.Screen
-          name="BookingTransactionDetails"
-          component={BookingTransactionDetails}
-        />
-        <Stack.Screen name="CancelBooking" component={CancelBooking} />
-        <Stack.Screen
-          name="RescheduleConfirmPin"
-          component={RescheduleConfirmPin}
-        />
-        <Stack.Screen
-          name="ReschedulePaymentConfirmation"
-          component={ReschedulePaymentConfirmation}
-        />
-        <Stack.Screen
-          name="RescheduleSearchFlight"
-          component={RescheduleSearchFlight}
-        />
-        <Stack.Screen
-          name="RescheduleFillPassengerDetails"
-          component={RescheduleFillPassengerDetails}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen name="ReturnSelectSeat" component={ReturnSelectSeats} />
+          <Stack.Screen name="ConfirmPin" component={ConfirmPin} />
+          <Stack.Screen
+            name="TransactionDetails"
+            component={TransactionDetails}
+          />
+          <Stack.Screen name="Congratulation" component={Congratulation} />
+          <Stack.Screen name="ETicket" component={ETicket} />
+          <Stack.Screen
+            name="BookingTransactionDetails"
+            component={BookingTransactionDetails}
+          />
+          <Stack.Screen name="CancelBooking" component={CancelBooking} />
+          <Stack.Screen
+            name="RescheduleConfirmPin"
+            component={RescheduleConfirmPin}
+          />
+          <Stack.Screen
+            name="ReschedulePaymentConfirmation"
+            component={ReschedulePaymentConfirmation}
+          />
+          <Stack.Screen
+            name="RescheduleSearchFlight"
+            component={RescheduleSearchFlight}
+          />
+          <Stack.Screen
+            name="RescheduleFillPassengerDetails"
+            component={RescheduleFillPassengerDetails}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 

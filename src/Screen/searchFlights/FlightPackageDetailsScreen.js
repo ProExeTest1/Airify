@@ -8,15 +8,17 @@ import {
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {
+  FrenchRefundableTermsAndConditions,
+  FrenchRescheduleTermsAndConditons,
   RefundableTermsAndConditions,
   RescheduleTermsAndConditons,
 } from '../../assets/DummyData/FlightDetailsData';
-import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const FlightPackageDetailsScreen = ({navigation, route}) => {
   const headerData = route?.params?.header;
   const [press, setPress] = useState('Flight');
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={{flex: 1}}>
       <PickerHeaderBar
@@ -75,13 +77,21 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
         <FlightDetails />
       ) : press === 'Refund' ? (
         <RefundandRescheduleInfo
-          sectionData={RefundableTermsAndConditions}
-          header={'Refundable'}
+          sectionData={
+            strings?.translate
+              ? FrenchRefundableTermsAndConditions
+              : RefundableTermsAndConditions
+          }
+          header={strings?.Refundable}
         />
       ) : (
         <RefundandRescheduleInfo
-          sectionData={RescheduleTermsAndConditons}
-          header={'Reschedule Available'}
+          sectionData={
+            strings?.translate
+              ? FrenchRescheduleTermsAndConditons
+              : RescheduleTermsAndConditons
+          }
+          header={strings?.refunnd_available}
         />
       )}
     </View>

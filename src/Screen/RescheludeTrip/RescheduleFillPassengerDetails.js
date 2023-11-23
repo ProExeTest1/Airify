@@ -46,6 +46,8 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
   const [passengerList, setPassengerList] = useState([]);
   const [flatlistIndex, setFlatlistIndex] = useState();
   const DropdownButton = useRef();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const item = useSelector(state =>
     ticketType === 'Old Trip'
       ? state?.rescheduleFlightdata?.rescheduleCardData?.searchFlightCardData
@@ -109,7 +111,7 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
     ) {
       navigation?.navigate('ReschedulePaymentConfirmation');
     } else {
-      AlertConstant('Please first add passengers to click on plus icon');
+      AlertConstant(strings?.add_passenger_first);
     }
   };
   const toggleDropDown = index => {
@@ -240,8 +242,8 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
                       FirstImage={Images.account}
                       header={
                         oldTripData?.SelectSeatData?.length > 1
-                          ? `Passenger(${index + 1})`
-                          : 'Passenger(s)'
+                          ? `${strings?.Passenger}(${index + 1})`
+                          : `${strings?.Passenger}(s)`
                       }
                     />
                     <View style={styles.passengerViewStyle}>
@@ -266,13 +268,13 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
                       FirstImage={Images.account}
                       header={
                         oldTripData?.SelectSeatData?.length > 1
-                          ? `Passenger(${index + 1})`
-                          : 'Passenger(s)'
+                          ? `${strings?.Passenger}(${index + 1})`
+                          : `${strings?.Passenger}(s)`
                       }
                     />
                     <DropDownPaperTextInput
-                      placeholder={'Passenger'}
-                      label={'Passenger'}
+                      placeholder={strings?.Passenger}
+                      label={strings?.Passenger}
                       icon={Images.downArrow}
                       value={item.name}
                       toggleDropdown={() => toggleDropDown(item.id)}
@@ -309,9 +311,7 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
                       TripType: tripType,
                       type: 'Reschedule',
                     })
-                  : AlertConstant(
-                      'please add passengers if you haven(t) passengers in passenger list then press + sign and add passenger',
-                    );
+                  : AlertConstant(strings?.add_passenger_on_click);
               }}>
               <CardHeader
                 FirstImage={Images.seat}
@@ -337,11 +337,13 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
                   </View>
                   <View style={{flex: 1}}>
                     <Text style={styles.searNumberListTitleText}>
-                      Passenger(s)
+                      {strings?.Passenger}(s)
                     </Text>
                   </View>
                   <View style={{width: wp(18), alignItems: 'center'}}>
-                    <Text style={styles.searNumberListTitleText}>Seat</Text>
+                    <Text style={styles.searNumberListTitleText}>
+                      {strings?.seat}
+                    </Text>
                   </View>
                 </View>
               )}
@@ -402,7 +404,7 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
           <Text style={styles.okButtonText}>
             {' '}
             {tripType === 'Round-Trip' && ticketType === 'Old Trip'
-              ? 'Confirm'
+              ? strings?.Confirm
               : strings.continue}
           </Text>
         </TouchableOpacity>

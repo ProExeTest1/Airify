@@ -24,6 +24,7 @@ import {
   AmenitiesData,
   CabinClassData,
   FlightPreferencesData,
+  FrenchnumberOfStops,
   RefundAndRescheduleData,
   numberOfStops,
 } from '../../assets/DummyData/Data';
@@ -35,6 +36,8 @@ import {strings} from '../../helper/Strings';
 
 const SavedFlightFilter = ({navigation}) => {
   const route = useRoute();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const savedFlight = useSelector(e => e?.SaveFlight?.activeFlight);
   const expireFlight = useSelector(e => e?.SaveFlight?.expireFlight);
 
@@ -216,7 +219,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Number of Stops</Text>
+              <Text style={styles.boxTitle}>{strings?.no_of_stops}</Text>
             </View>
             <View style={styles.StopsButBody}>
               <FlatList
@@ -243,7 +246,7 @@ const SavedFlightFilter = ({navigation}) => {
             {numberOfStopsData !== 'Direct' && (
               <>
                 <View style={styles.boxTitleBody}>
-                  <Text style={styles.boxTitle}>Stop Duration</Text>
+                  <Text style={styles.boxTitle}>{strings?.stop_duration}</Text>
                   <Text style={styles.boxVelue}>
                     {`${priceTargets2[0]} - ${priceTargets2[1]} hours`}
                   </Text>
@@ -260,7 +263,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Airlines</Text>
+              <Text style={styles.boxTitle}>{strings?.Airlines}</Text>
               <TouchableOpacity
                 onPress={() => {
                   setAirlinesCondition(!AirlinesCondition);
@@ -313,7 +316,7 @@ const SavedFlightFilter = ({navigation}) => {
           </View>
           <View style={styles.boxBody}>
             <View style={styles.boxTitleBody}>
-              <Text style={styles.boxTitle}>Flight Duration</Text>
+              <Text style={styles.boxTitle}>{strings?.Flight_Duration}</Text>
               <Text style={styles.boxVelue}>
                 {`${priceTargets3[0]}h - ${priceTargets3[1]}h`}
               </Text>

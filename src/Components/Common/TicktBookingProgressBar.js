@@ -3,10 +3,10 @@ import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
-import {bookingTransactionData} from '../../redux/action/BookingAction';
-import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const TicktBookingProgressBar = ({progress}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.mainViewstyle}>
       <View style={styles.progressInnerViewStyle}>
@@ -86,7 +86,9 @@ const TicktBookingProgressBar = ({progress}) => {
               3
             </Text>
           </View>
-          <Text style={styles.progressTextStyle}>{strings.eTicket}</Text>
+          <Text numberOfLines={1} style={styles.progressTextStyle}>
+            {strings.eTicket}
+          </Text>
         </View>
       </View>
     </View>

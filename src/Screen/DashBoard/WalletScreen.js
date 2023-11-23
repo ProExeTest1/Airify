@@ -16,12 +16,13 @@ import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {useSelector} from 'react-redux';
 
 const WalletScreen = ({navigation}) => {
   const [userData, setUserData] = useState({});
   const [myWallet, setMyWallet] = useState('00.00');
   const [transactionHistory, setTransactionHistory] = useState([]);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const isFocused = useIsFocused();
   const UserData = async () => {
     const journeyData = await firestore()

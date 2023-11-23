@@ -17,11 +17,9 @@ import OtpInputs from 'react-native-otp-inputs';
 import storage from '@react-native-firebase/storage';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
-import notifee, {EventType} from '@notifee/react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {CountryPicker} from 'react-native-country-codes-picker';
 
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 import {DineWay} from '../../redux/action/HomeAction';
@@ -47,6 +45,7 @@ import {ActivityIndicator} from 'react-native-paper';
 
 const SignUpScreen = ({navigation: {goBack}, navigation}) => {
   const indexRoute = useRoute()?.params?.index;
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const swiperRef = useRef();
   const dispatch = useDispatch();
   const [pin, setPin] = useState('');

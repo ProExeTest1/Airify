@@ -26,6 +26,8 @@ import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 import {AlertConstant} from '../../helper/AlertConstant';
 
 const CancelBooking = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const [selectedData, setSelectedData] = useState({});
   const [fileResponse, setFileResponse] = useState([]);
   const [UserWalletData, setUserWalletData] = useState({});
@@ -255,8 +257,8 @@ const CancelBooking = ({navigation}) => {
 
               // Display a notification
               await notifee.displayNotification({
-                title: 'Your Ticket Cancel Successfully',
-                body: `${firebaseTicketData?.totalPaymentList?.totalPayment} rupees refund in few minutes.`,
+                title: strings?.ticket_notification,
+                body: `${firebaseTicketData?.totalPaymentList?.totalPayment} ${strings?.refund_notification}`,
                 android: {
                   channelId,
                   smallIcon: 'ic_notification',

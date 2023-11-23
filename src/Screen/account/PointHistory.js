@@ -1,16 +1,16 @@
 import React from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useRoute} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
+import {useSelector, useDispatch} from 'react-redux';
 
 const pointHistory = ({navigation: {goBack}}) => {
   const pointDummy = useRoute();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <CommonHeader

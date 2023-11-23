@@ -38,6 +38,8 @@ const PatmentConfirmation = ({navigation, route}) => {
   const [WalletData, setWalletData] = useState({});
   const [ticketType, setTicketType] = useState('Departure');
   const [PointsData, setPointsData] = useState({});
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const item = useSelector(state => state.searchFlight.searchFlightCardData);
   const returnItem = useSelector(
     state => state?.searchFlight?.searchFlightReturnCardData,
@@ -197,7 +199,7 @@ const PatmentConfirmation = ({navigation, route}) => {
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
-        headerName={'Payment Confirmaion'}
+        headerName={strings?.payment_confirm}
         navigation1={() => {
           navigation.goBack();
           dispatch(DiscountDataAction({}));

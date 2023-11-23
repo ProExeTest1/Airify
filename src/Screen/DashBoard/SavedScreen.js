@@ -13,8 +13,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import firestore from '@react-native-firebase/firestore';
-
-import {strings} from '../../helper/Strings';
 import {
   CommonHeader,
   ActiveSavedAddress,
@@ -31,6 +29,8 @@ import {
 } from '../../redux/action/SavedFlights';
 
 const SavedScreen = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const isFocus = useIsFocused();
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
@@ -481,7 +481,7 @@ const SavedScreen = ({navigation}) => {
               )}
             />
           </View>
-        
+
           <View
             style={{
               paddingVertical: hp(2),
@@ -498,26 +498,26 @@ const SavedScreen = ({navigation}) => {
         </View>
       </Modal>
       {SearchFlightCardData?.length > 0 && (
-            <View style={styles.sortBody}>
-              <TouchableOpacity
-                onPress={() => setModalVisible2(true)}
-                style={styles.sortImgBody}>
-                <Image style={styles.sortImg} source={Images.sortIcon} />
-                <Text style={styles.sortText}>{strings.sort}</Text>
-              </TouchableOpacity>
-              <View style={styles.sortLine}></View>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('SavedFlightFilter', {
-                    header: selectedOption,
-                  })
-                }
-                style={styles.sortImgBody}>
-                <Image style={styles.sortImg} source={Images.filterIcon} />
-                <Text style={styles.sortText}>{strings.filter}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+        <View style={styles.sortBody}>
+          <TouchableOpacity
+            onPress={() => setModalVisible2(true)}
+            style={styles.sortImgBody}>
+            <Image style={styles.sortImg} source={Images.sortIcon} />
+            <Text style={styles.sortText}>{strings.sort}</Text>
+          </TouchableOpacity>
+          <View style={styles.sortLine}></View>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('SavedFlightFilter', {
+                header: selectedOption,
+              })
+            }
+            style={styles.sortImgBody}>
+            <Image style={styles.sortImg} source={Images.filterIcon} />
+            <Text style={styles.sortText}>{strings.filter}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

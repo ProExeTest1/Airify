@@ -6,7 +6,9 @@ import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {OnBoardingText, OnBoardingSingleButton} from '../../components';
 
+import {useSelector} from 'react-redux';
 const SignUpSuccess = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <View style={styles.FirstViewStyle}>

@@ -11,17 +11,22 @@ import {Images} from '../../helper/IconConstant';
 import {
   FlightDetailsData,
   FlightDetailsData1,
+  FrenchFlightDetailsData,
 } from '../../assets/DummyData/FlightDetailsData';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {color} from '../../helper/ColorConstant';
 import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const FlightServices = ({DetailsNavigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View>
       <View style={styles.flatlistViewStyle}>
         <FlatList
-          data={FlightDetailsData}
+          data={
+            strings?.translate ? FrenchFlightDetailsData : FlightDetailsData
+          }
           showsVerticalScrollIndicator={false}
           bounces={false}
           renderItem={({item}) => {

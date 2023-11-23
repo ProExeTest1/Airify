@@ -12,10 +12,11 @@ import {
   OnBoardingSingleButton,
 } from '../../components';
 
+import {useSelector} from 'react-redux';
 const OnBoardingFirst = ({navigation}) => {
   const swiperRef = useRef();
   const [index, setIndex] = useState(0);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <Swiper

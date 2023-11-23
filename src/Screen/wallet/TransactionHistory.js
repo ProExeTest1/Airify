@@ -10,11 +10,12 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import LottieView from 'lottie-react-native';
+import {useSelector} from 'react-redux';
 
 const TransactionHistory = ({navigation}) => {
   const isFocused = useIsFocused();
   const [transactionHistory, setTransactionHistory] = useState([]);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const getTransactionHistory = async () => {
     await firestore()
       .collection('UserWallet')

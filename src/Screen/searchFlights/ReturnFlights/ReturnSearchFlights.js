@@ -48,6 +48,7 @@ const ReturnSearchFlights = ({navigation, route}) => {
   const [selectedData, setSelectedData] = useState({});
 
   const dispatch = useDispatch();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const searchFlightFilterData = useSelector(
     e => e?.searchFlight?.searchFlightFilterData,
@@ -243,7 +244,7 @@ const ReturnSearchFlights = ({navigation, route}) => {
   const applydata = () => {
     setSearchFlightCardData(SearchFlightData);
     dispatch(SearchFlightFilterData({}));
-    Alert.alert('Filter data not match');
+    AlertConstant(strings?.filter_data_not_match);
   };
   return (
     <View style={styles.body}>

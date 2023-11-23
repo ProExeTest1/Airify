@@ -53,3 +53,57 @@ export const NotificationData = [
     ],
   },
 ];
+export const FrenchNotificationData = [
+  {
+    data: [
+      {
+        id: 1,
+        title: 'Alerte nouvelle fonctionnalité !',
+        description:
+          "Découvrez les nouvelles fonctionnalités passionnantes de l'application. Améliorez votre expérience de voyage dès aujourd'hui !",
+        image: Images.checkBox_tickMark,
+      },
+    ],
+    time: "Aujourd'hui",
+  },
+  {
+    time: 'Hier',
+    data: [
+      {
+        id: 2,
+        title: "Activer l'authentification à deux facteurs",
+        description:
+          "Utilisez l'authentification à deux facteurs pour une sécurité renforcée de votre compte.",
+        image: Images.security,
+      },
+      {
+        id: 3,
+        title: 'Mise à jour de votre vol !',
+        description:
+          "Vol pour Tokyo (HND) à l'heure à la porte B12. Bon voyage !",
+        image: Images.aeroplane,
+        ticket: 'update',
+      },
+    ],
+  },
+  {
+    time: '20 décembre 2023',
+    data: [
+      {
+        id: 4,
+        title: 'Offre exclusive débloquée !',
+        description:
+          "Félicitations ! Vous avez débloqué une remise de 15 % sur votre prochaine réservation de vol avec Airify. Commencez à planifier votre aventure dès aujourd'hui !",
+        image: Images.discount,
+      },
+      {
+        id: 5,
+        title: 'Mises à jour de paiement multiples !',
+        description:
+          "Vous pouvez maintenant ajouter une carte de crédit pour les paiements des billets d'avion.",
+        image: Images.payments,
+        time: '20 décembre 2023',
+      },
+    ],
+  },
+];

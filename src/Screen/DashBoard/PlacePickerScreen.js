@@ -22,6 +22,8 @@ import {strings} from '../../helper/Strings';
 
 const PlacePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const headerData = route?.params?.data;
   const [search, setSearch] = useState([]);
   const [apiData, setApidata] = useState([]);

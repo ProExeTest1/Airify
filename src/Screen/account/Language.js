@@ -8,53 +8,66 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useSelector, useDispatch} from 'react-redux';
 
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {languageDummyJson} from '../../assets/DummyData/languageDummyJson';
+import {languageChangeAction} from '../../redux/action/LanguageChangeAction';
 
 const Language = ({navigation: {goBack}}) => {
   const [languageData, setLanguageData] = useState([]);
-  const [selectedLanguage, setSelectedLanguage] = useState({});
+  const [selectedLanguage, setSelectedLanguage] = useState();
+  const dispatch = useDispatch();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
-  useEffect(() => {
-    data();
-    getData();
-  }, []);
+  // const data = () => {
+  //   console.log(languageDummyJson);
+  //   const det = languageDummyJson?.data?.countries?.map(i =>
+  //     i?.languages.map(e => {
+  //       return {
+  //         emoji: i?.emoji,
+  //         language: `${e?.name} (${i?.name.slice(0, 3)})`,
+  //       };
+  //     }),
+  //   );
+  //   setLanguageData(det?.flat());
+  // };
 
-  const data = () => {
-    console.log(languageDummyJson);
-    const det = languageDummyJson?.data?.countries?.map(i =>
-      i?.languages.map(e => {
-        return {
-          emoji: i?.emoji,
-          language: `${e?.name} (${i?.name.slice(0, 3)})`,
-        };
-      }),
-    );
-    setLanguageData(det?.flat());
-  };
-
-  const getData = async () => {
+  // const getData = async () => {
+  //   try {
+  //     const jsonValue = await AsyncStorage?.getItem('selected_Language');
+  //     setSelectedLanguage(JSON?.parse(jsonValue));
+  //   } catch (e) {
+  //     console.log('e :>> ', e);
+  //   }
+  // };
+  const getLanguage = async () => {
     try {
-      const jsonValue = await AsyncStorage?.getItem('selected_Language');
-      setSelectedLanguage(JSON?.parse(jsonValue));
-    } catch (e) {
-      console.log('e :>> ', e);
-    }
-  };
-
-  const languageSelectionAsync = async item => {
-    try {
-      await AsyncStorage?.setItem('selected_Language', JSON.stringify(item));
+      const dd = await AsyncStorage?.getItem('selected_Language');
+      setSelectedLanguage(dd == 'French' ? 'French' : 'English');
+      // console.log(dd, 'log of lan async');
+      // console.log(dd === 'French' ? 'French' : 'English');
     } catch (error) {
       console.log('error :>> ', error);
     }
   };
 
+  const languageSelectionAsync = async item => {
+    try {
+      await AsyncStorage?.setItem('selected_Language', item);
+      dispatch(languageChangeAction(item));
+    } catch (error) {
+      console.log('error :>> ', error);
+    }
+  };
+  useEffect(() => {
+    // data();
+    // getData();
+    getLanguage();
+  }, [selectedLanguage]);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -64,13 +77,13 @@ const Language = ({navigation: {goBack}}) => {
         navigation2={() => {}}
         Images1={Images.backIcon}
         Images1Color={color.white}
-        headerName={strings.language}
+        headerName={strings?.language}
         navigation1={() => {
           goBack();
         }}
       />
       <View>
-        <FlatList
+        {/* <FlatList
           bounces={false}
           data={languageData}
           extraData={selectedLanguage}
@@ -90,14 +103,16 @@ const Language = ({navigation: {goBack}}) => {
                 onPress={() => {
                   setSelectedLanguage(item);
                   languageSelectionAsync(item);
-                }}>
+                }}
+                >
                 <View style={styles.textViewStyle}>
                   <Text style={styles.textStyle}>{item?.emoji}</Text>
                   <Text
                     style={[
                       styles.textStyle,
                       {textAlign: 'center', color: color.black},
-                    ]}>
+                    ]}
+                    >
                     {item?.language}
                   </Text>
                 </View>
@@ -115,7 +130,75 @@ const Language = ({navigation: {goBack}}) => {
               </TouchableOpacity>
             );
           }}
-        />
+        /> */}
+        <TouchableOpacity
+          onPress={() => {
+            setSelectedLanguage('English');
+            languageSelectionAsync('English');
+          }}
+          style={[
+            styles.flatListStyle,
+            {
+              borderColor:
+                selectedLanguage == 'English' ? color.commonBlue : color.white,
+            },
+          ]}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.textStyle}>🇬🇧</Text>
+            <Text
+              style={[
+                styles.textStyle,
+                {textAlign: 'center', color: color.black},
+              ]}>
+              English
+            </Text>
+          </View>
+          {selectedLanguage == 'English' && (
+            <Image
+              source={Images.checkIcon}
+              style={{
+                width: hp(3),
+                height: hp(3),
+                tintColor: 'blue',
+                paddingStart: 'auto',
+              }}
+            />
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setSelectedLanguage('French');
+            languageSelectionAsync('French');
+          }}
+          style={[
+            styles.flatListStyle,
+            {
+              borderColor:
+                selectedLanguage == 'French' ? color.commonBlue : color.white,
+            },
+          ]}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.textStyle}>🇫🇷</Text>
+            <Text
+              style={[
+                styles.textStyle,
+                {textAlign: 'center', color: color.black},
+              ]}>
+              Anglaise{`(French)`}
+            </Text>
+          </View>
+          {selectedLanguage == 'French' && (
+            <Image
+              source={Images.checkIcon}
+              style={{
+                width: hp(3),
+                height: hp(3),
+                tintColor: 'blue',
+                paddingStart: 'auto',
+              }}
+            />
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );

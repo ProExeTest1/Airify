@@ -11,9 +11,11 @@ import {
   OnBoardingModuleHeader,
   OnBoardingSingleButton,
 } from '../../components';
+import {useSelector} from 'react-redux';
 
 const CreateNewPassword = ({navigation: {goBack}}) => {
   const [modal, setModal] = useState(false);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const openModal = () => {
     setModal(true);
   };

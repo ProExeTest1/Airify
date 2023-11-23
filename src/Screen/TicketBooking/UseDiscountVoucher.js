@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import {color} from '../../helper/ColorConstant';
 import {CommonHeader} from '../../components';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {DiscountVoucherDummy} from '../../assets/DummyData/Discount';
+import {
+  DiscountVoucherDummy,
+  FrenchDiscountVoucherDummy,
+} from '../../assets/DummyData/Discount';
 import {useDispatch, useSelector} from 'react-redux';
 import {DiscountDataAction} from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
@@ -26,6 +28,8 @@ const UseDiscountVoucher = ({navigation, route}) => {
   const [DiscountData, setDiscountData] = useState(
     useSelector(e => e?.SelectSeatData?.DiscountData),
   );
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const item = useSelector(state =>
     type == 'Reschedule'
       ? state?.rescheduleFlightdata?.rescheduleCardData?.searchFlightCardData
@@ -78,7 +82,11 @@ const UseDiscountVoucher = ({navigation, route}) => {
         <FlatList
           bounces={false}
           showsVerticalScrollIndicator={false}
-          data={DiscountVoucherDummy}
+          data={
+            strings?.translate
+              ? FrenchDiscountVoucherDummy
+              : DiscountVoucherDummy
+          }
           renderItem={({item}) => {
             return (
               <View style={styles.flatListInnerViewStyle}>

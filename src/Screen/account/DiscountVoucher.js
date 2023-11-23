@@ -1,14 +1,18 @@
 import React from 'react';
 import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
 
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {DiscountVoucherDummy} from '../../assets/DummyData/Discount';
+import {
+  DiscountVoucherDummy,
+  FrenchDiscountVoucherDummy,
+} from '../../assets/DummyData/Discount';
+import {useSelector, useDispatch} from 'react-redux';
 
 const DiscountVoucher = ({navigation: {goBack}}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -26,7 +30,11 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
       <View style={styles.flatListOuterViewStyle}>
         <FlatList
           bounces={false}
-          data={DiscountVoucherDummy}
+          data={
+            strings?.translate
+              ? FrenchDiscountVoucherDummy
+              : DiscountVoucherDummy
+          }
           showsVerticalScrollIndicator={false}
           renderItem={({item}) => {
             return (

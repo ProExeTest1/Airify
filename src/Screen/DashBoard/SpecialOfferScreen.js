@@ -10,6 +10,7 @@ import {
 import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
 
+import {useSelector} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
@@ -29,6 +30,7 @@ const SpecialOfferScreen = ({route, navigation}) => {
     Clipboard.setString(promocode);
     AlertConstant('Text copied to clipboard!');
   };
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View style={styles.container}>
       <CommonHeader

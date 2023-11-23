@@ -3,14 +3,14 @@ import React, {useEffect, useState} from 'react';
 import ToggleSwitch from 'toggle-switch-react-native';
 import firestore from '@react-native-firebase/firestore';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
+import {useSelector, useDispatch} from 'react-redux';
 import {fontSize, hp, wp} from '../../helper/Constant';
 
 const Notification = ({navigation: {goBack}}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [NotificationList, setNotificationList] = useState([]);
 
   useEffect(() => {

@@ -13,7 +13,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Alert, NativeModules} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
+import {useDispatch, useSelector} from 'react-redux';
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
@@ -21,6 +21,7 @@ const TabNavigation = () => {
   useEffect(() => {
     UserLoginMaintain();
   }, []);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const UserLoginMaintain = async () => {
     let ID = await DeviceInfo?.getUniqueId();
     await firestore()
@@ -48,7 +49,7 @@ const TabNavigation = () => {
       }}>
       <Tab.Screen
         options={{
-          title: 'Home',
+          title: strings?.Home,
           tabBarIcon: props => (
             <TabBarComponents props={props} Icon={Images.TabHomeIcon} />
           ),
@@ -58,7 +59,7 @@ const TabNavigation = () => {
       />
       <Tab.Screen
         options={{
-          title: 'Saved',
+          title: strings?.Saved,
           tabBarIcon: props => (
             <TabBarComponents props={props} Icon={Images.saved} />
           ),
@@ -68,7 +69,7 @@ const TabNavigation = () => {
       />
       <Tab.Screen
         options={{
-          title: 'Bookings',
+          title: strings?.Bookings,
           tabBarIcon: props => (
             <TabBarComponents props={props} Icon={Images.booking} />
           ),
@@ -78,7 +79,7 @@ const TabNavigation = () => {
       />
       <Tab.Screen
         options={{
-          title: 'Wallet',
+          title: strings?.Wallet,
           tabBarIcon: props => (
             <TabBarComponents props={props} Icon={Images.wallet} />
           ),
@@ -88,7 +89,7 @@ const TabNavigation = () => {
       />
       <Tab.Screen
         options={{
-          title: 'Account',
+          title: strings?.Account,
           tabBarIcon: props => (
             <TabBarComponents
               props={props}

@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import moment from 'moment';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -20,6 +20,8 @@ import LottieView from 'lottie-react-native';
 import {strings} from '../../helper/Strings';
 
 const ActiveSavedAddress = ({onPress, data}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const dispatch = useDispatch();
   const [activeAddressData, setActiveAddressData] = useState([]);
 
@@ -71,7 +73,14 @@ const ActiveSavedAddress = ({onPress, data}) => {
                 onPress={() => {
                   onPress(item);
                 }}
-                style={[styles.cardBody, {marginTop: index === 0 ? hp(3) : 0, marginBottom: index == activeAddressData?.length - 1 ? hp(15) : hp(2)}]}>
+                style={[
+                  styles.cardBody,
+                  {
+                    marginTop: index === 0 ? hp(3) : 0,
+                    marginBottom:
+                      index == activeAddressData?.length - 1 ? hp(15) : hp(2),
+                  },
+                ]}>
                 <View style={styles.cardHeader}>
                   <View
                     style={[

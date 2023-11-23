@@ -25,6 +25,7 @@ import {
   OnBoardingSingleButton,
 } from '../../components';
 import DeviceInfo from 'react-native-device-info';
+import {useSelector} from 'react-redux';
 
 const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [Email, setEmail] = useState('');
@@ -32,7 +33,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
   const [condition, setCondition] = useState(false);
   const [Password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const openModal = () => {
     setModal(true);
   };

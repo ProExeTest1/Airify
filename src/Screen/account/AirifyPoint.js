@@ -14,11 +14,16 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
+import {useSelector, useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
 const AirifyPoint = ({navigation: {goBack}, navigation}) => {
   const [pointData, setPointData] = useState({});
+  const [strings, setString] = useState(
+    useSelector(state => state?.languageReducer?.languageObject),
+  );
 
+  console.log(strings, 'hello');
   const getUserPointData = async () => {
     await firestore()
       .collection('Points')

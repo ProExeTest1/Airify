@@ -24,6 +24,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AlertConstant} from '../../../helper/AlertConstant';
 
 const ReturnSelectSeats = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const temp = useSelector(e => e.SelectSeatData.ReturnSelectSeatData);
   const searchFlightCardData = useSelector(
     state => state.searchFlight.searchFlightReturnCardData,
@@ -84,8 +86,8 @@ const ReturnSelectSeats = ({navigation}) => {
         setseatData(
           seatData?.map(item => {
             if (OccuiedData?.some(i => item.seatNo === i)) {
-              Alert?.alert(
-                `your selected seat ${item?.seatNo} is already book`,
+              AlertConstant(
+                `${strings?.your_selected} ${item?.seatNo} ${strings?.already_booked} `,
               );
               return {
                 name: item?.name,
@@ -104,7 +106,7 @@ const ReturnSelectSeats = ({navigation}) => {
       setseatData([]);
       navigation?.navigate('FillPassengerDetails', {TripType: 'Round-Trip'});
     } else {
-      AlertConstant('please select seat');
+      AlertConstant(strings?.please_select_seat);
     }
   };
 
@@ -114,7 +116,7 @@ const ReturnSelectSeats = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <CommonHeader
-        headerName={`${strings?.selectSeat} (Return)`}
+        headerName={`${strings?.selectSeat} ${strings?.return}`}
         navigation1={() => {
           navigation.goBack();
         }}

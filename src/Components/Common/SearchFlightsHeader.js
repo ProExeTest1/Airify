@@ -36,6 +36,8 @@ const SearchFlightsHeader = ({
   headerName,
   tripType,
 }) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const searchFlightData = useSelector(e =>
     tripType === 'Round-trip'
       ? e?.searchFlight?.searchFlightReturnData

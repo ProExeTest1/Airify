@@ -7,8 +7,6 @@ import firestore from '@react-native-firebase/firestore';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {CountryPicker} from 'react-native-country-codes-picker';
-
-import {strings} from '../../helper/Strings';
 import {
   CommonHeader,
   OnBoardingSingleButton,
@@ -19,8 +17,10 @@ import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {useSelector, useDispatch} from 'react-redux';
 
 const NewPassenger = ({navigation: {goBack}, navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const route = useRoute();
   const title = ['Mr.', 'Mrs.'];
   const [email, setEmail] = useState('');
@@ -646,5 +646,3 @@ const styles = StyleSheet.create({
   },
   subContainerView: {flexDirection: 'row'},
 });
-
-

@@ -15,7 +15,9 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import LottieView from 'lottie-react-native';
+import {useSelector, useDispatch} from 'react-redux';
 const PassengerList = ({navigation: {goBack}, navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [passengerList, setPassengerList] = useState([]);
 
   useEffect(() => {

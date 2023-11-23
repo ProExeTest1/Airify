@@ -6,7 +6,6 @@ import firestore from '@react-native-firebase/firestore';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {CountryPicker} from 'react-native-country-codes-picker';
 
-import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {
   CommonHeader,
@@ -19,6 +18,7 @@ import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
 
 const AddAddress = ({navigation}) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const route = useRoute();
   const [note, setNote] = useState('');
   const [show, setShow] = useState(false);

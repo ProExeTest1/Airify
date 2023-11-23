@@ -19,9 +19,12 @@ import moment from 'moment';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import LottieView from 'lottie-react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 const NotificationScreen = ({navigation}) => {
   const [NotificationData, SetNotificationData] = useState([]);
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const passengers = async () => {
     await firestore()
       .collection('NotificationHistory')

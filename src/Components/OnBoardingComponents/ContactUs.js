@@ -10,7 +10,7 @@ import {
 
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {ContactUSData} from '../../assets/DummyData/Data';
+import {ContactUSData, FrenchContactUSData} from '../../assets/DummyData/Data';
 
 const ContactUS = () => {
   return (

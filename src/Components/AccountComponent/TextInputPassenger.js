@@ -12,6 +12,7 @@ import {
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {useSelector} from 'react-redux';
 
 const TextInputPassenger = ({
   value,
@@ -30,7 +31,7 @@ const TextInputPassenger = ({
   autoCapitalize,
 }) => {
   const [focus, setFocus] = useState(false);
-
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   return (
     <View
       style={[

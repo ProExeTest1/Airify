@@ -12,18 +12,22 @@ import {strings} from '../../helper/Strings';
 import SearchBar from '../Common/SearchBar';
 import {Images} from '../../helper/IconConstant';
 import {color} from '../../helper/ColorConstant';
-import {FaqData} from '../../assets/DummyData/Data';
+import {FaqData, FrenchFaqData} from '../../assets/DummyData/Data';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {FaqDummy} from '../../assets/DummyData/FaqDummy';
+import {FaqDummy, FrenchFaqDummy} from '../../assets/DummyData/FaqDummy';
+import {useSelector} from 'react-redux';
 
 const Faq = () => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [categorySelect, setCategory] = useState({
     id: 1,
-    title: 'General',
+    title: strings?.translate ? 'Général' : 'General',
   });
   const [searchText, setSearchText] = useState('');
   const [searchData, setSearchData] = useState([]);
-  const [faqDummyData, setFaqDummyData] = useState(FaqDummy);
+  const [faqDummyData, setFaqDummyData] = useState(
+    strings?.translate ? FrenchFaqDummy : FaqDummy,
+  );
 
   useEffect(() => {
     searchFaqQuestion(searchText);
@@ -45,7 +49,7 @@ const Faq = () => {
       <View style={styles.innerContainer}>
         <FlatList
           horizontal
-          data={FaqData}
+          data={strings?.translate ? FrenchFaqData : FaqData}
           bounces={false}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => {

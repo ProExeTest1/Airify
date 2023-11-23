@@ -12,9 +12,10 @@ import Modal from 'react-native-modal';
 import {strings} from '../../helper/Strings';
 import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
-import {ClassData} from '../../assets/DummyData/Data';
+import {ClassData, FrenchClassData} from '../../assets/DummyData/Data';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';
+import {useSelector} from 'react-redux';
 
 const ClassPickerModal = ({
   onCancel,
@@ -22,6 +23,7 @@ const ClassPickerModal = ({
   toggleModal,
   isModalVisible,
 }) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const [index, setIndex] = useState(1);
   return (
     <View>
@@ -35,7 +37,7 @@ const ClassPickerModal = ({
           </View>
           <View>
             <FlatList
-              data={ClassData}
+              data={strings?.translate ? FrenchClassData : ClassData}
               scrollEnabled={false}
               renderItem={({item}) => {
                 return (
@@ -81,7 +83,7 @@ const ClassPickerModal = ({
               onPress2={() => {
                 toggleModal();
                 if (index === 1) {
-                  setClass('Economy');
+                  setClass(strings?.translate ? 'Économie' : 'Economy');
                 }
               }}
             />

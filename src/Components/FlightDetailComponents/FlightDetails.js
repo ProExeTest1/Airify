@@ -7,11 +7,13 @@ import {Images} from '../../helper/IconConstant';
 import {
   FlightDetailsData,
   FlightDetailsData1,
+  FrenchFlightDetailsData,
+  FrenchFlightDetailsData1,
 } from '../../assets/DummyData/FlightDetailsData';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {strings} from '../../helper/Strings';
 
 const FlightDetails = () => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
   const cardData = useSelector(
     state => state?.searchFlight?.searchFlightCardData,
   );
@@ -78,7 +80,9 @@ const FlightDetails = () => {
             <FlatList
               bounces={false}
               scrollEnabled={false}
-              data={FlightDetailsData}
+              data={
+                strings?.translate ? FrenchFlightDetailsData : FlightDetailsData
+              }
               showsVerticalScrollIndicator={false}
               renderItem={({item}) => {
                 return (
@@ -99,7 +103,11 @@ const FlightDetails = () => {
             <FlatList
               bounces={false}
               scrollEnabled={false}
-              data={FlightDetailsData1}
+              data={
+                strings?.translate
+                  ? FrenchFlightDetailsData1
+                  : FlightDetailsData1
+              }
               showsVerticalScrollIndicator={false}
               renderItem={({item}) => {
                 return (

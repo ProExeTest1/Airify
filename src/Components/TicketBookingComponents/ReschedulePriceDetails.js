@@ -19,6 +19,8 @@ const ReschedulePriceDetails = ({
   TotalPoints,
   ToggleSwitchBut1,
 }) => {
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
+
   const insurancePrice = Math.round((newPrice * 2.8) / 100);
   const travelTax = Math.round((newPrice * 1.5) / 100);
 

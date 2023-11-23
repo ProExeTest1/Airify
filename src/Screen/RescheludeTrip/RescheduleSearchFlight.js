@@ -24,9 +24,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {color} from '../../helper/ColorConstant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
-import {dateAction, depatureDateAction} from '../../redux/action/DateAction';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
-import {strings} from '../../helper/Strings';
 import moment from 'moment';
 import {
   Menu,
@@ -40,6 +38,7 @@ import {
   RescheduleNormalDateData,
   rescheduleSelectNewCardData,
 } from '../../redux/action/RescheduleAction';
+import {AlertConstant} from '../../helper/AlertConstant';
 
 const RescheduleSearchFlight = ({navigation, route}) => {
   const tripType = route?.params?.TripType;
@@ -55,6 +54,7 @@ const RescheduleSearchFlight = ({navigation, route}) => {
   const [selectedData, setSelectedData] = useState({});
 
   const dispatch = useDispatch();
+  const strings = useSelector(state => state?.languageReducer?.languageObject);
 
   const rescheduleData = useSelector(
     e => e?.rescheduleFlightdata?.rescheduleCardData,
@@ -258,7 +258,7 @@ const RescheduleSearchFlight = ({navigation, route}) => {
   const applydata = () => {
     setSearchFlightCardData(SearchFlightData);
     dispatch(SearchFlightFilterData({}));
-    Alert.alert('Filter data not match');
+    AlertConstant(strings?.filter_data_not_match);
   };
 
   const setData = i => {
@@ -276,7 +276,7 @@ const RescheduleSearchFlight = ({navigation, route}) => {
       <View style={styles.header}>
         <View style={styles.headerNevBody}>
           <View style={styles.headerTitleBody}>
-            <Text style={styles.headerTitle}>Reschedule Trip</Text>
+            <Text style={styles.headerTitle}>{strings?.reschedule_trip}</Text>
           </View>
           <TouchableOpacity onPress={() => navigation?.goBack()}>
             <Image style={styles.BackImg} source={Images.backIcon} />
