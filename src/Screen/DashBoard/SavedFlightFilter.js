@@ -468,7 +468,6 @@ const SavedFlightFilter = ({navigation}) => {
               <FlatList
                 data={FlightPreferencesData}
                 scrollEnabled={false}
-                bounces={false}
                 renderItem={({item, index}) => (
                   <View
                     style={[
