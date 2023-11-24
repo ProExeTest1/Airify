@@ -21,7 +21,6 @@ import {
   FlightServices,
   ReturnDepartureSwitch,
 } from '../../components';
-import {strings} from '../../helper/Strings';
 import {ShareConstant} from '../../helper/ShareConstant';
 import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 

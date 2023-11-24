@@ -1,8 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
-
-import {strings} from '../../helper/Strings';
 import {useSelector} from 'react-redux';
 
 const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {

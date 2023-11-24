@@ -568,7 +568,7 @@ const ThemeStyle = color =>
     modalViewStyle: {
       borderRadius: 16,
       alignItems: 'center',
-      backgroundColor: 'white',
+      backgroundColor: color?.white,
       paddingBottom: hp(4),
     },
     modalsubViewStyle: {

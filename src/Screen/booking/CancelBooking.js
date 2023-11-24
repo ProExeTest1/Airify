@@ -370,7 +370,11 @@ const CancelBooking = ({navigation}) => {
         <View style={styles.createAlertBody}>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <LottieView
-              source={require('../../helper/bookingSuccess.json')}
+              source={
+                color.white == '#fff'
+                  ? require('../../helper/bookingSuccess.json')
+                  : require('../../helper/bookingSuccessDark.json')
+              }
               autoPlay
               loop
               style={{
@@ -423,6 +427,7 @@ const ThemeStyle = color =>
       marginStart: wp(2),
       fontSize: fontSize(18),
       fontWeight: '500',
+      color: color?.black,
     },
     documentUploadview: {
       paddingVertical: hp(2),
@@ -447,7 +452,7 @@ const ThemeStyle = color =>
       tintColor: color.darkGray,
     },
     createAlertBody: {
-      backgroundColor: '#fff',
+      backgroundColor: color?.white,
       paddingVertical: wp(6),
       paddingHorizontal: wp(6),
       borderRadius: 20,

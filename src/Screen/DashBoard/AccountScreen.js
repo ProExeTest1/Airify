@@ -21,7 +21,6 @@ import {
   FrenchSettingData,
   SettingData,
 } from '../../assets/DummyData/SettingData';
-import {useSelector} from 'react-redux';
 import {
   CommonHeader,
   OnBoardingTwoButton,

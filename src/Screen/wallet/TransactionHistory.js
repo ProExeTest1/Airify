@@ -3,10 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useIsFocused} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import LottieView from 'lottie-react-native';

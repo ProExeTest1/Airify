@@ -1,8 +1,6 @@
 import React from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import {View, Text, StyleSheet} from 'react-native';
-
-import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {OnBoardingModuleHeader, OnBoardingSingleButton} from '../../components';

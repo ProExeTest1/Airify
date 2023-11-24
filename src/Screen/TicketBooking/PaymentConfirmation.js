@@ -12,13 +12,10 @@ import {
   CommonHeader,
   FlightDetailsCard,
   PriceDetails,
-  ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
-
 import ToggleSwitch from 'toggle-switch-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';

@@ -2,12 +2,10 @@ import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 
 import {hp, wp} from '../../helper/Constant';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {OnBoardingText, OnBoardingSingleButton} from '../../components';
 import {useSelector} from 'react-redux';
 
-import {useSelector} from 'react-redux';
 const SignUpSuccess = ({navigation}) => {
   const strings = useSelector(state => state?.languageReducer?.languageObject);
   const color = useSelector(state => state?.themereducer?.colorTheme);

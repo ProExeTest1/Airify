@@ -14,8 +14,6 @@ import {
   FrenchFlightDetailsData,
 } from '../../assets/DummyData/FlightDetailsData';
 import {fontSize, hp, wp} from '../../helper/Constant';
-
-import {strings} from '../../helper/Strings';
 import {useSelector} from 'react-redux';
 
 const FlightServices = ({DetailsNavigation}) => {

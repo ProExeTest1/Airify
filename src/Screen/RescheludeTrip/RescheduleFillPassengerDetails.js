@@ -16,23 +16,16 @@ import {
   DropDownPaperTextInput,
   FlightDetailsCard,
   FlightServices,
-  PriceDetails,
   ReschedulePriceDetails,
   RescheduleSwitch,
-  ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
-import {strings} from '../../helper/Strings';
 
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  ReturnSelectSeatActionData,
-  SelectSeatActionData,
-} from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {RescheduleSelectSeatData} from '../../redux/action/RescheduleAction';
 

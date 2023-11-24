@@ -7,7 +7,6 @@ import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {useSelector, useDispatch} from 'react-redux';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {useSelector} from 'react-redux';
 
 const Notification = ({navigation: {goBack}}) => {
   const strings = useSelector(state => state?.languageReducer?.languageObject);

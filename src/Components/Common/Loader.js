@@ -1,7 +1,6 @@
 import {StyleSheet, View, Animated, Easing} from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {hp} from '../../helper/Constant';
-import {useSelector} from 'react-redux';
 
 const Loader = ({color, durationMs = 1700}) => {
   const rotationDegree = useRef(new Animated.Value(0)).current;

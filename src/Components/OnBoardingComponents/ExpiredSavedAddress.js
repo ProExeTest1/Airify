@@ -16,9 +16,6 @@ import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {expiredFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
-import {strings} from '../../helper/Strings';
-import {useSelector, useDispatch} from 'react-redux';
-
 const ExpiredSavedAddress = ({onPress}) => {
   const dispatch = useDispatch();
   const [expireAddressData, setExpireAddressData] = useState([]);
@@ -93,6 +90,7 @@ const ExpiredSavedAddress = ({onPress}) => {
                   <Image
                     source={Images.filled_save}
                     style={styles.saveIconStyle}
+                    resizeMode="contain"
                   />
                 </View>
                 <View style={styles.cardDataBody}>
@@ -139,7 +137,9 @@ const ExpiredSavedAddress = ({onPress}) => {
                 <View style={[styles.cardBottemBody, styles.cardBottemBody2]}>
                   <Text style={styles.FlightsPlaseName}>{item?.date}</Text>
                   <View style={styles.expiredViewStyle}>
-                    <Text>{strings?.expired}</Text>
+                    <Text style={styles.FlightsPlaseName}>
+                      {strings?.expired}
+                    </Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -264,6 +264,11 @@ const ThemeStyle = color =>
     lottiStyle: {
       height: hp(65),
       width: wp(100),
+    },
+    saveIconStyle: {
+      height: hp(2),
+      width: hp(2),
+      tintColor: color?.commonBlue,
     },
   });
 

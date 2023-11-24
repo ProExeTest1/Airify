@@ -1,8 +1,5 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-
-import {strings} from '../../helper/Strings';
-
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {OnBoardingText, OnBoardingSingleButton} from '../../components';

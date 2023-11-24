@@ -143,7 +143,7 @@ const Language = ({navigation: {goBack}}) => {
             styles.flatListStyle,
             {
               borderColor:
-                selectedLanguage == 'English' ? color.commonBlue : color.white,
+                selectedLanguage == 'English' ? color.commonBlue : color.grey,
             },
           ]}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -177,7 +177,7 @@ const Language = ({navigation: {goBack}}) => {
             styles.flatListStyle,
             {
               borderColor:
-                selectedLanguage == 'French' ? color.commonBlue : color.white,
+                selectedLanguage == 'French' ? color.commonBlue : color.grey,
             },
           ]}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>

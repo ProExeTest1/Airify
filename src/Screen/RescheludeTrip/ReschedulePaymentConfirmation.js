@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -11,16 +10,12 @@ import React, {useEffect, useState} from 'react';
 import {
   CommonHeader,
   FlightDetailsCard,
-  PriceDetails,
   ReschedulePriceDetails,
   RescheduleSwitch,
-  ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
-
 import ToggleSwitch from 'toggle-switch-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
@@ -28,7 +23,6 @@ import auth from '@react-native-firebase/auth';
 import {
   DiscountDataAction,
   SelectpaymentMethodAction,
-  totalPaymentListAction,
 } from '../../redux/action/SelectSeatAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {

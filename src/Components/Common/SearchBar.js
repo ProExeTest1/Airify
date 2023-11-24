@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, Platform, StyleSheet, TextInput, View} from 'react-native';
-
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useSelector} from 'react-redux';

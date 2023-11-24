@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
-
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {hp, wp} from '../../helper/Constant';
 import {

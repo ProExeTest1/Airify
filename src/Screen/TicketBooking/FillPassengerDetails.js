@@ -20,8 +20,6 @@ import {
   ReturnDepartureSwitch,
   TicktBookingProgressBar,
 } from '../../components';
-import {strings} from '../../helper/Strings';
-
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import auth from '@react-native-firebase/auth';

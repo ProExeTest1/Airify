@@ -8,8 +8,6 @@ import {
   Image,
   Platform,
 } from 'react-native';
-
-import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useSelector} from 'react-redux';
 

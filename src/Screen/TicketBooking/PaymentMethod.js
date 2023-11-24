@@ -9,9 +9,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {CommonHeader} from '../../components';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';

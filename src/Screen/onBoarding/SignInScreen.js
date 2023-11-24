@@ -11,9 +11,6 @@ import Modal from 'react-native-modal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import {strings} from '../../helper/Strings';
-
 import {Images} from '../../helper/IconConstant';
 import CheckButton from '../../components/OnBoardingComponents/CheckButton';
 import {fontSize, hp, wp} from '../../helper/Constant';

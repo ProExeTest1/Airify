@@ -19,7 +19,6 @@ import {
   returnNormalDateAction,
 } from '../../redux/action/DateAction';
 import {useSelector} from 'react-redux';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 
 import {fontSize, hp, wp} from '../../helper/Constant';

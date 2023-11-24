@@ -2,9 +2,6 @@ import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import ScrollPicker from 'react-native-wheel-scrollview-picker';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-
-import {strings} from '../../helper/Strings';
-
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import OnBoardingTwoButton from '../Common/OnBoardingTwoButton';

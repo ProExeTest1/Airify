@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {View, Text, StyleSheet} from 'react-native';
-import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {AlertConstant} from '../../helper/AlertConstant';
@@ -12,7 +11,6 @@ import {
 } from '../../components';
 import {useSelector} from 'react-redux';
 
-import {useSelector} from 'react-redux';
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');
   const strings = useSelector(state => state?.languageReducer?.languageObject);

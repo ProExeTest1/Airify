@@ -19,11 +19,6 @@ import {ActivityIndicator} from 'react-native-paper';
 import {randomBookingIDGenerator} from '../../helper/RandomPromoCodegenerator';
 import {useDispatch, useSelector} from 'react-redux';
 import LottieView from 'lottie-react-native';
-import {
-  DiscountDataAction,
-  SelectSeatActionData,
-  SelectpaymentMethodAction,
-} from '../../redux/action/SelectSeatAction';
 import moment from 'moment';
 import {showTicketActionData} from '../../redux/action/showTicketAction';
 import {

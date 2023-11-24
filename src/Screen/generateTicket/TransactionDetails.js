@@ -27,14 +27,23 @@ import Barcode from '@kichiyaki/react-native-barcode-generator';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {SearchFlightReturnAction} from '../../redux/action/SearchFlightAction';
-import {SearchFlightAction} from '../../redux/action/PlaceAction';
+import {
+  SearchFlightAction,
+  depaturePlaceAction,
+  destinationPlaceAction,
+} from '../../redux/action/PlaceAction';
 import {
   RescheduleCardData,
   RescheduleDateData,
   RescheduleNormalDateData,
 } from '../../redux/action/RescheduleAction';
 import moment from 'moment';
-
+import {
+  dateAction,
+  depatureDateAction,
+  returnDateAction,
+  returnNormalDateAction,
+} from '../../redux/action/DateAction';
 const TransactionDetails = ({navigation, route}) => {
   //BKG951233154
   const tripType = route?.params?.TripType;
@@ -87,6 +96,12 @@ const TransactionDetails = ({navigation, route}) => {
               navigation?.navigate('TabNavigation');
               dispatch(SearchFlightReturnAction({}));
               dispatch(SearchFlightAction({}));
+              dispatch(depaturePlaceAction({}));
+              dispatch(destinationPlaceAction({}));
+              dispatch(dateAction({}));
+              dispatch(depatureDateAction(''));
+              dispatch(returnDateAction(''));
+              dispatch(returnNormalDateAction({}));
             }}
             onPress1={true}
             onPress2={false}

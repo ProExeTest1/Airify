@@ -6,11 +6,8 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {StackActions, useRoute} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {strings} from '../../helper/Strings';
-
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';

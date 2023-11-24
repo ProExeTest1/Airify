@@ -10,7 +10,6 @@ import {
   SearchFlightReturnCardAction,
 } from '../../redux/action/SearchFlightAction';
 import {AlertConstant} from '../../helper/AlertConstant';
-import {strings} from '../../helper/Strings';
 import moment from 'moment';
 
 const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {

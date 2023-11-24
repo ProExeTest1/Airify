@@ -10,15 +10,10 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {CommonHeader} from '../../../components';
-import {strings} from '../../../helper/Strings';
 import {Images} from '../../../helper/IconConstant';
-import {color} from '../../../helper/ColorConstant';
 import {airlineCity} from '../../../assets/DummyData/AirlineCity';
 import firestore from '@react-native-firebase/firestore';
-import {
-  ReturnSelectSeatActionData,
-  SelectSeatActionData,
-} from '../../../redux/action/SelectSeatAction';
+import {ReturnSelectSeatActionData} from '../../../redux/action/SelectSeatAction';
 import {fontSize, hp, wp} from '../../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
 import {AlertConstant} from '../../../helper/AlertConstant';

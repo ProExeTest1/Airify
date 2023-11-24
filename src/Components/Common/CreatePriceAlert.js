@@ -10,8 +10,6 @@ import {
   View,
 } from 'react-native';
 import ToggleSwitch from 'toggle-switch-react-native';
-
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 
 import {wp, fontSize, hp} from '../../helper/Constant';

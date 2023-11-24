@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, Alert, Image, ScrollView} from 'react-native';
 import {CommonHeader} from '../../components';
 
 import {Images} from '../../helper/IconConstant';
-import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useRoute} from '@react-navigation/native';
 import Barcode from '@kichiyaki/react-native-barcode-generator';

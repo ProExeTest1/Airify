@@ -16,7 +16,6 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import {useSelector, useDispatch} from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import {useSelector} from 'react-redux';
 
 const AirifyPoint = ({navigation: {goBack}, navigation}) => {
   const [pointData, setPointData] = useState({});

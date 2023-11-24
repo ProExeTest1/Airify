@@ -472,6 +472,7 @@ const SavedScreen = ({navigation}) => {
           <View style={styles.sortModalBody}>
             <FlatList
               data={radioButtons}
+              bounces={false}
               renderItem={({item, index}) => (
                 <View style={{paddingVertical: hp(1)}}>
                   <RadioButton

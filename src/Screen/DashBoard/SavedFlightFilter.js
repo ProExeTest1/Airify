@@ -24,7 +24,6 @@ import {
   AmenitiesData,
   CabinClassData,
   FlightPreferencesData,
-  FrenchnumberOfStops,
   RefundAndRescheduleData,
   numberOfStops,
 } from '../../assets/DummyData/Data';
@@ -32,7 +31,6 @@ import {
   activeFlightFilter,
   expiredFlightFilter,
 } from '../../redux/action/SavedFlights';
-import {strings} from '../../helper/Strings';
 
 const SavedFlightFilter = ({navigation}) => {
   const route = useRoute();
@@ -470,6 +468,7 @@ const SavedFlightFilter = ({navigation}) => {
               <FlatList
                 data={FlightPreferencesData}
                 scrollEnabled={false}
+                bounces={false}
                 renderItem={({item, index}) => (
                   <View
                     style={[

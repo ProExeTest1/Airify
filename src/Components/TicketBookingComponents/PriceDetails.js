@@ -4,9 +4,6 @@ import CardHeader from './CardHeader';
 import {Images} from '../../helper/IconConstant';
 import {useSelector} from 'react-redux';
 import {fontSize, hp, wp} from '../../helper/Constant';
-
-import {strings} from '../../helper/Strings';
-
 const PriceDetails = ({
   totalPassenger,
   totalSeat,

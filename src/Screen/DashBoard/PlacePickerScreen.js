@@ -17,7 +17,6 @@ import {
   depaturePlaceAction,
   destinationPlaceAction,
 } from '../../redux/action/PlaceAction';
-import {strings} from '../../helper/Strings';
 
 const PlacePickerScreen = ({navigation, route}) => {
   const dispatch = useDispatch();

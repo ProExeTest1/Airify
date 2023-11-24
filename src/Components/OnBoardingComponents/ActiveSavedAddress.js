@@ -16,7 +16,6 @@ import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {activeFlight} from '../../redux/action/SavedFlights';
 import LottieView from 'lottie-react-native';
-import {strings} from '../../helper/Strings';
 
 const ActiveSavedAddress = ({onPress, data}) => {
   const strings = useSelector(state => state?.languageReducer?.languageObject);

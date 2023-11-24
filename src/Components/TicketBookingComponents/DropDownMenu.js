@@ -1,6 +1,5 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useRef, useState} from 'react';
-import Modal from 'react-native-modal';
 import {hp, wp} from '../../helper/Constant';
 import {useSelector} from 'react-redux';
 const DropDownMenu = ({data, renderItem, dropdownTop, style}) => {

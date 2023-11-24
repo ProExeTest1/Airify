@@ -13,8 +13,6 @@ import {fontSize, hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {
   OnBoardingTwoButton,
-  SearchFlightsHeader,
-  TicketList,
   CreatePriceAlert,
   CardList,
 } from '../../components';

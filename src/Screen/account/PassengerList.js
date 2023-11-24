@@ -109,7 +109,7 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         backgroundColor:
-                          index % 2 == 0 ? color.white : color.grey1,
+                          index % 2 == 0 ? color.white : color.grey,
                       },
                     ]}>
                     <View style={styles.textStyle}>

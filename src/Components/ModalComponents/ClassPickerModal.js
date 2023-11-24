@@ -8,9 +8,6 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-
-import {strings} from '../../helper/Strings';
-
 import {Images} from '../../helper/IconConstant';
 import {ClassData, FrenchClassData} from '../../assets/DummyData/Data';
 import {fontSize, hp, wp} from '../../helper/Constant';

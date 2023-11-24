@@ -11,11 +11,8 @@ import {
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-
 import {RAZORPAY_KEY_ID} from '@env';
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {AlertConstant} from '../../helper/AlertConstant';

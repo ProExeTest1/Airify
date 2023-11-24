@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Image,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -9,11 +10,7 @@ import {
 } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {AlertConstant} from '../../helper/AlertConstant';
-
-import {useSelector} from 'react-redux';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {
   CommonHeader,
@@ -52,7 +49,8 @@ const SpecialOfferScreen = ({route, navigation}) => {
         headerName={headerData}
         navigation={() => navigation.goBack()}
       /> */}
-      <View style={styles.innerContainer}>
+
+      <ScrollView bounces={false} style={styles.innerContainer}>
         <SwiperFlatlistComponent showPagination={true} />
         <Text style={styles.titleStyle}>{strings.exclusive_offer}</Text>
         <Text style={[styles.textStyle, {marginVertical: hp(1.2)}]}>
@@ -104,12 +102,13 @@ const SpecialOfferScreen = ({route, navigation}) => {
           <Text style={styles.dottextStyle}>•</Text>
           <Text style={styles.textStyle}>{strings.T_and_D_line2}</Text>
         </View>
-        <TouchableOpacity style={styles.claimDiscountButtonStyle}>
-          <Text style={styles.claimDiscountFontStyle}>
-            {strings.Claim_Discount}
-          </Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
+
+      <TouchableOpacity style={styles.claimDiscountButtonStyle}>
+        <Text style={styles.claimDiscountFontStyle}>
+          {strings.Claim_Discount}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -147,13 +146,14 @@ const ThemeStyle = color =>
       marginVertical: hp(0.8),
     },
     claimDiscountButtonStyle: {
-      width: wp(90),
-      height: hp(7),
+      marginHorizontal: wp(5),
+      paddingHorizontal: wp(3),
+      paddingVertical: hp(2),
       borderRadius: 12,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'blue',
-      marginVertical: Platform.OS === 'ios' ? hp(4) : hp(2),
+      marginBottom: hp(3),
     },
     claimDiscountFontStyle: {
       fontWeight: 'bold',

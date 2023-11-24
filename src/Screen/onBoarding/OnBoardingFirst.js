@@ -1,9 +1,7 @@
 import Swiper from 'react-native-swiper';
 import {View, StyleSheet} from 'react-native';
 import React, {useRef, useState} from 'react';
-
 import {hp, wp} from '../../helper/Constant';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {
   OnBoardingText,
@@ -11,8 +9,6 @@ import {
   OnBoardingTwoButton,
   OnBoardingSingleButton,
 } from '../../components';
-import {useSelector} from 'react-redux';
-
 import {useSelector} from 'react-redux';
 const OnBoardingFirst = ({navigation}) => {
   const swiperRef = useRef();

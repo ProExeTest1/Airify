@@ -9,9 +9,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import OtpInputs from 'react-native-otp-inputs';
 import {CommonHeader, OnBoardingTwoButton} from '../../components';
-import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';

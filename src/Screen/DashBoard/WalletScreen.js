@@ -10,11 +10,8 @@ import {
 import auth from '@react-native-firebase/auth';
 import {useIsFocused} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
-
-import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
-
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useSelector} from 'react-redux';
 
