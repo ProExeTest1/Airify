@@ -11,7 +11,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -153,8 +153,10 @@ const FlightDetailsScreen = ({navigation, route}) => {
           });
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: color.bgColor}}>
       <View style={styles.headerViewStyle}>
         <SafeAreaView>
           <View style={styles.safeHeaderViewStyle}>
@@ -325,201 +327,201 @@ const FlightDetailsScreen = ({navigation, route}) => {
 
 export default FlightDetailsScreen;
 
-const styles = StyleSheet.create({
-  headerViewStyle: {
-    backgroundColor: color.commonBlue,
-  },
-  ScrollViewStyle: {marginTop: hp(1)},
-  backIconStyle: {
-    height: hp(3),
-    width: hp(3),
-    tintColor: color.white,
-  },
-  headerTextStyle: {
-    fontSize: fontSize(22),
-    fontWeight: 'bold',
-    color: color.white,
-  },
-  saveShareIconStyle: {
-    height: hp(2.5),
-    width: hp(2.5),
-    tintColor: color.white,
-  },
-  safeHeaderViewStyle: {
-    paddingHorizontal: wp(7),
-    justifyContent: 'space-between',
-    paddingVertical: Platform.OS == 'ios' ? hp(2) : hp(3),
-    flexDirection: 'row',
-  },
-  headerTextViewStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    position: 'absolute',
-    width: wp(100),
-  },
-  saveShareViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: wp(17),
-  },
-
-  cardBody: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    marginBottom: hp(2),
-    borderRadius: 10,
-    borderColor: '#000',
-    marginHorizontal: wp(4),
-  },
-  cardPrice: {
-    color: color.commonBlue,
-    fontSize: fontSize(20),
-    fontWeight: '600',
-    marginVertical: hp(1.2),
-  },
-  cardPriceTitle: {
-    color: '#7e7e7f',
-    fontSize: fontSize(16),
-  },
-
-  FlightsPlaseBody: {
-    width: wp(20),
-  },
-  FlightsPlaseImgBody: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  FlightsPlaseImg: {
-    height: hp(5),
-    width: hp(17),
-  },
-  FlightsPlaseImgText: {
-    color: '#7e7e7f',
-    fontSize: fontSize(13),
-  },
-  FlightsPlaseNicName: {
-    fontSize: fontSize(21),
-    color: '#000',
-    fontWeight: 'bold',
-    marginTop: hp(1.5),
-  },
-  FlightsPlaseName: {
-    color: '#7e7e7f',
-    fontWeight: '500',
-  },
-  cardBottemBody: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingBottom: hp(2.5),
-    paddingTop: hp(1),
-  },
-  flatlistIconStyle: {
-    height: hp(2.5),
-    width: hp(2.5),
-    tintColor: '#383838',
-  },
-  forwardStyle: {
-    height: hp(1.8),
-    width: hp(1.8),
-    tintColor: color.commonBlue,
-  },
-  flatlistViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#e2e2e2',
-    borderBottomWidth: 1,
-    paddingVertical: hp(1.6),
-  },
-  aeroPlaneImageStyle: {
-    height: hp(6),
-    width: hp(6),
-  },
-  secondCardHeaderStyle: {
-    marginHorizontal: wp(5),
-  },
-  secondCardheaderTextStyle: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-  },
-  thirdCardStyle: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    borderColor: '#000',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: hp(2),
-  },
-  flatlistTextStyle: {
-    fontSize: fontSize(18),
-    color: '#383838',
-    marginHorizontal: wp(3),
-  },
-  flatlist1InnerViewStyle: {
-    flexDirection: 'row',
-    marginVertical: hp(1),
-  },
-  flatlist2InnerViewStyle: {
-    marginHorizontal: wp(2),
-  },
-  detailsTextStyle: {
-    fontSize: fontSize(18),
-    color: color.commonBlue,
-    marginHorizontal: wp(3),
-  },
-  priceTextStyle: {color: '#383838'},
-  continueButtonStyle: {
-    height: hp(6.5),
-    width: '50%',
-    backgroundColor: color.commonBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  continueTextStyle: {
-    fontSize: fontSize(18),
-    color: color.white,
-    fontWeight: '600',
-  },
-  modalStyle: {
-    justifyContent: 'flex-start',
-    alignSelf: 'center',
-    top: Platform.OS == 'ios' ? hp(4) : hp(0),
-  },
-  modalViewViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '40%',
-    backgroundColor: color.white,
-    borderRadius: 100,
-    paddingVertical: hp(1.2),
-    paddingHorizontal: wp(1.3),
-    paddingRight: wp(2.6),
-    shadowOffset: {
-      width: 0,
-      height: 2,
+const ThemeStyle = color =>
+  StyleSheet.create({
+    headerViewStyle: {
+      backgroundColor: color.commonBlue,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 6,
-    elevation: 30,
-  },
-  imageViewStyle: {
-    backgroundColor: color.commonBlue,
-    padding: hp(0.9),
-    borderRadius: 100,
-    marginHorizontal: wp(2.3),
-  },
-  imageStyle: {
-    height: hp(2.5),
-    width: hp(2.5),
-    tintColor: color.white,
-  },
-  modalTextStyle: {
-    fontSize: fontSize(22),
-    fontWeight: 'bold',
-    color: color.black,
-    marginHorizontal: wp(1),
-  },
-});
+    ScrollViewStyle: {marginTop: hp(1)},
+    backIconStyle: {
+      height: hp(3),
+      width: hp(3),
+      tintColor: '#fff',
+    },
+    headerTextStyle: {
+      fontSize: fontSize(22),
+      fontWeight: 'bold',
+      color: '#fff',
+    },
+    saveShareIconStyle: {
+      height: hp(2.5),
+      width: hp(2.5),
+      tintColor: '#fff',
+    },
+    safeHeaderViewStyle: {
+      paddingHorizontal: wp(7),
+      justifyContent: 'space-between',
+      paddingVertical: Platform.OS == 'ios' ? hp(2) : hp(3),
+      flexDirection: 'row',
+    },
+    headerTextViewStyle: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
+      position: 'absolute',
+      width: wp(100),
+    },
+    saveShareViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      width: wp(17),
+    },
+
+    cardBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(4),
+      marginBottom: hp(2),
+      borderRadius: 10,
+      marginHorizontal: wp(4),
+    },
+    cardPrice: {
+      color: color.commonBlue,
+      fontSize: fontSize(20),
+      fontWeight: '600',
+      marginVertical: hp(1.2),
+    },
+    cardPriceTitle: {
+      color: color.darkLight,
+      fontSize: fontSize(16),
+    },
+
+    FlightsPlaseBody: {
+      width: wp(20),
+    },
+    FlightsPlaseImgBody: {
+      alignItems: 'center',
+      flex: 1,
+    },
+    FlightsPlaseImg: {
+      height: hp(5),
+      width: hp(17),
+    },
+    FlightsPlaseImgText: {
+      color: '#7e7e7f',
+      fontSize: fontSize(13),
+    },
+    FlightsPlaseNicName: {
+      fontSize: fontSize(21),
+      color: '#000',
+      fontWeight: 'bold',
+      marginTop: hp(1.5),
+    },
+    FlightsPlaseName: {
+      color: '#7e7e7f',
+      fontWeight: '500',
+    },
+    cardBottemBody: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingBottom: hp(2.5),
+      paddingTop: hp(1),
+    },
+    flatlistIconStyle: {
+      height: hp(2.5),
+      width: hp(2.5),
+      tintColor: '#383838',
+    },
+    forwardStyle: {
+      height: hp(1.8),
+      width: hp(1.8),
+      tintColor: color.commonBlue,
+    },
+    flatlistViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: color.grey,
+      borderBottomWidth: 1,
+      paddingVertical: hp(1.6),
+    },
+    aeroPlaneImageStyle: {
+      height: hp(6),
+      width: hp(6),
+    },
+    secondCardHeaderStyle: {
+      marginHorizontal: wp(5),
+    },
+    secondCardheaderTextStyle: {
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      color: color.black,
+    },
+    thirdCardStyle: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(4),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingVertical: hp(2),
+    },
+    flatlistTextStyle: {
+      fontSize: fontSize(18),
+      color: '#383838',
+      marginHorizontal: wp(3),
+    },
+    flatlist1InnerViewStyle: {
+      flexDirection: 'row',
+      marginVertical: hp(1),
+    },
+    flatlist2InnerViewStyle: {
+      marginHorizontal: wp(2),
+    },
+    detailsTextStyle: {
+      fontSize: fontSize(18),
+      color: color.commonBlue,
+      marginHorizontal: wp(3),
+    },
+    priceTextStyle: {color: color.darkLight},
+    continueButtonStyle: {
+      height: hp(6.5),
+      width: '50%',
+      backgroundColor: color.commonBlue,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+    },
+    continueTextStyle: {
+      fontSize: fontSize(18),
+      color: '#fff',
+      fontWeight: '600',
+    },
+    modalStyle: {
+      justifyContent: 'flex-start',
+      alignSelf: 'center',
+      top: Platform.OS == 'ios' ? hp(4) : hp(0),
+    },
+    modalViewViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      width: '40%',
+      backgroundColor: color.white,
+      borderRadius: 100,
+      paddingVertical: hp(1.2),
+      paddingHorizontal: wp(1.3),
+      paddingRight: wp(2.6),
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: 6,
+      elevation: 30,
+    },
+    imageViewStyle: {
+      backgroundColor: color.commonBlue,
+      padding: hp(0.9),
+      borderRadius: 100,
+      marginHorizontal: wp(2.3),
+    },
+    imageStyle: {
+      height: hp(2.5),
+      width: hp(2.5),
+      tintColor: color.white,
+    },
+    modalTextStyle: {
+      fontSize: fontSize(22),
+      fontWeight: 'bold',
+      color: color.black,
+      marginHorizontal: wp(1),
+    },
+  });

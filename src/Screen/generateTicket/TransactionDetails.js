@@ -18,7 +18,7 @@ import {
   ReturnDepartureSwitch,
 } from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -73,8 +73,10 @@ const TransactionDetails = ({navigation, route}) => {
     Clipboard.setString(firebaseTicketData?.bookingID);
     AlertConstant('Text copied to clipboard!');
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: color.bgColor}}>
       {firebaseTicketData?.bookingID && (
         <>
           <StatusBar barStyle={'light-content'} />
@@ -90,7 +92,7 @@ const TransactionDetails = ({navigation, route}) => {
             onPress2={false}
             Images1={Images.backIcon}
             Images2={null}
-            Images1Color={color.white}
+            Images1Color={'#fff'}
           />
           {tripType === 'Round-Trip' ? (
             <ReturnDepartureSwitch
@@ -132,7 +134,12 @@ const TransactionDetails = ({navigation, route}) => {
                 </Text>
                 <Image
                   source={Images.copy}
-                  style={{height: hp(3), width: hp(3), marginLeft: wp(2)}}
+                  style={{
+                    height: hp(3),
+                    width: hp(3),
+                    marginLeft: wp(2),
+                    tintColor: color.black,
+                  }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
@@ -274,7 +281,11 @@ const TransactionDetails = ({navigation, route}) => {
                   </Text>
                   <Image
                     source={Images.copy}
-                    style={{height: hp(2.3), width: hp(2.3)}}
+                    style={{
+                      height: hp(2.3),
+                      width: hp(2.3),
+                      tintColor: color.black,
+                    }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -290,7 +301,11 @@ const TransactionDetails = ({navigation, route}) => {
                   </Text>
                   <Image
                     source={Images.copy}
-                    style={{height: hp(2.3), width: hp(2.3)}}
+                    style={{
+                      height: hp(2.3),
+                      width: hp(2.3),
+                      tintColor: color.black,
+                    }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -305,7 +320,11 @@ const TransactionDetails = ({navigation, route}) => {
                   </Text>
                   <Image
                     source={Images.copy}
-                    style={{height: hp(2.3), width: hp(2.3)}}
+                    style={{
+                      height: hp(2.3),
+                      width: hp(2.3),
+                      tintColor: color.black,
+                    }}
                     resizeMode="contain"
                   />
                 </TouchableOpacity>
@@ -421,130 +440,132 @@ const TransactionDetails = ({navigation, route}) => {
 
 export default TransactionDetails;
 
-const styles = StyleSheet.create({
-  scrollViewStyle: {flex: 1},
-  cardBody: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    marginBottom: hp(2),
-    borderRadius: 10,
-    borderColor: '#000',
-    marginHorizontal: wp(4),
-  },
-  flatlistViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#e2e2e2',
-    borderBottomWidth: 1,
-    paddingVertical: hp(1.6),
-  },
-  flyIconStyle: {
-    height: hp(3),
-    width: hp(3),
-  },
-  cardHeaderText: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    flex: 1,
-    color: color.black,
-    marginHorizontal: wp(4),
-  },
-  contactDetailsViewStyle: {
-    marginVertical: hp(2),
-  },
-  emailViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'space-between',
-    marginTop: hp(1),
-  },
-  nameTextStyle: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    flex: 1,
-    color: color.black,
-  },
-  emailStyle: {
-    flex: 1,
-    fontSize: fontSize(16),
-    color: '#383838',
-  },
-  PhoneNumberStyle: {
-    color: '#383838',
-    fontSize: fontSize(16),
-    marginHorizontal: wp(2),
-  },
-  buttonStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: hp(2),
-    borderRadius: 10,
-    backgroundColor: color.commonBlue,
-    marginVertical: hp(1.2),
-    marginBottom: hp(2),
-  },
-  buttonTextStyle: {
-    fontSize: fontSize(18, 812),
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  seatNumberListTitleText: {
-    fontSize: fontSize(18, 812),
-    color: color.black,
-    fontWeight: 'bold',
-  },
-  seatNumberListTitleText1: {
-    fontSize: fontSize(20, 812),
-    color: color.black,
-    fontWeight: 'bold',
-  },
-  passengerViewStyle: {
-    flexDirection: 'row',
-    backgroundColor: '#F3F3F3',
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(2),
-    flex: 1,
-    borderRadius: 10,
-    justifyContent: 'space-between',
-    marginBottom: hp(1),
-    marginVertical: hp(2),
-  },
-  noteStyle: {
-    flex: 1,
-    marginHorizontal: wp(6),
-    textAlign: 'center',
-    color: '#383838',
-    fontSize: fontSize(16),
-  },
-  rescheduleButtonStyle: {
-    paddingHorizontal: wp(6),
-    marginHorizontal: wp(4),
-    paddingVertical: hp(2),
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 12,
-    borderWidth: 2,
-    marginVertical: hp(1.2),
-  },
-  rescheduleTextStyle: {
-    fontSize: fontSize(20),
-    fontWeight: 'bold',
-  },
-  TransactionDetailsStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: hp(1),
-  },
-  labeltxtStyle: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: color.black,
-  },
-  dataTextStyle: {
-    fontSize: fontSize(18),
-    color: color.black,
-    fontWeight: 'bold',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    scrollViewStyle: {flex: 1},
+    cardBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(4),
+      marginBottom: hp(2),
+      borderRadius: 10,
+      borderColor: '#000',
+      marginHorizontal: wp(4),
+    },
+    flatlistViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: '#e2e2e2',
+      borderBottomWidth: 1,
+      paddingVertical: hp(1.6),
+    },
+    flyIconStyle: {
+      height: hp(3),
+      width: hp(3),
+      tintColor: color.black,
+    },
+    cardHeaderText: {
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      flex: 1,
+      color: color.black,
+      marginHorizontal: wp(4),
+    },
+    contactDetailsViewStyle: {
+      marginVertical: hp(2),
+    },
+    emailViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+      justifyContent: 'space-between',
+      marginTop: hp(1),
+    },
+    nameTextStyle: {
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      flex: 1,
+      color: color.black,
+    },
+    emailStyle: {
+      flex: 1,
+      fontSize: fontSize(16),
+      color: color.offerColor,
+    },
+    PhoneNumberStyle: {
+      color: color.offerColor,
+      fontSize: fontSize(16),
+      marginHorizontal: wp(2),
+    },
+    buttonStyle: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: hp(2),
+      borderRadius: 10,
+      backgroundColor: color.commonBlue,
+      marginVertical: hp(1.2),
+      marginBottom: hp(2),
+    },
+    buttonTextStyle: {
+      fontSize: fontSize(18, 812),
+      color: 'white',
+      fontWeight: 'bold',
+    },
+    seatNumberListTitleText: {
+      fontSize: fontSize(18, 812),
+      color: color.black,
+      fontWeight: 'bold',
+    },
+    seatNumberListTitleText1: {
+      fontSize: fontSize(20, 812),
+      color: color.black,
+      fontWeight: 'bold',
+    },
+    passengerViewStyle: {
+      flexDirection: 'row',
+      backgroundColor: color.lightGray,
+      paddingHorizontal: wp(3),
+      paddingVertical: hp(2),
+      flex: 1,
+      borderRadius: 10,
+      justifyContent: 'space-between',
+      marginBottom: hp(1),
+      marginVertical: hp(2),
+    },
+    noteStyle: {
+      flex: 1,
+      marginHorizontal: wp(6),
+      textAlign: 'center',
+      color: color.offerColor,
+      fontSize: fontSize(16),
+    },
+    rescheduleButtonStyle: {
+      paddingHorizontal: wp(6),
+      marginHorizontal: wp(4),
+      paddingVertical: hp(2),
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 12,
+      borderWidth: 2,
+      marginVertical: hp(1.2),
+    },
+    rescheduleTextStyle: {
+      fontSize: fontSize(20),
+      fontWeight: 'bold',
+    },
+    TransactionDetailsStyle: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginVertical: hp(1),
+    },
+    labeltxtStyle: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: color.black,
+    },
+    dataTextStyle: {
+      fontSize: fontSize(18),
+      color: color.black,
+      fontWeight: 'bold',
+    },
+  });

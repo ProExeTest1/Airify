@@ -11,6 +11,7 @@ import showTicketReducer from './showTicketReducer';
 import BookingReducer from './BookingReducer';
 import RescheduleReducer from './RescheduleReducer';
 import LanguageReducer from './LanguageReducer';
+import ColorThemeReducer from './ColorThemeReducer';
 
 export const rootReducer = combineReducers({
   date: dateReducer,
@@ -25,4 +26,5 @@ export const rootReducer = combineReducers({
   bookingTransactiondata: BookingReducer,
   rescheduleFlightdata: RescheduleReducer,
   languageReducer: LanguageReducer,
+  themereducer: ColorThemeReducer,
 });

@@ -4,8 +4,11 @@ import SwiperFlatList from 'react-native-swiper-flatlist';
 
 import {hp, wp} from '../../helper/Constant';
 import {dummyData} from '../../assets/DummyData/Data';
+import {useSelector} from 'react-redux';
 
 const SwiperFlatlistComponent = ({showPagination}) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View>
       <SwiperFlatList
@@ -34,19 +37,20 @@ const SwiperFlatlistComponent = ({showPagination}) => {
 
 export default SwiperFlatlistComponent;
 const {width} = Dimensions.get('window');
-const styles = StyleSheet.create({
-  child: {
-    width,
-    justifyContent: 'center',
-  },
-  offerimageStyle: {
-    width: wp(88),
-    height: hp(25),
-    borderRadius: 14,
-  },
-  paginationStyleItem: {
-    width: hp(0.9),
-    height: hp(0.9),
-    borderRadius: 5,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    child: {
+      width,
+      justifyContent: 'center',
+    },
+    offerimageStyle: {
+      width: wp(88),
+      height: hp(25),
+      borderRadius: 14,
+    },
+    paginationStyleItem: {
+      width: hp(0.9),
+      height: hp(0.9),
+      borderRadius: 5,
+    },
+  });

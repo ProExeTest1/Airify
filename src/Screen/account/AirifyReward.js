@@ -16,14 +16,14 @@ import {
   OnBoardingSingleButton,
   Loader,
 } from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import QRCode from 'react-native-qrcode-svg';
 import {AlertConstant} from '../../helper/AlertConstant';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const AirifyReward = ({navigation: {goBack}}) => {
   const strings = useSelector(state => state?.languageReducer?.languageObject);
@@ -64,7 +64,8 @@ const AirifyReward = ({navigation: {goBack}}) => {
       AlertConstant(error?.message);
     }
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles?.container}>
       <CommonHeader
@@ -72,7 +73,8 @@ const AirifyReward = ({navigation: {goBack}}) => {
         onPress2={false}
         Images2={Images?.info}
         Images1={Images?.backIcon}
-        Images1Color={color?.white}
+        Images1Color={'#fff'}
+        Images2Color={'#fff'}
         headerName={strings?.airifyReward}
         navigation1={() => {
           goBack();
@@ -116,7 +118,7 @@ const AirifyReward = ({navigation: {goBack}}) => {
           style={{
             borderTopWidth: 1,
             paddingVertical: hp(2),
-            borderColor: color?.grey1,
+            borderColor: color?.grey,
           }}>
           <OnBoardingSingleButton
             buttonText={strings?.shareCode}
@@ -130,56 +132,58 @@ const AirifyReward = ({navigation: {goBack}}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  bodyMainText: {
-    paddingVertical: hp(2),
-  },
-  qrCodeStyle: {
-    borderWidth: 1,
-    marginTop: hp(4),
-    alignItems: 'center',
-    paddingVertical: hp(4),
-    marginHorizontal: wp(8),
-    justifyContent: 'center',
-    borderColor: color.grayLight,
-  },
-  promocodeViewStyle: {
-    borderRadius: 5,
-    flexDirection: 'row',
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(2),
-    backgroundColor: color.Grey,
-  },
-  promocodeTextStyle: {
-    fontWeight: 'bold',
-    marginRight: wp(2),
-    color: color.black,
-    fontSize: fontSize(18),
-  },
-  copyImageStyle: {
-    width: hp(3),
-    height: hp(3),
-  },
-  referralCodeView: {
-    alignItems: 'center',
-    paddingVertical: hp(4),
-    justifyContent: 'center',
-  },
-  textView: {
-    borderRadius: 4,
-    marginTop: hp(2),
-    marginBottom: hp(4),
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(28),
-    backgroundColor: color.Grey,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    bodyMainText: {
+      paddingVertical: hp(2),
+    },
+    qrCodeStyle: {
+      borderWidth: 1,
+      marginTop: hp(4),
+      alignItems: 'center',
+      paddingVertical: hp(4),
+      marginHorizontal: wp(8),
+      justifyContent: 'center',
+      borderColor: color.grey,
+    },
+    promocodeViewStyle: {
+      borderRadius: 5,
+      flexDirection: 'row',
+      paddingVertical: hp(1.5),
+      paddingHorizontal: wp(2),
+      backgroundColor: color.Grey,
+    },
+    promocodeTextStyle: {
+      fontWeight: 'bold',
+      marginRight: wp(2),
+      color: color.black,
+      fontSize: fontSize(18),
+    },
+    copyImageStyle: {
+      width: hp(3),
+      height: hp(3),
+      tintColor: color.black,
+    },
+    referralCodeView: {
+      alignItems: 'center',
+      paddingVertical: hp(4),
+      justifyContent: 'center',
+    },
+    textView: {
+      borderRadius: 4,
+      marginTop: hp(2),
+      marginBottom: hp(4),
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      paddingVertical: hp(1.5),
+      paddingHorizontal: wp(28),
+      backgroundColor: color.TowButtonBgColor2,
+    },
+  });
 
 export default AirifyReward;

@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 import {MenuProvider} from 'react-native-popup-menu';
 import SplashScreen from 'react-native-splash-screen';
 import firestore from '@react-native-firebase/firestore';
@@ -57,37 +57,48 @@ function App() {
               }),
           });
       });
-    // const date = getDate();
-    // const addAllFlight = date.map((item, index) => {
-    //   return {
-    //     date: item.date,
-    //     day: item.day,
-    //     flightData: SearchFlightData.map((i, ind) => {
-    //       return {
-    //         flightData: i,
-    //         selectSeat: [],
-    //       };
-    //     }),
-    //   };
-    // });
-    // await firestore()
-    //   .collection('AirlineSeatBookData')
-    //   .doc('JaTwXgqSHSESiR6CDzdy')
-    //   .update({
-    //     AirlineSeatBookData: addAllFlight,
-    //   });
   };
   const seatingArrange = async () => {
-    if (
-      new Date().toLocaleDateString('en-IN') !==
-      (await firestore()
-        .collection('AirlineSeatBookData')
-        .doc('JaTwXgqSHSESiR6CDzdy')
-        .get()
-        .then(i => i.data().AirlineSeatBookData[0].date))
-    ) {
-      functi();
-    }
+    await firestore()
+      .collection('AirlineSeatBookData')
+      .doc('JaTwXgqSHSESiR6CDzdy')
+      .get()
+      .then(async item => {
+        if (
+          !getDate().every(
+            (i, index) =>
+              i.date == item.data().AirlineSeatBookData[index - 1].date,
+          )
+        ) {
+          functi();
+        } else if (
+          item
+            .data()
+            .AirlineSeatBookData.every(
+              i => i.date == getDate()[getDate().length - 1].date,
+            )
+        ) {
+          const date = getDate();
+          const addAllFlight = date.map((item, index) => {
+            return {
+              date: item.date,
+              day: item.day,
+              flightData: SearchFlightData.map((i, ind) => {
+                return {
+                  flightData: i,
+                  selectSeat: [],
+                };
+              }),
+            };
+          });
+          await firestore()
+            .collection('AirlineSeatBookData')
+            .doc('JaTwXgqSHSESiR6CDzdy')
+            .update({
+              AirlineSeatBookData: addAllFlight,
+            });
+        }
+      });
   };
   return (
     <Provider store={store}>

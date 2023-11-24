@@ -10,7 +10,7 @@ import {
 import React, {useCallback, useEffect, useState} from 'react';
 import {CommonHeader, OnBoardingSingleButton} from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {strings} from '../../helper/Strings';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {cancelBookingRadio} from '../../assets/DummyData/radioButtons';
@@ -74,7 +74,7 @@ const CancelBooking = ({navigation}) => {
               firebaseTicketData?.totalPaymentList?.totalPayment,
             transactionHistory: [
               {
-                title: 'cancel Booking',
+                title: 'Cancel Booking',
                 price: `+$${firebaseTicketData?.totalPaymentList?.totalPayment}`,
                 date: moment(new Date()).format('MMM D,YYYY'),
                 time: new Date().toLocaleTimeString('en-IN'),
@@ -91,40 +91,40 @@ const CancelBooking = ({navigation}) => {
               if (
                 i.date ==
                 moment(
-                  firebaseTicketData.searchFlightDateData[1],
+                  firebaseTicketData?.searchFlightDateData[1],
                   'MMM DD YYYY',
                 ).format('D/M/YYYY')
               ) {
                 return {
                   date: i.date,
                   day: i.day,
-                  flightData: i.flightData.map(e => {
+                  flightData: i?.flightData?.map(e => {
                     if (
-                      e.flightData.airlineName ==
+                      e?.flightData?.airlineName ==
                         firebaseTicketData?.searchFlightCardData?.airlineName &&
-                      e.flightData.lendTime ==
+                      e?.flightData?.lendTime ==
                         firebaseTicketData?.searchFlightCardData?.lendTime &&
-                      e.flightData.logo ==
+                      e?.flightData?.logo ==
                         firebaseTicketData?.searchFlightCardData?.logo &&
-                      e.flightData.pickTime ==
+                      e?.flightData?.pickTime ==
                         firebaseTicketData?.searchFlightCardData?.pickTime &&
-                      e.flightData.price ==
+                      e?.flightData?.price ==
                         firebaseTicketData?.searchFlightCardData?.price &&
-                      e.flightData.stop ==
+                      e?.flightData?.stop ==
                         firebaseTicketData?.searchFlightCardData?.stop &&
-                      e.flightData.stopDuration ==
+                      e?.flightData?.stopDuration ==
                         firebaseTicketData?.searchFlightCardData
                           ?.stopDuration &&
-                      e.flightData.totalHours ==
+                      e?.flightData?.totalHours ==
                         firebaseTicketData?.searchFlightCardData?.totalHours &&
-                      e.flightData.day ==
+                      e?.flightData?.day ==
                         firebaseTicketData?.searchFlightCardData?.day
                     ) {
                       return {
                         flightData: e.flightData,
-                        selectSeat: e?.selectSeat.filter(i =>
+                        selectSeat: e?.selectSeat?.filter(i =>
                           firebaseTicketData?.SelectSeatData?.some(
-                            a => a.seatNo != i,
+                            a => a?.seatNo != i,
                           ),
                         ),
                       };
@@ -160,13 +160,13 @@ const CancelBooking = ({navigation}) => {
                   return {
                     id: item.id,
                     Departure: false,
-                    Return: item.Return,
+                    Return: item?.Return,
                   };
                 }
-                if (firebaseTicketData.type == 'Return') {
+                if (firebaseTicketData?.type == 'Return') {
                   return {
-                    id: item.id,
-                    Departure: item.Departure,
+                    id: item?.id,
+                    Departure: item?.Departure,
                     Return: false,
                   };
                 }
@@ -198,8 +198,8 @@ const CancelBooking = ({navigation}) => {
       .collection('BookingCancel')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setBookingCancelData(documentSnapshot.data().BookingCancel);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setBookingCancelData(documentSnapshot?.data()?.BookingCancel);
           }
         });
       });
@@ -209,8 +209,8 @@ const CancelBooking = ({navigation}) => {
       .collection('SaveTicket')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == auth().currentUser.uid) {
-            setSaveTicketData(documentSnapshot.data().SaveTicket);
+          if (documentSnapshot?.id == auth()?.currentUser?.uid) {
+            setSaveTicketData(documentSnapshot?.data()?.SaveTicket);
           }
         });
       });
@@ -220,8 +220,8 @@ const CancelBooking = ({navigation}) => {
       .collection('AirlineSeatBookData')
       .onSnapshot(querySnapshot => {
         querySnapshot?.forEach(documentSnapshot => {
-          if (documentSnapshot.id == 'JaTwXgqSHSESiR6CDzdy') {
-            SetSeatData(documentSnapshot.data().AirlineSeatBookData);
+          if (documentSnapshot?.id == 'JaTwXgqSHSESiR6CDzdy') {
+            SetSeatData(documentSnapshot?.data()?.AirlineSeatBookData);
           }
         });
       });
@@ -250,7 +250,7 @@ const CancelBooking = ({navigation}) => {
               await notifee.requestPermission();
 
               // Create a channel (required for Android)
-              const channelId = await notifee.createChannel({
+              const channelId = await notifee?.createChannel({
                 id: auth().currentUser?.uid,
                 name: 'Ticket Booking',
               });
@@ -272,12 +272,12 @@ const CancelBooking = ({navigation}) => {
               notifee.onForegroundEvent(async ({type, detail}) => {
                 await firestore()
                   .collection('NotificationHistory')
-                  .doc(auth().currentUser.uid)
+                  .doc(auth()?.currentUser?.uid)
                   .get()
                   .then(async i => {
                     await firestore()
                       .collection('NotificationHistory')
-                      .doc(auth().currentUser.uid)
+                      .doc(auth()?.currentUser?.uid)
                       .update({
                         NotificationHistory: [
                           ...i?.data()?.NotificationHistory,
@@ -295,11 +295,11 @@ const CancelBooking = ({navigation}) => {
                   case EventType.DISMISSED:
                     console.log(
                       'User dismissed notification',
-                      detail.notification,
+                      detail?.notification,
                     );
                     break;
                   case EventType.PRESS:
-                    navigation.navigate('WalletScreen');
+                    navigation?.navigate('WalletScreen');
                     break;
                 }
               });
@@ -308,6 +308,8 @@ const CancelBooking = ({navigation}) => {
         });
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -319,7 +321,7 @@ const CancelBooking = ({navigation}) => {
         onPress2={false}
         Images1={Images.backIcon}
         Images2={null}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
       />
       <View style={styles.bodyView}>
         <Text style={styles.textStyle}>{strings.reasonText}</Text>
@@ -404,75 +406,76 @@ const CancelBooking = ({navigation}) => {
 
 export default CancelBooking;
 
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: color.white},
-  sortModalBody: {
-    paddingVertical: hp(1),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  bodyView: {
-    flex: 1,
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
-  },
-  textStyle: {
-    marginStart: wp(2),
-    fontSize: fontSize(18),
-    fontWeight: '500',
-  },
-  documentUploadview: {
-    paddingVertical: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-    marginBottom: hp(2),
-  },
-  documentImageView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: hp(4),
-    marginTop: hp(2),
-    borderWidth: 1,
-    borderColor: '#e2e2e2',
-    borderRadius: wp(4),
-  },
-  uploadIcon: {
-    height: hp(3),
-    width: hp(3),
-    resizeMode: 'contain',
-    paddingVertical: hp(2.5),
-    tintColor: color.darkGray,
-  },
-  createAlertBody: {
-    backgroundColor: '#fff',
-    paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  createAlertTitleBody: {
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  createAlertTitle: {
-    fontSize: fontSize(20),
-    fontWeight: '600',
-  },
-  successMessage: {
-    fontSize: fontSize(20),
-    fontWeight: 'bold',
-    color: color.commonBlue,
-    marginBottom: hp(3),
-    textAlign: 'center',
-  },
-  buutonstyle: {
-    backgroundColor: color.commonBlue,
-    width: wp(70),
-    paddingVertical: hp(1.8),
-    alignItems: 'center',
-    borderRadius: 10,
-    marginTop: hp(4),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {flex: 1, backgroundColor: color.white},
+    sortModalBody: {
+      paddingVertical: hp(1),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    bodyView: {
+      flex: 1,
+      paddingHorizontal: wp(4),
+      paddingVertical: hp(2),
+    },
+    textStyle: {
+      marginStart: wp(2),
+      fontSize: fontSize(18),
+      fontWeight: '500',
+    },
+    documentUploadview: {
+      paddingVertical: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+      marginBottom: hp(2),
+    },
+    documentImageView: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: hp(4),
+      marginTop: hp(2),
+      borderWidth: 1,
+      borderColor: '#e2e2e2',
+      borderRadius: wp(4),
+    },
+    uploadIcon: {
+      height: hp(3),
+      width: hp(3),
+      resizeMode: 'contain',
+      paddingVertical: hp(2.5),
+      tintColor: color.darkGray,
+    },
+    createAlertBody: {
+      backgroundColor: '#fff',
+      paddingVertical: wp(6),
+      paddingHorizontal: wp(6),
+      borderRadius: 20,
+      alignItems: 'center',
+    },
+    createAlertTitleBody: {
+      alignItems: 'center',
+      paddingBottom: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    createAlertTitle: {
+      fontSize: fontSize(20),
+      fontWeight: '600',
+    },
+    successMessage: {
+      fontSize: fontSize(20),
+      fontWeight: 'bold',
+      color: color.commonBlue,
+      marginBottom: hp(3),
+      textAlign: 'center',
+    },
+    buutonstyle: {
+      backgroundColor: color.commonBlue,
+      width: wp(70),
+      paddingVertical: hp(1.8),
+      alignItems: 'center',
+      borderRadius: 10,
+      marginTop: hp(4),
+    },
+  });

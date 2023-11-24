@@ -3,7 +3,6 @@ import {useSelector} from 'react-redux';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
 
@@ -24,6 +23,8 @@ const CardList = ({
           ? e?.searchFlight?.searchFlightReturnData
           : e?.place?.searchFlightData,
       );
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <TouchableOpacity
       onPress={() => {
@@ -50,7 +51,11 @@ const CardList = ({
         <View style={styles.FlightsPlaseImgBody}>
           <Image
             style={styles.FlightsPlaseImg}
-            source={Images.airplaneWhiteIcon}
+            source={
+              color.white === '#fff'
+                ? Images.airplaneWhiteIcon
+                : Images.airplaneDarkWhiteIcon
+            }
           />
           <Text style={styles.FlightsPlaseImgText}>{item.totalHours}</Text>
         </View>
@@ -71,79 +76,80 @@ const CardList = ({
     </TouchableOpacity>
   );
 };
-const styles = StyleSheet.create({
-  cardBody: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: wp(4),
-    borderColor: color.grayLight,
-    backgroundColor: color.white,
-  },
-  cardHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    paddingVertical: hp(2.5),
-    borderColor: color.grayLight,
-  },
-  cardHeaderText: {
-    flex: 1,
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: fontSize(18),
-  },
-  cardHeaderLogo: {
-    width: wp(5.8),
-    height: wp(5.8),
-    marginEnd: wp(3),
-    borderRadius: 500,
-  },
-  cardPrice: {
-    fontWeight: '600',
-    fontSize: fontSize(20),
-    color: color.commonBlue,
-  },
-  cardPriceTitle: {
-    color: color.darkLight,
-    fontSize: fontSize(18),
-  },
-  cardDataBody: {
-    paddingTop: hp(2.5),
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  FlightsPlaseBody: {
-    width: wp(20),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    height: hp(5),
-    width: hp(17),
-  },
-  FlightsPlaseImgText: {
-    color: color.darkLight,
-    fontSize: fontSize(13),
-  },
-  FlightsPlaseNicName: {
-    color: '#000',
-    fontWeight: 'bold',
-    marginTop: hp(1.5),
-    fontSize: fontSize(21),
-  },
-  FlightsPlaseName: {
-    fontWeight: '500',
-    color: color.darkLight,
-  },
-  cardBottemBody: {
-    paddingTop: hp(1),
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingBottom: hp(2.5),
-    justifyContent: 'space-between',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    cardBody: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 10,
+      paddingHorizontal: wp(4),
+      borderColor: color.grey,
+      backgroundColor: color.white,
+    },
+    cardHeader: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      borderBottomWidth: 2,
+      paddingVertical: hp(2.5),
+      borderColor: color.grey,
+    },
+    cardHeaderText: {
+      flex: 1,
+      color: color.black,
+      fontWeight: 'bold',
+      fontSize: fontSize(18),
+    },
+    cardHeaderLogo: {
+      width: wp(5.8),
+      height: wp(5.8),
+      marginEnd: wp(3),
+      borderRadius: 500,
+    },
+    cardPrice: {
+      fontWeight: '600',
+      fontSize: fontSize(20),
+      color: color.commonBlue,
+    },
+    cardPriceTitle: {
+      color: color.darkLight,
+      fontSize: fontSize(18),
+    },
+    cardDataBody: {
+      paddingTop: hp(2.5),
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    FlightsPlaseBody: {
+      width: wp(20),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      height: hp(5),
+      width: hp(17),
+    },
+    FlightsPlaseImgText: {
+      color: color.darkLight,
+      fontSize: fontSize(13),
+    },
+    FlightsPlaseNicName: {
+      color: color.black,
+      fontWeight: 'bold',
+      marginTop: hp(1.5),
+      fontSize: fontSize(21),
+    },
+    FlightsPlaseName: {
+      fontWeight: '500',
+      color: color.darkLight,
+    },
+    cardBottemBody: {
+      paddingTop: hp(1),
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingBottom: hp(2.5),
+      justifyContent: 'space-between',
+    },
+  });
 export default CardList;

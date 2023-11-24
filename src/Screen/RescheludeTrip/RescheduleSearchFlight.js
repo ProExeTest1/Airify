@@ -22,7 +22,7 @@ import {SearchFlightData} from '../../assets/DummyData/SearchFlightData';
 import Modal from 'react-native-modal';
 import {useDispatch, useSelector} from 'react-redux';
 import {RadioButton} from 'react-native-radio-buttons-group';
-import {color} from '../../helper/ColorConstant';
+
 import {radioButtons} from '../../assets/DummyData/radioButtons';
 import {SearchFlightFilterData} from '../../redux/action/SearchFlightAction';
 import moment from 'moment';
@@ -268,7 +268,8 @@ const RescheduleSearchFlight = ({navigation, route}) => {
       navigation: 'ReshceduleFilldetails',
     });
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.body}>
       {/* ----------------------------------------------------> Header components */}
@@ -290,7 +291,10 @@ const RescheduleSearchFlight = ({navigation, route}) => {
               />
             </MenuTrigger>
             <MenuOptions style={styles.dropdownBody}>
-              <MenuOption onSelect={() => onShare()}>
+              <MenuOption
+                onSelect={() => {
+                  onShare();
+                }}>
                 <View
                   style={[
                     styles.dropdownList,
@@ -303,12 +307,15 @@ const RescheduleSearchFlight = ({navigation, route}) => {
                   <Text style={styles.dropdownText}>{strings.shareResult}</Text>
                 </View>
               </MenuOption>
-              <MenuOptions onSelect={() => setModalVisible1(true)}>
+              <MenuOption
+                onSelect={() => {
+                  setModalVisible1(true);
+                }}>
                 <View style={styles.dropdownList}>
                   <Image style={styles.dropdownIcon} source={Images.bell} />
                   <Text style={styles.dropdownText}>{strings.priceAlerts}</Text>
                 </View>
-              </MenuOptions>
+              </MenuOption>
             </MenuOptions>
           </Menu>
         </View>
@@ -483,7 +490,11 @@ const RescheduleSearchFlight = ({navigation, route}) => {
                     selected={item?.id === selectedData?.id}
                     onPress={() => setSelectedData(item)}
                     label={item?.label}
-                    labelStyle={{fontSize: fontSize(18), fontWeight: '500'}}
+                    labelStyle={{
+                      fontSize: fontSize(18),
+                      fontWeight: '500',
+                      color: color.black,
+                    }}
                     color={color.commonBlue}
                   />
                 </View>
@@ -511,176 +522,180 @@ const RescheduleSearchFlight = ({navigation, route}) => {
 
 export default RescheduleSearchFlight;
 
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-  },
-  ScrollViewBody: {
-    flex: 1,
-    paddingHorizontal: wp(7),
-  },
-  sortBody: {
-    position: 'absolute',
-    paddingVertical: hp(1.8),
-    paddingHorizontal: wp(4),
-    width: wp(55),
-    bottom: hp(5),
-    alignSelf: 'center',
-    borderRadius: 500,
-    backgroundColor: '#fff',
-    shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 7},
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 8,
-    flexDirection: 'row',
-  },
-  sortImgBody: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  sortLine: {
-    borderColor: '#e2e2e2',
-    borderEndWidth: 2,
-    height: '100%',
-  },
-  sortText: {
-    fontSize: fontSize(20),
-    fontWeight: '500',
-    color: color.black,
-  },
-  sortImg: {
-    height: wp(6),
-    width: wp(6),
-  },
-  createAlertBody: {
-    backgroundColor: '#fff',
-    paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
-  },
-  createAlertTitleBody: {
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  createAlertTitle: {
-    fontSize: fontSize(20),
-    fontWeight: '600',
-    color: color.black,
-  },
-  sortModalBody: {
-    paddingVertical: hp(1),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  header: {
-    backgroundColor: '#295dff',
-    paddingTop: Platform.OS === 'ios' ? hp(6) : hp(2),
-  },
-  headerNevBody: {
-    marginBottom: hp(3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: wp(4),
-    justifyContent: 'space-between',
-  },
-  BackImg: {
-    width: wp(8),
-    height: wp(8),
-    tintColor: color.white,
-  },
-  headerTitleBody: {
-    width: wp(100),
-    position: 'absolute',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: fontSize(22),
-  },
-  FlightsPlaseNicName: {
-    color: '#fff',
-    fontWeight: 'bold',
-    marginBottom: hp(1.5),
-    fontSize: fontSize(22),
-  },
-  FlightsPlaseName: {
-    color: '#fff',
-  },
-  FlightsPlaseBody: {
-    width: wp(24),
-    paddingHorizontal: wp(4),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    width: hp(20),
-    height: hp(5.5),
-  },
-  FlightsPlaseImgText: {
-    color: '#fff',
-    fontSize: fontSize(14),
-  },
-  dateListBody: {
-    paddingStart: wp(8),
-    flexDirection: 'row',
-    paddingBottom: hp(3),
-  },
-  dateIconBody: {
-    width: hp(7),
-    height: hp(7),
-    borderWidth: 1,
-    borderRadius: 10,
-    marginEnd: wp(2.5),
-    borderColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  dateIcon: {
-    width: hp(3.2),
-    height: hp(3.2),
-    tintColor: '#fff',
-  },
-  dateline: {
-    borderWidth: 0.5,
-    marginEnd: wp(2.5),
-    borderColor: '#fff',
-  },
-  date: {
-    fontWeight: 'bold',
-    marginBottom: hp(0.3),
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  dropdownBody: {
-    top: wp(10),
-    width: wp(50),
-    borderRadius: 10,
-    position: 'absolute',
-    backgroundColor: '#fff',
-  },
-  dropdownList: {
-    paddingStart: wp(3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: hp(1.5),
-  },
-  dropdownIcon: {
-    width: wp(6.5),
-    height: wp(6.5),
-    marginEnd: wp(4),
-  },
-  dropdownText: {
-    fontWeight: '500',
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    body: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    ScrollViewBody: {
+      flex: 1,
+      paddingHorizontal: wp(7),
+    },
+    sortBody: {
+      position: 'absolute',
+      paddingVertical: hp(1.8),
+      paddingHorizontal: wp(4),
+      width: wp(55),
+      bottom: hp(5),
+      alignSelf: 'center',
+      borderRadius: 500,
+      backgroundColor: color.white,
+      shadowColor: color.black,
+      shadowOffset: {width: 0, height: 7},
+      shadowOpacity: 0.2,
+      shadowRadius: 10,
+      elevation: 8,
+      flexDirection: 'row',
+    },
+    sortImgBody: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+    },
+    sortLine: {
+      borderColor: color.grey,
+      borderEndWidth: 2,
+      height: '100%',
+    },
+    sortText: {
+      fontSize: fontSize(20),
+      fontWeight: '500',
+      color: color.black,
+    },
+    sortImg: {
+      height: wp(6),
+      width: wp(6),
+      tintColor: color.black,
+    },
+    createAlertBody: {
+      backgroundColor: color.white,
+      paddingVertical: wp(6),
+      paddingHorizontal: wp(6),
+      borderTopEndRadius: 20,
+      borderTopStartRadius: 20,
+    },
+    createAlertTitleBody: {
+      alignItems: 'center',
+      paddingBottom: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    createAlertTitle: {
+      fontSize: fontSize(20),
+      fontWeight: '600',
+      color: color.black,
+    },
+    sortModalBody: {
+      paddingVertical: hp(1),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    header: {
+      backgroundColor: '#295dff',
+      paddingTop: Platform.OS === 'ios' ? hp(6) : hp(2),
+    },
+    headerNevBody: {
+      marginBottom: hp(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: wp(4),
+      justifyContent: 'space-between',
+    },
+    BackImg: {
+      width: wp(8),
+      height: wp(8),
+      tintColor: '#fff',
+    },
+    headerTitleBody: {
+      width: wp(100),
+      position: 'absolute',
+      alignItems: 'center',
+    },
+    headerTitle: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: fontSize(22),
+    },
+    FlightsPlaseNicName: {
+      color: '#fff',
+      fontWeight: 'bold',
+      marginBottom: hp(1.5),
+      fontSize: fontSize(22),
+    },
+    FlightsPlaseName: {
+      color: '#fff',
+    },
+    FlightsPlaseBody: {
+      width: wp(24),
+      paddingHorizontal: wp(4),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      width: hp(20),
+      height: hp(5.5),
+    },
+    FlightsPlaseImgText: {
+      color: '#fff',
+      fontSize: fontSize(14),
+    },
+    dateListBody: {
+      paddingStart: wp(8),
+      flexDirection: 'row',
+      paddingBottom: hp(3),
+    },
+    dateIconBody: {
+      width: hp(7),
+      height: hp(7),
+      borderWidth: 1,
+      borderRadius: 10,
+      marginEnd: wp(2.5),
+      borderColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    dateIcon: {
+      width: hp(3.2),
+      height: hp(3.2),
+      tintColor: '#fff',
+    },
+    dateline: {
+      borderWidth: 0.5,
+      marginEnd: wp(2.5),
+      borderColor: '#fff',
+    },
+    date: {
+      fontWeight: 'bold',
+      marginBottom: hp(0.3),
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    dropdownBody: {
+      top: wp(10),
+      width: wp(50),
+      borderRadius: 10,
+      position: 'absolute',
+      backgroundColor: color.white,
+    },
+    dropdownList: {
+      paddingStart: wp(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: hp(1.5),
+    },
+    dropdownIcon: {
+      width: wp(6.5),
+      height: wp(6.5),
+      marginEnd: wp(4),
+      tintColor: color.black,
+    },
+    dropdownText: {
+      fontWeight: '500',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+  });

@@ -421,7 +421,9 @@ export const strings = Object.freeze({
 
   // Passenger Alerts
   enter_first_name: 'Please Enter First Name',
+  enter_first_name_valid: 'Please enter valid First Name',
   enter_last_name: 'Please Enter last name',
+  enter_last_name_valid: 'Please Enter valid Last name',
   select_title: 'Please select title',
   enter_DOB: 'Please Enter Date of Birth',
   select_country_code: 'Please select country code',

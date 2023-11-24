@@ -3,13 +3,15 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {strings} from '../../helper/Strings';
 import {CommonHeader, ContactUs, Faq} from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useSelector, useDispatch} from 'react-redux';
 
 const HelpCenter = ({navigation: {goBack}}) => {
   const [selectedOption, setSelectedOption] = useState(true);
   const strings = useSelector(state => state?.languageReducer?.languageObject);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
+
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -18,7 +20,7 @@ const HelpCenter = ({navigation: {goBack}}) => {
         onPress2={false}
         navigation2={() => {}}
         Images1={Images.backIcon}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
         headerName={strings.helpCenter}
         navigation1={() => {
           goBack();
@@ -31,7 +33,7 @@ const HelpCenter = ({navigation: {goBack}}) => {
             {
               backgroundColor: selectedOption
                 ? color.commonBlue
-                : color.lightGray2,
+                : color.TowButtonBgColor2,
               borderRadius: wp(2),
             },
           ]}
@@ -41,7 +43,7 @@ const HelpCenter = ({navigation: {goBack}}) => {
           <Text
             style={[
               styles.buttonTextStyle,
-              {color: selectedOption ? color.white : color.black},
+              {color: selectedOption ? '#fff' : color.black},
             ]}>
             {strings.FAQ}
           </Text>
@@ -51,7 +53,7 @@ const HelpCenter = ({navigation: {goBack}}) => {
             styles.buttonStyle,
             {
               backgroundColor: selectedOption
-                ? color.lightGray2
+                ? color.TowButtonBgColor2
                 : color.commonBlue,
               borderRadius: wp(2),
             },
@@ -62,7 +64,7 @@ const HelpCenter = ({navigation: {goBack}}) => {
           <Text
             style={[
               styles.buttonTextStyle,
-              {color: !selectedOption ? color.white : color.black},
+              {color: !selectedOption ? '#fff' : color.black},
             ]}>
             {strings?.contactUs}
           </Text>
@@ -75,30 +77,31 @@ const HelpCenter = ({navigation: {goBack}}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.Grey,
-  },
-  buttonViewStyle: {
-    borderRadius: wp(2),
-    flexDirection: 'row',
-    marginVertical: hp(2),
-    marginHorizontal: wp(2),
-    justifyContent: 'space-around',
-    backgroundColor: color.lightGray2,
-  },
-  buttonStyle: {
-    flex: 1,
-    width: wp(48),
-    height: hp(5),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonTextStyle: {
-    fontWeight: 'bold',
-    fontSize: fontSize(15),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.onBoardingBgColor,
+    },
+    buttonViewStyle: {
+      borderRadius: wp(2),
+      flexDirection: 'row',
+      marginVertical: hp(2),
+      marginHorizontal: wp(2),
+      justifyContent: 'space-around',
+      backgroundColor: color.TowButtonBgColor2,
+    },
+    buttonStyle: {
+      flex: 1,
+      width: wp(48),
+      height: hp(5),
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    buttonTextStyle: {
+      fontWeight: 'bold',
+      fontSize: fontSize(15),
+    },
+  });
 
 export default HelpCenter;

@@ -11,12 +11,15 @@ import {
   OnBoardingTwoButton,
   OnBoardingSingleButton,
 } from '../../components';
+import {useSelector} from 'react-redux';
 
 import {useSelector} from 'react-redux';
 const OnBoardingFirst = ({navigation}) => {
   const swiperRef = useRef();
   const [index, setIndex] = useState(0);
   const strings = useSelector(state => state?.languageReducer?.languageObject);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <Swiper
@@ -97,17 +100,18 @@ const OnBoardingFirst = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  slide: {
-    flex: 1,
-  },
-  buttonStyle: {
-    marginTop: hp(4),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+    },
+    slide: {
+      flex: 1,
+    },
+    buttonStyle: {
+      marginTop: hp(4),
+    },
+  });
 
 export default OnBoardingFirst;

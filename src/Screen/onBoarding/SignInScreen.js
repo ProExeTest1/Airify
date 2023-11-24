@@ -13,7 +13,7 @@ import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {strings} from '../../helper/Strings';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import CheckButton from '../../components/OnBoardingComponents/CheckButton';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -129,7 +129,8 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
       AlertConstant('Please Enter Valid Credetials');
     }
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <OnBoardingModuleHeader
@@ -148,11 +149,13 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           keyboardType={'email-address'}
           onChangeText={email => setEmail(email)}
           textInputPlaceholder={strings.EmailText}
+          onSubmitEditing={() => passwordRef?.focus()}
         />
         <Text style={styles.textInputTitleStyle}>{strings.Password}</Text>
         <OnBoardingTextInput
           value={Password}
           keyboardType={'default'}
+          ref={input => (passwordRef = input)}
           textInputIcon={Images.password}
           textInputPlaceholder={strings.Password}
           onChangeText={password => setPassword(password)}
@@ -186,7 +189,7 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           </View>
         </View>
         <View style={styles.signUpStyle}>
-          <Text style={{color: 'black'}}>{strings.signUpLine}</Text>
+          <Text style={{color: color.black}}>{strings.signUpLine}</Text>
           <TouchableOpacity
             style={{marginLeft: wp(1)}}
             onPress={() => {
@@ -194,8 +197,8 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
             }}>
             <Text
               style={{
-                color: 'blue',
-                fontWeight: '400',
+                color: color.commonBlue,
+                fontWeight: '600',
                 fontSize: fontSize(14),
               }}>
               {strings.signUp}
@@ -228,11 +231,15 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
           style={{
             borderRadius: 16,
             alignItems: 'center',
-            backgroundColor: 'white',
+            backgroundColor: color.white,
           }}>
           <Image
             style={styles.modalImageStyle}
-            source={Images.WelcomeScreenModalImage}
+            source={
+              color.white == '#fff'
+                ? Images.WelcomeScreenModalImage
+                : Images.WelcomeScreenModalDarkImage
+            }
           />
           <OnBoardingText
             OnBoardingMainTextStyle={{color: 'blue'}}
@@ -251,52 +258,54 @@ const SignInScreen = ({navigation: {goBack}, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  textInputTitleStyle: {
-    marginLeft: wp(6),
-    color: color.black,
-  },
-  rememberLineStyle: {
-    flexDirection: 'row',
-    paddingVertical: hp(1),
-    marginHorizontal: wp(2),
-  },
-  forgotPasswordStyle: {
-    color: 'blue',
-  },
-  signUpStyle: {
-    flex: 1,
-    borderTopWidth: 1,
-    paddingTop: hp(4),
-    flexDirection: 'row',
-    marginVertical: hp(5),
-    borderBottomWidth: 1,
-    borderColor: '#ECEFEF',
-    marginHorizontal: wp(6),
-    justifyContent: 'center',
-  },
-  buttonStyle: {
-    height: hp(6),
-    bottom: hp(2.5),
-  },
-  lineStyle: {
-    height: 1,
-    marginTop: hp(4),
-    marginHorizontal: wp(5),
-    backgroundColor: '#ECEFEF',
-  },
-  modalImageStyle: {
-    width: wp(70),
-    height: hp(30),
-    marginTop: hp(2),
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.onBoardingBgColor,
+    },
+    textInputTitleStyle: {
+      marginLeft: wp(6),
+      color: color.black,
+    },
+    rememberLineStyle: {
+      flexDirection: 'row',
+      paddingVertical: hp(1),
+      marginHorizontal: wp(2),
+    },
+    forgotPasswordStyle: {
+      color: color.commonBlue,
+      fontWeight: '600',
+    },
+    signUpStyle: {
+      flex: 1,
+      borderTopWidth: 1,
+      paddingTop: hp(4),
+      flexDirection: 'row',
+      marginVertical: hp(5),
+      borderBottomWidth: 1,
+      borderColor: '#ECEFEF',
+      marginHorizontal: wp(6),
+      justifyContent: 'center',
+    },
+    buttonStyle: {
+      height: hp(6),
+      bottom: hp(2.5),
+    },
+    lineStyle: {
+      height: 1,
+      marginTop: hp(4),
+      marginHorizontal: wp(5),
+      backgroundColor: '#ECEFEF',
+    },
+    modalImageStyle: {
+      width: wp(70),
+      height: hp(30),
+      marginTop: hp(2),
+    },
+    checkbox: {
+      alignSelf: 'center',
+    },
+  });
 
 export default SignInScreen;

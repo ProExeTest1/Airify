@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-
-import {color} from '../../helper/ColorConstant';
+import {useSelector} from 'react-redux';
 
 const MultiSliderComponets = ({
   min,
@@ -11,6 +10,8 @@ const MultiSliderComponets = ({
   sliderLength,
   onValuesChangeFinish,
 }) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <MultiSlider
       min={min}
@@ -28,21 +29,22 @@ const MultiSliderComponets = ({
 
 export default MultiSliderComponets;
 
-const styles = StyleSheet.create({
-  MultiSliderStyle: {
-    height: 4,
-    backgroundColor: color.commonBlue,
-  },
-  MultiSliderSelectedStyle: {
-    height: 4,
-    backgroundColor: '#eeeeee',
-  },
-  MultiSliderCustomMarker: {
-    width: 20,
-    height: 20,
-    borderWidth: 4,
-    borderRadius: 50,
-    backgroundColor: '#fff',
-    borderColor: color.commonBlue,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    MultiSliderStyle: {
+      height: 4,
+      backgroundColor: color.commonBlue,
+    },
+    MultiSliderSelectedStyle: {
+      height: 4,
+      backgroundColor: '#eeeeee',
+    },
+    MultiSliderCustomMarker: {
+      width: 20,
+      height: 20,
+      borderWidth: 4,
+      borderRadius: 50,
+      backgroundColor: '#fff',
+      borderColor: color.commonBlue,
+    },
+  });

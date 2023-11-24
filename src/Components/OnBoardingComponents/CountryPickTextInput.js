@@ -9,25 +9,30 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import {strings} from '../../helper/Strings';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
 import {useSelector} from 'react-redux';
 
-const CountryPickTextInput = ({
-  value,
-  onPress1,
-  onPress2,
-  disabled,
-  editable,
-  countryCode,
-  placeholder,
-  onChangeText,
-  textInputStyle,
-  placeholderTextColor,
-}) => {
+const CountryPickTextInput = (
+  {
+    value,
+    onPress1,
+    onPress2,
+    disabled,
+    editable,
+    countryCode,
+    placeholder,
+    onChangeText,
+    textInputStyle,
+    placeholderTextColor,
+    onSubmitEditing,
+  },
+  ref,
+) => {
   const strings = useSelector(state => state?.languageReducer?.languageObject);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
+
   return (
     <KeyboardAvoidingView>
       <View style={styles.mainViewStyle}>
@@ -47,7 +52,9 @@ const CountryPickTextInput = ({
           <View style={styles.InputViewStyle}>
             <TextInput
               value={value}
+              ref={ref}
               editable={editable}
+              onSubmitEditing={onSubmitEditing}
               keyboardType="number-pad"
               maxLength={10}
               placeholder={placeholder}
@@ -62,36 +69,37 @@ const CountryPickTextInput = ({
   );
 };
 
-const styles = StyleSheet.create({
-  textInputIconStyle: {
-    width: hp(2),
-    height: hp(2),
-    marginLeft: wp(1),
-    tintColor: '#A0A0A0',
-  },
-  viewStyle: {
-    padding: 10,
-    width: '90%',
-    height: hp(6.5),
-    borderRadius: wp(2),
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: '#E6E6E6',
-  },
-  InputViewStyle: {
-    color: color.black,
-    flexDirection: 'row',
-    paddingVertical: hp(1),
-  },
-  textInputStyle: {
-    flex: 1,
-    marginLeft: wp(4),
-    color: color.black,
-  },
-  mainViewStyle: {
-    alignItems: 'center',
-    marginVertical: hp(1),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    textInputIconStyle: {
+      width: hp(2),
+      height: hp(2),
+      marginLeft: wp(1),
+      tintColor: '#A0A0A0',
+    },
+    viewStyle: {
+      padding: 10,
+      width: '90%',
+      height: hp(6.5),
+      borderRadius: wp(2),
+      alignItems: 'center',
+      flexDirection: 'row',
+      backgroundColor: color.grey3,
+    },
+    InputViewStyle: {
+      color: color.black,
+      flexDirection: 'row',
+      paddingVertical: hp(1),
+    },
+    textInputStyle: {
+      flex: 1,
+      marginLeft: wp(4),
+      color: color.black,
+    },
+    mainViewStyle: {
+      alignItems: 'center',
+      marginVertical: hp(1),
+    },
+  });
 
-export default CountryPickTextInput;
+export default React.forwardRef(CountryPickTextInput);

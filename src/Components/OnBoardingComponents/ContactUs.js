@@ -8,11 +8,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {ContactUSData, FrenchContactUSData} from '../../assets/DummyData/Data';
+import {ContactUSData} from '../../assets/DummyData/Data';
+import {useSelector} from 'react-redux';
 
 const ContactUS = () => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <FlatList
@@ -41,32 +44,33 @@ const ContactUS = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.Grey,
-  },
-  viewStyle: {
-    borderRadius: wp(2),
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: hp(1),
-    paddingVertical: hp(2),
-    marginHorizontal: wp(4),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
-  },
-  iconStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    resizeMode: 'contain',
-  },
-  textStyle: {
-    fontWeight: '500',
-    paddingStart: wp(4),
-    fontSize: fontSize(16),
-    color: '#000',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.onBoardingBgColor,
+    },
+    viewStyle: {
+      borderRadius: wp(2),
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginVertical: hp(1),
+      paddingVertical: hp(2),
+      marginHorizontal: wp(4),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.white,
+    },
+    iconStyle: {
+      width: hp(2.5),
+      height: hp(2.5),
+      resizeMode: 'contain',
+    },
+    textStyle: {
+      fontWeight: '500',
+      paddingStart: wp(4),
+      fontSize: fontSize(16),
+      color: color.black,
+    },
+  });
 
 export default ContactUS;

@@ -96,6 +96,8 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
     }
     return i;
   });
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.ScrollViewBody}>
       <FlatList
@@ -118,10 +120,11 @@ const TicktList = ({SelectDate, SearchFlightCard, tripType1, tripType}) => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  ScrollViewBody: {
-    flex: 1,
-    paddingHorizontal: wp(7),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    ScrollViewBody: {
+      flex: 1,
+      paddingHorizontal: wp(7),
+    },
+  });
 export default TicktList;

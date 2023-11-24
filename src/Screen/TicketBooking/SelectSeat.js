@@ -14,7 +14,7 @@ import {CommonHeader} from '../../components';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {airlineCity} from '../../assets/DummyData/AirlineCity';
 import firestore from '@react-native-firebase/firestore';
@@ -137,12 +137,13 @@ const SelectSeat = ({navigation, route}) => {
       AlertConstant(strings.please_select_seat);
     }
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   useEffect(() => {
     getFirebaseData();
   }, []);
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: color.bgColor}}>
       <CommonHeader
         headerName={
           tripType === 'Round-Trip'
@@ -233,7 +234,7 @@ const SelectSeat = ({navigation, route}) => {
               <View
                 style={[
                   styles.selectedIcon,
-                  {backgroundColor: '#8596b3'},
+                  {backgroundColor: color.occupiedSeatColor},
                 ]}></View>
               <Text style={styles.textStyle}>{strings.Occupied}</Text>
             </View>
@@ -241,7 +242,7 @@ const SelectSeat = ({navigation, route}) => {
               <View
                 style={[
                   styles.selectedIcon,
-                  {backgroundColor: '#cdd0d6'},
+                  {backgroundColor: color.availableSeatColor},
                 ]}></View>
               <Text style={styles.textStyle}>{strings.Available}</Text>
             </View>
@@ -265,7 +266,7 @@ const SelectSeat = ({navigation, route}) => {
                       <View style={styles.seatButBody}>
                         {i?.number ? (
                           <View style={styles.seatBut}>
-                            <Text>{item}</Text>
+                            <Text style={{color: color.black}}>{item}</Text>
                           </View>
                         ) : (
                           <TouchableOpacity
@@ -285,8 +286,8 @@ const SelectSeat = ({navigation, route}) => {
                                 )
                                   ? color.commonBlue
                                   : OccuiedData?.some(i => i === item)
-                                  ? '#8596b3'
-                                  : '#cdd0d6',
+                                  ? color.occupiedSeatColor
+                                  : color.availableSeatColor,
                               },
                             ]}>
                             {seatData?.some(i => i?.seatNo === item) ? (
@@ -301,7 +302,7 @@ const SelectSeat = ({navigation, route}) => {
                                   {
                                     color: OccuiedData?.some(i => i === item)
                                       ? '#fff'
-                                      : color.commonBlue,
+                                      : color.TowButtonTextColor,
                                   },
                                 ]}>
                                 {item}
@@ -330,7 +331,7 @@ const SelectSeat = ({navigation, route}) => {
         </View>
         <View style={{flex: 2.5}}>
           <TouchableOpacity style={styles.okButton} onPress={() => setSeat()}>
-            <Text style={styles.okButtonText}>{strings.seat}</Text>
+            <Text style={styles.okButtonText}>{strings.ok}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -340,143 +341,143 @@ const SelectSeat = ({navigation, route}) => {
 
 export default SelectSeat;
 
-const styles = StyleSheet.create({
-  selectSeatHeaderBody: {
-    height: hp(10),
-    backgroundColor: color.commonBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: hp(1),
-    paddingBottom: hp(2),
-  },
-  FlatListBody: {
-    flexDirection: 'row',
-    width: wp(38),
-    marginEnd: wp(4),
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    paddingHorizontal: wp(3),
-    alignItems: 'center',
-  },
-  FlatListNumberBody: {
-    backgroundColor: color.commonBlue,
-    height: wp(7),
-    width: wp(7),
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginEnd: wp(3),
-  },
-  FlatListNumber: {
-    color: '#fff',
-    fontSize: fontSize(16),
-    fontWeight: 'bold',
-  },
-  FlatListTitle: {
-    color: color.commonBlue,
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    marginBottom: hp(0.5),
-  },
-  FlatListSubTitle: {
-    color: color.commonBlue,
-    fontSize: fontSize(13),
-  },
-  bottomButtonBody: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-    paddingTop: hp(2),
-    paddingBottom: hp(4),
-    flexDirection: 'row',
-  },
-  SeatText: {
-    marginBottom: hp(0.5),
-    fontSize: fontSize(13),
-    color: color.black,
-  },
-  seatNumberText: {
-    fontSize: fontSize(19),
-    fontWeight: 'bold',
-    color: color.black,
-  },
-  okButton: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(2),
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  okButtonText: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: '#fff',
-  },
-  searchFlightBody: {
-    paddingVertical: hp(2.5),
-    borderBlockColor: color.grayLight,
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  flightLogo: {
-    height: wp(7.5),
-    width: wp(7.5),
-    borderRadius: 50,
-    marginEnd: wp(4),
-  },
-  flightName: {
-    color: color.black,
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    marginBottom: hp(0.8),
-  },
-  flightLendText: {
-    color: color.darkLight,
-  },
-  showTypeOpsBody: {
-    paddingVertical: hp(2),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: wp(5),
-  },
-  selectedBody: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    // marginHorizontal: wp(3),
-  },
-  selectedIcon: {
-    marginEnd: wp(3),
-    height: wp(4),
-    width: wp(4),
-    borderRadius: 2,
-  },
-  seatRowNumber: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  seatRowNumberText: {
-    fontSize: fontSize(17),
-    fontWeight: 'bold',
-    color: color.black,
-  },
-  seatButBody: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: hp(1),
-  },
-  seatBut: {
-    height: wp(14),
-    width: wp(14),
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-  },
-  seatButHeader: {
-    height: hp(5),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textStyle: {
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    selectSeatHeaderBody: {
+      height: hp(10),
+      backgroundColor: color.commonBlue,
+      justifyContent: 'center',
+      paddingTop: hp(1),
+      paddingBottom: hp(2),
+    },
+    FlatListBody: {
+      flexDirection: 'row',
+      width: wp(38),
+      marginEnd: wp(4),
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      paddingHorizontal: wp(3),
+      alignItems: 'center',
+    },
+    FlatListNumberBody: {
+      backgroundColor: color.commonBlue,
+      height: wp(7),
+      width: wp(7),
+      borderRadius: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginEnd: wp(3),
+    },
+    FlatListNumber: {
+      color: '#fff',
+      fontSize: fontSize(16),
+      fontWeight: 'bold',
+    },
+    FlatListTitle: {
+      color: color.commonBlue,
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      marginBottom: hp(0.5),
+    },
+    FlatListSubTitle: {
+      color: color.commonBlue,
+      fontSize: fontSize(13),
+    },
+    bottomButtonBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+      paddingTop: hp(2),
+      paddingBottom: hp(4),
+      flexDirection: 'row',
+    },
+    SeatText: {
+      marginBottom: hp(0.5),
+      fontSize: fontSize(13),
+      color: color.black,
+    },
+    seatNumberText: {
+      fontSize: fontSize(19),
+      fontWeight: 'bold',
+      color: color.black,
+    },
+    okButton: {
+      backgroundColor: color.commonBlue,
+      paddingVertical: hp(2),
+      alignItems: 'center',
+      borderRadius: 10,
+    },
+    okButtonText: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: '#fff',
+    },
+    searchFlightBody: {
+      paddingVertical: hp(2.5),
+      borderBlockColor: color.grayLight,
+      borderBottomWidth: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    flightLogo: {
+      height: wp(7.5),
+      width: wp(7.5),
+      borderRadius: 50,
+      marginEnd: wp(4),
+    },
+    flightName: {
+      color: color.black,
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      marginBottom: hp(0.8),
+    },
+    flightLendText: {
+      color: color.offerColor,
+    },
+    showTypeOpsBody: {
+      paddingVertical: hp(2),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: wp(5),
+    },
+    selectedBody: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      // marginHorizontal: wp(3),
+    },
+    selectedIcon: {
+      marginEnd: wp(3),
+      height: wp(4),
+      width: wp(4),
+      borderRadius: 2,
+    },
+    seatRowNumber: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    seatRowNumberText: {
+      fontSize: fontSize(17),
+      fontWeight: 'bold',
+      color: color.black,
+    },
+    seatButBody: {
+      flex: 1,
+      alignItems: 'center',
+      paddingVertical: hp(1),
+    },
+    seatBut: {
+      height: wp(14),
+      width: wp(14),
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 5,
+    },
+    seatButHeader: {
+      height: hp(5),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textStyle: {
+      color: color.black,
+    },
+  });

@@ -42,14 +42,17 @@ const TabNavigation = () => {
         console.log('err', err);
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {backgroundColor: color.white},
       }}>
       <Tab.Screen
         options={{
           title: strings?.Home,
+          headerTitleStyle: {color: color.paperTextInputColor},
           tabBarIcon: props => (
             <TabBarComponents props={props} Icon={Images.TabHomeIcon} />
           ),

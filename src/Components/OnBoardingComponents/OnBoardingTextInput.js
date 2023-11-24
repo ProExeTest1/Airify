@@ -9,25 +9,31 @@ import {
 } from 'react-native';
 
 import {hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useSelector} from 'react-redux';
 
-const OnBoardingTextInput = ({
-  value,
-  onPress,
-  container,
-  onChangeText,
-  keyboardType,
-  textInputIcon,
-  textInputStyle,
-  onPressCalender,
-  textInputIconStyle,
-  textInputPlaceholder,
-  contextMenuHidden,
-}) => {
+const OnBoardingTextInput = (
+  {
+    value,
+    onPress,
+    container,
+    onChangeText,
+    keyboardType,
+    textInputIcon,
+    textInputStyle,
+    onPressCalender,
+    textInputIconStyle,
+    textInputPlaceholder,
+    contextMenuHidden,
+    onSubmitEditing,
+  },
+  ref,
+) => {
   const [focus, setFocus] = useState(false);
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <TouchableOpacity
       activeOpacity={0.3}
@@ -42,15 +48,21 @@ const OnBoardingTextInput = ({
       )}
       <TextInput
         value={value}
+        ref={ref}
+        onSubmitEditing={onSubmitEditing}
         autoCorrect={false}
         onPressIn={onPress}
         autoCapitalize="none"
-        secureTextEntry={textInputPlaceholder == 'Password' ||
-        textInputPlaceholder == 'Confirm New Password' ? !focus : false}
+        secureTextEntry={
+          textInputPlaceholder == 'Password' ||
+          textInputPlaceholder == 'Confirm New Password'
+            ? !focus
+            : false
+        }
         onChangeText={onChangeText}
         keyboardType={keyboardType}
         editable={onPress ? false : true}
-        placeholderTextColor={color.grey}
+        placeholderTextColor={color.grey2}
         placeholder={textInputPlaceholder}
         style={[styles.textInputStyle, textInputStyle]}
         contextMenuHidden={contextMenuHidden}
@@ -85,46 +97,46 @@ const OnBoardingTextInput = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    // height: hp(6.5),
-    paddingVertical: Platform.OS === 'ios' ? hp(2.2) : hp(0.5),
-    width: wp(90),
-    borderRadius: wp(2),
-    paddingStart: wp(2),
-    alignSelf: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: hp(2),
-    backgroundColor: '#E6E6E6',
-  },
-  textInputIconStyle: {
-    width: hp(2),
-    height: hp(2),
-    tintColor: '#A0A0A0',
-    color: color.black,
-  },
-  textInputStyle: {
-    flex: 1,
-    marginLeft: wp(2),
-    color: color.black,
-  },
-  calenderIconStyle: {
-    width: hp(2),
-    height: hp(2),
-    paddingRight: 15,
-    tintColor: '#A0A0A0',
-  },
-  hidePasswordStyle: {
-    width: hp(2),
-    height: hp(2),
-    paddingRight: 15,
-    tintColor: '#A0A0A0',
-  },
-  imageTouchStyle: {
-    alignItems: 'flex-end',
-    paddingHorizontal: wp(4),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      paddingVertical: Platform.OS === 'ios' ? hp(2.2) : hp(0.5),
+      width: wp(90),
+      borderRadius: wp(2),
+      paddingStart: wp(2),
+      alignSelf: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: hp(2),
+      backgroundColor: color.grey,
+    },
+    textInputIconStyle: {
+      width: hp(2),
+      height: hp(2),
+      tintColor: '#A0A0A0',
+      color: color.black,
+    },
+    textInputStyle: {
+      flex: 1,
+      marginLeft: wp(2),
+      color: color.black,
+    },
+    calenderIconStyle: {
+      width: hp(2),
+      height: hp(2),
+      paddingRight: 15,
+      tintColor: '#A0A0A0',
+    },
+    hidePasswordStyle: {
+      width: hp(2),
+      height: hp(2),
+      paddingRight: 15,
+      tintColor: '#A0A0A0',
+    },
+    imageTouchStyle: {
+      alignItems: 'flex-end',
+      paddingHorizontal: wp(4),
+    },
+  });
 
-export default OnBoardingTextInput;
+export default React.forwardRef(OnBoardingTextInput);

@@ -55,6 +55,7 @@ import RescheduleSearchFlight from '../screen/RescheludeTrip/RescheduleSearchFli
 import RescheduleFillPassengerDetails from '../screen/RescheludeTrip/RescheduleFillPassengerDetails';
 import {languageChangeAction} from '../redux/action/LanguageChangeAction';
 import {useDispatch, useSelector} from 'react-redux';
+import {colorThemeType} from '../redux/action/ColorThemeAction';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -74,6 +75,15 @@ const StackNavigation = () => {
     };
     languageData();
   }, [dispatch]);
+  useEffect(async () => {
+    await AsyncStorage.getItem('DarkMode')
+      .then(i => {
+        dispatch(colorThemeType(JSON.parse(i)));
+      })
+      .catch(() => {
+        dispatch(colorThemeType(false));
+      });
+  }, []);
   return (
     <>
       <NavigationContainer>

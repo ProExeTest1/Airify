@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {PickerHeaderBar} from '../../components';
-import {color} from '../../helper/ColorConstant';
+import {CommonHeader, PickerHeaderBar} from '../../components';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -20,6 +20,7 @@ import {
 } from '../../redux/action/DateAction';
 import {AlertConstant} from '../../helper/AlertConstant';
 import {strings} from '../../helper/Strings';
+import {Images} from '../../helper/IconConstant';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -179,11 +180,20 @@ const DatePickerScreen = ({navigation, route}) => {
       AlertConstant(strings.choose_date);
     }
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
-    <View>
-      <PickerHeaderBar
+    <View style={{backgroundColor: color.bgColor, flex: 1}}>
+      <CommonHeader
+        onPress1={true}
+        onPress2={false}
+        Images1={Images?.cancel}
         headerName={'Select Date'}
-        navigation={() => navigation?.goBack('')}
+        cancelButtonStyle1={{height: hp(2.5), marginTop: hp(0.3)}}
+        Images1Color={'#fff'}
+        navigation1={() => {
+          navigation.goBack();
+        }}
       />
       <View style={styles.currentDateStyle}>
         <View style={styles.dateMainViewStyle}>
@@ -207,10 +217,21 @@ const DatePickerScreen = ({navigation, route}) => {
             </Text>
           </View>
         </View>
-        <View style={{height: hp(65)}}>
+        <View style={{flex: 1}}>
           <CalendarList
+            theme={{
+              calendarBackground: color.white,
+              todayTextColor: color.commonBlue,
+              dayTextColor: color.black,
+              monthTextColor: color.black,
+              textMonthFontSize: fontSize(18),
+              textMonthFontWeight: '600',
+              textDayFontSize: fontSize(14),
+              textDayFontWeight: '400',
+              textDayHeaderFontWeight: '600',
+              textDayHeaderFontSize: fontSize(16),
+            }}
             animateScroll={true}
-            style={styles.calenderStyle}
             onDayPress={day => {
               setPress(true);
               if (returnPress) {
@@ -240,71 +261,72 @@ const DatePickerScreen = ({navigation, route}) => {
           />
         </View>
       </View>
-      <SafeAreaView style={styles.bottomViewStyle}>
-        <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
-          <Text style={styles.searchFontStyle}>{strings.ok}</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      <TouchableOpacity style={styles.searchButtonStyle} onPress={onOkPress}>
+        <Text style={styles.searchFontStyle}>{strings.ok}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default DatePickerScreen;
 
-const styles = StyleSheet.create({
-  dateViewStyle: {
-    width: wp(40),
-    borderRadius: 30,
-    alignItems: 'center',
-    borderRadius: 30,
-    backgroundColor: color.commonBlue,
-    justifyContent: 'center',
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1.8),
-    marginVertical: hp(2.2),
-  },
-  ReturndateViewStyle: {
-    width: wp(40),
-    borderWidth: 1,
-    borderRadius: 30,
-    alignItems: 'center',
-    borderRadius: 30,
-    borderWidth: 1,
-    marginVertical: hp(2.2),
-    justifyContent: 'center',
-    paddingVertical: hp(1.8),
-  },
-  dateTextStyle: {
-    fontWeight: '500',
-    color: color.white,
-    fontSize: fontSize(16, 812),
-  },
-  currentDateStyle: {
-    marginHorizontal: wp(2.5),
-    alignSelf: 'center',
-  },
-  searchButtonStyle: {
-    alignItems: 'center',
-    marginHorizontal: wp(5),
-    paddingVertical: hp(2.2),
-    borderRadius: 16,
-    backgroundColor: 'blue',
-    marginVertical: hp(2.5),
-    justifyContent: 'center',
-  },
-  searchFontStyle: {
-    fontWeight: 'bold',
-    color: color.white,
-    fontSize: fontSize(20, 812),
-  },
-  dateMainViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  returnDateTextStyle: {
-    color: 'black',
-    fontSize: fontSize(16, 812),
-    fontWeight: '500',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    dateViewStyle: {
+      width: wp(40),
+      borderRadius: 30,
+      alignItems: 'center',
+      borderRadius: 30,
+      backgroundColor: color.commonBlue,
+      justifyContent: 'center',
+      paddingHorizontal: wp(3),
+      paddingVertical: hp(1.8),
+      marginVertical: hp(2.2),
+    },
+    ReturndateViewStyle: {
+      width: wp(40),
+      borderWidth: 1,
+      borderRadius: 30,
+      alignItems: 'center',
+      borderRadius: 30,
+      borderWidth: 2,
+      borderColor: color.grey,
+      marginVertical: hp(2.2),
+      justifyContent: 'center',
+      paddingVertical: hp(1.8),
+    },
+    dateTextStyle: {
+      fontWeight: '500',
+      color: '#fff',
+      fontSize: fontSize(16, 812),
+    },
+    currentDateStyle: {
+      paddingHorizontal: wp(2.5),
+      alignSelf: 'center',
+      flex: 1,
+    },
+    searchButtonStyle: {
+      alignItems: 'center',
+      marginHorizontal: wp(5),
+      paddingVertical: hp(2.2),
+      borderRadius: 16,
+      backgroundColor: 'blue',
+      marginVertical: hp(2.4),
+      justifyContent: 'center',
+    },
+    searchFontStyle: {
+      fontWeight: 'bold',
+      color: '#fff',
+      fontSize: fontSize(20, 812),
+    },
+    dateMainViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    returnDateTextStyle: {
+      color: color.black,
+      fontSize: fontSize(16, 812),
+      fontWeight: '500',
+    },
+  });

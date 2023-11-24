@@ -1,11 +1,13 @@
 import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {TimeData} from '../../assets/DummyData/timeData';
+import {useSelector} from 'react-redux';
 
 const GetTime = ({departureTime, setDepartureTime}) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <FlatList
       data={TimeData}
@@ -24,10 +26,10 @@ const GetTime = ({departureTime, setDepartureTime}) => {
               borderColor:
                 item.time === departureTime?.time
                   ? color.commonBlue
-                  : '#e4e4e4',
+                  : color.grey,
             },
           ]}>
-          <Text style={{color: '#7e7e7f', marginBottom: hp(1)}}>
+          <Text style={{color: color.darkLight, marginBottom: hp(1)}}>
             {item.title}
           </Text>
           <Text style={styles.textStyle}>{item.time}</Text>
@@ -39,20 +41,21 @@ const GetTime = ({departureTime, setDepartureTime}) => {
 
 export default GetTime;
 
-const styles = StyleSheet.create({
-  departureTimeBody: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: hp(1.5),
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(4),
-    backgroundColor: '#fafafa',
-  },
-  textStyle: {
-    color: '#000',
-    fontWeight: '500',
-    fontSize: fontSize(16),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    departureTimeBody: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 10,
+      alignItems: 'center',
+      marginBottom: hp(1.5),
+      paddingVertical: hp(2),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.grey3,
+    },
+    textStyle: {
+      color: color.black,
+      fontWeight: '500',
+      fontSize: fontSize(16),
+    },
+  });

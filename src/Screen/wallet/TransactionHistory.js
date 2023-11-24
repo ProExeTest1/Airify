@@ -6,7 +6,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import LottieView from 'lottie-react-native';
@@ -28,9 +28,10 @@ const TransactionHistory = ({navigation}) => {
       getTransactionHistory();
     }
   }, [isFocused]);
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: color.bgColor}}>
       {transactionHistory.length == 0 ? (
         <View
           style={{
@@ -38,7 +39,11 @@ const TransactionHistory = ({navigation}) => {
             justifyContent: 'center',
           }}>
           <LottieView
-            source={require('../../helper/noDataFound.json')}
+            source={
+              color.white == '#fff'
+                ? require('../../helper/noDataFound.json')
+                : require('../../helper/noDataFoundDark.json')
+            }
             autoPlay
             loop
             style={styles.lottiStyle}
@@ -87,27 +92,28 @@ const TransactionHistory = ({navigation}) => {
 
 export default TransactionHistory;
 
-const styles = StyleSheet.create({
-  TopUpBody: {
-    flex: 1,
-  },
-  FlatListBody: {
-    borderBottomWidth: 1,
-    paddingVertical: hp(2),
-    borderColor: color.grayLight,
-  },
-  headerBody: {
-    marginBottom: hp(1),
-    flexDirection: 'row',
-  },
-  headerText: {
-    flex: 1,
-    fontWeight: '600',
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  priceText: {
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    TopUpBody: {
+      flex: 1,
+    },
+    FlatListBody: {
+      borderBottomWidth: 1,
+      paddingVertical: hp(2),
+      borderColor: color.grey,
+    },
+    headerBody: {
+      marginBottom: hp(1),
+      flexDirection: 'row',
+    },
+    headerText: {
+      flex: 1,
+      fontWeight: '600',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    priceText: {
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+  });

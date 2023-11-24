@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {hp, wp} from '../../helper/Constant';
+import {useSelector} from 'react-redux';
 
 const OnBoardingTwoButton = ({
   onPress1,
@@ -11,6 +12,8 @@ const OnBoardingTwoButton = ({
   twoButtonStyle,
   TwoButtonStyle,
 }) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -27,32 +30,33 @@ const OnBoardingTwoButton = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: hp(4),
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  buttonStyle: {
-    width: wp(40),
-    height: hp(5),
-    marginRight: wp(2),
-    borderRadius: wp(2),
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#EEF2FF',
-  },
-  buttonTextStyle: {
-    color: 'blue',
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  buttonTextTwoStyle: {
-    color: 'white',
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      marginTop: hp(4),
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    buttonStyle: {
+      width: wp(40),
+      height: hp(5),
+      marginRight: wp(2),
+      borderRadius: wp(2),
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#EEF2FF',
+    },
+    buttonTextStyle: {
+      color: 'blue',
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+    buttonTextTwoStyle: {
+      color: 'white',
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+  });
 
 export default OnBoardingTwoButton;

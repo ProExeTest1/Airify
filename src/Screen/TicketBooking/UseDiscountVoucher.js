@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {color} from '../../helper/ColorConstant';
+
 import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -64,6 +64,8 @@ const UseDiscountVoucher = ({navigation, route}) => {
       AlertConstant(strings.select_voucher);
     }
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -76,7 +78,7 @@ const UseDiscountVoucher = ({navigation, route}) => {
         Images1={Images.backIcon}
         Images2={null}
         cancelButtonStyle1={styles.plusIconStyle}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
       />
       <View style={styles.flatListOuterViewStyle}>
         <FlatList
@@ -176,84 +178,87 @@ const UseDiscountVoucher = ({navigation, route}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  flatListOuterViewStyle: {
-    flex: 1,
-    paddingHorizontal: wp(6),
-    paddingtop: hp(2.5),
-  },
-  flatListInnerViewStyle: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
-    borderRadius: 6,
-    marginVertical: hp(1),
-  },
-  cartTitleTextStyle: {
-    fontSize: fontSize(18),
-    fontWeight: '600',
-    marginBottom: hp(1),
-    color: color.black,
-  },
-  cartView: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-    marginTop: hp(0.5),
-  },
-  timeIconStyle: {
-    height: wp(3.5),
-    width: wp(3.5),
-    marginRight: wp(2),
-  },
-  secondViewStyle: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: wp(4),
-    marginTop: hp(0.5),
-  },
-  useButtonView: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    borderLeftWidth: 1,
-    borderColor: color.grayLight,
-    marginTop: hp(0.5),
-  },
-  useTouchableStyle: {
-    borderWidth: 1,
-    borderRadius: 100,
-    paddingVertical: hp(1),
-    width: wp(20),
-    alignItems: 'center',
-  },
-  bottomButtonBody: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-    paddingTop: hp(2),
-    paddingBottom: hp(2),
-    flexDirection: 'row',
-  },
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    flatListOuterViewStyle: {
+      flex: 1,
+      paddingHorizontal: wp(6),
+      paddingtop: hp(2.5),
+    },
+    flatListInnerViewStyle: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(4),
+      paddingVertical: hp(2),
+      borderRadius: 6,
+      marginVertical: hp(1),
+    },
+    cartTitleTextStyle: {
+      fontSize: fontSize(18),
+      fontWeight: '600',
+      marginBottom: hp(1),
+      color: color.black,
+    },
+    cartView: {
+      flexDirection: 'row',
+      flex: 1,
+      justifyContent: 'space-between',
+      marginTop: hp(0.5),
+    },
+    timeIconStyle: {
+      height: wp(3.5),
+      width: wp(3.5),
+      marginRight: wp(2),
+      tintColor: color.black,
+    },
+    secondViewStyle: {
+      flexDirection: 'row',
+      flex: 1,
+      justifyContent: 'space-between',
+      marginHorizontal: wp(4),
+      marginTop: hp(0.5),
+    },
+    useButtonView: {
+      flex: 1,
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      borderLeftWidth: 1,
+      borderColor: color.grey,
+      marginTop: hp(0.5),
+    },
+    useTouchableStyle: {
+      borderWidth: 1,
+      borderRadius: 100,
+      paddingVertical: hp(1),
+      width: wp(20),
+      alignItems: 'center',
+    },
+    bottomButtonBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+      paddingTop: hp(2),
+      paddingBottom: hp(2),
+      flexDirection: 'row',
+    },
 
-  okButton: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(2),
-    alignItems: 'center',
-    borderRadius: 10,
-    flex: 1,
-  },
-  okButtonText: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: '#fff',
-  },
-  textStyle: {
-    color: color.black,
-  },
-});
+    okButton: {
+      backgroundColor: color.commonBlue,
+      paddingVertical: hp(2),
+      alignItems: 'center',
+      borderRadius: 10,
+      flex: 1,
+    },
+    okButtonText: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: '#fff',
+    },
+    textStyle: {
+      color: color.black,
+    },
+  });
 
 export default UseDiscountVoucher;

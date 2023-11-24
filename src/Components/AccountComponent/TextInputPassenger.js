@@ -10,28 +10,34 @@ import {
 } from 'react-native';
 
 import {strings} from '../../helper/Strings';
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useSelector} from 'react-redux';
 
-const TextInputPassenger = ({
-  value,
-  onPress,
-  editable,
-  disabled,
-  placeholder,
-  onChangeText,
-  calenderIcon,
-  textInputIcon,
-  TextInputLabel,
-  onPressCalender,
-  textInputLabelStyle,
-  onPressCountryPicker,
-  passengerTextInputStyle,
-  autoCapitalize,
-}) => {
+const TextInputPassenger = (
+  {
+    value,
+    onPress,
+    editable,
+    disabled,
+    placeholder,
+    onChangeText,
+    calenderIcon,
+    textInputIcon,
+    TextInputLabel,
+    onPressCalender,
+    textInputLabelStyle,
+    onPressCountryPicker,
+    passengerTextInputStyle,
+    autoCapitalize,
+    onSubmitEditing,
+    inputMode,
+  },
+  ref,
+) => {
   const [focus, setFocus] = useState(false);
   const strings = useSelector(state => state?.languageReducer?.languageObject);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View
       style={[
@@ -60,11 +66,15 @@ const TextInputPassenger = ({
           editable={editable}
           placeholder={placeholder}
           value={value}
-          numberOfLines={1}
+          ref={ref}
+          inputMode={inputMode}
+          onSubmitEditing={onSubmitEditing}
+          numberOfLi
+          nes={1}
           autoCapitalize={autoCapitalize}
           maxLength={placeholder == strings.Phone ? 10 : 100}
           onChangeText={onChangeText}
-          placeholderTextColor={'#6e6e6e'}
+          placeholderTextColor={color.offerColor}
           cursorColor={color.commonBlue}
           style={[styles.passengerTextInputStyle, passengerTextInputStyle]}
         />
@@ -85,41 +95,42 @@ const TextInputPassenger = ({
   );
 };
 
-export default TextInputPassenger;
-const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: wp(3),
-    backgroundColor: color.white,
-  },
-  passengerTextInputStyle: {
-    flex: 1,
-    fontSize: fontSize(16),
-    color: color.black,
-  },
-  textInputLabelStyle: {
-    fontWeight: '500',
-    fontSize: fontSize(14),
-    marginVertical: hp(1.5),
-    marginHorizontal: wp(1),
-    color: color.black,
-  },
-  inputView: {
-    borderRadius: wp(4),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: wp(6),
-    paddingVertical: Platform.OS === 'ios' ? hp(2.5) : hp(0.5),
-    backgroundColor: color.lightWhite,
-  },
-  textInputIconstyle: {
-    height: hp(2),
-    width: hp(2),
-    tintColor: '#A0A0A0',
-    right: wp(4),
-  },
-  calenderIcon: {
-    height: hp(2),
-    width: hp(2),
-    tintColor: '#A0A0A0',
-  },
-});
+export default React.forwardRef(TextInputPassenger);
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      marginHorizontal: wp(3),
+      backgroundColor: color.onBoardingBgColor,
+    },
+    passengerTextInputStyle: {
+      flex: 1,
+      fontSize: fontSize(16),
+      color: color.black,
+    },
+    textInputLabelStyle: {
+      fontWeight: '500',
+      fontSize: fontSize(14),
+      marginVertical: hp(1.5),
+      marginHorizontal: wp(1),
+      color: color.black,
+    },
+    inputView: {
+      borderRadius: wp(4),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: wp(6),
+      paddingVertical: Platform.OS === 'ios' ? hp(2.5) : hp(0.5),
+      backgroundColor: color.lightWhite,
+    },
+    textInputIconstyle: {
+      height: hp(2),
+      width: hp(2),
+      tintColor: color.darkLight,
+      right: wp(4),
+    },
+    calenderIcon: {
+      height: hp(2),
+      width: hp(2),
+      tintColor: color.darkLight,
+    },
+  });

@@ -8,10 +8,10 @@ import {
   Image,
 } from 'react-native';
 import moment from 'moment';
+import {useDispatch, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {expiredFlight} from '../../redux/action/SavedFlights';
@@ -58,6 +58,8 @@ const ExpiredSavedAddress = ({onPress}) => {
         dispatch(expiredFlight(activeData));
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       {expireAddressData?.length > 0 ? (
@@ -105,7 +107,11 @@ const ExpiredSavedAddress = ({onPress}) => {
                   <View style={styles.FlightsPlaseImgBody}>
                     <Image
                       style={styles.FlightsPlaseImg}
-                      source={Images.airplaneWhiteIcon}
+                      source={
+                        color.white == '#fff'
+                          ? Images.airplaneWhiteIcon
+                          : Images.airplaneDarkWhiteIcon
+                      }
                     />
                     <Text style={styles.FlightsPlaseImgText}>
                       {item?.totalHours}
@@ -143,7 +149,11 @@ const ExpiredSavedAddress = ({onPress}) => {
       ) : (
         <View style={styles.LottieViewStyle}>
           <LottieView
-            source={require('../../helper/noDataFound.json')}
+            source={
+              color.white == '#fff'
+                ? require('../../helper/noDataFound.json')
+                : require('../../helper/noDataFoundDark.json')
+            }
             autoPlay
             loop
             style={styles.lottiStyle}
@@ -154,110 +164,107 @@ const ExpiredSavedAddress = ({onPress}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: wp(4),
-  },
-  cardBody: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: hp(2),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
-    borderColor: color.grayLight,
-  },
-  cardHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    paddingVertical: hp(2.5),
-    borderColor: color.grayLight,
-  },
-  cardHeaderText: {
-    flex: 1,
-    fontWeight: 'bold',
-    fontSize: fontSize(18),
-  },
-  cardHeaderLogo: {
-    width: wp(5.8),
-    height: wp(5.8),
-    marginEnd: wp(3),
-    borderRadius: 500,
-  },
-  cardPrice: {
-    fontWeight: '600',
-    fontSize: fontSize(20),
-    color: color.commonBlue,
-  },
-  cardPriceTitle: {
-    color: color.darkLight,
-    fontSize: fontSize(18),
-  },
-  cardDataBody: {
-    paddingTop: hp(2.5),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  FlightsPlaseBody: {
-    width: wp(20),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    height: hp(5),
-    width: hp(17),
-  },
-  FlightsPlaseImgText: {
-    color: color.darkLight,
-    fontSize: fontSize(13),
-  },
-  FlightsPlaseNicName: {
-    color: '#000',
-    fontWeight: 'bold',
-    marginTop: hp(1.5),
-    fontSize: fontSize(21),
-  },
-  FlightsPlaseName: {
-    fontWeight: '500',
-    color: color.darkLight,
-  },
-  cardBottemBody: {
-    paddingTop: hp(1),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: hp(2.5),
-    justifyContent: 'space-between',
-  },
-  cardBottemBody2: {
-    paddingTop: hp(2),
-    borderTopWidth: 1,
-    alignItems: 'center',
-    borderColor: color.grayLight,
-  },
-  saveIconStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    resizeMode: 'contain',
-    tintColor: color.commonBlue,
-  },
-  expiredViewStyle: {
-    borderRadius: 4,
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(2),
-    backgroundColor: color.Grey,
-  },
-  LottieViewStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  lottiStyle: {
-    height: hp(65),
-    width: wp(100),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: wp(4),
+    },
+    cardBody: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 10,
+      marginBottom: hp(2),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.white,
+      borderColor: color.grey,
+    },
+    cardHeader: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      paddingVertical: hp(2.5),
+      borderColor: color.grey,
+    },
+    cardHeaderText: {
+      flex: 1,
+      fontWeight: 'bold',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    cardHeaderLogo: {
+      width: wp(5.8),
+      height: wp(5.8),
+      marginEnd: wp(3),
+      borderRadius: 500,
+    },
+    cardPrice: {
+      fontWeight: '600',
+      fontSize: fontSize(20),
+      color: color.commonBlue,
+    },
+    cardPriceTitle: {
+      color: color.offerColor,
+      fontSize: fontSize(18),
+    },
+    cardDataBody: {
+      paddingTop: hp(2.5),
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    FlightsPlaseBody: {
+      width: wp(20),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      width: hp(17),
+      height: hp(5),
+    },
+    FlightsPlaseImgText: {
+      color: color.offerColor,
+      fontSize: fontSize(13),
+    },
+    FlightsPlaseNicName: {
+      color: color.black,
+      fontWeight: 'bold',
+      marginTop: hp(1.5),
+      fontSize: fontSize(21),
+    },
+    FlightsPlaseName: {
+      fontWeight: '500',
+      color: color.offerColor,
+    },
+    cardBottemBody: {
+      paddingTop: hp(1),
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingBottom: hp(2.5),
+      justifyContent: 'space-between',
+    },
+    cardBottemBody2: {
+      paddingTop: hp(2),
+      borderTopWidth: 1,
+      alignItems: 'center',
+      borderColor: color.grey,
+    },
+
+    filledSavedStyle: {
+      width: hp(2.5),
+      height: hp(2.5),
+      resizeMode: 'contain',
+      tintColor: color.commonBlue,
+    },
+    LottieViewStyle: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    lottiStyle: {
+      height: hp(65),
+      width: wp(100),
+    },
+  });
 
 export default ExpiredSavedAddress;

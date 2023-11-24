@@ -3,7 +3,7 @@ import {useRoute} from '@react-navigation/native';
 import MapView, {Marker} from 'react-native-maps';
 import {View, Text, StyleSheet} from 'react-native';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {addressData} from '../../redux/action/AddressAction';
 import {CommonHeader, OnBoardingSingleButton} from '../../components';
@@ -44,6 +44,8 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
     }
   };
 
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -51,12 +53,12 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
         onPress2={true}
         Images2={Images.loupe}
         Images1={Images.backIcon}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
+        Images2Color={'#fff'}
         headerName={strings.addNewAddress}
         navigation1={() => {
           goBack();
         }}
-        cancelButtonStyle={styles.plusIconStyle}
       />
       <MapView
         style={{
@@ -108,30 +110,29 @@ const LocationSearch = ({navigation: {goBack}, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  plusIconStyle: {
-    tintColor: color.white,
-  },
-  addressDisplayView: {
-    bottom: 0,
-    width: wp(100),
-    position: 'absolute',
-    paddingBottom: hp(4),
-    paddingVertical: hp(4),
-    paddingHorizontal: wp(8),
-    borderTopLeftRadius: wp(4),
-    borderTopRightRadius: wp(4),
-    backgroundColor: color.white,
-  },
-  CityStyle: {
-    fontWeight: 'bold',
-    marginBottom: hp(2),
-    fontSize: fontSize(18),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    addressDisplayView: {
+      bottom: 0,
+      width: wp(100),
+      position: 'absolute',
+      paddingBottom: hp(4),
+      paddingVertical: hp(4),
+      paddingHorizontal: wp(8),
+      borderTopLeftRadius: wp(4),
+      borderTopRightRadius: wp(4),
+      backgroundColor: color.white,
+    },
+    CityStyle: {
+      fontWeight: 'bold',
+      marginBottom: hp(2),
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+  });
 
 export default LocationSearch;

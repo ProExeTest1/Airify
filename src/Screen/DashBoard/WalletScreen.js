@@ -14,7 +14,7 @@ import firestore from '@react-native-firebase/firestore';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useSelector} from 'react-redux';
 
@@ -67,8 +67,10 @@ const WalletScreen = ({navigation}) => {
   useEffect(() => {
     UserData();
   }, []);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: color.bgColor}}>
       <CommonHeader
         onPress1={false}
         onPress2={false}
@@ -87,7 +89,7 @@ const WalletScreen = ({navigation}) => {
               onPress={() => navigation.navigate('TopUp')}
               style={styles.topUpBut}>
               <Image style={styles.topUpIcon} source={Images.topUpIcon} />
-              <Text style={{color: color.black}}>{strings.topUp}</Text>
+              <Text style={{color: '#000'}}>{strings.topUp}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -126,97 +128,98 @@ const WalletScreen = ({navigation}) => {
 
 export default WalletScreen;
 
-const styles = StyleSheet.create({
-  walletBody: {
-    flex: 1,
-    paddingTop: hp(3),
-    paddingHorizontal: wp(6),
-  },
-  mywalletCardBody: {
-    borderRadius: 10,
-    paddingVertical: hp(3),
-    paddingHorizontal: wp(6),
-    backgroundColor: color.commonBlue,
-  },
-  mywalletCardName: {
-    fontWeight: 'bold',
-    color: color.white,
-    marginBottom: hp(3),
-    fontSize: fontSize(18),
-  },
-  mywalletCardBalanceTitle: {
-    fontWeight: '500',
-    color: color.white,
-    marginBottom: hp(1),
-    fontSize: fontSize(16),
-  },
-  mywalletCardBalanceBody: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  mywalletCardBalance: {
-    fontWeight: 'bold',
-    color: color.white,
-    fontSize: fontSize(25),
-  },
-  topUpBut: {
-    borderRadius: 50,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    paddingVertical: hp(1.3),
-    paddingHorizontal: wp(4),
-  },
-  topUpIcon: {
-    width: wp(5),
-    height: wp(5),
-    marginEnd: wp(1),
-  },
-  transactionHistoryHeader: {
-    paddingTop: hp(4),
-    flexDirection: 'row',
-    paddingBottom: hp(2),
-    alignItems: 'center',
-  },
-  headerText: {
-    flex: 1,
-    fontWeight: 'bold',
-    fontSize: fontSize(20),
-    color: color.black,
-  },
-  transactionHistoryViewAllBut: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  ViewAllButText: {
-    marginEnd: wp(3),
-    fontWeight: '600',
-    color: color.commonBlue,
-  },
-  ViewAllButIcon: {
-    width: wp(6),
-    height: wp(6),
-    tintColor: color.commonBlue,
-    transform: [{rotate: '270deg'}],
-  },
-  FlatListBody: {
-    borderBottomWidth: 1,
-    paddingVertical: hp(2),
-    borderColor: color.grayLight,
-  },
-  headerBody: {
-    flexDirection: 'row',
-    marginBottom: hp(1),
-  },
-  headerText: {
-    flex: 1,
-    fontWeight: '600',
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  priceText: {
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    walletBody: {
+      flex: 1,
+      paddingTop: hp(3),
+      paddingHorizontal: wp(6),
+    },
+    mywalletCardBody: {
+      borderRadius: 10,
+      paddingVertical: hp(3),
+      paddingHorizontal: wp(6),
+      backgroundColor: color.commonBlue,
+    },
+    mywalletCardName: {
+      fontWeight: 'bold',
+      color: '#fff',
+      marginBottom: hp(3),
+      fontSize: fontSize(18),
+    },
+    mywalletCardBalanceTitle: {
+      fontWeight: '500',
+      color: '#fff',
+      marginBottom: hp(1),
+      fontSize: fontSize(16),
+    },
+    mywalletCardBalanceBody: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    mywalletCardBalance: {
+      fontWeight: 'bold',
+      color: '#fff',
+      fontSize: fontSize(25),
+    },
+    topUpBut: {
+      borderRadius: 50,
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      paddingVertical: hp(1.3),
+      paddingHorizontal: wp(4),
+    },
+    topUpIcon: {
+      width: wp(5),
+      height: wp(5),
+      marginEnd: wp(1),
+    },
+    transactionHistoryHeader: {
+      paddingTop: hp(4),
+      flexDirection: 'row',
+      paddingBottom: hp(2),
+      alignItems: 'center',
+    },
+    headerText: {
+      flex: 1,
+      fontWeight: 'bold',
+      fontSize: fontSize(20),
+      color: color.black,
+    },
+    transactionHistoryViewAllBut: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    ViewAllButText: {
+      marginEnd: wp(3),
+      fontWeight: '600',
+      color: color.commonBlue,
+    },
+    ViewAllButIcon: {
+      width: wp(6),
+      height: wp(6),
+      tintColor: color.commonBlue,
+      transform: [{rotate: '270deg'}],
+    },
+    FlatListBody: {
+      borderBottomWidth: 1,
+      paddingVertical: hp(2),
+      borderColor: color.grey,
+    },
+    headerBody: {
+      flexDirection: 'row',
+      marginBottom: hp(1),
+    },
+    headerText: {
+      flex: 1,
+      fontWeight: '600',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    priceText: {
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+  });

@@ -2,7 +2,8 @@ import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import {TextInput} from 'react-native-paper';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
+import {useSelector} from 'react-redux';
 const CustomPaperTextInput = ({
   width,
   placeholder,
@@ -16,6 +17,8 @@ const CustomPaperTextInput = ({
   onPress,
   marginHorizontal,
 }) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <Pressable
       onPress={onPress}
@@ -29,20 +32,18 @@ const CustomPaperTextInput = ({
       <TextInput
         editable={false}
         label={label}
+        textColor={color.black}
         pointerEvents="none"
-        placeholder={placeholder}
-        placeholderTextColor={'white'}
         value={value}
-        // theme={{ colors: { onSurfaceVariant: 'white'} }}
-        // activeOutlineColor="white"
-        // outlineColor="white"
-        // textColor="white"
+        theme={{colors: {onSurfaceVariant: color.paperTextInputColor}}}
+        outlineColor={color.grey}
         mode="outlined"
         outlineStyle={styles.outlineStyle}
         left={
           <TextInput.Icon
             icon={icon}
             style={{marginTop: hp(2.4)}}
+            color={color.black}
             onPress={onPress}
           />
         }
@@ -56,21 +57,22 @@ const CustomPaperTextInput = ({
 
 export default CustomPaperTextInput;
 
-const styles = StyleSheet.create({
-  textInputStyle: {
-    height: hp(7.3),
-    justifyContent: 'center',
-    fontSize: fontSize(16),
-    backgroundColor: color.white,
-    width: '100%',
-  },
-  iconStyle: {
-    marginTop: hp(2.4),
-    tintColor: color.white,
-  },
-  outlineStyle: {
-    borderRadius: 16,
-    borderWidth: 0.5,
-    // borderColor:'white'
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    textInputStyle: {
+      height: hp(7.3),
+      justifyContent: 'center',
+      fontSize: fontSize(16),
+      backgroundColor: color.white,
+      width: '100%',
+    },
+    iconStyle: {
+      marginTop: hp(2.4),
+      tintColor: color.white,
+    },
+    outlineStyle: {
+      borderRadius: 16,
+      borderWidth: 0.5,
+      // borderColor:'white'
+    },
+  });
