@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native';
 
-import {color} from '../../helper/ColorConstant';
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {CommonHeader, PickerHeaderBar, SearchBar} from '../../components';
@@ -131,6 +130,8 @@ const PlacePickerScreen = ({navigation, route}) => {
       navigation.navigate('TabNavigation');
     }
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       {/* <PickerHeaderBar
@@ -143,7 +144,7 @@ const PlacePickerScreen = ({navigation, route}) => {
         Images1={Images?.cancel}
         headerName={headerData}
         cancelButtonStyle1={{height: hp(2.5), marginTop: hp(0.3)}}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
         navigation1={() => {
           navigation.goBack();
         }}
@@ -211,55 +212,57 @@ const PlacePickerScreen = ({navigation, route}) => {
 
 export default PlacePickerScreen;
 const {height, width} = Dimensions.get('screen');
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  flatlistViewStyle: {
-    paddingHorizontal: wp(6),
-  },
-  cityTouchStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    flex: 1,
-    paddingVertical: hp(2),
-  },
-  lineStyle: {
-    flex: 1,
-    height: hp(0),
-    borderWidth: 0.5,
-  },
-  forwardIconStyle: {
-    width: hp(4.4),
-    height: wp(4.4),
-  },
-  textStyle: {
-    fontWeight: '500',
-    color: color.black,
-    fontSize: fontSize(18),
-  },
-  textViewStyle: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  smallTextViewStyle: {
-    paddingTop: hp(0.5),
-    flexDirection: 'row',
-  },
-  smallTextStyle: {
-    color: color.grey,
-    fontSize: fontSize(16),
-  },
-  notFoundTextStyle: {
-    fontSize: fontSize(20),
-    color: 'black',
-  },
-  notFoundViewStyle: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: color.white,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    flatlistViewStyle: {
+      paddingHorizontal: wp(6),
+    },
+    cityTouchStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderBottomWidth: 2,
+      borderColor: color.grey,
+      flex: 1,
+      paddingVertical: hp(2),
+    },
+    lineStyle: {
+      flex: 1,
+      height: hp(0),
+      borderWidth: 0.5,
+    },
+    forwardIconStyle: {
+      width: hp(4.4),
+      height: wp(4.4),
+    },
+    textStyle: {
+      fontWeight: '500',
+      color: color.black,
+      fontSize: fontSize(18),
+    },
+    textViewStyle: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    smallTextViewStyle: {
+      paddingTop: hp(0.5),
+      flexDirection: 'row',
+    },
+    smallTextStyle: {
+      color: color.offerColor,
+      fontSize: fontSize(16),
+    },
+    notFoundTextStyle: {
+      fontSize: fontSize(20),
+      color: 'black',
+    },
+    notFoundViewStyle: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: color.white,
+    },
+  });

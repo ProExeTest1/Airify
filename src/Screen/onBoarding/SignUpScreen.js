@@ -24,7 +24,7 @@ import {CountryPicker} from 'react-native-country-codes-picker';
 
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {DineWay} from '../../redux/action/HomeAction';
 
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -495,6 +495,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
         AlertConstant('Your email is already register');
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <OnBoardingModuleHeader
@@ -617,7 +619,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                 <Text style={{marginLeft: wp(4), color: color.black}}>
                   {strings.TermsCondition1}
                 </Text>
-                <Text style={{color: color.commonBlue}}>
+                <Text style={{color: color.commonBlue, fontWeight: '600'}}>
                   {strings.TextTerm}
                 </Text>
               </View>
@@ -625,7 +627,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           </View>
           <View style={styles.signUpStyle}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{color: 'black'}}>{strings.signInLine}</Text>
+              <Text style={{color: color.black}}>{strings.signInLine}</Text>
               <TouchableOpacity
                 style={{marginLeft: wp(1)}}
                 onPress={() => {
@@ -635,7 +637,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                   style={{
                     color: color.commonBlue,
                     fontSize: fontSize(14),
-                    fontWeight: '400',
+                    fontWeight: '600',
                   }}>
                   {strings.signInText}
                 </Text>
@@ -709,8 +711,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         borderColor: selectedJourneyData?.some(
                           i => i == item?.name,
                         )
-                          ? 'blue'
-                          : '#EEEEEE',
+                          ? color.commonBlue
+                          : color.grey,
+                        backgroundColor: selectedJourneyData?.some(
+                          i => i == item?.name,
+                        )
+                          ? null
+                          : color.grayLight2,
                       },
                     ]}
                     onPress={() => {
@@ -733,46 +740,6 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                   </TouchableOpacity>
                 );
               })}
-              {/* <FlatList
-              bounces={false}
-              showsVerticalScrollIndicator={false}
-              numColumns={2}
-              data={journeyData.data}
-              renderItem={({item}) => {
-                return (
-                  <TouchableOpacity
-                    style={[
-                      styles.flatListViewStyle,
-                      {
-                        borderColor: selectedJourneyData.some(
-                          i => i == item.name,
-                        )
-                          ? 'blue'
-                          : '#EEEEEE',
-                      },
-                    ]}
-                    onPress={() => {
-                      selectedJourneyData.some(i => i == item.name)
-                        ? setSelectedJourneyData(
-                            selectedJourneyData.filter(e => e !== item.name),
-                          )
-                        : selectedJourneyData.length < 10
-                        ? setSelectedJourneyData([
-                            ...selectedJourneyData,
-                            item?.name,
-                          ])
-                        : null;
-                    }}>
-                    <Image
-                      source={{uri: item.image}}
-                      style={styles.flatListIconStyle}
-                    />
-                    <Text style={{color: color.black}}>{item.name}</Text>
-                  </TouchableOpacity>
-                );
-              }}
-              keyExtractor={item => item.name}
-            /> */}
             </View>
           </ScrollView>
         </View>
@@ -794,8 +761,13 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                         borderColor: selectedDineWay?.some(
                           i => i == item?.strCategory,
                         )
-                          ? 'blue'
-                          : '#EEEEEE',
+                          ? color.commonBlue
+                          : color.grey,
+                        backgroundColor: selectedJourneyData?.some(
+                          i => i == item?.name,
+                        )
+                          ? '#ffffff00'
+                          : color.grayLight2,
                       },
                     ]}
                     onPress={() => {
@@ -826,7 +798,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           </ScrollView>
         </View>
         <View style={styles.slide}>
-          <View style={{marginTop: hp(2), marginVertical: hp(2)}}>
+          <View style={{marginTop: hp(2)}}>
             <FlatList
               bounces={false}
               data={dummyAirlineData}
@@ -837,8 +809,8 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
                       styles.flyWayStyle,
                       {
                         borderColor: selectedFlyWay?.some(i => i == item?.name)
-                          ? 'blue'
-                          : '#EEEEEE',
+                          ? color.commonBlue
+                          : color.grey,
                       },
                     ]}
                     onPress={() => {
@@ -924,7 +896,7 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
           <OnBoardingSingleButton
             buttonText={
               index == 0
-                ? strings.signInText
+                ? strings.signUp
                 : index == 1
                 ? strings.OnBoardingButtonSecond
                 : index == 5
@@ -982,114 +954,116 @@ const SignUpScreen = ({navigation: {goBack}, navigation}) => {
       />
       <Modal isVisible={modalVisible2} backdropColor="#000000">
         <View style={styles.createAlertBody}>
-          <ActivityIndicator size="large" color={color.white} />
+          <ActivityIndicator size="large" color={color.dark} />
         </View>
       </Modal>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  textInputTitleStyle: {
-    marginLeft: wp(6),
-    color: color.black,
-  },
-  rememberLineStyle: {
-    paddingBottom: hp(2),
-    flexDirection: 'row',
-  },
-  forgotPasswordStyle: {
-    color: 'blue',
-  },
-  signUpStyle: {
-    flex: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#ECEFEF',
-    marginHorizontal: wp(6),
-    paddingTop: hp(2),
-    alignItems: 'center',
-  },
-  buttonStyle: {
-    paddingVertical: hp(2),
-    marginVertical: hp(3),
-  },
-  lineStyle: {
-    height: 1,
-    marginTop: hp(2),
-    marginHorizontal: wp(5),
-    backgroundColor: '#ECEFEF',
-  },
-  modalImageStyle: {
-    width: wp(70),
-    height: hp(30),
-    marginTop: hp(2),
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
-  textInputContainer: {marginTop: hp(1)},
-  slide: {
-    flex: 1,
-  },
-  flatListIconStyle: {
-    width: hp(3),
-    height: hp(3),
-    borderRadius: 15,
-    resizeMode: 'contain',
-    marginHorizontal: wp(2),
-  },
-  flatListViewStyle: {
-    borderWidth: 1,
-    alignItems: 'center',
-    borderRadius: wp(15),
-    flexDirection: 'row',
-    paddingVertical: hp(2),
-    marginVertical: hp(0.5),
-    marginHorizontal: wp(1),
-    justifyContent: 'center',
-    paddingHorizontal: wp(4),
-  },
-  HederStyle: {
-    fontWeight: '600',
-    marginVertical: hp(2),
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  textInputView1: {
-    marginBottom: 10,
-    marginTop: hp(4),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: wp(14),
-  },
-  otpInputStyle: {
-    width: wp(14),
-    height: hp(6),
-    borderRadius: 10,
-    letterSpacing: 5,
-    textAlign: 'center',
-    backgroundColor: '#DFE1E5',
-  },
-  flyWayStyle: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 15,
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: hp(1),
-    paddingVertical: hp(2),
-    marginHorizontal: wp(4),
-    paddingHorizontal: wp(4),
-  },
-  textInputCountryPicker: {
-    height: hp(10),
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.onBoardingBgColor,
+    },
+    textInputTitleStyle: {
+      marginLeft: wp(6),
+      color: color.black,
+    },
+    rememberLineStyle: {
+      paddingBottom: hp(2),
+      flexDirection: 'row',
+    },
+    forgotPasswordStyle: {
+      color: 'blue',
+    },
+    signUpStyle: {
+      flex: 1,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderColor: '#ECEFEF',
+      marginHorizontal: wp(6),
+      paddingTop: hp(2),
+      alignItems: 'center',
+    },
+    buttonStyle: {
+      paddingVertical: hp(2),
+      marginVertical: hp(3),
+    },
+    lineStyle: {
+      height: 1,
+      marginTop: hp(2),
+      marginHorizontal: wp(5),
+      backgroundColor: '#ECEFEF',
+    },
+    modalImageStyle: {
+      width: wp(70),
+      height: hp(30),
+      marginTop: hp(2),
+    },
+    checkbox: {
+      alignSelf: 'center',
+    },
+    textInputContainer: {marginTop: hp(1)},
+    slide: {
+      flex: 1,
+    },
+    flatListIconStyle: {
+      width: hp(3),
+      height: hp(3),
+      borderRadius: 15,
+      resizeMode: 'contain',
+      marginHorizontal: wp(2),
+    },
+    flatListViewStyle: {
+      borderWidth: 1,
+      alignItems: 'center',
+      borderRadius: wp(15),
+      flexDirection: 'row',
+      paddingVertical: hp(2),
+      marginVertical: hp(0.5),
+      marginHorizontal: wp(1),
+      justifyContent: 'center',
+      paddingHorizontal: wp(4),
+      backgroundColor: color.grayLight2,
+    },
+    HederStyle: {
+      fontWeight: '600',
+      marginVertical: hp(2),
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    textInputView1: {
+      marginBottom: 10,
+      marginTop: hp(4),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: wp(14),
+    },
+    otpInputStyle: {
+      width: wp(14),
+      height: hp(6),
+      borderRadius: 10,
+      letterSpacing: 5,
+      textAlign: 'center',
+      backgroundColor: '#DFE1E5',
+    },
+    flyWayStyle: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 15,
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginVertical: hp(1),
+      paddingVertical: hp(2),
+      marginHorizontal: wp(4),
+      paddingHorizontal: wp(4),
+    },
+    textInputCountryPicker: {
+      height: hp(10),
+      color: color.black,
+    },
+  });
 
 export default SignUpScreen;

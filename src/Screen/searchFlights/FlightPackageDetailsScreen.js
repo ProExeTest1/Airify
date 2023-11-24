@@ -6,19 +6,21 @@ import {
   RefundandRescheduleInfo,
 } from '../../components';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import {
   RefundableTermsAndConditions,
   RescheduleTermsAndConditons,
 } from '../../assets/DummyData/FlightDetailsData';
 import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const FlightPackageDetailsScreen = ({navigation, route}) => {
   const headerData = route?.params?.header;
   const [press, setPress] = useState('Flight');
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: color.bgColor}}>
       <PickerHeaderBar
         headerName={headerData}
         navigation={() => navigation.goBack('')}
@@ -29,13 +31,14 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
           style={[
             styles.optionTouchStyle,
             {
-              backgroundColor: press === 'Flight' ? color.commonBlue : null,
+              backgroundColor:
+                press === 'Flight' ? color.commonBlue : color.grey,
             },
           ]}>
           <Text
             style={[
               styles.optionTextStyle,
-              {color: press === 'Flight' ? color.white : color.black},
+              {color: press === 'Flight' ? '#fff' : color.black},
             ]}>
             {strings.Flight}
           </Text>
@@ -44,12 +47,15 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
           onPress={() => setPress('Refund')}
           style={[
             styles.optionTouchStyle,
-            {backgroundColor: press === 'Refund' ? color.commonBlue : null},
+            {
+              backgroundColor:
+                press === 'Refund' ? color.commonBlue : color.grey,
+            },
           ]}>
           <Text
             style={[
               styles.optionTextStyle,
-              {color: press === 'Refund' ? color.white : color.black},
+              {color: press === 'Refund' ? '#fff' : color.black},
             ]}>
             {strings.Refund_Info}
           </Text>
@@ -58,12 +64,15 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
           onPress={() => setPress('Reschedule')}
           style={[
             styles.optionTouchStyle,
-            {backgroundColor: press === 'Reschedule' ? color.commonBlue : null},
+            {
+              backgroundColor:
+                press === 'Reschedule' ? color.commonBlue : color.grey,
+            },
           ]}>
           <Text
             style={[
               styles.optionTextStyle,
-              {color: press === 'Reschedule' ? color.white : color.black},
+              {color: press === 'Reschedule' ? '#fff' : color.black},
             ]}
             ellipsizeMode="tail"
             numberOfLines={1}>
@@ -90,27 +99,27 @@ const FlightPackageDetailsScreen = ({navigation, route}) => {
 
 export default FlightPackageDetailsScreen;
 
-const styles = StyleSheet.create({
-  optionViewStyle: {
-    flexDirection: 'row',
-    backgroundColor: '#EBEBEC',
-    justifyContent: 'space-around',
-    width: '92%',
-    alignSelf: 'center',
-    borderRadius: 7,
-    marginVertical: hp(2),
-    height: hp(5.5),
-  },
-  optionTextStyle: {
-    fontSize: fontSize(16),
-    fontWeight: '600',
-    marginHorizontal: wp(1),
-  },
-  optionTouchStyle: {
-    borderRadius: 7,
-    height: hp(5.5),
-    width: '33%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    optionViewStyle: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '92%',
+      alignSelf: 'center',
+      borderRadius: 7,
+      marginVertical: hp(2),
+      height: hp(5.5),
+    },
+    optionTextStyle: {
+      fontSize: fontSize(16),
+      fontWeight: '600',
+      marginHorizontal: wp(1),
+    },
+    optionTouchStyle: {
+      borderRadius: 7,
+      height: hp(5.5),
+      width: '33%',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });

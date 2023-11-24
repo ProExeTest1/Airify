@@ -23,7 +23,7 @@ import {
   TicktBookingProgressBar,
 } from '../../components';
 import {strings} from '../../helper/Strings';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import auth from '@react-native-firebase/auth';
@@ -156,7 +156,8 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
         });
       });
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
@@ -320,7 +321,7 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
             <View
               style={{
                 marginVertical: hp(2),
-                backgroundColor: color.lightGray,
+                backgroundColor: color.white,
                 borderRadius: 5,
               }}>
               {flatlistData.length > 1 && SelectSeat?.every(i => i.seatNo) && (
@@ -328,6 +329,7 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
                   style={{
                     paddingVertical: hp(1.5),
                     flexDirection: 'row',
+                    backgroundColor: color.lightGray,
                   }}>
                   <View style={{width: wp(13), alignItems: 'center'}}>
                     <Text style={styles.searNumberListTitleText}>No.</Text>
@@ -350,6 +352,7 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
                       style={{
                         paddingVertical: hp(1.5),
                         flexDirection: 'row',
+                        backgroundColor: color.lightGray,
                       }}>
                       {flatlistData.length > 1 && (
                         <View style={{width: wp(13), alignItems: 'center'}}>
@@ -410,244 +413,233 @@ const RescheduleFillPassengerDetails = ({navigation, route}) => {
 export default RescheduleFillPassengerDetails;
 // 2.8% travel inssurance
 //1.5% tax
-const styles = StyleSheet.create({
-  scrollViewStyle: {flex: 1},
-  headerViewStyle: {
-    flex: 1,
-  },
-  progressViewStyle: {
-    backgroundColor: '#0041C0',
-    height: hp(4),
-    width: hp(4),
-    borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  progressCountStyle: {
-    fontSize: fontSize(17),
-    fontWeight: '600',
-    color: color.white,
-  },
-  progressInnerViewStyle: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  lineViewStyle: {
-    borderWidth: 1,
-    borderColor: 'black',
-    width: wp(14),
-  },
-  progressTextStyle: {
-    color: '#DBDDE1',
-    marginTop: hp(0.5),
-  },
-  bottomButtonBody: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-    paddingTop: hp(2),
-    paddingBottom: hp(4),
-    flexDirection: 'row',
-  },
-  okButton: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(2),
-    alignItems: 'center',
-    borderRadius: 10,
-    flex: 1,
-  },
-  okButtonText: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: '#fff',
-  },
-  cardBody: {
-    backgroundColor: color.white,
-    paddingHorizontal: wp(4),
-    marginBottom: hp(2),
-    borderRadius: 10,
-    borderColor: '#000',
-    marginHorizontal: wp(4),
-  },
-  cardHeaderText: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    flex: 1,
-    color: color.black,
-    marginHorizontal: wp(4),
-  },
-  nameTextStyle: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    flex: 1,
-    color: color.black,
-  },
-  flatlistViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#e2e2e2',
-    borderBottomWidth: 1,
-    paddingVertical: hp(1.6),
-  },
-  emailStyle: {
-    flex: 1,
-    fontSize: fontSize(16),
-    color: '#383838',
-  },
-  PhoneNumberStyle: {
-    color: '#383838',
-    fontSize: fontSize(16),
-    marginHorizontal: wp(2),
-  },
-  cardHeaderStyle: {
-    height: hp(3),
-    width: hp(3),
-  },
-  flyIconStyle: {
-    height: hp(3),
-    width: hp(3),
-  },
-  progressBarStyle: {
-    height: hp(10),
-    backgroundColor: color.commonBlue,
-    paddingHorizontal: wp(12),
-  },
-  cardheaderIconStyle: {
-    height: hp(3),
-    width: hp(3),
-    tintColor: color.commonBlue,
-  },
-  contactDetailsViewStyle: {
-    marginVertical: hp(2),
-  },
-  emailViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'space-between',
-    marginTop: hp(1),
-  },
-  plusIconStyle: {
-    height: hp(2),
-    width: hp(2),
-    tintColor: color.commonBlue,
-  },
-  passengerInputViewStyle: {
-    marginBottom: hp(2),
-  },
-  dropDownInputStyle: {
-    marginHorizontal: wp(2),
-    height: hp(7),
-    marginVertical: hp(1),
-  },
-  dropDownIconStyle: {
-    marginTop: hp(2.4),
-  },
-  dropDownMenuStyle: {
-    marginHorizontal: wp(1),
-    marginBottom: hp(1),
-  },
-  dropDownRenderItemTouchStyle: {
-    marginHorizontal: wp(4),
-    marginVertical: hp(1.2),
-    borderBottomWidth: 0.5,
-    borderColor: '#e6e6e6',
-    paddingBottom: hp(1.5),
-  },
-  renderItemTextStyle: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: '#383838',
-  },
-  searNumberListTitleText: {
-    fontSize: fontSize(17),
-    fontWeight: '500',
-    color: color.black,
-  },
-  flatlistViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#e2e2e2',
-    borderBottomWidth: 1,
-    paddingVertical: hp(1.6),
-  },
-  flyIconStyle: {
-    height: hp(3),
-    width: hp(3),
-  },
-  cardHeaderText: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    flex: 1,
-    color: color.black,
-    marginHorizontal: wp(4),
-  },
-  contactDetailsViewStyle: {
-    marginVertical: hp(2),
-  },
-  emailViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'space-between',
-    marginTop: hp(1),
-  },
-  nameTextStyle: {
-    fontSize: fontSize(18),
-    fontWeight: 'bold',
-    flex: 1,
-    color: color.black,
-  },
-  emailStyle: {
-    flex: 1,
-    fontSize: fontSize(16),
-    color: '#383838',
-  },
-  PhoneNumberStyle: {
-    color: '#383838',
-    fontSize: fontSize(16),
-    marginHorizontal: wp(2),
-  },
-  buttonStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: hp(2),
-    borderRadius: 10,
-    backgroundColor: color.commonBlue,
-    marginVertical: hp(1.2),
-    marginBottom: hp(2),
-  },
-  buttonTextStyle: {
-    fontSize: fontSize(18, 812),
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  seatNumberListTitleText: {
-    fontSize: fontSize(18, 812),
-    color: color.black,
-    fontWeight: 'bold',
-  },
-  seatNumberListTitleText1: {
-    fontSize: fontSize(20, 812),
-    color: color.black,
-    fontWeight: 'bold',
-  },
-  passengerViewStyle: {
-    flexDirection: 'row',
-    backgroundColor: '#F3F3F3',
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(2),
-    flex: 1,
-    borderRadius: 10,
-    justifyContent: 'space-between',
-    marginBottom: hp(1),
-    marginVertical: hp(2),
-  },
-  noteStyle: {
-    flex: 1,
-    marginHorizontal: wp(6),
-    textAlign: 'center',
-    color: '#383838',
-    fontSize: fontSize(16),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    scrollViewStyle: {flex: 1},
+    headerViewStyle: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    progressViewStyle: {
+      backgroundColor: '#0041C0',
+      height: hp(4),
+      width: hp(4),
+      borderRadius: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    progressCountStyle: {
+      fontSize: fontSize(17),
+      fontWeight: '600',
+      color: color.white,
+    },
+    progressInnerViewStyle: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+    },
+    lineViewStyle: {
+      borderWidth: 1,
+      borderColor: 'black',
+      width: wp(14),
+    },
+    progressTextStyle: {
+      color: '#DBDDE1',
+      marginTop: hp(0.5),
+    },
+    bottomButtonBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+      paddingTop: hp(2),
+      paddingBottom: hp(4),
+      flexDirection: 'row',
+    },
+    okButton: {
+      backgroundColor: color.commonBlue,
+      paddingVertical: hp(2),
+      alignItems: 'center',
+      borderRadius: 10,
+      flex: 1,
+    },
+    okButtonText: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: '#fff',
+    },
+    cardBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(4),
+      marginBottom: hp(2),
+      borderRadius: 10,
+      borderColor: '#000',
+      marginHorizontal: wp(4),
+    },
+    cardHeaderText: {
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      flex: 1,
+      color: color.black,
+      marginHorizontal: wp(4),
+    },
+    nameTextStyle: {
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      flex: 1,
+      color: color.black,
+    },
+    flatlistViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: '#e2e2e2',
+      borderBottomWidth: 1,
+      paddingVertical: hp(1.6),
+    },
+    emailStyle: {
+      flex: 1,
+      fontSize: fontSize(16),
+      color: color.offerColor,
+    },
+    PhoneNumberStyle: {
+      color: color.offerColor,
+      fontSize: fontSize(16),
+      marginHorizontal: wp(2),
+    },
+    cardHeaderStyle: {
+      height: hp(3),
+      width: hp(3),
+    },
+    flyIconStyle: {
+      height: hp(3),
+      width: hp(3),
+      tintColor: color.black,
+    },
+    progressBarStyle: {
+      height: hp(10),
+      backgroundColor: color.commonBlue,
+      paddingHorizontal: wp(12),
+    },
+    cardheaderIconStyle: {
+      height: hp(3),
+      width: hp(3),
+      tintColor: color.commonBlue,
+    },
+    contactDetailsViewStyle: {
+      marginVertical: hp(2),
+    },
+    emailViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+      justifyContent: 'space-between',
+      marginTop: hp(1),
+    },
+    plusIconStyle: {
+      height: hp(2),
+      width: hp(2),
+      tintColor: color.commonBlue,
+    },
+    passengerInputViewStyle: {
+      marginBottom: hp(2),
+    },
+    dropDownInputStyle: {
+      marginHorizontal: wp(2),
+      height: hp(7),
+      marginVertical: hp(1),
+    },
+    dropDownIconStyle: {
+      marginTop: hp(2.4),
+    },
+    dropDownMenuStyle: {
+      marginHorizontal: wp(1),
+      marginBottom: hp(1),
+    },
+    dropDownRenderItemTouchStyle: {
+      marginHorizontal: wp(4),
+      marginVertical: hp(1.2),
+      borderBottomWidth: 0.5,
+      borderColor: '#e6e6e6',
+      paddingBottom: hp(1.5),
+    },
+    renderItemTextStyle: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: '#383838',
+    },
+    searNumberListTitleText: {
+      fontSize: fontSize(17),
+      fontWeight: '500',
+      color: color.black,
+    },
+    flatlistViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: '#e2e2e2',
+      borderBottomWidth: 1,
+      paddingVertical: hp(1.6),
+    },
+    cardHeaderText: {
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      flex: 1,
+      color: color.black,
+      marginHorizontal: wp(4),
+    },
+    contactDetailsViewStyle: {
+      marginVertical: hp(2),
+    },
+    emailViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+      justifyContent: 'space-between',
+      marginTop: hp(1),
+    },
+    nameTextStyle: {
+      fontSize: fontSize(18),
+      fontWeight: 'bold',
+      flex: 1,
+      color: color.black,
+    },
+    buttonStyle: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: hp(2),
+      borderRadius: 10,
+      backgroundColor: color.commonBlue,
+      marginVertical: hp(1.2),
+      marginBottom: hp(2),
+    },
+    buttonTextStyle: {
+      fontSize: fontSize(18, 812),
+      color: 'white',
+      fontWeight: 'bold',
+    },
+    seatNumberListTitleText: {
+      fontSize: fontSize(18, 812),
+      color: color.black,
+      fontWeight: 'bold',
+    },
+    seatNumberListTitleText1: {
+      fontSize: fontSize(20, 812),
+      color: color.black,
+      fontWeight: 'bold',
+    },
+    passengerViewStyle: {
+      flexDirection: 'row',
+      backgroundColor: color.lightGray,
+      paddingHorizontal: wp(3),
+      paddingVertical: hp(2),
+      flex: 1,
+      borderRadius: 10,
+      justifyContent: 'space-between',
+      marginBottom: hp(1),
+      marginVertical: hp(2),
+    },
+    noteStyle: {
+      flex: 1,
+      marginHorizontal: wp(6),
+      textAlign: 'center',
+      color: '#383838',
+      fontSize: fontSize(16),
+    },
+  });

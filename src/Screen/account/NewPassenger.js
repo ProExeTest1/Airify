@@ -15,10 +15,11 @@ import {
   CommonDropDown,
   TextInputPassenger,
 } from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {useSelector} from 'react-redux';
 
 const NewPassenger = ({navigation: {goBack}, navigation}) => {
   const route = useRoute();
@@ -297,6 +298,8 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
       });
     navigation?.goBack();
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -305,7 +308,7 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
         onPress2={false}
         navigation2={() => {}}
         Images1={Images.cancel}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
         cancelButtonStyle1={styles.cancelStyle}
         headerName={
           mode == 'Edit' ? strings.editPassenger : strings.newPassenger
@@ -704,40 +707,41 @@ const NewPassenger = ({navigation: {goBack}, navigation}) => {
   );
 };
 export default NewPassenger;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  cancelStyle: {
-    width: hp(2),
-    height: hp(2),
-    marginTop: hp(0.5),
-    resizeMode: 'contain',
-    tintColor: color.white,
-  },
-  line: {
-    flex: 1,
-    borderWidth: 1,
-    marginTop: hp(2),
-    alignSelf: 'center',
-    borderColor: color.Grey,
-    marginHorizontal: wp(2),
-  },
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.onBoardingBgColor,
+    },
+    cancelStyle: {
+      width: hp(2),
+      height: hp(2),
+      marginTop: hp(0.5),
+      resizeMode: 'contain',
+      tintColor: color.white,
+    },
+    line: {
+      flex: 1,
+      borderWidth: 1,
+      marginTop: hp(2),
+      alignSelf: 'center',
+      borderColor: color.Grey,
+      marginHorizontal: wp(2),
+    },
 
-  buttonStyle: {
-    marginTop: hp(2),
-  },
-  buttonViewStyle: {
-    borderTopWidth: 1,
-    paddingBottom: hp(3),
-    borderColor: color.Grey,
-  },
-  lineText: {
-    marginTop: hp(2),
-    fontWeight: '500',
-    color: color.darkGray,
-    fontSize: fontSize(16),
-  },
-  subContainerView: {flexDirection: 'row'},
-});
+    buttonStyle: {
+      marginTop: hp(2),
+    },
+    buttonViewStyle: {
+      borderTopWidth: 1,
+      paddingBottom: hp(3),
+      borderColor: color.Grey,
+    },
+    lineText: {
+      marginTop: hp(2),
+      fontWeight: '500',
+      color: color.darkGray,
+      fontSize: fontSize(16),
+    },
+    subContainerView: {flexDirection: 'row'},
+  });

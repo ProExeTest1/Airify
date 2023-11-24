@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Alert, Image, ScrollView} from 'react-native';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
@@ -10,6 +10,7 @@ import Barcode from '@kichiyaki/react-native-barcode-generator';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import storage from '@react-native-firebase/storage';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {useSelector} from 'react-redux';
 
 const ETicket = ({navigation: {goBack}, navigation}) => {
   const [getImage, setGetImage] = useState({});
@@ -258,7 +259,8 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
     let file = await RNHTMLtoPDF.convert(options);
     AlertConstant(file.filePath);
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -266,9 +268,9 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
         onPress2={true}
         Images2={Images.download}
         Images1={Images.backIcon}
-        Images2Color={color.white}
+        Images2Color={'#fff'}
         headerName={strings.eTicket}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
         navigation2={() => {
           createPDF();
         }}
@@ -329,7 +331,11 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
                 <View style={styles.FlightsPlaseImgBody}>
                   <Image
                     style={styles.FlightsPlaseImg}
-                    source={Images.airplaneWhiteIcon}
+                    source={
+                      color.white == '#fff'
+                        ? Images.airplaneWhiteIcon
+                        : Images.airplaneDarkWhiteIcon
+                    }
                   />
                   <Text style={styles.FlightsPlaseImgText}>
                     {FlightData?.searchFlightCardData?.totalHours}
@@ -363,7 +369,7 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
           <View
             style={{
               borderBottomWidth: 1,
-              borderColor: color.lightGray,
+              borderColor: color.grey,
               marginHorizontal: wp(6),
             }}>
             <TicketData
@@ -400,7 +406,9 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
           </View>
         </View>
         <Image
-          source={Images.ticketWave}
+          source={
+            color.white == '#fff' ? Images.ticketWave : Images.ticketWaveDark
+          }
           style={{width: wp(88), height: hp(2)}}
         />
       </ScrollView>
@@ -408,146 +416,148 @@ const ETicket = ({navigation: {goBack}, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.commonBlue,
-  },
-  bodyView: {
-    flex: 1,
-    borderTopWidth: 0.4,
-    borderColor: color.white,
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(6),
-    paddingBottom: hp(4),
-  },
-  ticketMainView: {
-    backgroundColor: color.white,
-    borderTopLeftRadius: wp(3),
-    borderTopRightRadius: wp(3),
-  },
-  curveStyle: {
-    width: wp(13),
-    height: wp(13),
-    borderRadius: 100 / 2,
-    backgroundColor: color.commonBlue,
-  },
-  curveViewStyle: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: hp(1),
-  },
-  qrStyle: {height: hp(16), width: wp(80), resizeMode: 'contain'},
-  dashedStyle: {
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    flex: 1,
-    borderRadius: 1,
-    borderColor: color.darkLight,
-    marginHorizontal: wp(-8),
-  },
-  cartView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    marginHorizontal: wp(6),
-    borderColor: color.lightGray,
-  },
-  cardBody: {
-    flex: 1,
-    backgroundColor: color.white,
-    borderColor: color.grayLight,
-  },
-  cardHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    paddingVertical: hp(1.5),
-    borderColor: color.grayLight,
-  },
-  cardHeaderText: {
-    flex: 1,
-    fontWeight: 'bold',
-    fontSize: fontSize(16),
-  },
-  cardHeaderLogo: {
-    width: wp(5.8),
-    height: wp(5.8),
-    marginEnd: wp(3),
-    borderRadius: 500,
-  },
-  cardPrice: {
-    fontWeight: '600',
-    fontSize: fontSize(13),
-    color: color.black,
-  },
-  cardPriceTitle: {
-    color: color.darkLight,
-    fontSize: fontSize(16),
-  },
-  cardDataBody: {
-    paddingTop: hp(1.5),
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  FlightsPlaseBody: {
-    width: wp(20),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    width: hp(17),
-    height: hp(5),
-  },
-  FlightsPlaseImgText: {
-    color: color.darkLight,
-    fontSize: fontSize(13),
-  },
-  FlightsPlaseNicName: {
-    color: '#000',
-    fontWeight: 'bold',
-    marginTop: hp(1.5),
-    fontSize: fontSize(19),
-  },
-  FlightsPlaseName: {
-    fontWeight: '500',
-    color: color.darkLight,
-  },
-  cardBottemBody: {
-    paddingTop: hp(1),
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingBottom: hp(1.5),
-    justifyContent: 'space-between',
-  },
-  filledSavedStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    resizeMode: 'contain',
-    tintColor: color.commonBlue,
-  },
-  tikcetDetailViewStyle: {
-    flexDirection: 'row',
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.commonBlue,
+    },
+    bodyView: {
+      flex: 1,
+      borderTopWidth: 0.4,
+      borderColor: color.white,
+      paddingVertical: hp(2),
+      paddingHorizontal: wp(6),
+      paddingBottom: hp(4),
+    },
+    ticketMainView: {
+      backgroundColor: color.white,
+      borderTopLeftRadius: wp(3),
+      borderTopRightRadius: wp(3),
+    },
+    curveStyle: {
+      width: wp(13),
+      height: wp(13),
+      borderRadius: 100 / 2,
+      backgroundColor: color.commonBlue,
+    },
+    curveViewStyle: {
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: hp(1),
+    },
+    qrStyle: {height: hp(16), width: wp(80), resizeMode: 'contain'},
+    dashedStyle: {
+      borderWidth: 1,
+      borderStyle: 'dashed',
+      flex: 1,
+      borderRadius: 1,
+      borderColor: color.darkLight,
+      marginHorizontal: wp(-8),
+    },
+    cartView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      borderBottomWidth: 1,
+      marginHorizontal: wp(6),
+      borderColor: color.grey,
+    },
+    cardBody: {
+      flex: 1,
+      backgroundColor: color.white,
+      borderColor: color.grayLight,
+    },
+    cardHeader: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      paddingVertical: hp(1.5),
+      borderColor: color.grayLight,
+    },
+    cardHeaderText: {
+      flex: 1,
+      fontWeight: 'bold',
+      fontSize: fontSize(16),
+      color: color.black,
+    },
+    cardHeaderLogo: {
+      width: wp(5.8),
+      height: wp(5.8),
+      marginEnd: wp(3),
+      borderRadius: 500,
+    },
+    cardPrice: {
+      fontWeight: '600',
+      fontSize: fontSize(13),
+      color: color.black,
+    },
+    cardPriceTitle: {
+      color: color.darkLight,
+      fontSize: fontSize(16),
+    },
+    cardDataBody: {
+      paddingTop: hp(1.5),
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    FlightsPlaseBody: {
+      width: wp(20),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      width: hp(17),
+      height: hp(5),
+    },
+    FlightsPlaseImgText: {
+      color: color.darkLight,
+      fontSize: fontSize(13),
+    },
+    FlightsPlaseNicName: {
+      color: color.black,
+      fontWeight: 'bold',
+      marginTop: hp(1.5),
+      fontSize: fontSize(19),
+    },
+    FlightsPlaseName: {
+      fontWeight: '500',
+      color: color.darkLight,
+    },
+    cardBottemBody: {
+      paddingTop: hp(1),
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingBottom: hp(1.5),
+      justifyContent: 'space-between',
+    },
+    filledSavedStyle: {
+      width: hp(2.5),
+      height: hp(2.5),
+      resizeMode: 'contain',
+      tintColor: color.commonBlue,
+    },
+    tikcetDetailViewStyle: {
+      flexDirection: 'row',
 
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: hp(1),
-  },
-  detailsTextStyle: {
-    fontSize: fontSize(14),
-    fontWeight: 'bold',
-    color: color.black,
-  },
-  labelTextStyle: {
-    fontSize: fontSize(14),
-    color: '#383838',
-  },
-  textStyle: {
-    color: color.black,
-  },
-});
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginVertical: hp(1),
+    },
+    detailsTextStyle: {
+      fontSize: fontSize(14),
+      fontWeight: 'bold',
+      color: color.black,
+    },
+    labelTextStyle: {
+      fontSize: fontSize(14),
+      color: color.offerColor,
+    },
+    textStyle: {
+      color: color.black,
+    },
+  });
 
 export default ETicket;

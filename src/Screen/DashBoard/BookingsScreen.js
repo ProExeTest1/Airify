@@ -12,7 +12,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {useDispatch, useSelector} from 'react-redux';
@@ -95,6 +95,8 @@ const BookingsScreen = ({navigation}) => {
     getBookingsData();
     getBookingCancelData();
   }, []);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -113,7 +115,7 @@ const BookingsScreen = ({navigation}) => {
                 backgroundColor:
                   selectedData == 'Active'
                     ? color.commonBlue
-                    : color.lightGray2,
+                    : color.TowButtonBgColor2,
                 borderRadius: wp(2),
               },
             ]}
@@ -142,7 +144,7 @@ const BookingsScreen = ({navigation}) => {
             <Text
               style={[
                 styles.buttonTextStyle,
-                {color: selectedData == 'Active' ? color.white : color.black},
+                {color: selectedData == 'Active' ? '#fff' : color.black},
               ]}>
               Active
             </Text>
@@ -154,7 +156,7 @@ const BookingsScreen = ({navigation}) => {
                 backgroundColor:
                   selectedData == 'Completed'
                     ? color.commonBlue
-                    : color.lightGray2,
+                    : color.TowButtonBgColor2,
                 borderRadius: wp(2),
               },
             ]}
@@ -184,8 +186,7 @@ const BookingsScreen = ({navigation}) => {
               style={[
                 styles.buttonTextStyle,
                 {
-                  color:
-                    selectedData == 'Completed' ? color.white : color.black,
+                  color: selectedData == 'Completed' ? '#fff' : color.black,
                 },
               ]}>
               {strings.completed}
@@ -198,7 +199,7 @@ const BookingsScreen = ({navigation}) => {
                 backgroundColor:
                   selectedData == 'Canceled'
                     ? color.commonBlue
-                    : color.lightGray2,
+                    : color.TowButtonBgColor2,
                 borderRadius: wp(2),
               },
             ]}
@@ -209,7 +210,7 @@ const BookingsScreen = ({navigation}) => {
             <Text
               style={[
                 styles.buttonTextStyle,
-                {color: selectedData == 'Canceled' ? color.white : color.black},
+                {color: selectedData == 'Canceled' ? '#fff' : color.black},
               ]}>
               {strings.canceled}
             </Text>
@@ -297,7 +298,11 @@ const BookingsScreen = ({navigation}) => {
                         <View style={styles.FlightsPlaseImgBody}>
                           <Image
                             style={styles.FlightsPlaseImg}
-                            source={Images.airplaneWhiteIcon}
+                            source={
+                              color.white == '#fff'
+                                ? Images.airplaneWhiteIcon
+                                : Images.airplaneDarkWhiteIcon
+                            }
                           />
                           <Text style={styles.FlightsPlaseImgText}>
                             {item?.searchFlightCardData?.totalHours}
@@ -340,94 +345,96 @@ const BookingsScreen = ({navigation}) => {
 
 export default BookingsScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  buttonViewStyle: {
-    borderRadius: wp(2),
-    flexDirection: 'row',
-    marginVertical: hp(2.5),
-    justifyContent: 'space-around',
-    backgroundColor: color.lightGray2,
-  },
-  buttonStyle: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: hp(1.2),
-    justifyContent: 'center',
-  },
-  buttonTextStyle: {
-    fontWeight: '600',
-    fontSize: fontSize(14),
-  },
-  cardBody: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: hp(2),
-    paddingHorizontal: wp(4),
-    borderColor: color.grayLight,
-    backgroundColor: color.white,
-  },
-  cardHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    paddingVertical: hp(2.5),
-    borderColor: color.grayLight,
-  },
-  cardHeaderText: {
-    flex: 1,
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: fontSize(16),
-  },
-  cardHeaderLogo: {
-    width: wp(5.8),
-    height: wp(5.8),
-    marginEnd: wp(3),
-    borderRadius: 500,
-  },
-  cardPriceTitle: {
-    color: color.darkLight,
-    fontSize: fontSize(14),
-  },
-  cardDataBody: {
-    paddingTop: hp(2.5),
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  FlightsPlaseBody: {
-    width: wp(20),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    height: hp(5),
-    width: hp(17),
-  },
-  FlightsPlaseImgText: {
-    color: color.darkLight,
-    fontSize: fontSize(13),
-  },
-  FlightsPlaseNicName: {
-    color: '#000',
-    fontWeight: 'bold',
-    marginTop: hp(1.5),
-    fontSize: fontSize(21),
-  },
-  FlightsPlaseName: {
-    fontWeight: '500',
-    color: color.darkLight,
-  },
-  cardBottemBody: {
-    paddingTop: hp(1),
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingBottom: hp(2.5),
-    justifyContent: 'space-between',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    buttonViewStyle: {
+      borderRadius: wp(2),
+      flexDirection: 'row',
+      marginVertical: hp(2.5),
+      justifyContent: 'space-around',
+      backgroundColor: color.TowButtonBgColor2,
+    },
+    buttonStyle: {
+      flex: 1,
+      alignItems: 'center',
+      paddingVertical: hp(1.2),
+      justifyContent: 'center',
+    },
+    buttonTextStyle: {
+      fontWeight: '600',
+      fontSize: fontSize(14),
+    },
+    cardBody: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 10,
+      marginBottom: hp(2),
+      paddingHorizontal: wp(4),
+      borderColor: color.grayLight,
+      backgroundColor: color.white,
+    },
+    cardHeader: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      paddingVertical: hp(2.5),
+      borderColor: color.grey,
+    },
+    cardHeaderText: {
+      flex: 1,
+      color: color.black,
+      fontWeight: 'bold',
+      fontSize: fontSize(16),
+    },
+    cardHeaderLogo: {
+      width: wp(5.8),
+      height: wp(5.8),
+      marginEnd: wp(3),
+      borderRadius: 500,
+    },
+    cardPriceTitle: {
+      color: color.offerColor,
+      fontSize: fontSize(14),
+    },
+    cardDataBody: {
+      paddingTop: hp(2.5),
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    FlightsPlaseBody: {
+      width: wp(20),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      height: hp(5),
+      width: hp(17),
+    },
+    FlightsPlaseImgText: {
+      color: color.offerColor,
+      fontSize: fontSize(13),
+    },
+    FlightsPlaseNicName: {
+      color: color.black,
+      fontWeight: 'bold',
+      marginTop: hp(1.5),
+      fontSize: fontSize(21),
+    },
+    FlightsPlaseName: {
+      fontWeight: '500',
+      color: color.offerColor,
+    },
+    cardBottemBody: {
+      paddingTop: hp(1),
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingBottom: hp(2.5),
+      justifyContent: 'space-between',
+    },
+  });

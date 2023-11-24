@@ -10,7 +10,7 @@ import {
 import React, {useCallback, useEffect, useState} from 'react';
 import {CommonHeader, OnBoardingSingleButton} from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {strings} from '../../helper/Strings';
 import {RadioButton} from 'react-native-radio-buttons-group';
 import {cancelBookingRadio} from '../../assets/DummyData/radioButtons';
@@ -306,6 +306,8 @@ const CancelBooking = ({navigation}) => {
         });
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -317,7 +319,7 @@ const CancelBooking = ({navigation}) => {
         onPress2={false}
         Images1={Images.backIcon}
         Images2={null}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
       />
       <View style={styles.bodyView}>
         <Text style={styles.textStyle}>{strings.reasonText}</Text>
@@ -402,75 +404,76 @@ const CancelBooking = ({navigation}) => {
 
 export default CancelBooking;
 
-const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: color.white},
-  sortModalBody: {
-    paddingVertical: hp(1),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  bodyView: {
-    flex: 1,
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
-  },
-  textStyle: {
-    marginStart: wp(2),
-    fontSize: fontSize(18),
-    fontWeight: '500',
-  },
-  documentUploadview: {
-    paddingVertical: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-    marginBottom: hp(2),
-  },
-  documentImageView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: hp(4),
-    marginTop: hp(2),
-    borderWidth: 1,
-    borderColor: '#e2e2e2',
-    borderRadius: wp(4),
-  },
-  uploadIcon: {
-    height: hp(3),
-    width: hp(3),
-    resizeMode: 'contain',
-    paddingVertical: hp(2.5),
-    tintColor: color.darkGray,
-  },
-  createAlertBody: {
-    backgroundColor: '#fff',
-    paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  createAlertTitleBody: {
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  createAlertTitle: {
-    fontSize: fontSize(20),
-    fontWeight: '600',
-  },
-  successMessage: {
-    fontSize: fontSize(20),
-    fontWeight: 'bold',
-    color: color.commonBlue,
-    marginBottom: hp(3),
-    textAlign: 'center',
-  },
-  buutonstyle: {
-    backgroundColor: color.commonBlue,
-    width: wp(70),
-    paddingVertical: hp(1.8),
-    alignItems: 'center',
-    borderRadius: 10,
-    marginTop: hp(4),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {flex: 1, backgroundColor: color.white},
+    sortModalBody: {
+      paddingVertical: hp(1),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    bodyView: {
+      flex: 1,
+      paddingHorizontal: wp(4),
+      paddingVertical: hp(2),
+    },
+    textStyle: {
+      marginStart: wp(2),
+      fontSize: fontSize(18),
+      fontWeight: '500',
+    },
+    documentUploadview: {
+      paddingVertical: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+      marginBottom: hp(2),
+    },
+    documentImageView: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: hp(4),
+      marginTop: hp(2),
+      borderWidth: 1,
+      borderColor: '#e2e2e2',
+      borderRadius: wp(4),
+    },
+    uploadIcon: {
+      height: hp(3),
+      width: hp(3),
+      resizeMode: 'contain',
+      paddingVertical: hp(2.5),
+      tintColor: color.darkGray,
+    },
+    createAlertBody: {
+      backgroundColor: '#fff',
+      paddingVertical: wp(6),
+      paddingHorizontal: wp(6),
+      borderRadius: 20,
+      alignItems: 'center',
+    },
+    createAlertTitleBody: {
+      alignItems: 'center',
+      paddingBottom: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    createAlertTitle: {
+      fontSize: fontSize(20),
+      fontWeight: '600',
+    },
+    successMessage: {
+      fontSize: fontSize(20),
+      fontWeight: 'bold',
+      color: color.commonBlue,
+      marginBottom: hp(3),
+      textAlign: 'center',
+    },
+    buutonstyle: {
+      backgroundColor: color.commonBlue,
+      width: wp(70),
+      paddingVertical: hp(1.8),
+      alignItems: 'center',
+      borderRadius: 10,
+      marginTop: hp(4),
+    },
+  });

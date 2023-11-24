@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import LottieView from 'lottie-react-native';
+import {useSelector} from 'react-redux';
 const PassengerList = ({navigation: {goBack}, navigation}) => {
   const [passengerList, setPassengerList] = useState([]);
 
@@ -44,7 +45,8 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
         });
       });
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -52,7 +54,8 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
         onPress2={true}
         Images2={Images.plus}
         Images1={Images.backIcon}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
+        Images2Color={'#fff'}
         headerName={strings.passengerList}
         cancelButtonStyle={styles.plusIconStyle}
         navigation1={() => {
@@ -70,7 +73,11 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
             flex: 1,
           }}>
           <LottieView
-            source={require('../../helper/noDataFound.json')}
+            source={
+              color.white == '#fff'
+                ? require('../../helper/noDataFound.json')
+                : require('../../helper/noDataFoundDark.json')
+            }
             autoPlay
             loop
             style={styles.lottiStyle}
@@ -80,10 +87,10 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
         <View style={{flex: 1, backgroundColor: color.white}}>
           <View
             style={[styles.headerStyle, {backgroundColor: color.commonBlue}]}>
-            <Text style={[styles.mainHeaderText, {color: color.white}]}>
+            <Text style={[styles.mainHeaderText, {color: '#fff'}]}>
               {strings?.no}
             </Text>
-            <Text style={[styles.mainHeaderText, {color: color.white}]}>
+            <Text style={[styles.mainHeaderText, {color: '#fff'}]}>
               {strings?.name}
             </Text>
           </View>
@@ -138,44 +145,44 @@ const PassengerList = ({navigation: {goBack}, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  plusIconStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    resizeMode: 'contain',
-    tintColor: color.white,
-  },
-  mainHeaderText: {
-    color: color.black,
-    fontWeight: 'bold',
-    fontSize: fontSize(16),
-    paddingHorizontal: wp(4),
-  },
-  headerStyle: {
-    flexDirection: 'row',
-    borderTopWidth: 0.2,
-    paddingVertical: hp(2),
-    borderColor: color.white,
-  },
-  EditIconStyle: {
-    width: hp(2),
-    height: hp(2),
-    resizeMode: 'contain',
-    tintColor: color.commonBlue,
-  },
-  textStyle: {
-    flexDirection: 'row',
-  },
-  flatListView: {
-    flex: 1,
-  },
-  lottiStyle: {
-    height: hp(100),
-    width: hp(50),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    plusIconStyle: {
+      width: hp(2.5),
+      height: hp(2.5),
+      resizeMode: 'contain',
+    },
+    mainHeaderText: {
+      color: color.black,
+      fontWeight: 'bold',
+      fontSize: fontSize(16),
+      paddingHorizontal: wp(4),
+    },
+    headerStyle: {
+      flexDirection: 'row',
+      borderTopWidth: 0.2,
+      paddingVertical: hp(2),
+      borderColor: color.white,
+    },
+    EditIconStyle: {
+      width: hp(2),
+      height: hp(2),
+      resizeMode: 'contain',
+      tintColor: color.commonBlue,
+    },
+    textStyle: {
+      flexDirection: 'row',
+    },
+    flatListView: {
+      flex: 1,
+    },
+    lottiStyle: {
+      height: hp(100),
+      width: hp(50),
+    },
+  });
 
 export default PassengerList;

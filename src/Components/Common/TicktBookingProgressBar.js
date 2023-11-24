@@ -1,12 +1,15 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {bookingTransactionData} from '../../redux/action/BookingAction';
 import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const TicktBookingProgressBar = ({progress}) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.mainViewstyle}>
       <View style={styles.progressInnerViewStyle}>
@@ -95,45 +98,46 @@ const TicktBookingProgressBar = ({progress}) => {
 
 export default TicktBookingProgressBar;
 
-const styles = StyleSheet.create({
-  progressViewStyle: {
-    height: hp(4),
-    width: hp(4),
-    borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  progressCountStyle: {
-    fontSize: fontSize(17),
-    fontWeight: '600',
-    color: color.white,
-  },
-  progressInnerViewStyle: {
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  lineViewStyle: {
-    borderWidth: 1,
-    width: wp(14),
-    marginTop: hp(2),
-  },
-  progressTextStyle: {
-    color: '#DBDDE1',
-    marginTop: hp(0.5),
-  },
-  mainViewstyle: {
-    height: hp(10),
-    backgroundColor: color.commonBlue,
-    paddingHorizontal: wp(12),
-  },
-  firstViewStyle: {
-    alignItems: 'center',
-    width: wp(15),
-  },
-  doneIconstyle: {
-    height: wp(5),
-    width: wp(5),
-    tintColor: color.commonBlue,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    progressViewStyle: {
+      height: hp(4),
+      width: hp(4),
+      borderRadius: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    progressCountStyle: {
+      fontSize: fontSize(17),
+      fontWeight: '600',
+      color: color.white,
+    },
+    progressInnerViewStyle: {
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+    },
+    lineViewStyle: {
+      borderWidth: 1,
+      width: wp(14),
+      marginTop: hp(2),
+    },
+    progressTextStyle: {
+      color: '#DBDDE1',
+      marginTop: hp(0.5),
+    },
+    mainViewstyle: {
+      height: hp(10),
+      backgroundColor: color.commonBlue,
+      paddingHorizontal: wp(12),
+    },
+    firstViewStyle: {
+      alignItems: 'center',
+      width: wp(15),
+    },
+    doneIconstyle: {
+      height: wp(5),
+      width: wp(5),
+      tintColor: color.commonBlue,
+    },
+  });

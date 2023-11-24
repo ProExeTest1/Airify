@@ -16,7 +16,6 @@ import {
   CheckButton,
 } from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
 
 const AddAddress = ({navigation}) => {
   const route = useRoute();
@@ -103,6 +102,8 @@ const AddAddress = ({navigation}) => {
       });
     navigation?.navigate('SavedAddress');
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -118,13 +119,16 @@ const AddAddress = ({navigation}) => {
         onPress1={true}
         onPress2={false}
         Images1={Images.cancel}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
+        Images2Color={'#fff'}
         cancelButtonStyle1={styles.plusIconStyle}
       />
       <View style={styles.mainViewStyle}>
         <View style={styles.locationViewStyle}>
           <Image source={Images?.location} style={styles.locationIconStyle} />
-          <Text>{userSelectedAddress?.display_name}</Text>
+          <Text style={{color: color.black}}>
+            {userSelectedAddress?.display_name}
+          </Text>
         </View>
         <Text style={styles.textInputTitleStyle}>{strings?.addressLabel}</Text>
         <OnBoardingTextInput
@@ -197,65 +201,66 @@ const AddAddress = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  plusIconStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    marginTop: hp(0.5),
-    resizeMode: 'contain',
-  },
-  mainViewStyle: {
-    flex: 1,
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
-  },
-  locationViewStyle: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginHorizontal: wp(1),
-  },
-  locationIconStyle: {
-    width: wp(5),
-    height: hp(5),
-    marginRight: wp(1),
-    resizeMode: 'contain',
-    tintColor: color.commonBlue,
-  },
-  textInputContainer: {marginTop: hp(1)},
-  textInputTitleStyle: {
-    marginTop: hp(2),
-    fontWeight: '600',
-    color: color.black,
-    marginHorizontal: wp(2),
-  },
-  textInputCountryPicker: {
-    height: hp(10),
-    color: color.black,
-  },
-  buttonStyle: {
-    paddingVertical: hp(2),
-  },
-  buttonViewStyle: {
-    flex: 1,
-    borderTopWidth: 2,
-    marginTop: hp(14),
-    justifyContent: 'flex-end',
-    borderColor: color.grayLight,
-  },
-  checkBoxStyle: {
-    marginLeft: wp(2),
-    color: color.black,
-    fontWeight: '500',
-  },
-  checkButtonViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    plusIconStyle: {
+      width: hp(2.5),
+      height: hp(2.5),
+      marginTop: hp(0.5),
+      resizeMode: 'contain',
+    },
+    mainViewStyle: {
+      flex: 1,
+      paddingVertical: hp(2),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.white,
+    },
+    locationViewStyle: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginHorizontal: wp(1),
+    },
+    locationIconStyle: {
+      width: wp(5),
+      height: hp(5),
+      marginRight: wp(1),
+      resizeMode: 'contain',
+      tintColor: color.commonBlue,
+    },
+    textInputContainer: {marginTop: hp(1)},
+    textInputTitleStyle: {
+      marginTop: hp(2),
+      fontWeight: '600',
+      color: color.black,
+      marginHorizontal: wp(2),
+    },
+    textInputCountryPicker: {
+      height: hp(10),
+      color: color.black,
+    },
+    buttonStyle: {
+      paddingVertical: hp(2),
+    },
+    buttonViewStyle: {
+      flex: 1,
+      borderTopWidth: 2,
+      marginTop: hp(14),
+      justifyContent: 'flex-end',
+      borderColor: color.grayLight,
+    },
+    checkBoxStyle: {
+      marginLeft: wp(2),
+      color: color.black,
+      fontWeight: '500',
+    },
+    checkButtonViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+  });
 
 export default AddAddress;

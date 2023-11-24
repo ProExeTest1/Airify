@@ -13,6 +13,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {Alert, NativeModules} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,14 +42,17 @@ const TabNavigation = () => {
         console.log('err', err);
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {backgroundColor: color.white},
       }}>
       <Tab.Screen
         options={{
           title: 'Home',
+          headerTitleStyle: {color: color.paperTextInputColor},
           tabBarIcon: props => (
             <TabBarComponents props={props} Icon={Images.TabHomeIcon} />
           ),

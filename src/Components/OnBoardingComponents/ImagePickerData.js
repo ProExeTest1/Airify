@@ -13,6 +13,7 @@ import ButtonData from './ButtonData';
 import {hp, wp} from '../../helper/Constant';
 import {Images} from '../../helper/IconConstant';
 import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
   const [modal, setModal] = useState(false);
@@ -52,6 +53,8 @@ const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
   }, []);
 
   const uri = pickerResponse?.assets && pickerResponse.assets[0].uri;
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -92,36 +95,37 @@ const ImagePickerData = ({pickerResponse, setPickerResponse}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  imagePlusStyle: {
-    width: hp(4.27),
-    height: hp(4.27),
-  },
-  boxStyle: {
-    borderWidth: 2,
-    width: hp(12.27),
-    height: hp(12.27),
-    alignSelf: 'center',
-    alignItems: 'center',
-    borderColor: '#DFDFDF',
-    justifyContent: 'center',
-    borderRadius: hp(12.27 / 2),
-  },
-  buttonStyle: {
-    width: '80%',
-    marginVertical: hp(1),
-  },
-  modalStyle: {
-    margin: wp(0),
-    justifyContent: 'flex-end',
-  },
-  modalViewStyle: {
-    borderRadius: 16,
-    height: hp(23.35),
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3C93D7',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    imagePlusStyle: {
+      width: hp(4.27),
+      height: hp(4.27),
+    },
+    boxStyle: {
+      borderWidth: 2,
+      width: hp(12.27),
+      height: hp(12.27),
+      alignSelf: 'center',
+      alignItems: 'center',
+      borderColor: '#DFDFDF',
+      justifyContent: 'center',
+      borderRadius: hp(12.27 / 2),
+    },
+    buttonStyle: {
+      width: '80%',
+      marginVertical: hp(1),
+    },
+    modalStyle: {
+      margin: wp(0),
+      justifyContent: 'flex-end',
+    },
+    modalViewStyle: {
+      borderRadius: 16,
+      height: hp(23.35),
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#3C93D7',
+    },
+  });
 
 export default ImagePickerData;

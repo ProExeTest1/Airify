@@ -10,11 +10,12 @@ import {
 
 import {strings} from '../../helper/Strings';
 import {CommonHeader, Loader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {useSelector} from 'react-redux';
 
 const AirifyPoint = ({navigation: {goBack}, navigation}) => {
   const [pointData, setPointData] = useState({});
@@ -33,6 +34,8 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
   useEffect(() => {
     getUserPointData();
   }, []);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -40,7 +43,8 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
         onPress2={false}
         Images2={Images.info}
         Images1={Images.backIcon}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
+        Images2Color={'#fff'}
         headerName={strings.airifyPoint}
         navigation1={() => {
           goBack();
@@ -122,82 +126,83 @@ const AirifyPoint = ({navigation: {goBack}, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  mainCartViewStyle: {
-    borderRadius: 4,
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.commonBlue,
-  },
-  mainCartSubView: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: hp(1.5),
-  },
-  mainCartTextHeader: {
-    color: color.white,
-    marginBottom: hp(1),
-    fontSize: fontSize(12),
-  },
-  scannerStyle: {
-    width: wp(5),
-    height: hp(5),
-    resizeMode: 'contain',
-    tintColor: color.white,
-  },
-  pointTextStyle: {
-    fontWeight: 'bold',
-    color: color.white,
-    marginBottom: hp(1),
-    fontSize: fontSize(24),
-  },
-  infoLine: {
-    color: color.white,
-    marginBottom: hp(1),
-    fontSize: fontSize(11),
-  },
-  bodyView: {paddingHorizontal: wp(6), paddingVertical: hp(2)},
-  flatListHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  arrowStyle: {
-    width: wp(3),
-    height: hp(3),
-    marginLeft: wp(4),
-    resizeMode: 'contain',
-    tintColor: color.commonBlue,
-    transform: [{rotate: '90deg'}],
-  },
-  dotStyle: {
-    width: hp(0.3),
-    height: hp(0.3),
-    borderRadius: hp(0.3),
-    backgroundColor: color.black,
-  },
-  flatListView: {
-    borderBottomWidth: 1,
-    paddingVertical: hp(1),
-    borderColor: color.lightGray,
-  },
-  flatListSubView: {
-    flexDirection: 'row',
-    paddingVertical: hp(1),
-    justifyContent: 'space-between',
-  },
-  mainTextStyle: {
-    fontWeight: 'bold',
-    color: color.black,
-  },
-  textStyle: {
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    mainCartViewStyle: {
+      borderRadius: 4,
+      paddingVertical: hp(1),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.commonBlue,
+    },
+    mainCartSubView: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingVertical: hp(1.5),
+    },
+    mainCartTextHeader: {
+      color: '#fff',
+      marginBottom: hp(1),
+      fontSize: fontSize(12),
+    },
+    scannerStyle: {
+      width: wp(5),
+      height: hp(5),
+      resizeMode: 'contain',
+      tintColor: color.white,
+    },
+    pointTextStyle: {
+      fontWeight: 'bold',
+      color: '#fff',
+      marginBottom: hp(1),
+      fontSize: fontSize(24),
+    },
+    infoLine: {
+      color: '#fff',
+      marginBottom: hp(1),
+      fontSize: fontSize(11),
+    },
+    bodyView: {paddingHorizontal: wp(6), paddingVertical: hp(2)},
+    flatListHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    arrowStyle: {
+      width: wp(3),
+      height: hp(3),
+      marginLeft: wp(4),
+      resizeMode: 'contain',
+      tintColor: color.commonBlue,
+      transform: [{rotate: '90deg'}],
+    },
+    dotStyle: {
+      width: hp(0.3),
+      height: hp(0.3),
+      borderRadius: hp(0.3),
+      backgroundColor: color.black,
+    },
+    flatListView: {
+      borderBottomWidth: 2,
+      paddingVertical: hp(1),
+      borderColor: color.grey,
+    },
+    flatListSubView: {
+      flexDirection: 'row',
+      paddingVertical: hp(1),
+      justifyContent: 'space-between',
+    },
+    mainTextStyle: {
+      fontWeight: 'bold',
+      color: color.black,
+    },
+    textStyle: {
+      color: color.black,
+    },
+  });
 
 export default AirifyPoint;

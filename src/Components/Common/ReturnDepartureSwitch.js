@@ -1,10 +1,13 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.optionViewStyle}>
       <TouchableOpacity
@@ -13,13 +16,13 @@ const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
           styles.optionTouchStyle,
           {
             backgroundColor:
-              ticketType == 'Departure' ? color.commonBlue : null,
+              ticketType == 'Departure' ? color.commonBlue : color.grey,
           },
         ]}>
         <Text
           style={[
             styles.optionStyle,
-            {color: ticketType === 'Departure' ? color.white : color.black},
+            {color: ticketType === 'Departure' ? '#fff' : color.black},
           ]}>
           {strings.departure}
         </Text>
@@ -29,13 +32,14 @@ const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
         style={[
           styles.optionTouchStyle,
           {
-            backgroundColor: ticketType == 'Return' ? color.commonBlue : null,
+            backgroundColor:
+              ticketType == 'Return' ? color.commonBlue : color.grey,
           },
         ]}>
         <Text
           style={[
             styles.optionStyle,
-            {color: ticketType === 'Return' ? color.white : color.black},
+            {color: ticketType === 'Return' ? '#fff' : color.black},
           ]}>
           {strings.return}
         </Text>
@@ -46,23 +50,23 @@ const ReturnDepartureSwitch = ({onPress1, ticketType, onPress2}) => {
 
 export default ReturnDepartureSwitch;
 
-const styles = StyleSheet.create({
-  optionStyle: {
-    textAlign: 'center',
-    fontSize: fontSize(18),
-    fontWeight: '500',
-  },
-  optionViewStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: wp(4),
-    backgroundColor: '#DCDCDC',
-    marginTop: hp(3),
-    borderRadius: 7,
-  },
-  optionTouchStyle: {
-    flex: 1,
-    paddingVertical: hp(1.5),
-    borderRadius: 7,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    optionStyle: {
+      textAlign: 'center',
+      fontSize: fontSize(18),
+      fontWeight: '500',
+    },
+    optionViewStyle: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginHorizontal: wp(4),
+      marginTop: hp(3),
+      borderRadius: 7,
+    },
+    optionTouchStyle: {
+      flex: 1,
+      paddingVertical: hp(1.5),
+      borderRadius: 7,
+    },
+  });

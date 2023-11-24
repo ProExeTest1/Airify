@@ -10,6 +10,7 @@ import {
   OnBoardingSingleButton,
   OnBoardingTextInput,
 } from '../../components';
+import {useSelector} from 'react-redux';
 
 const ResetPassword = ({navigation: {goBack}, navigation}) => {
   const [email, setEmail] = useState('');
@@ -39,7 +40,8 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
     await auth().signOut();
     navigation.navigate('SignInScreen');
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <View style={{flex: 0.27, backgroundColor: 'blue'}}>
@@ -76,32 +78,33 @@ const ResetPassword = ({navigation: {goBack}, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  textInputTitleStyle: {
-    color: 'black',
-    marginLeft: wp(6),
-  },
-  signUpStyle: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: wp(22),
-    justifyContent: 'space-around',
-  },
-  buttonStyle: {
-    height: hp(6),
-    marginTop: hp(3),
-  },
-  lineStyle: {
-    height: 1,
-    marginHorizontal: wp(5),
-    backgroundColor: '#ECEFEF',
-  },
-  buttonViewStyle: {flex: 1, justifyContent: 'flex-end', marginBottom: hp(4)},
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+    },
+    textInputTitleStyle: {
+      color: 'black',
+      marginLeft: wp(6),
+    },
+    signUpStyle: {
+      alignSelf: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingHorizontal: wp(22),
+      justifyContent: 'space-around',
+    },
+    buttonStyle: {
+      height: hp(6),
+      marginTop: hp(3),
+    },
+    lineStyle: {
+      height: 1,
+      marginHorizontal: wp(5),
+      backgroundColor: '#ECEFEF',
+    },
+    buttonViewStyle: {flex: 1, justifyContent: 'flex-end', marginBottom: hp(4)},
+  });
 
 export default ResetPassword;

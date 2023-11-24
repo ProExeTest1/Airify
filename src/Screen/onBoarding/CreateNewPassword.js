@@ -11,6 +11,7 @@ import {
   OnBoardingModuleHeader,
   OnBoardingSingleButton,
 } from '../../components';
+import {useSelector} from 'react-redux';
 
 const CreateNewPassword = ({navigation: {goBack}}) => {
   const [modal, setModal] = useState(false);
@@ -20,6 +21,8 @@ const CreateNewPassword = ({navigation: {goBack}}) => {
   const closeModal = async () => {
     setModal(false);
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <View style={{flex: 0.27, backgroundColor: 'blue'}}>
@@ -84,51 +87,52 @@ const CreateNewPassword = ({navigation: {goBack}}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  textInputTitleStyle: {
-    marginLeft: wp(6),
-  },
-  rememberLineStyle: {
-    marginTop: hp(2),
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  forgotPasswordStyle: {
-    color: 'blue',
-  },
-  signUpStyle: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: wp(22),
-    justifyContent: 'space-around',
-  },
-  buttonStyle: {
-    height: hp(6),
-    marginTop: hp(4),
-  },
-  lineStyle: {
-    height: 1,
-    marginTop: hp(4),
-    backgroundColor: '#ECEFEF',
-    marginHorizontal: wp(5),
-  },
-  modalImageStyle: {
-    width: wp(70),
-    height: hp(30),
-    marginTop: hp(2),
-  },
-  buttonViewStyle: {flex: 1, justifyContent: 'flex-end', marginBottom: hp(4)},
-  modalView: {
-    height: hp(58),
-    borderRadius: 16,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+    },
+    textInputTitleStyle: {
+      marginLeft: wp(6),
+    },
+    rememberLineStyle: {
+      marginTop: hp(2),
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+    },
+    forgotPasswordStyle: {
+      color: 'blue',
+    },
+    signUpStyle: {
+      alignSelf: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingHorizontal: wp(22),
+      justifyContent: 'space-around',
+    },
+    buttonStyle: {
+      height: hp(6),
+      marginTop: hp(4),
+    },
+    lineStyle: {
+      height: 1,
+      marginTop: hp(4),
+      backgroundColor: '#ECEFEF',
+      marginHorizontal: wp(5),
+    },
+    modalImageStyle: {
+      width: wp(70),
+      height: hp(30),
+      marginTop: hp(2),
+    },
+    buttonViewStyle: {flex: 1, justifyContent: 'flex-end', marginBottom: hp(4)},
+    modalView: {
+      height: hp(58),
+      borderRadius: 16,
+      alignItems: 'center',
+      backgroundColor: 'white',
+    },
+  });
 
 export default CreateNewPassword;

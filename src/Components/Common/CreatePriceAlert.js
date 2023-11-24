@@ -2,6 +2,7 @@ import React from 'react';
 import {
   FlatList,
   Image,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,7 +13,7 @@ import ToggleSwitch from 'toggle-switch-react-native';
 
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {wp, fontSize, hp} from '../../helper/Constant';
 import {TimeData} from '../../assets/DummyData/timeData';
 import {MultiSliderComponets, OnBoardingTwoButton} from '../index';
@@ -47,9 +48,14 @@ const CreatePriceAlert = ({
       : e?.place?.searchFlightData,
   );
   const totalSeat = Number(searchFlightData?.passenger?.split(' ')[0]);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
-    <View style={styles.createAlertBody}>
-      <ScrollView style={{marginHorizontal: wp(6)}}>
+    <SafeAreaView style={styles.createAlertBody}>
+      <ScrollView
+        style={{marginHorizontal: wp(6)}}
+        bounces={false}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.createAlertTitleBody}>
           <Text style={styles.createAlertTitle}>
             {strings.PriceAlertHeader}
@@ -77,7 +83,11 @@ const CreatePriceAlert = ({
             <View style={styles.FlightsPlaseImgBody}>
               <Image
                 style={styles.FlightsPlaseImg}
-                source={Images.airplaneGreIcon}
+                source={
+                  color.white === '#fff'
+                    ? Images.airplaneGreIcon
+                    : Images.airplaneDarkWhiteIcon
+                }
               />
               <Text style={styles.FlightsPlaseImgText}>
                 {`${`${new Date()}`.slice(
@@ -134,6 +144,7 @@ const CreatePriceAlert = ({
           <Text style={styles.PriceTargetsTitle}>{strings?.DepartureTime}</Text>
           <ToggleSwitch
             isOn={ToggleSwitchBut1}
+            offColor={color.availableSeatColor}
             size="medium"
             onColor={color.commonBlue}
             onToggle={isOn => setToggleSwitchBut1(isOn)}
@@ -173,6 +184,7 @@ const CreatePriceAlert = ({
           <ToggleSwitch
             size="medium"
             isOn={ToggleSwitchBut2}
+            offColor={color.availableSeatColor}
             onColor={color.commonBlue}
             onToggle={isOn => setToggleSwitchBut2(isOn)}
           />
@@ -186,150 +198,150 @@ const CreatePriceAlert = ({
           />
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default CreatePriceAlert;
 
-const styles = StyleSheet.create({
-  cardDataBody: {
-    paddingTop: hp(2.5),
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  FlightsPlaseBody: {
-    width: wp(20),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    width: hp(19),
-    height: hp(5.5),
-  },
-  FlightsPlaseImgText: {
-    color: '#7e7e7f',
-    marginTop: hp(1),
-    fontSize: fontSize(11),
-  },
-  FlightsPlaseNicName: {
-    color: color.black,
-    fontWeight: 'bold',
-    marginTop: hp(1.5),
-    fontSize: fontSize(21),
-  },
-  FlightsPlaseName: {
-    color: '#7e7e7f',
-    fontWeight: '500',
-  },
-  cardBottemBody: {
-    paddingTop: hp(1),
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingBottom: hp(2.5),
-    justifyContent: 'space-between',
-  },
-  createAlertBody: {
-    paddingVertical: wp(6),
-    backgroundColor: '#fff',
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
-  },
-  createAlertTitleBody: {
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  createAlertTitle: {
-    fontWeight: '600',
-    fontSize: fontSize(20),
-    color: color.black,
-  },
-  createAlertNotifiBody: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: hp(3),
-  },
-  createAlertNotifiImg: {
-    width: wp(6),
-    height: wp(6),
-    marginEnd: wp(4),
-  },
-  createAlertNotifiText: {
-    width: wp(78),
-    fontWeight: '500',
-    fontSize: fontSize(17),
-    color: color.black,
-  },
-  createAlertCardBody: {
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: hp(1),
-    borderColor: '#e4e4e4',
-    paddingHorizontal: wp(4),
-    backgroundColor: '#fafafa',
-  },
-  PriceTargetsBody: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingVertical: hp(1.5),
-  },
-  PriceTargetsImg: {
-    width: wp(7.5),
-    height: wp(7.5),
-    marginEnd: wp(4),
-  },
-  PriceTargetsTitle: {
-    flex: 1,
-    fontWeight: '500',
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  PriceTargetsText: {
-    fontSize: fontSize(20),
-    color: color.black,
-  },
-  departureTimeBody: {
-    flex: 1,
-    borderWidth: 1,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: hp(1.5),
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(4),
-    backgroundColor: '#fafafa',
-  },
-  sliderViewStyle: {
-    width: wp(6.6),
-    borderWidth: 4,
-    height: hp(3.07),
-    borderRadius: 100,
-    backgroundColor: '#fff',
-    borderColor: color.commonBlue,
-  },
-  unselectedStyle: {
-    height: 4,
-    backgroundColor: '#eeeeee',
-  },
-  departureTitleStyle: {
-    color: '#7e7e7f',
-    marginBottom: hp(1),
-  },
-  selectedStyle: {
-    height: 4,
-    backgroundColor: color.commonBlue,
-  },
-  departureTimeTextStyle: {
-    color: '#000',
-    fontWeight: '500',
-    fontSize: fontSize(16),
-  },
-  buttonStyle: {
-    borderTopWidth: 1,
-    paddingVertical: hp(4),
-    borderColor: '#e2e2e2',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    cardDataBody: {
+      paddingTop: hp(2.5),
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    FlightsPlaseBody: {
+      width: wp(20),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      width: hp(19),
+      height: hp(5.5),
+    },
+    FlightsPlaseImgText: {
+      color: color.darkLight,
+      marginTop: hp(1),
+      fontSize: fontSize(11),
+    },
+    FlightsPlaseNicName: {
+      color: color.black,
+      fontWeight: 'bold',
+      marginTop: hp(1.5),
+      fontSize: fontSize(21),
+    },
+    FlightsPlaseName: {
+      color: color.darkLight,
+      fontWeight: '500',
+    },
+    cardBottemBody: {
+      paddingTop: hp(1),
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingBottom: hp(2.5),
+      justifyContent: 'space-between',
+    },
+    createAlertBody: {
+      backgroundColor: color.onBoardingBgColor,
+      borderTopEndRadius: 20,
+      borderTopStartRadius: 20,
+    },
+    createAlertTitleBody: {
+      alignItems: 'center',
+      paddingVertical: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    createAlertTitle: {
+      fontWeight: '600',
+      fontSize: fontSize(20),
+      color: color.black,
+    },
+    createAlertNotifiBody: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: hp(3),
+    },
+    createAlertNotifiImg: {
+      width: wp(6),
+      height: wp(6),
+      marginEnd: wp(4),
+      tintColor: color.black,
+    },
+    createAlertNotifiText: {
+      width: wp(78),
+      fontWeight: '500',
+      fontSize: fontSize(17),
+      color: color.black,
+    },
+    createAlertCardBody: {
+      borderWidth: 1,
+      borderRadius: 10,
+      marginBottom: hp(1),
+      borderColor: color.grey,
+      paddingHorizontal: wp(4),
+      backgroundColor: color.grey3,
+    },
+    PriceTargetsBody: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingVertical: hp(1.5),
+    },
+    PriceTargetsImg: {
+      width: wp(7.5),
+      height: wp(7.5),
+      marginEnd: wp(4),
+      tintColor: color.black,
+    },
+    PriceTargetsTitle: {
+      flex: 1,
+      fontWeight: '500',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    PriceTargetsText: {
+      fontSize: fontSize(20),
+      color: color.black,
+    },
+    departureTimeBody: {
+      flex: 1,
+      borderWidth: 1,
+      borderRadius: 10,
+      alignItems: 'center',
+      marginBottom: hp(1.5),
+      paddingVertical: hp(2),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.grey3,
+    },
+    sliderViewStyle: {
+      width: wp(6.6),
+      borderWidth: 4,
+      height: hp(3.07),
+      borderRadius: 100,
+      backgroundColor: '#fff',
+      borderColor: color.commonBlue,
+    },
+    unselectedStyle: {
+      height: 4,
+      backgroundColor: '#eeeeee',
+    },
+    departureTitleStyle: {
+      color: color.darkLight,
+      marginBottom: hp(1),
+    },
+    selectedStyle: {
+      height: 4,
+      backgroundColor: color.commonBlue,
+    },
+    departureTimeTextStyle: {
+      color: color.black,
+      fontWeight: '500',
+      fontSize: fontSize(16),
+    },
+    buttonStyle: {
+      paddingTop: hp(4),
+    },
+  });

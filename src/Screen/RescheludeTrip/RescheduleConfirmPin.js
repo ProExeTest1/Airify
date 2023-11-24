@@ -11,7 +11,7 @@ import OtpInputs from 'react-native-otp-inputs';
 import {CommonHeader, OnBoardingTwoButton} from '../../components';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -75,6 +75,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
   );
   const dispatch = useDispatch();
 
+  console.log('SelectDate', SelectSeatData);
   const checkPin = async pin => {
     if (pin.length == 4) {
       if (pin == Number(pinData)) {
@@ -162,11 +163,14 @@ const RescheduleConfirmPin = ({navigation, route}) => {
                     ) {
                       return {
                         flightData: e.flightData,
-                        selectSeat: e?.selectSeat.filter(i =>
-                          oldTripData?.SelectSeatData?.some(
-                            a => a?.seatNo == i,
-                          ),
-                        ),
+                        selectSeat: [
+                          e?.selectSeat.filter(i => {
+                            oldTripData?.SelectSeatData?.some(
+                              a => a?.seatNo == i,
+                            );
+                          }),
+                          SelectSeatData.map(i => i.seatNo),
+                        ].flat(),
                       };
                     }
                     return e;
@@ -350,6 +354,8 @@ const RescheduleConfirmPin = ({navigation, route}) => {
     getUserPointData();
     getUserWalletData();
   }, []);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -362,7 +368,7 @@ const RescheduleConfirmPin = ({navigation, route}) => {
         Images1={Images.backIcon}
         Images2={null}
         cancelButtonStyle1={styles.plusIconStyle}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
       />
       <View style={{flex: 1, alignContent: 'center', justifyContent: 'center'}}>
         <Text
@@ -406,7 +412,11 @@ const RescheduleConfirmPin = ({navigation, route}) => {
           ) : (
             <View style={{alignItems: 'center', justifyContent: 'center'}}>
               <LottieView
-                source={require('../../helper/bookingSuccess.json')}
+                source={
+                  color.white == '#fff'
+                    ? require('../../helper/bookingSuccess.json')
+                    : require('../../helper/bookingSuccessDark.json')
+                }
                 autoPlay
                 loop
                 style={{
@@ -486,43 +496,48 @@ const RescheduleConfirmPin = ({navigation, route}) => {
 
 export default RescheduleConfirmPin;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  otpInputStyle: {
-    backgroundColor: '#DFE1E5',
-    textAlign: 'center',
-    height: wp(14),
-    width: wp(14),
-    borderRadius: 10,
-    fontSize: fontSize(20),
-    color: color.black,
-  },
-  slide: {
-    flexDirection: 'row',
-    paddingHorizontal: wp(10),
-  },
-  createAlertBody: {
-    backgroundColor: '#fff',
-    paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  createAlertTitleBody: {
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  createAlertTitle: {
-    fontSize: fontSize(20),
-    fontWeight: '600',
-  },
-  sortModalBody: {
-    paddingVertical: hp(1),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.onBoardingBgColor,
+    },
+    otpInputStyle: {
+      backgroundColor: color.grayLight,
+      textAlign: 'center',
+      height: wp(14),
+      width: wp(14),
+      borderRadius: 10,
+      fontSize: fontSize(20),
+      color: color.black,
+    },
+    slide: {
+      flexDirection: 'row',
+      paddingHorizontal: wp(10),
+    },
+    createAlertBody: {
+      backgroundColor: color.white,
+      paddingVertical: wp(6),
+      paddingHorizontal: wp(6),
+      borderRadius: 20,
+      alignItems: 'center',
+    },
+    createAlertTitleBody: {
+      alignItems: 'center',
+      paddingBottom: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    createAlertTitle: {
+      fontSize: fontSize(20),
+      fontWeight: '600',
+    },
+    sortModalBody: {
+      paddingVertical: hp(1),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    textStyle: {
+      color: color.black,
+    },
+  });

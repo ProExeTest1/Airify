@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getDate = () => {
   let days = [
     'Sunday',
@@ -17,7 +19,7 @@ export const getDate = () => {
       ...Array,
       {
         day: days[getCurntDate.getDay()],
-        date: getCurntDate.toLocaleDateString('en-IN'),
+        date: moment(getCurntDate).format('D/M/YYYY'),
       },
     ];
   }

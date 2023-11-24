@@ -11,10 +11,11 @@ import {
 import {strings} from '../../helper/Strings';
 import SearchBar from '../Common/SearchBar';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {FaqData} from '../../assets/DummyData/Data';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {FaqDummy} from '../../assets/DummyData/FaqDummy';
+import {useSelector} from 'react-redux';
 
 const Faq = () => {
   const [categorySelect, setCategory] = useState({
@@ -39,7 +40,8 @@ const Faq = () => {
       setSearchData(abc);
     }
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -57,7 +59,7 @@ const Faq = () => {
                     backgroundColor:
                       item.title == categorySelect.title
                         ? color.commonBlue
-                        : color.Grey,
+                        : color.TowButtonBgColor2,
                   },
                 ]}
                 onPress={() => {
@@ -70,7 +72,7 @@ const Faq = () => {
                       color:
                         item.title !== categorySelect.title
                           ? color.black
-                          : color.white,
+                          : '#fff',
                     },
                   ]}>
                   {item.title}
@@ -134,62 +136,64 @@ const Faq = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.Grey,
-  },
-  innerContainer: {marginHorizontal: wp(2), paddingVertical: hp(1)},
-  textStyle: {
-    fontWeight: '500',
-    fontSize: fontSize(16),
-  },
-  FlatListViewStyle: {
-    borderWidth: 1,
-    marginTop: hp(1),
-    marginLeft: wp(2),
-    borderRadius: wp(5),
-    borderColor: '#E6E7E8',
-    paddingVertical: wp(3),
-    paddingHorizontal: wp(6),
-  },
-  TextInputBody: {
-    backgroundColor: color.lightWhite,
-  },
-  iconStyle: {
-    width: hp(3),
-    height: hp(3),
-    resizeMode: 'contain',
-  },
-  viewStyle: {
-    flexDirection: 'row',
-  },
-  questionStyle: {
-    flex: 1,
-    fontWeight: 'bold',
-    fontSize: fontSize(16),
-    color: color.black,
-  },
-  answerStyle: {
-    marginTop: hp(2),
-    paddingTop: hp(2),
-    borderTopWidth: 1,
-    borderColor: color.grayLight,
-  },
-  flatListView: {
-    marginTop: hp(2),
-    marginBottom: hp(8),
-  },
-  textStyle1: {
-    color: color.black,
-  },
-  flatlistInnerView: {
-    backgroundColor: color.white,
-    marginVertical: hp(1),
-    paddingHorizontal: wp(4),
-    marginHorizontal: wp(4),
-    paddingVertical: hp(2),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.onBoardingBgColor,
+    },
+    innerContainer: {marginHorizontal: wp(2), paddingVertical: hp(1)},
+    textStyle: {
+      fontWeight: '500',
+      fontSize: fontSize(16),
+    },
+    FlatListViewStyle: {
+      borderWidth: 1,
+      marginTop: hp(1),
+      marginLeft: wp(2),
+      borderRadius: wp(5),
+      borderColor: color.grey,
+      paddingVertical: wp(3),
+      paddingHorizontal: wp(6),
+    },
+    TextInputBody: {
+      backgroundColor: color.lightWhite,
+    },
+    iconStyle: {
+      width: hp(3),
+      height: hp(3),
+      resizeMode: 'contain',
+      tintColor: color.black,
+    },
+    viewStyle: {
+      flexDirection: 'row',
+    },
+    questionStyle: {
+      flex: 1,
+      fontWeight: 'bold',
+      fontSize: fontSize(16),
+      color: color.black,
+    },
+    answerStyle: {
+      marginTop: hp(2),
+      paddingTop: hp(2),
+      borderTopWidth: 1,
+      borderColor: color.grayLight,
+    },
+    flatListView: {
+      marginTop: hp(2),
+      marginBottom: hp(8),
+    },
+    textStyle1: {
+      color: color.black,
+    },
+    flatlistInnerView: {
+      backgroundColor: color.white,
+      marginVertical: hp(1),
+      paddingHorizontal: wp(4),
+      marginHorizontal: wp(4),
+      paddingVertical: hp(2),
+    },
+  });
 
 export default Faq;

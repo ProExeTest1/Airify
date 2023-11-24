@@ -7,8 +7,9 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {useSelector} from 'react-redux';
 
 const Notification = ({navigation: {goBack}}) => {
   const [NotificationList, setNotificationList] = useState([]);
@@ -28,6 +29,8 @@ const Notification = ({navigation: {goBack}}) => {
       console.log('error :>> ', error);
     }
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -36,7 +39,7 @@ const Notification = ({navigation: {goBack}}) => {
         onPress2={false}
         navigation2={() => {}}
         Images1={Images.backIcon}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
         headerName={strings.notification}
         navigation1={() => {
           goBack();
@@ -54,6 +57,7 @@ const Notification = ({navigation: {goBack}}) => {
                 <ToggleSwitch
                   isOn={item?.isOn}
                   size="medium"
+                  offColor={color.availableSeatColor}
                   onColor={color.commonBlue}
                   onToggle={async () => {
                     await firestore()
@@ -79,25 +83,26 @@ const Notification = ({navigation: {goBack}}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  FlatListView: {
-    flexDirection: 'row',
-    paddingVertical: hp(2),
-  },
-  titleStyle: {
-    flex: 1,
-    fontWeight: '500',
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  flatListBodyViewStyle: {
-    flex: 1,
-    paddingHorizontal: wp(4),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    FlatListView: {
+      flexDirection: 'row',
+      paddingVertical: hp(2),
+    },
+    titleStyle: {
+      flex: 1,
+      fontWeight: '500',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    flatListBodyViewStyle: {
+      flex: 1,
+      paddingHorizontal: wp(4),
+    },
+  });
 
 export default Notification;

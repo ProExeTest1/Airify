@@ -11,7 +11,7 @@ import React, {useEffect, useState} from 'react';
 import {CommonHeader} from '../../components';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -180,6 +180,8 @@ const PaymentMethod = ({navigation, route}) => {
         });
       });
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -192,7 +194,7 @@ const PaymentMethod = ({navigation, route}) => {
         Images1={Images.backIcon}
         Images2={null}
         cancelButtonStyle1={styles.plusIconStyle}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
       />
       <ScrollView
         bounces={false}
@@ -206,7 +208,7 @@ const PaymentMethod = ({navigation, route}) => {
             styles.PaymentMethodBody,
             {
               borderColor:
-                selectOpc.type === 'My Wallet' ? color.commonBlue : '#fff',
+                selectOpc.type === 'My Wallet' ? color.commonBlue : color.grey,
             },
           ]}>
           <Image style={styles.PaymentMethodIcon} source={Images.wallet} />
@@ -229,7 +231,9 @@ const PaymentMethod = ({navigation, route}) => {
                 styles.selectedCard,
                 {
                   tintColor:
-                    selectOpc.type === 'My Wallet' ? color.commonBlue : '#fff',
+                    selectOpc.type === 'My Wallet'
+                      ? color.commonBlue
+                      : color.white,
                 },
               ]}
               source={Images.doneIcon}
@@ -244,7 +248,7 @@ const PaymentMethod = ({navigation, route}) => {
             styles.PaymentMethodBody,
             {
               borderColor:
-                selectOpc.type === 'PayPal' ? color.commonBlue : '#fff',
+                selectOpc.type === 'PayPal' ? color.commonBlue : color.grey,
             },
           ]}>
           <Image
@@ -258,7 +262,9 @@ const PaymentMethod = ({navigation, route}) => {
                 styles.selectedCard,
                 {
                   tintColor:
-                    selectOpc.type === 'PayPal' ? color.commonBlue : '#fff',
+                    selectOpc.type === 'PayPal'
+                      ? color.commonBlue
+                      : color.white,
                 },
               ]}
               source={Images.doneIcon}
@@ -273,7 +279,7 @@ const PaymentMethod = ({navigation, route}) => {
             styles.PaymentMethodBody,
             {
               borderColor:
-                selectOpc.type === 'Google Pay' ? color.commonBlue : '#fff',
+                selectOpc.type === 'Google Pay' ? color.commonBlue : color.grey,
             },
           ]}>
           <Image style={styles.PaymentMethodOtherIcon} source={Images.google} />
@@ -284,7 +290,9 @@ const PaymentMethod = ({navigation, route}) => {
                 styles.selectedCard,
                 {
                   tintColor:
-                    selectOpc.type === 'Google Pay' ? color.commonBlue : '#fff',
+                    selectOpc.type === 'Google Pay'
+                      ? color.commonBlue
+                      : color.white,
                 },
               ]}
               source={Images.doneIcon}
@@ -297,10 +305,13 @@ const PaymentMethod = ({navigation, route}) => {
             styles.PaymentMethodBody,
             {
               borderColor:
-                selectOpc.type === 'Apple Pay' ? color.commonBlue : '#fff',
+                selectOpc.type === 'Apple Pay' ? color.commonBlue : color.grey,
             },
           ]}>
-          <Image style={styles.PaymentMethodOtherIcon} source={Images.apple} />
+          <Image
+            style={[styles.PaymentMethodOtherIcon, {tintColor: color.black}]}
+            source={Images.apple}
+          />
           <Text style={styles.PaymentMethodName}>{strings.Apple_Pay}</Text>
           <View style={styles.myWalletBody}>
             <Image
@@ -308,7 +319,9 @@ const PaymentMethod = ({navigation, route}) => {
                 styles.selectedCard,
                 {
                   tintColor:
-                    selectOpc.type === 'Apple Pay' ? color.commonBlue : '#fff',
+                    selectOpc.type === 'Apple Pay'
+                      ? color.commonBlue
+                      : color.white,
                 },
               ]}
               source={Images.doneIcon}
@@ -323,7 +336,7 @@ const PaymentMethod = ({navigation, route}) => {
             styles.PaymentMethodBody,
             {
               borderColor:
-                selectOpc.type === 'Visa Pay' ? color.commonBlue : '#fff',
+                selectOpc.type === 'Visa Pay' ? color.commonBlue : color.grey,
             },
           ]}>
           <Image
@@ -337,7 +350,9 @@ const PaymentMethod = ({navigation, route}) => {
                 styles.selectedCard,
                 {
                   tintColor:
-                    selectOpc.type === 'Visa Pay' ? color.commonBlue : '#fff',
+                    selectOpc.type === 'Visa Pay'
+                      ? color.commonBlue
+                      : color.white,
                 },
               ]}
               source={Images.doneIcon}
@@ -362,68 +377,70 @@ const PaymentMethod = ({navigation, route}) => {
 
 export default PaymentMethod;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  PaymentMethodBody: {
-    backgroundColor: '#fff',
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(4),
-    marginTop: hp(3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 2,
-  },
-  PaymentMethodIcon: {
-    height: wp(15),
-    width: wp(15),
-    tintColor: color.commonBlue,
-    marginEnd: wp(4),
-  },
-  PaymentMethodName: {
-    flex: 1,
-    fontSize: fontSize(18),
-    fontWeight: '600',
-    color: color.black,
-  },
-  myWalletBody: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  walletPraice: {
-    fontSize: fontSize(18),
-    fontWeight: '600',
-    marginEnd: wp(3),
-  },
-  selectedCard: {
-    height: wp(7),
-    width: wp(7),
-  },
-  PaymentMethodOtherIcon: {
-    height: wp(15),
-    width: wp(15),
-    marginEnd: wp(4),
-  },
-  bottomButtonBody: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-    paddingTop: hp(2),
-    paddingBottom: hp(4),
-    flexDirection: 'row',
-  },
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    PaymentMethodBody: {
+      backgroundColor: color.white,
+      paddingVertical: hp(2),
+      paddingHorizontal: wp(4),
+      marginTop: hp(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderRadius: 10,
+      borderWidth: 2,
+    },
+    PaymentMethodIcon: {
+      height: wp(15),
+      width: wp(15),
+      tintColor: color.commonBlue,
+      marginEnd: wp(4),
+    },
+    PaymentMethodName: {
+      flex: 1,
+      fontSize: fontSize(18),
+      fontWeight: '600',
+      color: color.black,
+    },
+    myWalletBody: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    walletPraice: {
+      fontSize: fontSize(18),
+      fontWeight: '600',
+      marginEnd: wp(3),
+    },
+    selectedCard: {
+      height: wp(7),
+      width: wp(7),
+    },
+    PaymentMethodOtherIcon: {
+      height: wp(15),
+      width: wp(15),
+      marginEnd: wp(4),
+    },
+    bottomButtonBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+      paddingTop: hp(2),
+      paddingBottom: hp(4),
+      flexDirection: 'row',
+    },
 
-  okButton: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(2),
-    alignItems: 'center',
-    borderRadius: 10,
-    flex: 1,
-  },
-  okButtonText: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: '#fff',
-  },
-});
+    okButton: {
+      backgroundColor: color.commonBlue,
+      paddingVertical: hp(2),
+      alignItems: 'center',
+      borderRadius: 10,
+      flex: 1,
+    },
+    okButtonText: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: '#fff',
+    },
+  });

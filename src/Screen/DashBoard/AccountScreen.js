@@ -17,7 +17,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {SettingData} from '../../assets/DummyData/SettingData';
 import {
@@ -26,6 +25,8 @@ import {
   TextData,
   Loader,
 } from '../../components';
+import {useDispatch, useSelector} from 'react-redux';
+import {colorThemeType} from '../../redux/action/ColorThemeAction';
 
 const AccountScreen = ({navigation}) => {
   const [modal, setModal] = useState(false);
@@ -33,6 +34,7 @@ const AccountScreen = ({navigation}) => {
   const [toggleSwitchBut, setToggleSwitchBut] = useState();
   const [selectedLanguage, setSelectedLanguage] = useState();
 
+  const dispatch = useDispatch();
   useEffect(() => {
     getData();
     UserData();
@@ -52,6 +54,8 @@ const AccountScreen = ({navigation}) => {
   const DarkModeAsyncStorage = async isOn => {
     try {
       await AsyncStorage.setItem('DarkMode', JSON.stringify(isOn));
+      console.log('isOn', isOn);
+      dispatch(colorThemeType(isOn));
     } catch (error) {
       console.log('error :>> ', error);
     }
@@ -71,6 +75,9 @@ const AccountScreen = ({navigation}) => {
   const closeModal = async () => {
     setModal(false);
   };
+
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
 
   return (
     <View style={styles.container}>
@@ -182,6 +189,7 @@ const AccountScreen = ({navigation}) => {
                           size="medium"
                           isOn={toggleSwitchBut}
                           onColor={color.commonBlue}
+                          offColor={color.availableSeatColor}
                           onToggle={isOn => {
                             setToggleSwitchBut(isOn);
                             DarkModeAsyncStorage(isOn);
@@ -256,129 +264,132 @@ const AccountScreen = ({navigation}) => {
   );
 };
 
-export default AccountScreen;
+const ThemeStyle = color => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    headerStyle: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingVertical: hp(2),
+      marginHorizontal: wp(6.66),
+      justifyContent: 'space-between',
+    },
+    profilePicViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    profilePicStyle: {
+      width: hp(7.38),
+      height: hp(7.38),
+      borderRadius: 100,
+    },
+    headertextStyle: {marginHorizontal: 10},
+    userNameStyle: {
+      marginVertical: 5,
+      color: color.black,
+      fontSize: fontSize(12),
+    },
+    bellTouchStyle: {
+      padding: hp(1.2),
+      borderRadius: 100,
+      borderColor: color.black,
+    },
+    bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.black},
+    NameStyle: {
+      fontWeight: '500',
+      color: color.black,
+    },
+    listTouchStyle: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginVertical: hp(2.4),
+      marginHorizontal: wp(6),
+    },
+    listImageDiffStyle: {
+      width: hp(2.5),
+      height: hp(2.5),
+      resizeMode: 'contain',
+    },
+    listImageViewStyle: {
+      borderWidth: 1,
+      padding: hp(1.7),
+      borderRadius: 100,
+      borderColor: color.grey,
+    },
+    listImageStyle: {
+      width: hp(4),
+      height: hp(4),
+    },
+    listTextViewStyle: {
+      width: '75%',
+      marginHorizontal: 15,
+    },
+    listTitleTextStyle: {
+      fontWeight: '600',
+      fontSize: fontSize(16),
+      color: color.black,
+    },
+    listDiscriptionTextStyle: {
+      color: color.black,
+    },
+    forwardIconStyle: {
+      width: hp(3),
+      height: wp(3),
+      resizeMode: 'contain',
+      tintColor: color.black,
+    },
+    listHeaderViewStyle: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginHorizontal: wp(3),
+    },
+    listHeaderLineStyle: {
+      borderWidth: 0.5,
+      borderColor: color.grey,
+      marginHorizontal: wp(3),
+    },
+    header: {
+      fontSize: fontSize(14),
+      color: color.black,
+    },
+    listConditionStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    modalStyle: {
+      margin: wp(0),
+      justifyContent: 'flex-end',
+    },
+    modalViewStyle: {
+      height: hp(30),
+      borderRadius: 16,
+      alignItems: 'center',
+      backgroundColor: color.white,
+    },
+    modalsubViewStyle: {
+      marginTop: hp(5),
+      alignItems: 'center',
+    },
+    modalLogoutTextStyle: {
+      color: color.red,
+      fontWeight: '700',
+      fontSize: fontSize(18),
+    },
+    lineStyle: {
+      borderWidth: 1,
+      marginTop: hp(2),
+      marginHorizontal: wp(5),
+      paddingHorizontal: wp(42),
+      borderColor: color.grey,
+    },
+    TwoButtonViewStyle: {
+      marginTop: hp(4),
+    },
+  });
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  headerStyle: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingVertical: hp(2),
-    marginHorizontal: wp(6.66),
-    justifyContent: 'space-between',
-  },
-  profilePicViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  profilePicStyle: {
-    width: hp(7.38),
-    height: hp(7.38),
-    borderRadius: 100,
-  },
-  headertextStyle: {marginHorizontal: 10},
-  userNameStyle: {
-    marginVertical: 5,
-    color: color.black,
-    fontSize: fontSize(12),
-  },
-  bellTouchStyle: {
-    padding: hp(1.2),
-    borderRadius: 100,
-    borderColor: color.black,
-  },
-  bellStyle: {height: hp(3.07), width: hp(3.07), tintColor: color.black},
-  NameStyle: {
-    fontWeight: '500',
-    color: color.black,
-  },
-  listTouchStyle: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: hp(2.4),
-    marginHorizontal: wp(6),
-  },
-  listImageDiffStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    resizeMode: 'contain',
-  },
-  listImageViewStyle: {
-    borderWidth: 1,
-    padding: hp(1.7),
-    borderRadius: 100,
-    borderColor: color.grey,
-  },
-  listImageStyle: {
-    width: hp(4),
-    height: hp(4),
-  },
-  listTextViewStyle: {
-    width: '75%',
-    marginHorizontal: 15,
-  },
-  listTitleTextStyle: {
-    fontWeight: '600',
-    fontSize: fontSize(16),
-    color: color.black,
-  },
-  listDiscriptionTextStyle: {
-    color: color.black,
-  },
-  forwardIconStyle: {
-    width: hp(3),
-    height: wp(3),
-    resizeMode: 'contain',
-  },
-  listHeaderViewStyle: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginHorizontal: wp(3),
-  },
-  listHeaderLineStyle: {
-    borderWidth: 0.5,
-    borderColor: color.grey,
-    marginHorizontal: wp(3),
-  },
-  header: {
-    fontSize: fontSize(14),
-    color: color.black,
-  },
-  listConditionStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  modalStyle: {
-    margin: wp(0),
-    justifyContent: 'flex-end',
-  },
-  modalViewStyle: {
-    height: hp(30),
-    borderRadius: 16,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  modalsubViewStyle: {
-    marginTop: hp(5),
-    alignItems: 'center',
-  },
-  modalLogoutTextStyle: {
-    color: color.red,
-    fontWeight: '700',
-    fontSize: fontSize(18),
-  },
-  lineStyle: {
-    height: 2,
-    marginTop: hp(2),
-    marginHorizontal: wp(5),
-    paddingHorizontal: wp(42),
-    backgroundColor: color.lightGray,
-  },
-  TwoButtonViewStyle: {
-    marginTop: hp(4),
-  },
-});
+export default AccountScreen;

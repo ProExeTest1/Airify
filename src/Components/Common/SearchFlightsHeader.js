@@ -21,7 +21,7 @@ import {
 import {useSelector} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {getDate} from '../../assets/DummyData/GetDate';
 import moment from 'moment';
@@ -41,6 +41,8 @@ const SearchFlightsHeader = ({
       ? e?.searchFlight?.searchFlightReturnData
       : e?.place?.searchFlightData,
   );
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.header}>
       <View style={styles.headerNevBody}>
@@ -63,7 +65,7 @@ const SearchFlightsHeader = ({
               <View
                 style={[
                   styles.dropdownList,
-                  {borderBottomWidth: 2, borderColor: '#e2e2e2'},
+                  {borderBottomWidth: 2, borderColor: color.grey},
                 ]}>
                 <Image style={styles.dropdownIcon} source={Images.shareIcon} />
                 <Text style={styles.dropdownText}>{strings.shareResult}</Text>
@@ -159,111 +161,113 @@ const SearchFlightsHeader = ({
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#295dff',
-    paddingTop: Platform.OS === 'ios' ? hp(6) : hp(2),
-  },
-  headerNevBody: {
-    marginBottom: hp(3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: wp(4),
-    justifyContent: 'space-between',
-  },
-  BackImg: {
-    width: hp(3),
-    height: hp(3),
-    tintColor: color.white,
-  },
-  headerTitleBody: {
-    width: wp(100),
-    position: 'absolute',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: fontSize(22),
-  },
-  FlightsPlaseNicName: {
-    color: '#fff',
-    fontWeight: 'bold',
-    marginBottom: hp(1.5),
-    fontSize: fontSize(22),
-  },
-  FlightsPlaseName: {
-    color: '#fff',
-  },
-  FlightsPlaseBody: {
-    width: wp(24),
-    paddingHorizontal: wp(4),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    width: hp(20),
-    height: hp(5.5),
-  },
-  FlightsPlaseImgText: {
-    color: '#fff',
-    fontSize: fontSize(14),
-  },
-  dateListBody: {
-    paddingStart: wp(8),
-    flexDirection: 'row',
-    paddingBottom: hp(3),
-  },
-  dateIconBody: {
-    width: hp(7),
-    height: hp(7),
-    borderWidth: 1,
-    borderRadius: 10,
-    marginEnd: wp(2.5),
-    borderColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  dateIcon: {
-    width: hp(3.2),
-    height: hp(3.2),
-    tintColor: '#fff',
-  },
-  dateline: {
-    borderWidth: 0.5,
-    marginEnd: wp(2.5),
-    borderColor: '#fff',
-  },
-  date: {
-    fontWeight: 'bold',
-    marginBottom: hp(0.3),
-    fontSize: fontSize(18),
-  },
-  dropdownBody: {
-    top: wp(10),
-    width: wp(50),
-    borderRadius: 10,
-    position: 'absolute',
-    backgroundColor: '#fff',
-  },
-  dropdownList: {
-    paddingStart: wp(3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: hp(1.5),
-  },
-  dropdownIcon: {
-    width: wp(6.5),
-    height: wp(6.5),
-    marginEnd: wp(4),
-  },
-  dropdownText: {
-    fontWeight: '500',
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    header: {
+      backgroundColor: '#295dff',
+      paddingTop: Platform.OS === 'ios' ? hp(6) : hp(2),
+    },
+    headerNevBody: {
+      marginBottom: hp(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: wp(4),
+      justifyContent: 'space-between',
+    },
+    BackImg: {
+      width: hp(3),
+      height: hp(3),
+      tintColor: '#fff',
+    },
+    headerTitleBody: {
+      width: wp(100),
+      position: 'absolute',
+      alignItems: 'center',
+    },
+    headerTitle: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: fontSize(22),
+    },
+    FlightsPlaseNicName: {
+      color: '#fff',
+      fontWeight: 'bold',
+      marginBottom: hp(1.5),
+      fontSize: fontSize(22),
+    },
+    FlightsPlaseName: {
+      color: '#fff',
+    },
+    FlightsPlaseBody: {
+      width: wp(24),
+      paddingHorizontal: wp(4),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      width: hp(20),
+      height: hp(5.5),
+    },
+    FlightsPlaseImgText: {
+      color: '#fff',
+      fontSize: fontSize(14),
+    },
+    dateListBody: {
+      paddingStart: wp(8),
+      flexDirection: 'row',
+      paddingBottom: hp(3),
+    },
+    dateIconBody: {
+      width: hp(7),
+      height: hp(7),
+      borderWidth: 1,
+      borderRadius: 10,
+      marginEnd: wp(2.5),
+      borderColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    dateIcon: {
+      width: hp(3.2),
+      height: hp(3.2),
+      tintColor: '#fff',
+    },
+    dateline: {
+      borderWidth: 0.5,
+      marginEnd: wp(2.5),
+      borderColor: '#fff',
+    },
+    date: {
+      fontWeight: 'bold',
+      marginBottom: hp(0.3),
+      fontSize: fontSize(18),
+    },
+    dropdownBody: {
+      top: wp(10),
+      width: wp(50),
+      borderRadius: 10,
+      position: 'absolute',
+      backgroundColor: color.white,
+    },
+    dropdownList: {
+      paddingStart: wp(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: hp(1.5),
+    },
+    dropdownIcon: {
+      width: wp(6.5),
+      height: wp(6.5),
+      marginEnd: wp(4),
+      tintColor: color.black,
+    },
+    dropdownText: {
+      fontWeight: '500',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+  });
 
 export default SearchFlightsHeader;

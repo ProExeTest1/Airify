@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
+import {useSelector} from 'react-redux';
 
 const PickerHeaderBar = ({headerName, navigation}) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.headerViewStyle}>
       <SafeAreaView style={styles.safeHeaderViewStyle}></SafeAreaView>
@@ -35,39 +37,40 @@ const PickerHeaderBar = ({headerName, navigation}) => {
 
 export default PickerHeaderBar;
 
-const styles = StyleSheet.create({
-  headerViewStyle: {
-    backgroundColor: color.commonBlue,
-  },
-  cancelTouchStyle: {
-    height: hp(2),
-    width: hp(2),
-  },
-  cancelButtonStyle: {
-    width: hp(2),
-    height: hp(2),
-    tintColor: color.white,
-  },
-  headerTextStyle: {
-    fontWeight: 'bold',
-    color: color.white,
-    fontSize: fontSize(22),
-  },
-  safeHeaderViewStyle: {
-    paddingVertical: hp(3),
-    paddingHorizontal: wp(7),
-  },
-  headerinnerViewStyle: {
-    justifyContent: 'center',
-    paddingHorizontal: wp(8),
-    backgroundColor: color.commonBlue,
-    flex: 1,
-    paddingVertical: Platform.OS === 'ios' ? hp(3) : hp(0.7),
-    marginBottom: Platform.OS === 'android' ? hp(3) : null,
-  },
-  headerTextViewStyle: {
-    position: 'absolute',
-    flex: 1,
-    alignSelf: 'center',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    headerViewStyle: {
+      backgroundColor: color.commonBlue,
+    },
+    cancelTouchStyle: {
+      height: hp(2),
+      width: hp(2),
+    },
+    cancelButtonStyle: {
+      width: hp(2),
+      height: hp(2),
+      tintColor: '#fff',
+    },
+    headerTextStyle: {
+      fontWeight: 'bold',
+      color: '#fff',
+      fontSize: fontSize(22),
+    },
+    safeHeaderViewStyle: {
+      paddingVertical: hp(3),
+      paddingHorizontal: wp(7),
+    },
+    headerinnerViewStyle: {
+      justifyContent: 'center',
+      paddingHorizontal: wp(8),
+      backgroundColor: color.commonBlue,
+      flex: 1,
+      paddingVertical: Platform.OS === 'ios' ? hp(3) : hp(0.7),
+      marginBottom: Platform.OS === 'android' ? hp(3) : null,
+    },
+    headerTextViewStyle: {
+      position: 'absolute',
+      flex: 1,
+      alignSelf: 'center',
+    },
+  });

@@ -53,10 +53,23 @@ import RescheduleConfirmPin from '../screen/RescheludeTrip/RescheduleConfirmPin'
 import ReschedulePaymentConfirmation from '../screen/RescheludeTrip/ReschedulePaymentConfirmation';
 import RescheduleSearchFlight from '../screen/RescheludeTrip/RescheduleSearchFlight';
 import RescheduleFillPassengerDetails from '../screen/RescheludeTrip/RescheduleFillPassengerDetails';
+import {useDispatch, useSelector} from 'react-redux';
+import {colorThemeType} from '../redux/action/ColorThemeAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
+  let dispatch = useDispatch();
   const user = auth()?.currentUser?.uid;
+  useEffect(async () => {
+    await AsyncStorage.getItem('DarkMode')
+      .then(i => {
+        dispatch(colorThemeType(JSON.parse(i)));
+      })
+      .catch(() => {
+        dispatch(colorThemeType(false));
+      });
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator

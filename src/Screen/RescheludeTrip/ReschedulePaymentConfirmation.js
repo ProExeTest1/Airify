@@ -20,7 +20,7 @@ import {
 import {Images} from '../../helper/IconConstant';
 import {strings} from '../../helper/Strings';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import ToggleSwitch from 'toggle-switch-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
@@ -176,6 +176,8 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
   useEffect(() => {
     getFirebaseData();
   }, []);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.headerViewStyle}>
       <CommonHeader
@@ -271,6 +273,7 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
                     }
                     size="medium"
                     onColor={color.commonBlue}
+                    offColor={color.availableSeatColor}
                     onToggle={isOn => {
                       ticketType === 'Old Trip'
                         ? null
@@ -368,121 +371,125 @@ const ReschedulePaymentConfirmation = ({navigation, route}) => {
 
 export default ReschedulePaymentConfirmation;
 
-const styles = StyleSheet.create({
-  headerViewStyle: {
-    flex: 1,
-  },
-  bottomButtonBody: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-    paddingTop: hp(2),
-    paddingBottom: hp(4),
-    flexDirection: 'row',
-  },
+const ThemeStyle = color =>
+  StyleSheet.create({
+    headerViewStyle: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    bottomButtonBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+      paddingTop: hp(2),
+      paddingBottom: hp(4),
+      flexDirection: 'row',
+    },
 
-  okButton: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(2),
-    alignItems: 'center',
-    borderRadius: 10,
-    flex: 1,
-  },
-  okButtonText: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: '#fff',
-  },
-  ScrollBody: {
-    flex: 1,
-    paddingHorizontal: wp(6),
-    paddingTop: hp(3),
-  },
-  boxBody: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(4),
-    borderRadius: 10,
-    marginBottom: hp(2),
-  },
-  boxTitleBody: {
-    paddingVertical: hp(2),
-    flexDirection: 'row',
-  },
-  boxTitle: {
-    color: color.black,
-    fontSize: fontSize(17),
-    fontWeight: 'bold',
-    flex: 1,
-  },
-  boxVelue: {
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  StopsButBody: {
-    // paddingVertical: hp(1.5),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  StopsBut: {
-    backgroundColor: '#f2f2f2',
-    borderWidth: 2,
-    borderRadius: 10,
-    paddingVertical: hp(1.3),
-    width: wp(23.5),
-    alignItems: 'center',
-    marginEnd: wp(2.7),
-  },
-  boxIcon: {
-    height: wp(6),
-    width: wp(6),
-    marginEnd: wp(4),
-  },
-  skipIcon: {
-    height: wp(4),
-    width: wp(4),
-  },
-  discountBody: {
-    paddingVertical: hp(2),
-    borderTopWidth: 1,
-    borderColor: color.grayLight,
-    alignItems: 'flex-start',
-    flex: 1,
-  },
-  discountBut: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(6),
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 200,
-  },
-  discountText: {
-    color: '#fff',
-    fontSize: fontSize(17),
-    fontWeight: '500',
-  },
-  PaymentMethodBody: {
-    flex: 1,
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  PaymentMethodIcon: {
-    height: wp(8),
-    width: wp(8),
-    tintColor: color.commonBlue,
-    marginEnd: wp(4),
-  },
-  PaymentMethodName: {
-    flex: 1,
-    fontSize: fontSize(18),
-    fontWeight: '600',
-    color: color.black,
-  },
-  walletPraice: {
-    fontSize: fontSize(18),
-    fontWeight: '600',
-    marginEnd: wp(3),
-    color: color.commonBlue,
-  },
-});
+    okButton: {
+      backgroundColor: color.commonBlue,
+      paddingVertical: hp(2),
+      alignItems: 'center',
+      borderRadius: 10,
+      flex: 1,
+    },
+    okButtonText: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: '#fff',
+    },
+    ScrollBody: {
+      flex: 1,
+      paddingHorizontal: wp(6),
+      paddingTop: hp(3),
+    },
+    boxBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(4),
+      borderRadius: 10,
+      marginBottom: hp(2),
+    },
+    boxTitleBody: {
+      paddingVertical: hp(2),
+      flexDirection: 'row',
+    },
+    boxTitle: {
+      color: color.black,
+      fontSize: fontSize(17),
+      fontWeight: 'bold',
+      flex: 1,
+    },
+    boxVelue: {
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    StopsButBody: {
+      // paddingVertical: hp(1.5),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    StopsBut: {
+      backgroundColor: '#f2f2f2',
+      borderWidth: 2,
+      borderRadius: 10,
+      paddingVertical: hp(1.3),
+      width: wp(23.5),
+      alignItems: 'center',
+      marginEnd: wp(2.7),
+    },
+    boxIcon: {
+      height: wp(6),
+      width: wp(6),
+      marginEnd: wp(4),
+      tintColor: color.black,
+    },
+    skipIcon: {
+      height: wp(4),
+      width: wp(4),
+      tintColor: color.black,
+    },
+    discountBody: {
+      paddingVertical: hp(2),
+      borderTopWidth: 1,
+      borderColor: color.grey,
+      alignItems: 'flex-start',
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    discountBut: {
+      backgroundColor: color.commonBlue,
+      paddingVertical: hp(1.5),
+      paddingHorizontal: wp(6),
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderRadius: 200,
+    },
+    discountText: {
+      color: '#fff',
+      fontSize: fontSize(17),
+      fontWeight: '500',
+    },
+    PaymentMethodBody: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderRadius: 10,
+    },
+    PaymentMethodIcon: {
+      height: wp(8),
+      width: wp(8),
+      tintColor: color.commonBlue,
+      marginEnd: wp(4),
+    },
+    PaymentMethodName: {
+      flex: 1,
+      fontSize: fontSize(18),
+      fontWeight: '600',
+      color: color.black,
+    },
+    walletPraice: {
+      fontSize: fontSize(18),
+      fontWeight: '600',
+      marginEnd: wp(3),
+      color: color.commonBlue,
+    },
+  });

@@ -3,12 +3,15 @@ import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
 
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {DiscountVoucherDummy} from '../../assets/DummyData/Discount';
+import {useSelector} from 'react-redux';
 
 const DiscountVoucher = ({navigation: {goBack}}) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -16,7 +19,7 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
         onPress1={true}
         onPress2={false}
         Images1={Images?.backIcon}
-        Images1Color={color?.white}
+        Images1Color={'#fff'}
         headerName={strings?.discountVoucher}
         navigation1={() => {
           goBack();
@@ -72,65 +75,68 @@ const DiscountVoucher = ({navigation: {goBack}}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  flatListOuterViewStyle: {
-    flex: 1,
-    paddingHorizontal: wp(6),
-    paddingVertical: hp(2.5),
-  },
-  flatListInnerViewStyle: {
-    borderRadius: 6,
-    marginVertical: hp(1),
-    paddingVertical: hp(2),
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(4),
-  },
-  cartTitleTextStyle: {
-    fontWeight: '600',
-    marginBottom: hp(1),
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  cartView: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-  },
-  timeIconStyle: {
-    width: wp(4),
-    height: hp(4),
-    marginRight: wp(2),
-    resizeMode: 'contain',
-  },
-  secondViewStyle: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    marginHorizontal: wp(4),
-  },
-  useButtonView: {
-    flex: 1,
-    borderLeftWidth: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    borderColor: color.grayLight,
-  },
-  useTouchableStyle: {
-    borderRadius: 100,
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(8.5),
-    backgroundColor: color.commonBlue,
-  },
-  textStyle: {
-    color: color.black,
-  },
-  validationTextStyle: {
-    fontSize: fontSize(10),
-    color: color.black,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    flatListOuterViewStyle: {
+      flex: 1,
+      paddingHorizontal: wp(6),
+      paddingVertical: hp(2.5),
+    },
+    flatListInnerViewStyle: {
+      borderRadius: 6,
+      marginVertical: hp(1),
+      paddingVertical: hp(2),
+      backgroundColor: color.white,
+      paddingHorizontal: wp(4),
+    },
+    cartTitleTextStyle: {
+      fontWeight: '600',
+      marginBottom: hp(1),
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    cartView: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+    },
+    timeIconStyle: {
+      width: wp(4),
+      height: hp(4),
+      marginRight: wp(2),
+      resizeMode: 'contain',
+      tintColor: color.black,
+    },
+    secondViewStyle: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      marginHorizontal: wp(4),
+    },
+    useButtonView: {
+      flex: 1,
+      borderLeftWidth: 1,
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      borderColor: color.grey,
+    },
+    useTouchableStyle: {
+      borderRadius: 100,
+      paddingVertical: hp(1),
+      paddingHorizontal: wp(8.5),
+      backgroundColor: color.commonBlue,
+    },
+    textStyle: {
+      color: color.black,
+    },
+    validationTextStyle: {
+      fontSize: fontSize(10),
+      color: color.black,
+    },
+  });
 
 export default DiscountVoucher;

@@ -11,10 +11,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {languageDummyJson} from '../../assets/DummyData/languageDummyJson';
+import {useSelector} from 'react-redux';
 
 const Language = ({navigation: {goBack}}) => {
   const [languageData, setLanguageData] = useState([]);
@@ -54,7 +55,8 @@ const Language = ({navigation: {goBack}}) => {
       console.log('error :>> ', error);
     }
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -63,7 +65,7 @@ const Language = ({navigation: {goBack}}) => {
         onPress2={false}
         navigation2={() => {}}
         Images1={Images.backIcon}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
         headerName={strings.language}
         navigation1={() => {
           goBack();
@@ -121,33 +123,34 @@ const Language = ({navigation: {goBack}}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.grayLight,
-  },
-  flagIconStyle: {
-    width: hp(6),
-    height: hp(6),
-  },
-  flatListStyle: {
-    borderWidth: 2,
-    borderRadius: wp(2),
-    flexDirection: 'row',
-    marginVertical: hp(1),
-    paddingVertical: hp(3),
-    marginHorizontal: wp(6),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
-    justifyContent: 'space-between',
-  },
-  textStyle: {
-    paddingRight: wp(2),
-    fontSize: fontSize(20),
-  },
-  textViewStyle: {
-    flexDirection: 'row',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.grayLight,
+    },
+    flagIconStyle: {
+      width: hp(6),
+      height: hp(6),
+    },
+    flatListStyle: {
+      borderWidth: 2,
+      borderRadius: wp(2),
+      flexDirection: 'row',
+      marginVertical: hp(1),
+      paddingVertical: hp(3),
+      marginHorizontal: wp(6),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.white,
+      justifyContent: 'space-between',
+    },
+    textStyle: {
+      paddingRight: wp(2),
+      fontSize: fontSize(20),
+    },
+    textViewStyle: {
+      flexDirection: 'row',
+    },
+  });
 
 export default Language;

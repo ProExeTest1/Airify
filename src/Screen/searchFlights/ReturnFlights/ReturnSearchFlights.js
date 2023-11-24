@@ -245,6 +245,8 @@ const ReturnSearchFlights = ({navigation, route}) => {
     dispatch(SearchFlightFilterData({}));
     Alert.alert('Filter data not match');
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.body}>
       {/* ----------------------------------------------------> Header components */}
@@ -352,69 +354,73 @@ const ReturnSearchFlights = ({navigation, route}) => {
   );
 };
 export default ReturnSearchFlights;
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-  },
-  ScrollViewBody: {
-    flex: 1,
-    paddingHorizontal: wp(7),
-  },
-  sortBody: {
-    position: 'absolute',
-    paddingVertical: hp(1.8),
-    paddingHorizontal: wp(4),
-    width: wp(55),
-    bottom: hp(5),
-    alignSelf: 'center',
-    borderRadius: 500,
-    backgroundColor: '#fff',
-    shadowColor: '#000000',
-    shadowOffset: {width: 0, height: 7},
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 8,
-    flexDirection: 'row',
-  },
-  sortImgBody: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  sortLine: {
-    borderColor: '#e2e2e2',
-    borderEndWidth: 2,
-    height: '100%',
-  },
-  sortText: {
-    fontSize: fontSize(20),
-    fontWeight: '500',
-  },
-  sortImg: {
-    height: wp(6),
-    width: wp(6),
-  },
-  createAlertBody: {
-    backgroundColor: '#fff',
-    paddingVertical: wp(6),
-    paddingHorizontal: wp(6),
-    borderTopEndRadius: 20,
-    borderTopStartRadius: 20,
-  },
-  createAlertTitleBody: {
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  createAlertTitle: {
-    fontSize: fontSize(20),
-    fontWeight: '600',
-  },
-  sortModalBody: {
-    paddingVertical: hp(1),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    body: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    ScrollViewBody: {
+      flex: 1,
+      paddingHorizontal: wp(7),
+    },
+    sortBody: {
+      position: 'absolute',
+      paddingVertical: hp(1.8),
+      paddingHorizontal: wp(4),
+      width: wp(55),
+      bottom: hp(5),
+      alignSelf: 'center',
+      borderRadius: 500,
+      backgroundColor: color.white,
+      shadowColor: color.black,
+      shadowOffset: {width: 0, height: 7},
+      shadowOpacity: 0.2,
+      shadowRadius: 10,
+      elevation: 8,
+      flexDirection: 'row',
+    },
+    sortImgBody: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+    },
+    sortLine: {
+      borderColor: color.grey,
+      borderEndWidth: 2,
+      height: '100%',
+    },
+    sortText: {
+      fontSize: fontSize(20),
+      fontWeight: '500',
+      color: color.black,
+    },
+    sortImg: {
+      height: wp(6),
+      width: wp(6),
+      tintColor: color.black,
+    },
+    createAlertBody: {
+      backgroundColor: '#fff',
+      paddingVertical: wp(6),
+      paddingHorizontal: wp(6),
+      borderTopEndRadius: 20,
+      borderTopStartRadius: 20,
+    },
+    createAlertTitleBody: {
+      alignItems: 'center',
+      paddingBottom: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    createAlertTitle: {
+      fontSize: fontSize(20),
+      fontWeight: '600',
+    },
+    sortModalBody: {
+      paddingVertical: hp(1),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+  });

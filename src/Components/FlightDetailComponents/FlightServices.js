@@ -13,10 +13,13 @@ import {
   FlightDetailsData1,
 } from '../../assets/DummyData/FlightDetailsData';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
+
 import {strings} from '../../helper/Strings';
+import {useSelector} from 'react-redux';
 
 const FlightServices = ({DetailsNavigation}) => {
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View>
       <View style={styles.flatlistViewStyle}>
@@ -75,39 +78,40 @@ const FlightServices = ({DetailsNavigation}) => {
 
 export default FlightServices;
 
-const styles = StyleSheet.create({
-  flatlistTextStyle: {
-    fontSize: fontSize(18),
-    color: '#383838',
-    marginHorizontal: wp(3),
-  },
-  flatlist1InnerViewStyle: {
-    flexDirection: 'row',
-    marginVertical: hp(1),
-  },
-  flatlist2InnerViewStyle: {
-    marginHorizontal: wp(2),
-  },
-  flatlistIconStyle: {
-    height: hp(2.5),
-    width: hp(2.5),
-    tintColor: '#383838',
-  },
-  flatlistViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#e2e2e2',
-    borderBottomWidth: 1,
-    paddingVertical: hp(1.6),
-  },
-  detailsTextStyle: {
-    fontSize: fontSize(18),
-    color: color.commonBlue,
-    marginHorizontal: wp(3),
-  },
-  forwardStyle: {
-    height: hp(1.8),
-    width: hp(1.8),
-    tintColor: color.commonBlue,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    flatlistTextStyle: {
+      fontSize: fontSize(18),
+      color: color.darkLight,
+      marginHorizontal: wp(3),
+    },
+    flatlist1InnerViewStyle: {
+      flexDirection: 'row',
+      marginVertical: hp(1),
+    },
+    flatlist2InnerViewStyle: {
+      marginHorizontal: wp(2),
+    },
+    flatlistIconStyle: {
+      height: hp(2.5),
+      width: hp(2.5),
+      tintColor: color.darkLight,
+    },
+    flatlistViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderColor: color.grey,
+      borderBottomWidth: 1,
+      paddingVertical: hp(1.6),
+    },
+    detailsTextStyle: {
+      fontSize: fontSize(18),
+      color: color.commonBlue,
+      marginHorizontal: wp(3),
+    },
+    forwardStyle: {
+      height: hp(1.8),
+      width: hp(1.8),
+      tintColor: color.commonBlue,
+    },
+  });

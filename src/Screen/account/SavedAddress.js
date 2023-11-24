@@ -22,7 +22,7 @@ import firestore from '@react-native-firebase/firestore';
 
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {AlertConstant} from '../../helper/AlertConstant';
@@ -120,7 +120,8 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
           });
       });
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -128,7 +129,8 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
         onPress2={true}
         Images2={Images?.plus}
         Images1={Images?.backIcon}
-        Images1Color={color.white}
+        Images1Color={'#fff'}
+        Images2Color={'#fff'}
         headerName={strings?.savedAddress}
         cancelButtonStyle={styles?.plusIconStyle}
         navigation1={() => {
@@ -268,122 +270,123 @@ const SavedAddress = ({navigation: {goBack}, navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.Grey,
-  },
-  plusIconStyle: {
-    width: hp(2.5),
-    height: hp(2.5),
-    resizeMode: 'contain',
-  },
-  buttonStyle: {
-    flex: 1,
-    borderWidth: 1,
-    marginBottom: hp(2),
-    backgroundColor: color.white,
-    borderColor: color.commonBlue,
-  },
-  buttonTextStyle: {
-    color: color.commonBlue,
-  },
-  FlatListViewStyle: {flex: 1, paddingVertical: hp(1)},
-  flatListInnerViewStyleL: {
-    borderRadius: wp(2),
-    marginVertical: hp(1),
-    marginHorizontal: wp(6),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
-  },
-  cardViewHeaderStyle: {
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    paddingVertical: hp(1),
-    borderColor: color.lightGray,
-    justifyContent: 'space-between',
-  },
-  cardViewStyle: {
-    paddingTop: hp(1),
-    paddingBottom: hp(1),
-    borderColor: color.lightGray,
-  },
-  shareIconStyle: {height: hp(3), width: hp(3), resizeMode: 'contain'},
-  primaryTextStyle: {
-    borderWidth: 1,
-    borderRadius: wp(1),
-    alignItems: 'center',
-    marginHorizontal: wp(4),
-    paddingHorizontal: wp(2),
-    paddingVertical: hp(0.5),
-    borderColor: color.commonBlue,
-  },
-  dataStyle: {
-    paddingVertical: hp(1),
-    fontSize: fontSize(16),
-  },
-  textStyle: {
-    flexDirection: 'row',
-  },
-  buttonViewStyle: {
-    paddingTop: hp(1),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    marginHorizontal: wp(2),
-    justifyContent: 'space-between',
-  },
-  ChangeAddressButtonStyle: {
-    borderWidth: 1,
-    borderRadius: wp(2),
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(4),
-    borderColor: color.commonBlue,
-  },
-  ChangeAddressButtonTextStyle: {
-    textAlign: 'center',
-    color: color.commonBlue,
-  },
-  optionViewStyle: {
-    flex: 1,
-    zIndex: 1,
-    bottom: -25,
-    right: wp(4),
-    position: 'absolute',
-    flexDirection: 'row',
-    alignSelf: 'flex-end',
-    paddingVertical: hp(1),
-    backgroundColor: color.black,
-  },
-  dropdownBody: {
-    right: 0,
-    top: wp(12),
-    width: wp(65),
-    borderRadius: 10,
-    position: 'absolute',
-    backgroundColor: color.white,
-  },
-  dropdownList: {
-    paddingStart: wp(3),
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: hp(1.5),
-  },
-  dropdownIcon: {
-    width: wp(6.5),
-    height: wp(6.5),
-    marginEnd: wp(4),
-  },
-  dropdownText: {
-    fontWeight: '500',
-    fontSize: fontSize(18),
-  },
-  BackImg: {
-    width: wp(8),
-    height: wp(8),
-    tintColor: color.commonBlue,
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    plusIconStyle: {
+      width: hp(2.5),
+      height: hp(2.5),
+      resizeMode: 'contain',
+    },
+    buttonStyle: {
+      flex: 1,
+      borderWidth: 1,
+      marginBottom: hp(2),
+      backgroundColor: color.white,
+      borderColor: color.commonBlue,
+    },
+    buttonTextStyle: {
+      color: color.commonBlue,
+    },
+    FlatListViewStyle: {flex: 1, paddingVertical: hp(1)},
+    flatListInnerViewStyleL: {
+      borderRadius: wp(2),
+      marginVertical: hp(1),
+      marginHorizontal: wp(6),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.white,
+    },
+    cardViewHeaderStyle: {
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      flexDirection: 'row',
+      paddingVertical: hp(1),
+      borderColor: color.grey,
+      justifyContent: 'space-between',
+    },
+    cardViewStyle: {
+      paddingTop: hp(1),
+      paddingBottom: hp(1),
+      borderColor: color.grey,
+    },
+    shareIconStyle: {height: hp(3), width: hp(3), resizeMode: 'contain'},
+    primaryTextStyle: {
+      borderWidth: 1,
+      borderRadius: wp(1),
+      alignItems: 'center',
+      marginHorizontal: wp(4),
+      paddingHorizontal: wp(2),
+      paddingVertical: hp(0.5),
+      borderColor: color.commonBlue,
+    },
+    dataStyle: {
+      paddingVertical: hp(1),
+      fontSize: fontSize(16),
+    },
+    textStyle: {
+      flexDirection: 'row',
+    },
+    buttonViewStyle: {
+      paddingTop: hp(1),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingBottom: hp(2),
+      marginHorizontal: wp(2),
+      justifyContent: 'space-between',
+    },
+    ChangeAddressButtonStyle: {
+      borderWidth: 1,
+      borderRadius: wp(2),
+      paddingVertical: hp(1.5),
+      paddingHorizontal: wp(4),
+      borderColor: color.commonBlue,
+    },
+    ChangeAddressButtonTextStyle: {
+      textAlign: 'center',
+      color: color.commonBlue,
+    },
+    optionViewStyle: {
+      flex: 1,
+      zIndex: 1,
+      bottom: -25,
+      right: wp(4),
+      position: 'absolute',
+      flexDirection: 'row',
+      alignSelf: 'flex-end',
+      paddingVertical: hp(1),
+      backgroundColor: color.black,
+    },
+    dropdownBody: {
+      right: 0,
+      top: wp(12),
+      width: wp(65),
+      borderRadius: 10,
+      position: 'absolute',
+      backgroundColor: color.white,
+    },
+    dropdownList: {
+      paddingStart: wp(3),
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: hp(1.5),
+    },
+    dropdownIcon: {
+      width: wp(6.5),
+      height: wp(6.5),
+      marginEnd: wp(4),
+    },
+    dropdownText: {
+      fontWeight: '500',
+      fontSize: fontSize(18),
+    },
+    BackImg: {
+      width: wp(8),
+      height: wp(8),
+      tintColor: color.commonBlue,
+    },
+  });
 
 export default SavedAddress;

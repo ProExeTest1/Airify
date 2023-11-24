@@ -20,7 +20,6 @@ import {
   SwiperFlatlistComponent,
 } from '../../components/index';
 import {fontSize, hp, wp} from '../../helper/Constant';
-import {color} from '../../helper/ColorConstant';
 import {useSelector, useDispatch} from 'react-redux';
 import {strings} from '../../helper/Strings';
 import {SearchFlightAction} from '../../redux/action/PlaceAction';
@@ -204,13 +203,15 @@ const HomeScreen = ({navigation}) => {
         <Text
           style={[
             styles.optionTextStyle,
-            {color: press === tripType ? color.white : 'black'},
+            {color: press === tripType ? '#fff' : color.black},
           ]}>
           {tripType}
         </Text>
       </TouchableOpacity>
     );
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <View style={styles.headerViewStyle}></View>
@@ -422,144 +423,146 @@ const HomeScreen = ({navigation}) => {
 export default HomeScreen;
 
 const {width} = Dimensions.get('window');
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  text: {
-    fontSize: width * 0.6,
-    textAlign: 'center',
-  },
-  ScrollViewStyle: {
-    flex: 1,
-    // backgroundColor: color.black,
-  },
-  headerViewStyle: {
-    backgroundColor: color.commonBlue,
-    height: hp(35),
-    width: wp(100),
-    position: 'absolute',
-  },
-  headerStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: wp(6.66),
-    justifyContent: 'space-between',
-    marginTop: Platform.OS === 'android' ? hp(3) : null,
-    marginBottom: hp(3),
-  },
-  profilepicViewStyle: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  profilePicStyle: {
-    height: hp(7.38),
-    width: hp(7.38),
-    borderRadius: 100,
-  },
-  headertextStyle: {
-    marginHorizontal: wp(2.6),
-  },
-  GMStyle: {
-    color: color.white,
-    marginVertical: hp(0.6),
-  },
-  userNameStyle: {
-    fontWeight: 'bold',
-    color: color.white,
-    fontSize: fontSize(20, 812),
-    marginVertical: hp(0.6),
-  },
-  bellTouchStyle: {
-    borderWidth: 1,
-    borderRadius: 100,
-    borderColor: color.white,
-    padding: hp(1.2),
-  },
-  bellStyle: {
-    height: hp(3.07),
-    width: hp(3.07),
-    tintColor: color.white,
-  },
-  seatBookingMainViewStyle: {
-    paddingVertical: hp(2.4),
-    backgroundColor: color.white,
-    borderRadius: 16,
-    marginHorizontal: wp(6),
-  },
-  optionStyle: {
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: wp(4),
-  },
-  optionTouchStyle: {
-    borderRadius: 30,
-    borderWidth: 0.5,
-    // backgroundColor:'black',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: hp(1.6),
-    flex: 1,
-  },
-  optionTextStyle: {
-    fontWeight: '700',
-  },
-  customInputStyle: {
-    flexDirection: 'row',
-    marginHorizontal: wp(4),
-    marginVertical: hp(1.2),
-    justifyContent: 'space-between',
-  },
-  searchButtonStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: hp(7),
-    borderRadius: 16,
-    backgroundColor: 'blue',
-    marginVertical: hp(1.2),
-    marginHorizontal: wp(4),
-  },
-  searchFontStyle: {
-    fontSize: fontSize(20, 812),
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  offerStyle: {
-    flex: 1,
-    marginTop: hp(2),
-    marginHorizontal: wp(6),
-  },
-  specialOfferViewStyle: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginVertical: hp(1.2),
-  },
-  specialOfferTextStyle: {
-    fontSize: fontSize(20, 812),
-    fontWeight: 'bold',
-    color: color.black,
-  },
-  forwardStyle: {
-    height: hp(1.8),
-    width: hp(1.8),
-    tintColor: color.commonBlue,
-  },
-  updownStyle: {
-    height: hp(3.6),
-    width: hp(3.6),
-    tintColor: 'white',
-  },
-  updownTouchStyle: {
-    backgroundColor: color.commonBlue,
-    borderRadius: 100,
-    padding: hp(1.6),
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: '35%',
-    right: wp(10),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    text: {
+      fontSize: width * 0.6,
+      textAlign: 'center',
+    },
+    ScrollViewStyle: {
+      flex: 1,
+      // backgroundColor: color.black,
+    },
+    headerViewStyle: {
+      backgroundColor: color.commonBlue,
+      height: hp(35),
+      width: wp(100),
+      position: 'absolute',
+    },
+    headerStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginHorizontal: wp(6.66),
+      justifyContent: 'space-between',
+      marginTop: Platform.OS === 'android' ? hp(3) : null,
+      marginBottom: hp(3),
+    },
+    profilepicViewStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    profilePicStyle: {
+      height: hp(7.38),
+      width: hp(7.38),
+      borderRadius: 100,
+    },
+    headertextStyle: {
+      marginHorizontal: wp(2.6),
+    },
+    GMStyle: {
+      color: '#fff',
+      marginVertical: hp(0.6),
+    },
+    userNameStyle: {
+      fontWeight: 'bold',
+      color: '#fff',
+      fontSize: fontSize(20, 812),
+      marginVertical: hp(0.6),
+    },
+    bellTouchStyle: {
+      borderWidth: 1,
+      borderRadius: 100,
+      borderColor: '#fff',
+      padding: hp(1.2),
+    },
+    bellStyle: {
+      height: hp(3.07),
+      width: hp(3.07),
+      tintColor: '#fff',
+    },
+    seatBookingMainViewStyle: {
+      paddingVertical: hp(2.4),
+      backgroundColor: color.white,
+      borderRadius: 16,
+      marginHorizontal: wp(6),
+    },
+    optionStyle: {
+      flexDirection: 'row',
+      flex: 1,
+      justifyContent: 'space-between',
+      marginHorizontal: wp(4),
+    },
+    optionTouchStyle: {
+      borderRadius: 30,
+      borderWidth: 1,
+      borderColor: color.grey,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: hp(1.6),
+      flex: 1,
+    },
+    optionTextStyle: {
+      fontWeight: '700',
+    },
+    customInputStyle: {
+      flexDirection: 'row',
+      marginHorizontal: wp(4),
+      marginVertical: hp(1.2),
+      justifyContent: 'space-between',
+    },
+    searchButtonStyle: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: hp(7),
+      borderRadius: 16,
+      backgroundColor: 'blue',
+      marginVertical: hp(1.2),
+      marginHorizontal: wp(4),
+    },
+    searchFontStyle: {
+      fontSize: fontSize(20, 812),
+      color: 'white',
+      fontWeight: 'bold',
+    },
+    offerStyle: {
+      flex: 1,
+      marginTop: hp(2),
+      marginHorizontal: wp(6),
+    },
+    specialOfferViewStyle: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginVertical: hp(1.2),
+    },
+    specialOfferTextStyle: {
+      fontSize: fontSize(20, 812),
+      fontWeight: 'bold',
+      color: color.black,
+    },
+    forwardStyle: {
+      height: hp(1.8),
+      width: hp(1.8),
+      tintColor: color.commonBlue,
+    },
+    updownStyle: {
+      height: hp(3.6),
+      width: hp(3.6),
+      tintColor: 'white',
+    },
+    updownTouchStyle: {
+      backgroundColor: color.commonBlue,
+      borderRadius: 100,
+      padding: hp(1.6),
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute',
+      top: '35%',
+      right: wp(10),
+    },
+  });

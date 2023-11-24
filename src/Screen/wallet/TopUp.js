@@ -15,10 +15,11 @@ import firestore from '@react-native-firebase/firestore';
 import {RAZORPAY_KEY_ID} from '@env';
 import {strings} from '../../helper/Strings';
 import {CommonHeader} from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {AlertConstant} from '../../helper/AlertConstant';
+import {useSelector} from 'react-redux';
 
 const TopUp = ({navigation}) => {
   const [userData, setUserData] = useState({});
@@ -65,7 +66,8 @@ const TopUp = ({navigation}) => {
       setMyWallet(myWallet);
     }
   }, [userData]);
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   useEffect(() => {
     if (transactionHistory.length != getTransactionHistory().length) {
       getTransactionHistory().then(e => {
@@ -194,50 +196,51 @@ const TopUp = ({navigation}) => {
 
 export default TopUp;
 
-const styles = StyleSheet.create({
-  TopUpBody: {
-    flex: 1,
-    backgroundColor: color.commonBlue,
-  },
-  borderBottom: {
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e250',
-  },
-  buttonBody: {
-    paddingTop: hp(3),
-    paddingBottom: hp(5),
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-  },
-  ContinueButton: {
-    borderRadius: 10,
-    alignItems: 'center',
-    paddingVertical: hp(2),
-    backgroundColor: color.commonBlue,
-    paddingHorizontal: wp(4),
-  },
-  ContinueText: {
-    color: '#fff',
-    fontWeight: '500',
-    fontSize: fontSize(16),
-  },
-  inputBody: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  dollorSign: {
-    color: '#fff',
-    fontWeight: '500',
-    marginTop: hp(0.5),
-    fontSize: fontSize(18),
-  },
-  TextInputStyle: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: fontSize(40),
-  },
-  TextInputBody: {
-    flexDirection: 'row',
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    TopUpBody: {
+      flex: 1,
+      backgroundColor: color.commonBlue,
+    },
+    borderBottom: {
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e250',
+    },
+    buttonBody: {
+      paddingTop: hp(3),
+      paddingBottom: hp(5),
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+    },
+    ContinueButton: {
+      borderRadius: 10,
+      alignItems: 'center',
+      paddingVertical: hp(2),
+      backgroundColor: color.commonBlue,
+      paddingHorizontal: wp(4),
+    },
+    ContinueText: {
+      color: '#fff',
+      fontWeight: '500',
+      fontSize: fontSize(16),
+    },
+    inputBody: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    dollorSign: {
+      color: '#fff',
+      fontWeight: '500',
+      marginTop: hp(0.5),
+      fontSize: fontSize(18),
+    },
+    TextInputStyle: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: fontSize(40),
+    },
+    TextInputBody: {
+      flexDirection: 'row',
+    },
+  });

@@ -21,7 +21,7 @@ import {
   ExpiredSavedAddress,
   OnBoardingTwoButton,
 } from '../../components';
-import {color} from '../../helper/ColorConstant';
+
 import {Images} from '../../helper/IconConstant';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {radioButtons} from '../../assets/DummyData/radioButtons';
@@ -246,7 +246,8 @@ const SavedScreen = ({navigation}) => {
     dispatch(activeFlightFilter({}));
     dispatch(expiredFlightFilter({}));
   };
-
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -262,7 +263,7 @@ const SavedScreen = ({navigation}) => {
             {
               backgroundColor: selectedOption
                 ? color?.commonBlue
-                : color?.lightGray2,
+                : color?.TowButtonBgColor2,
               borderRadius: wp(2),
             },
           ]}
@@ -272,7 +273,7 @@ const SavedScreen = ({navigation}) => {
           <Text
             style={[
               styles?.buttonTextStyle,
-              {color: selectedOption ? color?.white : color?.black},
+              {color: selectedOption ? '#fff' : color?.black},
             ]}>
             {strings?.active}
           </Text>
@@ -282,7 +283,7 @@ const SavedScreen = ({navigation}) => {
             styles?.buttonStyle,
             {
               backgroundColor: selectedOption
-                ? color?.lightGray2
+                ? color?.TowButtonBgColor2
                 : color?.commonBlue,
               borderRadius: wp(2),
             },
@@ -293,7 +294,7 @@ const SavedScreen = ({navigation}) => {
           <Text
             style={[
               styles?.buttonTextStyle,
-              {color: !selectedOption ? color?.white : color?.black},
+              {color: !selectedOption ? '#fff' : color?.black},
             ]}>
             {strings?.expiry}
           </Text>
@@ -368,7 +369,11 @@ const SavedScreen = ({navigation}) => {
               <View style={styles?.FlightsPlaseImgBody}>
                 <Image
                   style={styles?.FlightsPlaseImg}
-                  source={Images?.airplaneWhiteIcon}
+                  source={
+                    color.white == '#fff'
+                      ? Images?.airplaneWhiteIcon
+                      : Images?.airplaneDarkWhiteIcon
+                  }
                 />
                 <Text style={styles?.FlightsPlaseImgText}>
                   {savedItem?.totalHours}
@@ -400,7 +405,7 @@ const SavedScreen = ({navigation}) => {
                 styles.cardBottemBody,
                 {
                   borderTopWidth: 1,
-                  borderColor: color.grayLight,
+                  borderColor: color.grey,
                   paddingTop: hp(2),
                   alignItems: 'center',
                 },
@@ -443,7 +448,11 @@ const SavedScreen = ({navigation}) => {
               {alignItems: 'center', paddingVertical: hp(2)},
             ]}>
             <Image
-              source={Images.removeSuccess}
+              source={
+                color.white == '#fff'
+                  ? Images.removeSuccess
+                  : Images.removeSuccessDark
+              }
               style={{height: hp(5), width: hp(5), resizeMode: 'contain'}}
             />
             <Text style={styles.headerTextStyle}>{strings.removeSuccess}</Text>
@@ -481,7 +490,7 @@ const SavedScreen = ({navigation}) => {
               )}
             />
           </View>
-        
+
           <View
             style={{
               paddingVertical: hp(2),
@@ -498,206 +507,212 @@ const SavedScreen = ({navigation}) => {
         </View>
       </Modal>
       {SearchFlightCardData?.length > 0 && (
-            <View style={styles.sortBody}>
-              <TouchableOpacity
-                onPress={() => setModalVisible2(true)}
-                style={styles.sortImgBody}>
-                <Image style={styles.sortImg} source={Images.sortIcon} />
-                <Text style={styles.sortText}>{strings.sort}</Text>
-              </TouchableOpacity>
-              <View style={styles.sortLine}></View>
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('SavedFlightFilter', {
-                    header: selectedOption,
-                  })
-                }
-                style={styles.sortImgBody}>
-                <Image style={styles.sortImg} source={Images.filterIcon} />
-                <Text style={styles.sortText}>{strings.filter}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+        <View style={styles.sortBody}>
+          <TouchableOpacity
+            onPress={() => setModalVisible2(true)}
+            style={styles.sortImgBody}>
+            <Image style={styles.sortImg} source={Images.sortIcon} />
+            <Text style={styles.sortText}>{strings.sort}</Text>
+          </TouchableOpacity>
+          <View style={styles.sortLine}></View>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('SavedFlightFilter', {
+                header: selectedOption,
+              })
+            }
+            style={styles.sortImgBody}>
+            <Image style={styles.sortImg} source={Images.filterIcon} />
+            <Text style={styles.sortText}>{strings.filter}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
 
 export default SavedScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  buttonViewStyle: {
-    borderRadius: wp(2),
-    flexDirection: 'row',
-    marginVertical: hp(2),
-    marginHorizontal: wp(4),
-    justifyContent: 'space-around',
-    backgroundColor: color.lightGray2,
-  },
-  buttonStyle: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: hp(1),
-    justifyContent: 'center',
-  },
-  buttonTextStyle: {
-    fontWeight: '600',
-    fontSize: fontSize(14),
-    color: color.black,
-  },
-  modalStyle: {
-    margin: wp(0),
-    justifyContent: 'flex-end',
-  },
-  modalViewStyle: {
-    height: hp(60),
-    borderRadius: 16,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  cardBody: {
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: hp(2),
-    paddingHorizontal: wp(4),
-    backgroundColor: color.white,
-    borderColor: color.grayLight,
-  },
-  cardHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    paddingVertical: hp(2.5),
-    borderColor: color.grayLight,
-  },
-  cardHeaderText: {
-    flex: 1,
-    fontWeight: 'bold',
-    fontSize: fontSize(18),
-    color: color.black,
-  },
-  cardHeaderLogo: {
-    width: wp(5.8),
-    height: wp(5.8),
-    marginEnd: wp(3),
-    borderRadius: 500,
-  },
-  cardPrice: {
-    fontWeight: '600',
-    fontSize: fontSize(20),
-    color: color.commonBlue,
-  },
-  cardPriceTitle: {
-    color: color.darkLight,
-    fontSize: fontSize(18),
-  },
-  cardDataBody: {
-    paddingTop: hp(2.5),
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  FlightsPlaseBody: {
-    width: wp(20),
-  },
-  FlightsPlaseImgBody: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  FlightsPlaseImg: {
-    height: hp(5),
-    width: hp(17),
-  },
-  FlightsPlaseImgText: {
-    color: color.darkLight,
-    fontSize: fontSize(13),
-  },
-  FlightsPlaseNicName: {
-    color: color.black,
-    fontWeight: 'bold',
-    marginTop: hp(1.5),
-    fontSize: fontSize(21),
-  },
-  FlightsPlaseName: {
-    fontWeight: '500',
-    color: color.darkLight,
-  },
-  cardBottemBody: {
-    paddingTop: hp(1),
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingBottom: hp(2.5),
-    justifyContent: 'space-between',
-  },
-  headerStyle: {
-    borderBottomWidth: 1,
-    marginVertical: hp(2),
-    paddingVertical: hp(3),
-    paddingHorizontal: wp(14),
-    borderColor: color.grayLight,
-  },
-  headerTextStyle: {
-    fontWeight: 'bold',
-    fontSize: fontSize(20),
-  },
-  sortBody: {
-    elevation: 8,
-    width: wp(55),
-    bottom: hp(4),
-    shadowRadius: 10,
-    borderRadius: 500,
-    shadowOpacity: 0.2,
-    alignSelf: 'center',
-    position: 'absolute',
-    flexDirection: 'row',
-    shadowColor: '#000000',
-    backgroundColor: '#fff',
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(4),
-    shadowOffset: {width: 0, height: 7},
-  },
-  sortImgBody: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  sortLine: {
-    height: '100%',
-    borderEndWidth: 2,
-    borderColor: '#e2e2e2',
-  },
-  sortText: {
-    fontWeight: '500',
-    fontSize: fontSize(20),
-    color: color.black,
-  },
-  sortImg: {
-    width: wp(6),
-    height: wp(6),
-  },
-  createAlertBody: {
-    paddingVertical: wp(6),
-    borderTopEndRadius: 20,
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-    borderTopStartRadius: 20,
-  },
-  createAlertTitleBody: {
-    alignItems: 'center',
-    paddingBottom: hp(2),
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-  },
-  createAlertTitle: {
-    fontWeight: '600',
-    fontSize: fontSize(20),
-    color: color.black,
-  },
-  sortModalBody: {
-    borderBottomWidth: 1,
-    borderColor: '#e2e2e2',
-    paddingVertical: hp(1),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.bgColor,
+    },
+    buttonViewStyle: {
+      borderRadius: wp(2),
+      flexDirection: 'row',
+      marginVertical: hp(2),
+      marginHorizontal: wp(4),
+      justifyContent: 'space-around',
+      backgroundColor: color.TowButtonBgColor2,
+    },
+    buttonStyle: {
+      flex: 1,
+      alignItems: 'center',
+      paddingVertical: hp(1),
+      justifyContent: 'center',
+    },
+    buttonTextStyle: {
+      fontWeight: '600',
+      fontSize: fontSize(14),
+      color: color.black,
+    },
+    modalStyle: {
+      margin: wp(0),
+      justifyContent: 'flex-end',
+    },
+    modalViewStyle: {
+      height: hp(60),
+      borderRadius: 16,
+      alignItems: 'center',
+      backgroundColor: color.white,
+    },
+    cardBody: {
+      borderWidth: 1,
+      borderRadius: 10,
+      marginBottom: hp(2),
+      paddingHorizontal: wp(4),
+      backgroundColor: color.white,
+      borderColor: color.grey,
+    },
+    cardHeader: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      paddingVertical: hp(2.5),
+      borderColor: color.grey,
+    },
+    cardHeaderText: {
+      flex: 1,
+      fontWeight: 'bold',
+      fontSize: fontSize(18),
+      color: color.black,
+    },
+    cardHeaderLogo: {
+      width: wp(5.8),
+      height: wp(5.8),
+      marginEnd: wp(3),
+      borderRadius: 500,
+    },
+    cardPrice: {
+      fontWeight: '600',
+      fontSize: fontSize(20),
+      color: color.commonBlue,
+    },
+    cardPriceTitle: {
+      color: color.offerColor,
+      fontSize: fontSize(18),
+    },
+    cardDataBody: {
+      paddingTop: hp(2.5),
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    FlightsPlaseBody: {
+      width: wp(20),
+    },
+    FlightsPlaseImgBody: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    FlightsPlaseImg: {
+      height: hp(5),
+      width: hp(17),
+    },
+    FlightsPlaseImgText: {
+      color: color.offerColor,
+      fontSize: fontSize(13),
+    },
+    FlightsPlaseNicName: {
+      color: color.black,
+      fontWeight: 'bold',
+      marginTop: hp(1.5),
+      fontSize: fontSize(21),
+    },
+    FlightsPlaseName: {
+      fontWeight: '500',
+      color: color.offerColor,
+    },
+    cardBottemBody: {
+      paddingTop: hp(1),
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingBottom: hp(2.5),
+      justifyContent: 'space-between',
+    },
+    headerStyle: {
+      borderBottomWidth: 1,
+      marginVertical: hp(2),
+      paddingVertical: hp(3),
+      paddingHorizontal: wp(14),
+      borderColor: color.grey,
+    },
+    headerTextStyle: {
+      fontWeight: 'bold',
+      fontSize: fontSize(20),
+      color: color.black,
+    },
+    sortBody: {
+      position: 'absolute',
+      paddingVertical: hp(1.8),
+      paddingHorizontal: wp(4),
+      width: wp(55),
+      bottom: hp(5),
+      alignSelf: 'center',
+      borderRadius: 500,
+      borderWidth: 1,
+      borderColor: color.grey,
+      backgroundColor: color.white,
+      shadowColor: color.black,
+      shadowOffset: {width: 0, height: 7},
+      shadowOpacity: 0.2,
+      shadowRadius: 10,
+      elevation: 8,
+      flexDirection: 'row',
+    },
+    sortImgBody: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+    },
+    sortLine: {
+      height: '100%',
+      borderEndWidth: 2,
+      borderColor: color.grey,
+    },
+    sortText: {
+      fontWeight: '500',
+      fontSize: fontSize(20),
+      color: color.black,
+    },
+    sortImg: {
+      width: wp(6),
+      height: wp(6),
+      tintColor: color.black,
+    },
+    createAlertBody: {
+      paddingVertical: wp(6),
+      borderTopEndRadius: 20,
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+      borderTopStartRadius: 20,
+    },
+    createAlertTitleBody: {
+      alignItems: 'center',
+      paddingBottom: hp(2),
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+    },
+    createAlertTitle: {
+      fontWeight: '600',
+      fontSize: fontSize(20),
+      color: color.black,
+    },
+    sortModalBody: {
+      borderBottomWidth: 1,
+      borderColor: '#e2e2e2',
+      paddingVertical: hp(1),
+    },
+  });

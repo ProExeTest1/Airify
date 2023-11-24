@@ -10,7 +10,7 @@ import {StackActions, useRoute} from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {strings} from '../../helper/Strings';
-import {color} from '../../helper/ColorConstant';
+
 import {useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -77,12 +77,17 @@ const Congratulation = ({navigation, route}) => {
   useEffect(() => {
     getUserPointData();
   }, []);
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View
       style={{
         flex: 1,
+        backgroundColor: color.white,
       }}>
-      <StatusBar barStyle={'dark-content'} />
+      <StatusBar
+        barStyle={color.white == '#fff' ? 'dark-content' : 'light-content'}
+      />
       <View
         style={{
           flex: 1,
@@ -105,7 +110,7 @@ const Congratulation = ({navigation, route}) => {
             textAlign: 'center',
             fontWeight: 'bold',
             marginTop: hp(2),
-            color: '#000',
+            color: color.black,
           }}>
           {strings.you_earned}{' '}
           {type == 'Reschedule'
@@ -120,7 +125,7 @@ const Congratulation = ({navigation, route}) => {
           style={{
             textAlign: 'center',
             marginTop: hp(2),
-            color: '#000',
+            color: color.black,
           }}>
           {strings.use_your_point}
         </Text>
@@ -140,25 +145,28 @@ const Congratulation = ({navigation, route}) => {
 
 export default Congratulation;
 
-const styles = StyleSheet.create({
-  bottomButtonBody: {
-    backgroundColor: '#fff',
-    paddingHorizontal: wp(6),
-    paddingTop: hp(2),
-    paddingBottom: hp(4),
-    flexDirection: 'row',
-  },
+const ThemeStyle = color =>
+  StyleSheet.create({
+    bottomButtonBody: {
+      backgroundColor: color.white,
+      paddingHorizontal: wp(6),
+      paddingTop: hp(2),
+      paddingBottom: hp(4),
+      flexDirection: 'row',
+      borderTopWidth: 2,
+      borderColor: color.grey,
+    },
 
-  okButton: {
-    backgroundColor: color.commonBlue,
-    paddingVertical: hp(2),
-    alignItems: 'center',
-    borderRadius: 10,
-    flex: 1,
-  },
-  okButtonText: {
-    fontSize: fontSize(18),
-    fontWeight: '500',
-    color: '#fff',
-  },
-});
+    okButton: {
+      backgroundColor: color.commonBlue,
+      paddingVertical: hp(2),
+      alignItems: 'center',
+      borderRadius: 10,
+      flex: 1,
+    },
+    okButtonText: {
+      fontSize: fontSize(18),
+      fontWeight: '500',
+      color: '#fff',
+    },
+  });

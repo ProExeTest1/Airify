@@ -12,7 +12,7 @@ import {AlertConstant} from '../../helper/AlertConstant';
 
 import {strings} from '../../helper/Strings';
 import {Images} from '../../helper/IconConstant';
-import {color} from '../../helper/ColorConstant';
+
 import {fontSize, hp, wp} from '../../helper/Constant';
 import {
   CommonHeader,
@@ -20,6 +20,7 @@ import {
   SwiperFlatlistComponent,
 } from '../../components';
 import {randomPromoCodeGenerator} from '../../helper/RandomPromoCodegenerator';
+import {useSelector} from 'react-redux';
 
 const SpecialOfferScreen = ({route, navigation}) => {
   const headerData = route?.params?.header;
@@ -29,6 +30,8 @@ const SpecialOfferScreen = ({route, navigation}) => {
     Clipboard.setString(promocode);
     AlertConstant('Text copied to clipboard!');
   };
+  const color = useSelector(state => state?.themereducer?.colorTheme);
+  const styles = ThemeStyle(color);
   return (
     <View style={styles.container}>
       <CommonHeader
@@ -40,7 +43,7 @@ const SpecialOfferScreen = ({route, navigation}) => {
         Images2={null}
         Images1={Images?.backIcon}
         Images2Color={false}
-        Images1Color={color?.white}
+        Images1Color={'#fff'}
         headerName={headerData}
       />
       {/* <PickerHeaderBar
@@ -111,96 +114,98 @@ const SpecialOfferScreen = ({route, navigation}) => {
 
 export default SpecialOfferScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  innerContainer: {
-    marginHorizontal: wp(5),
-    marginVertical: hp(2),
-  },
-  titleStyle: {
-    fontWeight: '700',
-    marginTop: hp(0.5),
-    color: color.black,
-    fontSize: fontSize(20),
-  },
-  dottextStyle: {
-    fontSize: fontSize(16),
-    color: '#565656',
-    marginHorizontal: wp(2),
-  },
-  textStyle: {
-    color: '#565656',
-    fontSize: fontSize(16),
-  },
-  termsTextViewStyle: {
-    width: '95%',
-    flexDirection: 'row',
-    marginVertical: hp(0.8),
-  },
-  claimDiscountButtonStyle: {
-    width: wp(90),
-    height: hp(7),
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'blue',
-    marginVertical: Platform.OS === 'ios' ? hp(4) : hp(2),
-  },
-  claimDiscountFontStyle: {
-    fontWeight: 'bold',
-    color: color.white,
-    fontSize: fontSize(18),
-  },
-  promocodeViewStyle: {
-    borderRadius: 5,
-    height: hp(7.5),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F3F3F3',
-  },
-  promocodeTextStyle: {
-    color: color.black,
-    fontSize: fontSize(18),
-    marginHorizontal: wp(3),
-  },
-  copyImageStyle: {
-    width: hp(3),
-    height: hp(3),
-  },
-  validateViewStyle: {
-    padding: hp(2),
-    borderRadius: 5,
-    borderWidth: 0.5,
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginVertical: hp(1.2),
-    borderColor: color.grey,
-    justifyContent: 'space-around',
-  },
-  clockimageStyle: {
-    width: hp(2),
-    height: hp(2),
-    tintColor: color.commonBlue,
-  },
-  commonViewStyle: {
-    flexDirection: 'row',
-    marginVertical: hp(0.8),
-  },
-  lineStyle: {
-    height: hp(5),
-    borderWidth: 0.5,
-  },
-  validateTextStyle: {
-    fontWeight: '700',
-    marginLeft: wp(7),
-    color: color.black,
-  },
-  textStyle1: {
-    color: color.black,
-    marginHorizontal: wp(2.5),
-  },
-});
+const ThemeStyle = color =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: color.white,
+    },
+    innerContainer: {
+      marginHorizontal: wp(5),
+      marginVertical: hp(2),
+    },
+    titleStyle: {
+      fontWeight: '700',
+      marginTop: hp(0.5),
+      color: color.black,
+      fontSize: fontSize(20),
+    },
+    dottextStyle: {
+      fontSize: fontSize(16),
+      color: '#565656',
+      marginHorizontal: wp(2),
+    },
+    textStyle: {
+      color: color.offerColor,
+      fontSize: fontSize(16),
+    },
+    termsTextViewStyle: {
+      width: '95%',
+      flexDirection: 'row',
+      marginVertical: hp(0.8),
+    },
+    claimDiscountButtonStyle: {
+      width: wp(90),
+      height: hp(7),
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'blue',
+      marginVertical: Platform.OS === 'ios' ? hp(4) : hp(2),
+    },
+    claimDiscountFontStyle: {
+      fontWeight: 'bold',
+      color: '#fff',
+      fontSize: fontSize(18),
+    },
+    promocodeViewStyle: {
+      borderRadius: 5,
+      height: hp(7.5),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: color.grey,
+    },
+    promocodeTextStyle: {
+      color: color.black,
+      fontSize: fontSize(18),
+      marginHorizontal: wp(3),
+    },
+    copyImageStyle: {
+      width: hp(3),
+      height: hp(3),
+      tintColor: color.black,
+    },
+    validateViewStyle: {
+      padding: hp(2),
+      borderRadius: 5,
+      borderWidth: 0.5,
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginVertical: hp(1.2),
+      borderColor: color.grey,
+      justifyContent: 'space-around',
+    },
+    clockimageStyle: {
+      width: hp(2),
+      height: hp(2),
+      tintColor: color.commonBlue,
+    },
+    commonViewStyle: {
+      flexDirection: 'row',
+      marginVertical: hp(0.8),
+    },
+    lineStyle: {
+      height: hp(5),
+      borderWidth: 0.5,
+    },
+    validateTextStyle: {
+      fontWeight: '700',
+      marginLeft: wp(7),
+      color: color.black,
+    },
+    textStyle1: {
+      color: color.black,
+      marginHorizontal: wp(2.5),
+    },
+  });
